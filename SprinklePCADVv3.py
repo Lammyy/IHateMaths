@@ -7,7 +7,7 @@ import seaborn as sns
 tf.reset_default_graph()
 #params
 epsilon=0.0000000001
-batch_size=128
+batch_size=64
 learning_rate_p=0.0001
 learning_rate_d=0.0001
 z_dim = 2
@@ -142,10 +142,11 @@ with tf.device('/gpu:0'):
 
 
 #if no NVIDIA CUDA take out config=...
-with tf.Session(config=tf.ConfigProto(log_device_placement=True)) as sess:
+with tf.Session(config=tf.ConfigProto(log_device_placement=False)) as sess:
+#with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     #Pre-Train Discriminator
-    for i in range(20000):
+    for i in range(8000):
         z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
         xin=np.repeat(xgen,batch_size)
         xin=xin.reshape(5*batch_size, 1)
@@ -168,7 +169,7 @@ with tf.Session(config=tf.ConfigProto(log_device_placement=True)) as sess:
             if i % 1000 == 0 or i == 1:
                 print('Step %i: Discriminator Loss: %f' % (i, dl))
         #Train Posterior on the 5 values of x specified at the start
-        for k in range(2):
+        for k in range(1):
             xin=np.repeat(xgen,batch_size)
             xin=xin.reshape(5*batch_size, 1)
             noise=np.random.randn(5*batch_size, noise_dim)
@@ -177,6 +178,42 @@ with tf.Session(config=tf.ConfigProto(log_device_placement=True)) as sess:
             #if k % 1000 == 0 or k ==1:
             print('Step %i: NELBO: %f' % (k, nelboo))
 
+        sns.set_style('whitegrid')
+        sns.set_context('poster')
+
+        plt.subplots(figsize=(20,8))
+        #make 5000 noise and 1000 of each x sample
+        N_samples=2000
+        noise=np.random.randn(5*N_samples, noise_dim).astype('float32')
+        x_gen=np.repeat(xgen,2000)
+        x_gen=x_gen.reshape(10000,1)
+        #plug into posterior
+        z_samples=posterior(x_gen,noise)
+        z_samples=tf.reshape(z_samples,[xgen.shape[0], N_samples, 2]).eval()
+        #print(z_samples)
+        #Plots
+        for i in range(5):
+            plt.subplot(2,5,i+1)
+            sns.kdeplot(z_samples[i,:,0], z_samples[i,:,1], cmap='Greens')
+            #plt.scatter(z_samples[i,:,0],z_samples[i,:,1])
+            plt.axis('square');
+            plt.title('q(z|x={})'.format(y[i]))
+            plt.xlim([xmin,xmax])
+            plt.ylim([xmin,xmax])
+            plt.xticks([])
+            plt.yticks([]);
+            plt.subplot(2,5,5+i+1)
+            plt.contour(xrange, xrange, np.exp(logprior+llh[i]).reshape(300,300).T, cmap='Greens')
+            plt.axis('square');
+            plt.title('p(z|x={})'.format(y[i]))
+            plt.xlim([xmin,xmax])
+            plt.ylim([xmin,xmax])
+            plt.xticks([])
+            plt.yticks([]);
+        plt.savefig('FiguresPCADV\Fig %i'%(j))
+        plt.close()
+
+#Final plot thing
     sns.set_style('whitegrid')
     sns.set_context('poster')
 
@@ -210,3 +247,4 @@ with tf.Session(config=tf.ConfigProto(log_device_placement=True)) as sess:
         plt.xticks([])
         plt.yticks([]);
     plt.show()
+    plt.savefig('Fig %s'.format(i))

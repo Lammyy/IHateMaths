@@ -1,0 +1,25 @@
+This is makeindex, version 2.15 [TeX Live 2017/W32TeX] (kpathsea + Thai support).
+Scanning style file c:/texlive/2017/texmf-dist/makeindex/nomencl/nomencl.ist.......
+** Input style error (file = c:/texlive/2017/texmf-dist/makeindex/nomencl/nomencl.ist, line = 70):
+   -- Unknown specifier lethead_prefix.
+** Input style error (file = c:/texlive/2017/texmf-dist/makeindex/nomencl/nomencl.ist, line = 71):
+   -- Unknown specifier lethead_suffix.
+** Input style error (file = c:/texlive/2017/texmf-dist/makeindex/nomencl/nomencl.ist, line = 72):
+   -- Unknown specifier lethead_flag.
+...done (10 attributes redefined, 3 ignored).
+Scanning input file THESIS.nlo...
+!! Input index error (file = THESIS.nlo, line = 1):
+   -- Illegal page number .
+!! Input index error (file = THESIS.nlo, line = 2):
+   -- Extra `@' at position 10 of first argument.
+!! Input index error (file = THESIS.nlo, line = 3):
+   -- Extra `@' at position 17 of first argument.
+!! Input index error (file = THESIS.nlo, line = 4):
+   -- Illegal page number .
+!! Input index error (file = THESIS.nlo, line = 5):
+   -- Extra `@' at position 15 of first argument.
+!! Input index error (file = THESIS.nlo, line = 6):
+   -- Illegal page number .
+done (0 entries accepted, 6 rejected).
+Nothing written in THESIS.els.
+Transcript written in THESIS.ilg.
