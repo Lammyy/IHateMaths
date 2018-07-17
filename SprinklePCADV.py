@@ -8,8 +8,8 @@ tf.reset_default_graph()
 #params
 epsilon=0.0000000001
 batch_size=64
-learning_rate_p=0.0001
-learning_rate_d=0.0001
+learning_rate_p=0.0003
+learning_rate_d=0.0003
 z_dim = 2
 noise_dim=3
 gen_hidden_dim1=30
@@ -158,7 +158,7 @@ with tf.Session(config=tf.ConfigProto(log_device_placement=False)) as sess:
     for j in range(1000):
         print('Iteration %i' % (j))
         #Train Discriminator
-        for i in range(3001):
+        for i in range(1001):
             #Prior sample N(0,I_2x2)
             z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
             xin=np.repeat(xgen,batch_size)
@@ -178,40 +178,41 @@ with tf.Session(config=tf.ConfigProto(log_device_placement=False)) as sess:
             #if k % 1000 == 0 or k ==1:
             print('Step %i: NELBO: %f' % (k, nelboo))
 
-        sns.set_style('whitegrid')
-        sns.set_context('poster')
+        if j % 10 == 0 or j == 1:
+            sns.set_style('whitegrid')
+            sns.set_context('poster')
 
-        plt.subplots(figsize=(20,8))
-        #make 5000 noise and 1000 of each x sample
-        N_samples=2000
-        noise=np.random.randn(5*N_samples, noise_dim).astype('float32')
-        x_gen=np.repeat(xgen,2000)
-        x_gen=x_gen.reshape(10000,1)
-        #plug into posterior
-        z_samples=posterior(x_gen,noise)
-        z_samples=tf.reshape(z_samples,[xgen.shape[0], N_samples, 2]).eval()
-        #print(z_samples)
-        #Plots
-        for i in range(5):
-            plt.subplot(2,5,i+1)
-            sns.kdeplot(z_samples[i,:,0], z_samples[i,:,1], cmap='Greens')
-            #plt.scatter(z_samples[i,:,0],z_samples[i,:,1])
-            plt.axis('square');
-            plt.title('q(z|x={})'.format(y[i]))
-            plt.xlim([xmin,xmax])
-            plt.ylim([xmin,xmax])
-            plt.xticks([])
-            plt.yticks([]);
-            plt.subplot(2,5,5+i+1)
-            plt.contour(xrange, xrange, np.exp(logprior+llh[i]).reshape(300,300).T, cmap='Greens')
-            plt.axis('square');
-            plt.title('p(z|x={})'.format(y[i]))
-            plt.xlim([xmin,xmax])
-            plt.ylim([xmin,xmax])
-            plt.xticks([])
-            plt.yticks([]);
-        plt.savefig('FiguresPCADV\Fig %i'%(j))
-        plt.close()
+            plt.subplots(figsize=(20,8))
+            #make 5000 noise and 1000 of each x sample
+            N_samples=1000
+            noise=np.random.randn(5*N_samples, noise_dim).astype('float32')
+            x_gen=np.repeat(xgen,N_samples)
+            x_gen=x_gen.reshape(5*N_samples,1)
+            #plug into posterior
+            z_samples=posterior(x_gen,noise)
+            z_samples=tf.reshape(z_samples,[xgen.shape[0], N_samples, 2]).eval()
+            #print(z_samples)
+            #Plots
+            for i in range(5):
+                plt.subplot(2,5,i+1)
+                sns.kdeplot(z_samples[i,:,0], z_samples[i,:,1], cmap='Greens')
+                #plt.scatter(z_samples[i,:,0],z_samples[i,:,1])
+                plt.axis('square');
+                plt.title('q(z|x={})'.format(y[i]))
+                plt.xlim([xmin,xmax])
+                plt.ylim([xmin,xmax])
+                plt.xticks([])
+                plt.yticks([]);
+                plt.subplot(2,5,5+i+1)
+                plt.contour(xrange, xrange, np.exp(logprior+llh[i]).reshape(300,300).T, cmap='Greens')
+                plt.axis('square');
+                plt.title('p(z|x={})'.format(y[i]))
+                plt.xlim([xmin,xmax])
+                plt.ylim([xmin,xmax])
+                plt.xticks([])
+                plt.yticks([]);
+            plt.savefig('FiguresPCADV\Fig %i'%(j))
+            plt.close()
 
 #Final plot thing
     sns.set_style('whitegrid')
@@ -247,4 +248,3 @@ with tf.Session(config=tf.ConfigProto(log_device_placement=False)) as sess:
         plt.xticks([])
         plt.yticks([]);
     plt.show()
-    plt.savefig('Fig %s'.format(i))

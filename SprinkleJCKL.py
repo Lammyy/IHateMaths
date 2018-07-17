@@ -8,8 +8,8 @@ tf.reset_default_graph()
 #params
 epsilon=0.0000001
 batch_size=64
-learning_rate_p=0.001
-learning_rate_d=0.001
+learning_rate_p=0.0002
+learning_rate_d=0.0002
 z_dim = 2
 noise_dim=3
 gen_hidden_dim1=30
@@ -85,9 +85,9 @@ biases = {
     'ratio_out': tf.Variable(tf.zeros([1]))
 }
 #likeli = p(x|z)
-def likelihood(z, x, beta_0=3., beta_1=1.):
-    beta = beta_0 + tf.reduce_sum(beta_1*tf.maximum(0.0, z**3), 1)
-    return -tf.log(beta) - x/beta
+#def likelihood(z, x, beta_0=3., beta_1=1.):
+#    beta = beta_0 + tf.reduce_sum(beta_1*tf.maximum(0.0, z**3), 1)
+#    return -tf.log(beta) - x/beta
 
 def problikelihood(z):
     return tf.transpose(tf.random_gamma(shape=[data_dim], alpha=1, beta=1/(3+tf.pow(tf.maximum(0.0,z[:,0]),3)+tf.pow(tf.maximum(0.0,z[:,1]),3))))
@@ -152,7 +152,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
         _, dl = sess.run([train_ratio, ratio_loss], feed_dict=feed_dict)
         if i % 1000 == 0 or i == 1:
             print('Step %i: ratiomator Loss: %f' % (i, dl))
-    for j in range(100):
+    for j in range(400):
         print('Iteration %i' % (j))
         #Train ratiomator
         for i in range(1001):
@@ -181,10 +181,10 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
 
             plt.subplots(figsize=(20,8))
             #make 5000 noise and 1000 of each x sample
-            N_samples=2000
+            N_samples=1000
             noise=np.random.randn(5*N_samples, noise_dim).astype('float32')
-            x_gen=np.repeat(xgen,2000)
-            x_gen=x_gen.reshape(10000,1)
+            x_gen=np.repeat(xgen,N_samples)
+            x_gen=x_gen.reshape(5*N_samples,1)
             #plug into posterior
             z_samples=posterior(x_gen,noise)
             z_samples=tf.reshape(z_samples,[xgen.shape[0], N_samples, 2]).eval()
@@ -245,4 +245,3 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
         plt.xticks([])
         plt.yticks([]);
     plt.show()
-    plt.savefig('Fig %s'.format(i))

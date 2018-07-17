@@ -30,7 +30,7 @@
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\C}{\mathbb{C}}
-\newcommand{\N}{\mathbb{N}}
+\newcommand{\N}{\mathcal{N}}
 \newcommand{\F}{\mathbb{F}}
 \newcommand{\PP}{\mathbb{P}}
 \newcommand{\T}{\mathbb{T}}
@@ -124,7 +124,7 @@ In machine learning, particularly for high dimensional applications such as imag
 \newpage
 \subsection{Objective Derivation}
 \subsubsection{Implicit Prior}
-The posterior distribution cannot be computed efficiently if $\int_z p(x,z)dz$ is intractable, which is often the case with large datasets or high dimensional data. Furthermore, the prior $p(z)$ or the likelihood $p(x|z)$ may be implicit. In the framework of variational inference and machine learning, we approximate the posterior distribution $p_\theta (z|x)$ with a variational distribution parametrized by $\phi$: $q_\phi (z)$. We aim to minimize the KL divergence between these distributions, defined as 
+The posterior distribution cannot be computed efficiently if $\int_z p(x,z)dz$ is intractable, which is often the case with large datasets or high dimensional data. Furthermore, the prior $p(z)$ or the likelihood $p(x|z)$ may be implicit. In the framework of variational inference, we approximate the posterior distribution $p_\theta (z|x)$ with a variational distribution parametrized by $\phi$: $q_\phi (z)$. We aim to minimize the KL divergence between these distributions, defined as 
 \[KL(Q||P)=\int_{-\infty}^\infty Q(x)\log \frac{Q(x)}{P(x)}dx=\mathbb{E}_{Q(x)}\left[\log\frac{Q(x)}{P(x)}\right].\]
 The parameters $\phi$ of our approximate distribution $q_\phi (z)$ are therefore chosen such that the KL divergence is minimised. Since the true posterior distribution $p_\theta(z|x)$ is dependent on $x$, it differs with each observation $x_n$ that we take. This would mean we would have to define a variational distribution for each observation. Thus, we amortize our distribution, conditioning it on $x$ and letting its parameters $\phi$ be constant for each observation:(or better to say condition on x and take expectation w.r.t. $q^*(x)$?)
 \[q_\phi(z|x).\]
@@ -143,13 +143,17 @@ ELBO&=\mathbb{E}_{q^*(x)}[\log p(x)-KL(q_\phi(z|x)||p_\theta(z|x))]\\
 \end{align*}
 If the prior distribution is implicit (but the likelihood $\log p(x|z)$ isn't), then we can still evaluate and optimize this expression by considering the density ratio between $p(z)$ and $q_\phi (z|x)$:
 \[ELBO = \mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log p(x|z)\right]+\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{p(z)}{q_\phi(z|x)}\right].\]
-The $\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log p(x|z)\right]$ term can be evaluated and optimised by applying the reparameterization trick (Kingma 2014; Rezende 2014; Tiao 2018), which involves taking random input noise $\epsilon\sim \pi(\epsilon)$ and observed variable $x\sim q^*(x)$, and passing it through the neural network representing the variational distribution $q_\phi(z|x)$, defined as the function $\mathcal{G}_\phi(\epsilon;x)$. We therefore have the following expression for the expected log-likelihood:
-\[\mathbb{E}_{q^*(x)\pi(\epsilon)}[\log p_\theta (x|\mathcal{G}_\phi(\epsilon;x)].\]
+%The $\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log p(x|z)\right]$ term can be evaluated and optimised by applying the reparameterization trick (Kingma 2014; Rezende 2014; Tiao 2018), which involves taking random input noise $\epsilon\sim \pi(\epsilon)$ and observed variable $x\sim q^*(x)$, and passing it through the neural network representing the variational distribution $q_\phi(z|x)$, defined as the function $\mathcal{G}_\phi(\epsilon;x)$. We therefore have the following expression for the expected log-likelihood:
+Now we specify our variational distribution $q_\phi(z|x)$ to be a neural network $\mathcal{G}$ parametrized by $\phi$ that inputs observed variable $x\sim q^*(x)$ and outputs $z\sim q_\phi(z|x)$.
+The problem with this approach is that neural networks are deterministic and do not capture the probabilistic nature of a distribution. The traditional method of solving this issue is to apply the "reparametrization trick" (Kingma 2014), in which the neural network is instead trained to output the mean $\bm{\mu}$ and variance $\bm{\sigma^2}$ vectors of the posterior distribution. These are used to transform a noise variable $\epsilon \sim \pi(\epsilon)$ (typically $\pi(\epsilon) = \mathcal{N}(0,I_{n\times n})$), overall depicting the posterior as a multivariate normal distribution with 0 covariance:
+\[\bm{z}=\bm{\mu}+\bm{\sigma^2}\times \bm{\epsilon},\]
+\[q_\phi(z|x)\sim \mathcal{N}(\bm{\mu},\bm{\sigma}^2I_{n\times n}).\]
+In this paper, we instead add noise variables $\epsilon \sim \pi(\epsilon)$ as inputs to the neural network, along with $x$. (Mescheder 2017) This allows for greater flexibility in our model at the cost of information about our variational posterior parameters $\phi$, as it is now an implicit 'black-box'. We therefore denote the generator of the variational posterior samples as $\mathcal{G}_\phi(\epsilon;x)$. \textbf{(should insert two comparing dags to highlight difference in methods)} \\
 The ELBO therefore becomes
 \[ELBO = \mathbb{E}_{q^*(x)\pi(\epsilon)}[\log p_\theta (x|\mathcal{G}_\phi(\epsilon;x)]+\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{p_\theta(z)}{q_\phi(z|x)}\right].\]
 Our objective is to maximize the ELBO, equivalent to minimizing its negative:
 \[\min_\phi NELBO = -\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log p_\theta(x|z)\right]+\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{q_\phi(z|x)}{p_\theta(z)}\right].\]
-As previously stated, since the prior distribution is implicit, we use a ratio estimator $\hat{r}_\alpha(x)$ for the true density ratio $r^*(x)=\frac{q_\phi(z|x)}{p_\theta(z)}$.
+As previously stated, since the prior distribution is implicit, we use a ratio estimator $\hat{r}_\alpha(x)$ for the true density ratio $r^*(x)=\frac{q_\phi(z|x)}{p_\theta(z)}$. The goal of the density ratio estimation procedure (section ...) is to formulate and optimize an estimator for this density ratio based on samples from the distributions.
 \newpage
 \subsubsection{Implicit Likelihood (\& Prior)}
 Clearly, if our likelihood distribution is implicit, then this expression cannot be evaluated. Instead, we must rephrase the problem, considering a density ratio between two joint distributions  (Tran, 2017). We begin by restating the original objective of choosing parameters $\phi$ to minimize the KL divergence between two distributions:
@@ -278,8 +282,8 @@ Note that the prior and likelihood terms don't appear in the ELBO training objec
 			$\min_\alpha \mathbb{E}_{q^*(x)\pi(\epsilon)}[-\log D_\alpha(\mathcal{G}_\phi(\epsilon;x), x)]+\mathbb{E}_{p(z)p(x|z)}[-\log (1-D_\alpha(z,x))]$\;
 		}
 	}
-	Sample $\{\epsilon^{(i,k)}\}^B_{i=1}\sim \pi(\epsilon)$\;
-	Sample $\{x^{(i,k)}_q\}^B_{i=1}\sim q^*(x)$\;
+	Sample $\{\epsilon^{(i)}\}^B_{i=1}\sim \pi(\epsilon)$\;
+	Sample $\{x^{(i)}_q\}^B_{i=1}\sim q^*(x)$\;
 	\update{$\phi$ by optimization step on}{
 		$\min_\phi \mathbb{E}_{q^*(x)\pi(\epsilon)}\frac{D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)}{1-D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)}$\;
 	}
@@ -395,7 +399,7 @@ Again the algorithm involves cycling between optimizing the ratio estimator unti
 \newpage
 \begin{algorithm}
 \SetKw{update}{update}
-\caption{Implicit Likelihood Class Probability Estimation}
+\caption{Implicit Likelihood Divergence Minimisation}
 \KwData{Dataset $q^*(x)$, true (implicit) prior $p(z)$, true (implicit) likelihood $p(x|z)$, noise distribution $\pi(\epsilon)$}
 \KwResult{Optimized posterior generator $\mathcal{G}_\phi(\epsilon;x)$}
 \BlankLine
@@ -414,8 +418,8 @@ Again the algorithm involves cycling between optimizing the ratio estimator unti
 			$\min_\alpha -\mathbb{E}_{q^*(x)\pi(\epsilon)}[\log r_\alpha(\mathcal{G}(\epsilon;x),x)]+\mathbb{E}_{p(z)p(x|z)}[r_\alpha(z,x)]$\;
 		}
 	}
-	Sample $\{\epsilon^{(i,k)}\}^B_{i=1}\sim \pi(\epsilon)$\;
-	Sample $\{x^{(i,k)}_q\}^B_{i=1}\sim q^*(x)$\;
+	Sample $\{\epsilon^{(i)}\}^B_{i=1}\sim \pi(\epsilon)$\;
+	Sample $\{x^{(i)}_q\}^B_{i=1}\sim q^*(x)$\;
 	\update{$\phi$ by optimization step on\\}{
 		$\min_\phi \mathbb{E}_{q^*(x)\pi(\epsilon)}[\log r_\alpha(\mathcal{G}(\epsilon;x),x)]$\;
 	}
@@ -719,21 +723,21 @@ Machine Learning by Andrew Ng Stanford online course\\
 \section{Experiments}
 \subsection{"Sprinkler" Example}
 \subsubsection{Problem Context}
+For the first experiment, we use the simple "Continuous Sprinkler" model as described in (Huszar 2017). The latent variables $z_1$ and $z_2$ represent the sprinkler and the rain respectively, and the observation $x$ represents the wetness of the grass.
+\[p(z_1,z_2)\sim \N (0,\sigma^2 I_{2\times 2})\]
+\[p(x|\bm{z})\sim EXP(3+\max(0,z_1)^3+\max(0,z_2)^3)\]
+This problem exhibits "explaining away" (Explaining "Explaining away" Wellman 1993), a pattern of reasoning in which the confirmation of one cause of an effect reduces the need to discuss alternative causes. In this example, despite the two possible causes of the wet grass being independent, when we condition on the observation of wet grass, the causes become dependent, as either cause being significant could lead to wet grass.\\
+\\
+In the experiment, we let $\sigma^2=2$, and consider observations $x=0,5,8,12,50$. To plot the true posterior $p(z|x)$, we simply use a range of equally spaced points from $(z_1,z_2)=[(-5,-5),\dots, (5,5)]$ to form the log prior values and log likelihood values for each observation value, and graph the exponential of the sum of these values. The plots are as shown in Figure (\textbf{need to insert figure}).\\
+\\
+As $x$ increases, the posteriors become increasingly multimodal and unusually shaped. Clearly, a flexible model for the posterior distribution is required, as a typical Gaussian model is too simple here.
+\subsubsection{Network Structure}
 
+\subsubsection{Results}
+nothing works lol
 \subsection{Lotka-Volterra Predator-Prey model}
-\subsection{Autoencoding Variational Bayes (MNIST image generation)}
-Kingma 2013
 \subsubsection{Problem Context}
-Introduce notations, similar to VB but with NN parametrization. Discuss problems with intractability and large dataset, introduce the 3 main things we want to solve.
-\subsubsection{Structure}x)
-Diagram of VAE
-\subsubsection{Variational Bound}
-Take ELBO from VB section but parametrize it with NN, discuss the typical useless Monte Carlo gradient estimator.
-\subsubsection{Algorithm}
-Propose better estimator of lower bound and its derivatives, derive AEVB algorithm.
-\subsubsection{Reparametrization Trick}
-Explain the trick and show changes in structure.
-\subsubsection{Example: Variational Autoencoder (for MNIST? or cats :) or human faces D: )}
-Show pseudocode and diagram for VAE (if different from before) and show output from own VAE code (gonna have to code my own VAE).
+\subsection{Autoencoding Variational Bayes (MNIST image generation)}
+\subsubsection{Problem Context}
 \subsection{no idea lol}
 \end{document}

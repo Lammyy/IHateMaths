@@ -20,8 +20,11 @@ noise=tf.random_normal([noise_dim],mean=0.0,stddev=1.0,dtype=tf.float32)
 swag=tf.random_normal([noise_dim],mean=0.0,stddev=1.0,dtype=tf.float32)
 #noise=np.random.randn(batch_size, noise_dim)
 
-with tf.Session() as sess:
-    sess.run(tf.global_variables_initializer())
-    print(z)
-    x=problikelihood(z)
-    print(x)
+xmin = -5
+xmax = 5
+xrange = np.linspace(xmin,xmax,100)
+x = np.repeat(xrange[:,None],100,axis=1)
+x = np.concatenate([[x.flatten()],[x.T.flatten()]])
+prior_variance = 2
+logprior = -(x**2).sum(axis=0)/2/prior_variance
+print(logprior)

@@ -28,12 +28,8 @@
 \contentsline {section}{\numberline {3}Experiments}{}{section.3}
 \contentsline {subsection}{\numberline {3.1}"Sprinkler" Example}{}{subsection.3.1}
 \contentsline {subsubsection}{\numberline {3.1.1}Problem Context}{}{subsubsection.3.1.1}
+\contentsline {subsubsection}{\numberline {3.1.2}Network Structure}{}{subsubsection.3.1.2}
 \contentsline {subsection}{\numberline {3.2}Lotka-Volterra Predator-Prey model}{}{subsection.3.2}
 \contentsline {subsection}{\numberline {3.3}Autoencoding Variational Bayes (MNIST image generation)}{}{subsection.3.3}
 \contentsline {subsubsection}{\numberline {3.3.1}Problem Context}{}{subsubsection.3.3.1}
-\contentsline {subsubsection}{\numberline {3.3.2}Structure}{}{subsubsection.3.3.2}
-\contentsline {subsubsection}{\numberline {3.3.3}Variational Bound}{}{subsubsection.3.3.3}
-\contentsline {subsubsection}{\numberline {3.3.4}Algorithm}{}{subsubsection.3.3.4}
-\contentsline {subsubsection}{\numberline {3.3.5}Reparametrization Trick}{}{subsubsection.3.3.5}
-\contentsline {subsubsection}{\numberline {3.3.6}Example: Variational Autoencoder (for MNIST? or cats :) or human faces D: )}{}{subsubsection.3.3.6}
 \contentsline {subsection}{\numberline {3.4}no idea lol}{}{subsection.3.4}

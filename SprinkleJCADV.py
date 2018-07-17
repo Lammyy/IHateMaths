@@ -187,10 +187,10 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
 
             plt.subplots(figsize=(20,8))
             #make 5000 noise and 1000 of each x sample
-            N_samples=2000
+            N_samples=1000
             noise=np.random.randn(5*N_samples, noise_dim).astype('float32')
-            x_gen=np.repeat(xgen,2000)
-            x_gen=x_gen.reshape(10000,1)
+            x_gen=np.repeat(xgen,N_samples)
+            x_gen=x_gen.reshape(5000,1)
             #plug into posterior
             z_samples=posterior(x_gen,noise)
             z_samples=tf.reshape(z_samples,[xgen.shape[0], N_samples, 2]).eval()
@@ -251,4 +251,3 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
         plt.xticks([])
         plt.yticks([]);
     plt.show()
-    plt.savefig('Fig %s'.format(i))
