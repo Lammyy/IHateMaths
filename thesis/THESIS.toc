@@ -22,9 +22,11 @@
 \contentsline {subsection}{\numberline {2.2}Neural Networks}{}{subsection.2.2}
 \contentsline {subsubsection}{\numberline {2.2.1}Motivation}{}{subsubsection.2.2.1}
 \contentsline {subsubsection}{\numberline {2.2.2}Neural Network Structure}{}{subsubsection.2.2.2}
-\contentsline {subsubsection}{\numberline {2.2.3}Back-Propagation}{}{subsubsection.2.2.3}
-\contentsline {subsubsection}{\numberline {2.2.4}Weight Initialization}{}{subsubsection.2.2.4}
-\contentsline {subsubsection}{\numberline {2.2.5}References}{}{subsubsection.2.2.5}
+\contentsline {subsubsection}{\numberline {2.2.3}Bias-per-node Representation}{}{subsubsection.2.2.3}
+\contentsline {subsubsection}{\numberline {2.2.4}Optimization}{}{subsubsection.2.2.4}
+\contentsline {subsubsection}{\numberline {2.2.5}Back-propogation}{}{subsubsection.2.2.5}
+\contentsline {subsubsection}{\numberline {2.2.6}Weight Initialization}{}{subsubsection.2.2.6}
+\contentsline {subsubsection}{\numberline {2.2.7}References}{}{subsubsection.2.2.7}
 \contentsline {section}{\numberline {3}Experiments}{}{section.3}
 \contentsline {subsection}{\numberline {3.1}"Sprinkler" Example}{}{subsection.3.1}
 \contentsline {subsubsection}{\numberline {3.1.1}Problem Context}{}{subsubsection.3.1.1}

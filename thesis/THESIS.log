@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  18 JUL 2018 17:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  19 JUL 2018 15:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -998,31 +998,92 @@ een already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.680 \begin{itemize}
-                      [23]pdfTeX warning (ext4): destination with the same iden
-tifier (name{page.}) has been already used, duplicate ignored
+                      [23]
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.694 ...{(2)}=g(\bm{\theta}^{(1)^\top}_1\bm{x})\]
-                                                   [24]pdfTeX warning (ext4): d
-estination with the same identifier (name{page.}) has been already used, duplic
-ate ignored
+l.728 \[
+        x_0=1,\qquad a_0^{(2)}=1\] [24]
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+
+Overfull \hbox (0.97499pt too wide) in paragraph at lines 781--781
+ [][][][]\OT1/cmr/m/n/12 Weighted 
+ []
+
+
+Overfull \hbox (6.52354pt too wide) in paragraph at lines 782--782
+ [][][][]\OT1/cmr/m/n/12 Activation 
+ []
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.717 ...n}}L(\Theta)=\frac1N \Delta_{m,n}^{(j)}\]
-                                                   [25]pdfTeX warning (ext4): d
-estination with the same identifier (name{page.}) has been already used, duplic
-ate ignored
+l.785 \[
+        a_1^{(2)}=g(\Theta^{(1)}_{1,1}x_1+b^{(1)}_1+\Theta^{(1)}_{1,2}x_2+b^...
+[25]
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+
+Underfull \hbox (badness 10000) in paragraph at lines 791--832
+
+ []
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.745 \newpage
-               [26pdfTeX warning (ext4): destination with the same identifier (
+l.832 \newpage
+               [26]
+Underfull \hbox (badness 10000) in paragraph at lines 859--867
+
+ []
+
+
+Overfull \hbox (9.50018pt too wide) in paragraph at lines 859--867
+\OT1/cmr/m/n/12 method of steep-est de-scent. It is clearly a de-scent di-rec-t
+ion as $\OMS/cmsy/m/n/12 ^^@r\OML/cmm/m/it/12 f\OT1/cmr/m/n/12 (\OML/cmm/b/it/1
+2 x[]\OT1/cmr/m/n/12 )[]\OMS/cmsy/m/n/12 r\OML/cmm/m/it/12 f\OT1/cmr/m/n/12 (\O
+ML/cmm/b/it/12 x[]\OT1/cmr/m/n/12 ) = \OMS/cmsy/m/n/12 ^^@jjr\OML/cmm/m/it/12 f
+\OT1/cmr/m/n/12 (\OML/cmm/b/it/12 x[]\OT1/cmr/m/n/12 )\OMS/cmsy/m/n/12 jj[] \OM
+L/cmm/m/it/12 <
+ []
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
+een already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.867 \newpage
+               [27]pdfTeX warning (ext4): destination with the same identifier 
+(name{page.}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.867 \newpage
+               [28]pdfTeX warning (ext4): destination with the same identifier 
+(name{page.}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.908 \newpage
+               [29]pdfTeX warning (ext4): destination with the same identifier 
+(name{page.}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.908 \newpage
+               [30pdfTeX warning (ext4): destination with the same identifier (
 name{algocf.7}) has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.745 \newpage
+l.908 \newpage
               ]
-Underfull \hbox (badness 10000) in paragraph at lines 762--764
+Underfull \hbox (badness 10000) in paragraph at lines 925--927
 
  []
 
@@ -1030,14 +1091,14 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.764 \newpage
-               [27]
-Underfull \hbox (badness 10000) in paragraph at lines 770--776
+l.927 \newpage
+               [31]
+Underfull \hbox (badness 10000) in paragraph at lines 933--939
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 770--776
+Underfull \hbox (badness 10000) in paragraph at lines 933--939
 
  []
 
@@ -1045,25 +1106,25 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.}) has b
 een already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.786 \end{document}
-                     [28]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 786.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 786.
+l.949 \end{document}
+                     [32]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 949.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 949.
  (./THESIS.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 786.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 786.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 949.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 949.
 Package rerunfilecheck Info: File `THESIS.out' has not changed.
-(rerunfilecheck)             Checksum: 140D4C3552B89E1B6A5E48655F036015;2822.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 786.
+(rerunfilecheck)             Checksum: D28F37B04AEB77AB4A51856C745B8B8B;2982.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 949.
  ) 
 Here is how much of TeX's memory you used:
- 19457 strings out of 492990
- 360556 string characters out of 6136334
- 449076 words of memory out of 5000000
- 22595 multiletter control sequences out of 15000+600000
+ 19580 strings out of 492990
+ 362678 string characters out of 6136334
+ 451076 words of memory out of 5000000
+ 22716 multiletter control sequences out of 15000+600000
  13726 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,19n,68p,953b,909s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,19n,68p,953b,911s stack positions out of 5000i,500n,10000p,200000b,80000s
 <c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/tex
 live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx6.pfb><c:/texlive/2017/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2017/texmf-dist
@@ -1081,10 +1142,10 @@ ic/amsfonts/cm/cmsy6.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmsy8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti1
 2.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pf
 b>
-Output written on THESIS.pdf (28 pages, 279042 bytes).
+Output written on THESIS.pdf (32 pages, 292621 bytes).
 PDF statistics:
- 405 PDF objects out of 1000 (max. 8388607)
- 353 compressed objects within 4 object streams
- 67 named destinations out of 1000 (max. 500000)
- 309 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 428 PDF objects out of 1000 (max. 8388607)
+ 372 compressed objects within 4 object streams
+ 69 named destinations out of 1000 (max. 500000)
+ 325 words of extra memory for PDF output out of 10000 (max. 10000000)
 

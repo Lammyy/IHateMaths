@@ -7,9 +7,9 @@ import seaborn as sns
 tf.reset_default_graph()
 #params
 epsilon=0.0000000001
-batch_size=64
-learning_rate_p=0.001
-learning_rate_d=0.001
+batch_size=100
+learning_rate_p=0.0001
+learning_rate_d=0.0003
 z_dim = 2
 noise_dim=3
 gen_hidden_dim1=30
@@ -148,20 +148,20 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
 #with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     #Pre-Train Discriminator
-    for i in range(8000):
+    for i in range(5000):
         z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
         xin=np.repeat(xgen,batch_size)
         xin=xin.reshape(5*batch_size, 1)
         noise=np.random.randn(5*batch_size, noise_dim)
         feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
         _, dl = sess.run([train_disc, disc_loss], feed_dict=feed_dict)
-        if i % 1000 == 0 or i == 1:
+        if i % 1000 == 0:
             print('Step %i: Discriminator Loss: %f' % (i, dl))
     #Training rate 0.001 from 1-100 iterations
-    for j in range(1000):
+    for j in range(10000):
         print('Iteration %i' % (j))
         #Train Discriminator
-        for i in range(1001):
+        for i in range(201):
             #Prior sample N(0,I_2x2)
             z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
             xin=np.repeat(xgen,batch_size)
@@ -169,7 +169,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             noise=np.random.randn(5*batch_size, noise_dim)
             feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
             _, dl = sess.run([train_disc, disc_loss], feed_dict=feed_dict)
-            if i % 1000 == 0 or i == 1:
+            if i % 200 == 0:
                 print('Step %i: Discriminator Loss: %f' % (i, dl))
         #Train Posterior on the 5 values of x specified at the start
         for k in range(1):

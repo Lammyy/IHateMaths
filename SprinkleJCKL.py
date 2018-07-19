@@ -8,8 +8,8 @@ tf.reset_default_graph()
 #params
 epsilon=0.0000001
 batch_size=64
-learning_rate_p=0.0003
-learning_rate_d=0.0003
+learning_rate_p=0.00005
+learning_rate_d=0.00005
 z_dim = 2
 noise_dim=3
 gen_hidden_dim1=30
@@ -111,7 +111,7 @@ def ratiomator(z, x):
     hidden_layer31 = tf.nn.relu(tf.matmul(hidden_layer, weights['ratio_hidden31'])+biases['ratio_hidden31'])
     hidden_layer32 = tf.nn.relu(tf.matmul(hidden_layer31, weights['ratio_hidden32'])+biases['ratio_hidden32'])
     out_layer = tf.matmul(hidden_layer32, weights['ratio_out'])+biases['ratio_out']
-    out_layer = tf.nn.sigmoid(out_layer)
+    out_layer = tf.nn.relu(out_layer)
     return out_layer
 #Build Networks
 #if no NVIDIA CUDA remove this line and unindent following lines
@@ -155,7 +155,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
     for j in range(1000):
         print('Iteration %i' % (j))
         #Train ratiomator
-        for i in range(1001):
+        for i in range(501):
             #Prior sample N(0,I_2x2)
             z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
             xin=np.repeat(xgen,batch_size)
@@ -163,7 +163,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             noise=np.random.randn(5*batch_size, noise_dim)
             feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
             _, dl = sess.run([train_ratio, ratio_loss], feed_dict=feed_dict)
-            if i % 1000 == 0 or i == 1:
+            if i % 500 == 0 or i == 1:
                 print('Step %i: ratiomator Loss: %f' % (i, dl))
         #Train Posterior on the 5 values of x specified at the start
         for k in range(1):
