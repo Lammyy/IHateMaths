@@ -6,17 +6,17 @@ from matplotlib import pylab as plt
 import seaborn as sns
 tf.reset_default_graph()
 #params
-epsilon=0.0000001
-batch_size=64
-learning_rate_p=0.00005
-learning_rate_d=0.00005
+epsilon=0.0000000001
+batch_size=100
+learning_rate_p=0.00001
+learning_rate_d=0.00001
 z_dim = 2
 noise_dim=3
-gen_hidden_dim1=30
-gen_hidden_dim2=60
+gen_hidden_dim1=40
+gen_hidden_dim2=80
 data_dim=1
-ratio_hidden_dim1=30
-ratio_hidden_dim2=60
+ratio_hidden_dim1=40
+ratio_hidden_dim2=80
 #Stuff for making true posterior graph (copied from Huszar)
 xmin = -5
 xmax = 5
@@ -112,6 +112,7 @@ def ratiomator(z, x):
     hidden_layer32 = tf.nn.relu(tf.matmul(hidden_layer31, weights['ratio_hidden32'])+biases['ratio_hidden32'])
     out_layer = tf.matmul(hidden_layer32, weights['ratio_out'])+biases['ratio_out']
     out_layer = tf.nn.relu(out_layer)
+    out_layer = tf.log(out_layer+epsilon)
     return out_layer
 #Build Networks
 #if no NVIDIA CUDA remove this line and unindent following lines
@@ -124,9 +125,9 @@ with tf.device('/gpu:0'):
     ratio_prior = ratiomator(prior_input, xlike)
     ratio_post = ratiomator(post_sample, x_input)
 
-    ratio_loss = -tf.reduce_mean(tf.log(ratio_post+epsilon))+tf.reduce_mean(ratio_prior)
+    ratio_loss = -tf.reduce_mean(ratio_post)+tf.reduce_mean(tf.exp(ratio_prior))
 
-    nelbo=tf.reduce_mean(tf.log(ratio_post+epsilon))
+    nelbo=tf.reduce_mean(ratio_post)
 
     post_vars = [weights['post_hidden11'],weights['post_hidden12'], weights['post_hidden2'], weights['post_hidden31'], weights['post_hidden32'], weights['post_out'],
     biases['post_hidden11'], biases['post_hidden12'], biases['post_hidden2'], biases['post_hidden31'], biases['post_hidden32'], biases['post_out']]
@@ -143,19 +144,19 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
 #with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     #Pre-Train ratiomator
-    for i in range(8000):
+    for i in range(10001):
         z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
         xin=np.repeat(xgen,batch_size)
         xin=xin.reshape(5*batch_size, 1)
         noise=np.random.randn(5*batch_size, noise_dim)
         feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
         _, dl = sess.run([train_ratio, ratio_loss], feed_dict=feed_dict)
-        if i % 1000 == 0 or i == 1:
+        if i % 1000 == 0:
             print('Step %i: ratiomator Loss: %f' % (i, dl))
-    for j in range(1000):
+    for j in range(20001):
         print('Iteration %i' % (j))
         #Train ratiomator
-        for i in range(501):
+        for i in range(201):
             #Prior sample N(0,I_2x2)
             z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
             xin=np.repeat(xgen,batch_size)
@@ -163,7 +164,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             noise=np.random.randn(5*batch_size, noise_dim)
             feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
             _, dl = sess.run([train_ratio, ratio_loss], feed_dict=feed_dict)
-            if i % 500 == 0 or i == 1:
+            if i % 200 == 0:
                 print('Step %i: ratiomator Loss: %f' % (i, dl))
         #Train Posterior on the 5 values of x specified at the start
         for k in range(1):
@@ -175,7 +176,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             #if k % 1000 == 0 or k ==1:
             print('Step %i: NELBO: %f' % (k, nelboo))
 
-        if j % 10 == 0 or j == 1:
+        if j % 100 == 0:
             sns.set_style('whitegrid')
             sns.set_context('poster')
 
@@ -217,10 +218,10 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
 
     plt.subplots(figsize=(20,8))
     #make 5000 noise and 1000 of each x sample
-    N_samples=2000
+    N_samples=1000
     noise=np.random.randn(5*N_samples, noise_dim).astype('float32')
-    x_gen=np.repeat(xgen,2000)
-    x_gen=x_gen.reshape(10000,1)
+    x_gen=np.repeat(xgen,N_samples)
+    x_gen=x_gen.reshape(5*N_samples,1)
     #plug into posterior
     z_samples=posterior(x_gen,noise)
     z_samples=tf.reshape(z_samples,[xgen.shape[0], N_samples, 2]).eval()

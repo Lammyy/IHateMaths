@@ -8,15 +8,15 @@ tf.reset_default_graph()
 #params
 epsilon=0.0000000001
 batch_size=100
-learning_rate_p=0.0001
-learning_rate_d=0.0003
+learning_rate_p=0.00001
+learning_rate_d=0.00001
 z_dim = 2
 noise_dim=3
-gen_hidden_dim1=30
-gen_hidden_dim2=60
+gen_hidden_dim1=40
+gen_hidden_dim2=80
 data_dim=1
-disc_hidden_dim1=30
-disc_hidden_dim2=60
+disc_hidden_dim1=40
+disc_hidden_dim2=80
 #Stuff for making true posterior graph (copied from Huszar)
 xmin = -5
 xmax = 5
@@ -85,9 +85,9 @@ biases = {
     'disc_out': tf.Variable(tf.zeros([1]))
 }
 #likeli = p(x|z)
-def likelihood(z, x, beta_0=3., beta_1=1.):
-    beta = beta_0 + tf.reduce_sum(beta_1*tf.maximum(0.0, z**3), 1)
-    return -tf.log(beta) - x/beta
+#def likelihood(z, x, beta_0=3., beta_1=1.):
+#    beta = beta_0 + tf.reduce_sum(beta_1*tf.maximum(0.0, z**3), 1)
+#    return -tf.log(beta) - x/beta
 
 def problikelihood(z):
     return tf.transpose(tf.random_gamma(shape=[data_dim], alpha=1, beta=1/(3+tf.pow(tf.maximum(0.0,z[:,0]),3)+tf.pow(tf.maximum(0.0,z[:,1]),3))))
@@ -148,7 +148,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
 #with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     #Pre-Train Discriminator
-    for i in range(5000):
+    for i in range(10001):
         z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
         xin=np.repeat(xgen,batch_size)
         xin=xin.reshape(5*batch_size, 1)
@@ -157,11 +157,11 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
         _, dl = sess.run([train_disc, disc_loss], feed_dict=feed_dict)
         if i % 1000 == 0:
             print('Step %i: Discriminator Loss: %f' % (i, dl))
-    #Training rate 0.001 from 1-100 iterations
-    for j in range(10000):
+
+    for j in range(20001):
         print('Iteration %i' % (j))
         #Train Discriminator
-        for i in range(201):
+        for i in range(101):
             #Prior sample N(0,I_2x2)
             z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
             xin=np.repeat(xgen,batch_size)
@@ -169,7 +169,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             noise=np.random.randn(5*batch_size, noise_dim)
             feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
             _, dl = sess.run([train_disc, disc_loss], feed_dict=feed_dict)
-            if i % 200 == 0:
+            if i % 100 == 0:
                 print('Step %i: Discriminator Loss: %f' % (i, dl))
         #Train Posterior on the 5 values of x specified at the start
         for k in range(1):
@@ -181,7 +181,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             #if k % 1000 == 0 or k ==1:
             print('Step %i: NELBO: %f' % (k, nelboo))
 
-        if j % 10 == 0 or j == 1:
+        if j % 100 == 0:
             sns.set_style('whitegrid')
             sns.set_context('poster')
 
@@ -190,7 +190,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             N_samples=1000
             noise=np.random.randn(5*N_samples, noise_dim).astype('float32')
             x_gen=np.repeat(xgen,N_samples)
-            x_gen=x_gen.reshape(5000,1)
+            x_gen=x_gen.reshape(5*N_samples,1)
             #plug into posterior
             z_samples=posterior(x_gen,noise)
             z_samples=tf.reshape(z_samples,[xgen.shape[0], N_samples, 2]).eval()
@@ -223,10 +223,10 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
 
     plt.subplots(figsize=(20,8))
     #make 5000 noise and 1000 of each x sample
-    N_samples=2000
+    N_samples=1000
     noise=np.random.randn(5*N_samples, noise_dim).astype('float32')
-    x_gen=np.repeat(xgen,2000)
-    x_gen=x_gen.reshape(10000,1)
+    x_gen=np.repeat(xgen,N_samples)
+    x_gen=x_gen.reshape(5*N_samples,1)
     #plug into posterior
     z_samples=posterior(x_gen,noise)
     z_samples=tf.reshape(z_samples,[xgen.shape[0], N_samples, 2]).eval()
