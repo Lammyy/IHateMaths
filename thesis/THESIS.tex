@@ -257,10 +257,10 @@ Using this discriminator function, our density ratio expression becomes:
 Overall, the class probability algorithm is (again) a cycle of optimizing the discriminator until convergence by minimizing its Bernoulli loss:
 \[\min_\alpha \mathbb{E}_{q^*(x)q_\phi(z|x)}[-\log D_\alpha(z,x)]+\mathbb{E}_{p(z)p(x|z)}[-\log (1-D_\alpha(z,x))]\]
 and taking an optimization step of the variational posterior:
-\[\min_\phi \mathbb{E}_{q^*(x)q_\phi(z|x)}\frac{D_\alpha(z,x)}{1-D_\alpha(z,x)}.\]
+\[\min_\phi \mathbb{E}_{q^*(x)q_\phi(z|x)}\log\frac{D_\alpha(z,x)}{1-D_\alpha(z,x)}.\]
 Since our posterior is defined as a generative neural network model $\mathcal{G}_\phi (\epsilon;x)$, these optimization objectives become:
 \[\min_\alpha \mathbb{E}_{q^*(x)\pi(\epsilon)}[-\log D_\alpha(\mathcal{G}_\phi(\epsilon;x), x)]+\mathbb{E}_{p(z)p(x|z)}[-\log (1-D_\alpha(z,x))]\]
-\[\min_\phi \mathbb{E}_{q^*(x)\pi(\epsilon)}\frac{D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)}{1-D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)}\]
+\[\min_\phi \mathbb{E}_{q^*(x)\pi(\epsilon)}\log\frac{D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)}{1-D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)}\]
 Note that the prior and likelihood terms don't appear in the ELBO training objective, so they can both be implicit. Another difference with the implicit prior algorithm is that instead of sampling $x$ from the dataset, it is taken from the likelihood, conditional on the $z$ sample.
 \newpage
 \begin{algorithm}
@@ -287,10 +287,29 @@ Note that the prior and likelihood terms don't appear in the ELBO training objec
 	Sample $\{\epsilon^{(i)}\}^B_{i=1}\sim \pi(\epsilon)$\;
 	Sample $\{x^{(i)}_q\}^B_{i=1}\sim q^*(x)$\;
 	\update{$\phi$ by optimization step on}{
-		$\min_\phi \mathbb{E}_{q^*(x)\pi(\epsilon)}\frac{D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)}{1-D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)}$\;
+		$\min_\phi \mathbb{E}_{q^*(x)\pi(\epsilon)}\log\frac{D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)}{1-D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)}$\;
 	}
 }
 \end{algorithm}
+\newpage
+We now derive the optimal discriminator and generator functions. First, we re-iterate the optimization objectives, using the expectations with respect to the joint distributions:
+\[\min_\alpha \mathbb{E}_{q(z,x)}[-\log D_\alpha(z, x)]+\mathbb{E}_{p(z,x)}[-\log (1-D_\alpha(z,x))]\]
+\[\min_\phi \mathbb{E}_{q(z,x)}\log\frac{D_\alpha(z,x)}{1-D_\alpha(z,x)}\]
+Now fixing $\phi$, we derive the optimal form of the discriminator for a fixed generator function. Expanding the expectations, the discriminative loss function becomes:
+\[\int_{(z,x)}-q(z,x)\log D_\alpha(z,x)-p(z,x)\log(1-D_\alpha(z,x))d(z,x)\]
+The minimizer of this function can be found by taking the derivative of the expression inside the integral and equating it to zero:
+\[\frac{d}{d D_\alpha(z,x)}\left(-q(z,x)\log D_\alpha(z,x)-p(z,x)\log (1-D_\alpha (z,x))\right)=0\]
+\[\frac{-q(z,x)}{D_\alpha(z,x)}+\frac{p(z,x)}{1-D_\alpha(z,x)}=0\]
+\[D_\alpha(z,x)(p(z,x)+q(z,x))=q(z,x)\]
+\[D_\alpha^*(z,x)=\frac{q(z,x)}{p(z,x)+q(z,x)}\]
+This is a minimizer as
+\[\frac{d^2}{dD^2_\alpha(z,x)}=\frac{q(z,x)}{(D_\alpha(z,x))^2}+\frac{p(z,x)}{(1-D_\alpha(z,x))^2}>0\]
+We now derive the optimal generator function by substituting the optimal discriminator $D_\alpha^*(z,x)=\frac{q(z,x)}{p(z,x)+q(z,x)}$ into the ELBO objective function, resulting in
+\begin{align*}
+ELBO &= \mathbb{E}_{q(z,x)}\log\frac{q(z,x)}{p(z,x)}\\
+&=KL(q(z,x)||p(z,x))
+\end{align*}
+which is minimized when $q(z,x)=p(z,x)$, or $q^*(x)q_\phi(z|x)=p(x)p(z|x)$.
 \newpage
 \subsection{Divergence Minimisation}
 \subsubsection{Procedure (Again need better heading)}
