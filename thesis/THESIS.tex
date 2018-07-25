@@ -292,6 +292,7 @@ Note that the prior and likelihood terms don't appear in the ELBO training objec
 }
 \end{algorithm}
 \newpage
+\subsubsection{Optimal functions}
 We now derive the optimal discriminator and generator functions. First, we re-iterate the optimization objectives, using the expectations with respect to the joint distributions:
 \[\min_\alpha \mathbb{E}_{q(z,x)}[-\log D_\alpha(z, x)]+\mathbb{E}_{p(z,x)}[-\log (1-D_\alpha(z,x))]\]
 \[\min_\phi \mathbb{E}_{q(z,x)}\log\frac{D_\alpha(z,x)}{1-D_\alpha(z,x)}\]
@@ -309,7 +310,14 @@ We now derive the optimal generator function by substituting the optimal discrim
 ELBO &= \mathbb{E}_{q(z,x)}\log\frac{q(z,x)}{p(z,x)}\\
 &=KL(q(z,x)||p(z,x))
 \end{align*}
-which is minimized when $q(z,x)=p(z,x)$, or $q^*(x)q_\phi(z|x)=p(x)p(z|x)$.
+which is minimized when $q(z,x)=p(z,x)$, or $q^*(x)q_\phi(z|x)=p(x)p(z|x)$. Our optimal generator function therefore has $\phi$ such that
+\[q_\phi(z|x)=\frac{p(x)p(z|x)}{q^*(x)}.\]
+Note that the generator function is affected by the ratio between the true data distribution $p(x)$ and the distribution of our dataset $q^*(x)$. Substituting this into the optimal discriminator expression, we have
+\begin{align*}
+D^*_\alpha(z,x)&=\frac{p(x)p(z|x)}{p(x)p(z|x)+p(x)p(z|x)}\\
+&=\frac{1}{2}
+\end{align*}
+This corresponds to a minimum discriminative loss of $\log 4$ and a minimum ELBO of $0$.
 \newpage
 \subsection{Divergence Minimisation}
 \subsubsection{Procedure (Again need better heading)}
@@ -446,6 +454,31 @@ Again the algorithm involves cycling between optimizing the ratio estimator unti
 	}
 }
 \end{algorithm}
+\newpage
+\subsubsection{Optimal functions}
+Similar to section (CPE optimal functions), we begin deriving the optimal discriminator and generator functions for divergence minimization by re-stating the optimization objectives, including the constant $+1$ term in the ratio loss:
+\[\min_\alpha-\mathbb{E}_{q(z,x)}[\log r_\alpha(z,x)+1]+\mathbb{E}_{p(z,x)}[r_\alpha(z,x)]\]
+\[\min_\phi \mathbb{E}_{q(z,x)}[\log r_\alpha (z,x)]\]
+From the theorem, it is known that the optimal form of the ratio estimator is
+\[r_\alpha(z,x)=\frac{q(z,x)}{p(z,x)}.\]
+Like the previous section, this corresponds to an optimal posterior with $\phi$ such that
+\[q_\phi(z|x)=\frac{p(x)p(z|x)}{q^*(x)}.\]
+Substituting this back into the optimal ratio estimator yields the optimal ratio of
+\[r_\alpha^*(z,x)=1\]
+which corresponds to an optimal ratio loss of $0$ and an optimal generative loss of $0$.
+\subsection{Ratio Error}
+Recall that the objective of the ratio estimator is to form a lower bound of the KL divergence through the formula
+\[KL[q(z,x)||p(z,x)]\geq \sup_\alpha \{\E_{q(z,x)}[1+\log r(z,x)]-\E_{p(z,x)}[r(z,x)]\}\]
+Also recall that for any arbitrary, fixed $\phi$, the optimal ratio estimator takes the form
+\[r_\alpha(z,x)=\frac{q(z,x)}{p(z,x)}\]
+We substitute this into the bound to form an error expression of the KL estimate:
+\begin{align*}
+ERROR&=KL[q(z,x)||p(z,x)]-\E_{q(z,x)}[1+\log r(z,x)]+\E_{p(z,x)}[r(z,x)]\\
+&=KL[q(z,x)||p(z,x)]-\E_{q(z,x)}\left[1+\log \frac{q(z,x)}{p(z,x)}\right]+\E_{p(z,x)}\left[\frac{q(z,x)}{p(z,x)}\right]\\
+&=KL[q(z,x)||p(z,x)]-1-KL[q(z,x)||p(z,x)]+\E_{p(z,x)}\left[\frac{q(z,x)}{p(z,x)}\right]\\
+&=\E_{p(z,x)}\left[\frac{q(z,x)}{p(z,x)}\right]-1
+\end{align*}
+Note that the error of the KL divergence estimation is dependent on the accuracy of the generator whilst in class probability estimation the error is independent of the generator. (which is why this method sucks and no one should ever use it under any circumstances)
 \newpage
 \section{Learning}
 \subsection{Variational Inference}

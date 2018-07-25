@@ -7,10 +7,13 @@
 \contentsline {subsubsection}{\numberline {1.3.1}Procedure (need better heading)}{}{subsubsection.1.3.1}
 \contentsline {subsubsection}{\numberline {1.3.2}Implicit Prior}{}{subsubsection.1.3.2}
 \contentsline {subsubsection}{\numberline {1.3.3}Implicit Likelihood (\& Prior)}{}{subsubsection.1.3.3}
+\contentsline {subsubsection}{\numberline {1.3.4}Optimal functions}{}{subsubsection.1.3.4}
 \contentsline {subsection}{\numberline {1.4}Divergence Minimisation}{}{subsection.1.4}
 \contentsline {subsubsection}{\numberline {1.4.1}Procedure (Again need better heading)}{}{subsubsection.1.4.1}
 \contentsline {subsubsection}{\numberline {1.4.2}Implicit Prior}{}{subsubsection.1.4.2}
 \contentsline {subsubsection}{\numberline {1.4.3}Implicit Likelihood (\& Prior)}{}{subsubsection.1.4.3}
+\contentsline {subsubsection}{\numberline {1.4.4}Optimal functions}{}{subsubsection.1.4.4}
+\contentsline {subsection}{\numberline {1.5}Ratio Error}{}{subsection.1.5}
 \contentsline {section}{\numberline {2}Learning}{}{section.2}
 \contentsline {subsection}{\numberline {2.1}Variational Inference}{}{subsection.2.1}
 \contentsline {subsubsection}{\numberline {2.1.1}Context}{}{subsubsection.2.1.1}
