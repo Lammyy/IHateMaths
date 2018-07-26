@@ -13,7 +13,8 @@
 \contentsline {subsubsection}{\numberline {1.4.2}Implicit Prior}{}{subsubsection.1.4.2}
 \contentsline {subsubsection}{\numberline {1.4.3}Implicit Likelihood (\& Prior)}{}{subsubsection.1.4.3}
 \contentsline {subsubsection}{\numberline {1.4.4}Optimal functions}{}{subsubsection.1.4.4}
-\contentsline {subsection}{\numberline {1.5}Ratio Error}{}{subsection.1.5}
+\contentsline {subsubsection}{\numberline {1.4.5}Ratio Error}{}{subsubsection.1.4.5}
+\contentsline {subsubsection}{\numberline {1.4.6}Alternative Derivation of Class Probability Estimation}{}{subsubsection.1.4.6}
 \contentsline {section}{\numberline {2}Learning}{}{section.2}
 \contentsline {subsection}{\numberline {2.1}Variational Inference}{}{subsection.2.1}
 \contentsline {subsubsection}{\numberline {2.1.1}Context}{}{subsubsection.2.1.1}

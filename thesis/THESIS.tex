@@ -466,7 +466,7 @@ Like the previous section, this corresponds to an optimal posterior with $\phi$ 
 Substituting this back into the optimal ratio estimator yields the optimal ratio of
 \[r_\alpha^*(z,x)=1\]
 which corresponds to an optimal ratio loss of $0$ and an optimal generative loss of $0$.
-\subsection{Ratio Error}
+\subsubsection{Ratio Error}
 Recall that the objective of the ratio estimator is to form a lower bound of the KL divergence through the formula
 \[KL[q(z,x)||p(z,x)]\geq \sup_\alpha \{\E_{q(z,x)}[1+\log r(z,x)]-\E_{p(z,x)}[r(z,x)]\}\]
 Also recall that for any arbitrary, fixed $\phi$, the optimal ratio estimator takes the form
@@ -479,6 +479,20 @@ ERROR&=KL[q(z,x)||p(z,x)]-\E_{q(z,x)}[1+\log r(z,x)]+\E_{p(z,x)}[r(z,x)]\\
 &=\E_{p(z,x)}\left[\frac{q(z,x)}{p(z,x)}\right]-1
 \end{align*}
 Note that the error of the KL divergence estimation is dependent on the accuracy of the generator whilst in class probability estimation the error is independent of the generator. (which is why this method sucks and no one should ever use it under any circumstances)
+\newpage
+\subsubsection{Alternative Derivation of Class Probability Estimation}
+If we apply Theorem 1 to the function $f(u)=u\log u-(u+1)\log (u+1)$, the resulting bi-level optimization problem is equivalent to that of class probability estimation. First, we derive an expression for the divergence:
+\begin{align*}
+D_{CPE}(p||q)&= \E_p\left[\frac{q(u)}{p(u)}\log \left(\frac{q(u)}{p(u)}\right)-\left(\frac{q(u)}{p(u)}+1 \right)\log\left(\frac{q(u)}{p(u)}_1\right)\right]\\
+&= \int_u q(u)\log\left(\frac{q(u)}{p(u)}\right)-(q(u)+p(u))\log\left(\frac{q(u)+p(u)}{p(u)}\right)du\\
+&= \int_u q(u)(\log(q(u))-\log(p(u)))-(q(u)+p(u))\log(q(u)+p(u))+(q(u)+p(u))\log p(u) du\\
+&= \int_u q(u)\log\left(\frac{q(u)}{q(u)+p(u)}\right)+p(u)\log \left(\frac{p(u)}{q(u)+p(u)}\right) du\\
+&= \int_u p(u)\log \left(\frac{2p(u)}{q(u)+p(u)}\right)-p(u)\log 2+q(u)\log \left(\frac{2q(u)}{q(u)+p(u)}\right)-q(u)\log 2 du\\
+&= \int_u p(u)\log \left(\frac{p(u)}{m(u)}-\log 2\right)+q(u)\log \left(\frac{q(u)}{m(u)}-\log 2\right)du\quad \text{ where }m(u)=\frac{q(u)+p(u)}{2}\\
+&= \E_p \left(\log \frac{p(u)}{m(u)}-\log 2\right)+\E_q\left(\log\frac{q(u)}{m(u)}-\log 2\right)\\
+&= KL(p(u)||m(u))+KL(q(u)||m(u))-\log 4\\
+&= 2JS[p(u)||q(u)]-\log 4\\
+\end{align*}
 \newpage
 \section{Learning}
 \subsection{Variational Inference}

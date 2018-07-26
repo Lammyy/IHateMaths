@@ -8,8 +8,8 @@ tf.reset_default_graph()
 #params
 epsilon=0.0000000001
 batch_size=100
-learning_rate_p=0.00001
-learning_rate_d=0.00001
+learning_rate_p=0.0001
+learning_rate_d=0.0001
 z_dim = 2
 noise_dim=3
 gen_hidden_dim1=40
@@ -144,19 +144,19 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
 #with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     #Pre-Train ratiomator
-    for i in range(10001):
+    for i in range(2001):
         z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
         xin=np.repeat(xgen,batch_size)
         xin=xin.reshape(5*batch_size, 1)
         noise=np.random.randn(5*batch_size, noise_dim)
         feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
         _, dl = sess.run([train_ratio, ratio_loss], feed_dict=feed_dict)
-        if i % 1000 == 0:
+        if i % 500 == 0:
             print('Step %i: ratiomator Loss: %f' % (i, dl))
     for j in range(20001):
         print('Iteration %i' % (j))
         #Train ratiomator
-        for i in range(201):
+        for i in range(101):
             #Prior sample N(0,I_2x2)
             z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
             xin=np.repeat(xgen,batch_size)
@@ -164,7 +164,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             noise=np.random.randn(5*batch_size, noise_dim)
             feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
             _, dl = sess.run([train_ratio, ratio_loss], feed_dict=feed_dict)
-            if i % 200 == 0:
+            if i % 100 == 0:
                 print('Step %i: ratiomator Loss: %f' % (i, dl))
         #Train Posterior on the 5 values of x specified at the start
         for k in range(1):
@@ -176,7 +176,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             #if k % 1000 == 0 or k ==1:
             print('Step %i: NELBO: %f' % (k, nelboo))
 
-        if j % 100 == 0:
+        if j % 200 == 0:
             sns.set_style('whitegrid')
             sns.set_context('poster')
 
