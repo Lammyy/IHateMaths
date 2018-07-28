@@ -466,19 +466,20 @@ Like the previous section, this corresponds to an optimal posterior with $\phi$ 
 Substituting this back into the optimal ratio estimator yields the optimal ratio of
 \[r_\alpha^*(z,x)=1\]
 which corresponds to an optimal ratio loss of $0$ and an optimal generative loss of $0$.
-\subsubsection{Ratio Error}
-Recall that the objective of the ratio estimator is to form a lower bound of the KL divergence through the formula
-\[KL[q(z,x)||p(z,x)]\geq \sup_\alpha \{\E_{q(z,x)}[1+\log r(z,x)]-\E_{p(z,x)}[r(z,x)]\}\]
-Also recall that for any arbitrary, fixed $\phi$, the optimal ratio estimator takes the form
-\[r_\alpha(z,x)=\frac{q(z,x)}{p(z,x)}\]
-We substitute this into the bound to form an error expression of the KL estimate:
+%\subsubsection{Ratio Error}
+%Recall that the objective of the ratio estimator is to form a lower bound of the KL divergence through the formula
+%\[KL[q(z,x)||p(z,x)]\geq \sup_\alpha \{\E_{q(z,x)}[1+\log r(z,x)]-\E_{p(z,x)}[r(z,x)]\}\]
+%Also recall that for any arbitrary, fixed $\phi$, the optimal ratio estimator takes the form
+%\[r_\alpha(z,x)=\frac{q(z,x)}{p(z,x)}\]
+Here we show that equality of the theorem is achieved when $r_\alpha(z,x)=\frac{q(z,x)}{p(z,x)}$:
 \begin{align*}
-ERROR&=KL[q(z,x)||p(z,x)]-\E_{q(z,x)}[1+\log r(z,x)]+\E_{p(z,x)}[r(z,x)]\\
-&=KL[q(z,x)||p(z,x)]-\E_{q(z,x)}\left[1+\log \frac{q(z,x)}{p(z,x)}\right]+\E_{p(z,x)}\left[\frac{q(z,x)}{p(z,x)}\right]\\
-&=KL[q(z,x)||p(z,x)]-1-KL[q(z,x)||p(z,x)]+\E_{p(z,x)}\left[\frac{q(z,x)}{p(z,x)}\right]\\
-&=\E_{p(z,x)}\left[\frac{q(z,x)}{p(z,x)}\right]-1
+KL[q(z,x)||p(z,x)]&=\E_{q(z,x)}[1+\log r(z,x)]-\E_{p(z,x)}[r(z,x)]\\
+&=\E_{q(z,x)}\left[1+\log \frac{q(z,x)}{p(z,x)}\right]-\E_{p(z,x)}\left[\frac{q(z,x)}{p(z,x)}\right]\\
+&=1+KL[q(z,x)||p(z,x)]-\E_{p(z,x)}\left[\frac{q(z,x)}{p(z,x)}\right]\\
+&=KL[q(z,x)||p(z,x)]-\E_{p(z,x)}\left[\frac{q(z,x)}{p(z,x)}\right]+1\\
+&=KL[q(z,x)||p(z,x)]-\int_{(z,x)}q(z,x)d(z,x)+1\\
+&=KL[q(z,x)||p(z,x)]
 \end{align*}
-Note that the error of the KL divergence estimation is dependent on the accuracy of the generator whilst in class probability estimation the error is independent of the generator. (which is why this method sucks and no one should ever use it under any circumstances)
 \newpage
 \subsubsection{Alternative Derivation of Class Probability Estimation}
 If we apply Theorem 1 to the function $f(u)=u\log u-(u+1)\log (u+1)$, the resulting bi-level optimization problem is equivalent to that of class probability estimation. First, we derive an expression for the divergence:
@@ -493,6 +494,23 @@ D_{CPE}(p||q)&= \E_p\left[\frac{q(u)}{p(u)}\log \left(\frac{q(u)}{p(u)}\right)-\
 &= KL(p(u)||m(u))+KL(q(u)||m(u))-\log 4\\
 &= 2JS[p(u)||q(u)]-\log 4\\
 \end{align*}
+Recall one of the conditions of $f$ to form an f-divergence is that $f(1)=0$, but in this case, $f(1)=-\log 4$, hence the constant term added to our Jensen-Shannon divergence.\\
+The derivative and convex conjugate of $f(u)=u\log u-(u+1)\log (u+1)$ is
+\[f'(u)=\log \frac{u}{u+1}\qquad f^*(u)=-\log (1-\exp u)\]
+so the convex conjugate of the derivative is simply
+\[f^*(f'(u))=\log (u+1)\]
+Using Theorem 1, we derive the following lower bound for the Jensen-Shannon divergence:
+\begin{align*}
+2JS[p(u)||q(u)]-\log 4&=D_{GAN}(p||q)\\
+&\geq \sup_{\hat{r}\in \mathcal{R}}\{\mathbb{E}_{q(u)}\left[\log \frac{\hat{r}(u)}{\hat{r}(u)+1}\right]-\mathbb{E}_{p(u)}[\log(\hat{r}(u)+1)]\}\\
+&=\sup_{\hat{\mathcal{D}}}\{\E_{q(u)}[\log \mathcal{D}(u)]+\E_{p(u)}[\log(1-\mathcal{D}(u))]\}
+\end{align*}
+where $\mathcal{D}(u)=\frac{\mathcal{R}(u)}{\mathcal{R}(u)+1}$. Equality of the bound is accomplished at the optimal function of
+\begin{align*}
+\mathcal{D}^*(u)&=\frac{\frac{q(u)}{p(u)}}{\frac{q(u)}{p(u)}+1}\\
+&=\frac{q(u)}{q(u)+p(u)}
+\end{align*}
+which is the optimal discriminator of class probability estimation. Thus, our previous formulation of class probability estimation by minimizing the Bernoulli loss of a discriminator function is the same as maximizing the lower bound of a Jensen-Shannon divergence between the two distributions, in terms of a "discriminator" function.
 \newpage
 \section{Learning}
 \subsection{Variational Inference}
