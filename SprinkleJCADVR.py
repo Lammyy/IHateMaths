@@ -111,7 +111,8 @@ def discriminator(z, x):
     hidden_layer31 = tf.nn.relu(tf.matmul(hidden_layer, weights['disc_hidden31'])+biases['disc_hidden31'])
     hidden_layer32 = tf.nn.relu(tf.matmul(hidden_layer31, weights['disc_hidden32'])+biases['disc_hidden32'])
     out_layer = tf.matmul(hidden_layer32, weights['disc_out'])+biases['disc_out']
-    out_layer = tf.nn.sigmoid(out_layer)
+    out_layer = tf.nn.relu(out_layer)
+   #out_layer = tf.log(out_layer+epsilon)
     return out_layer
 #Build Networks
 #if no NVIDIA CUDA remove this line and unindent following lines
@@ -129,9 +130,9 @@ with tf.device('/gpu:0'):
     disc_prior = discriminator(prior_input, xlike)
     disc_post = discriminator(post_sample, x_input)
 
-    disc_loss = -tf.reduce_mean(tf.log(disc_post+epsilon))-tf.reduce_mean(tf.log(1.0-disc_prior+epsilon))
+    disc_loss = tf.reduce_mean(tf.log(1+disc_post)-tf.log(disc_post+epsilon))+tf.reduce_mean(tf.log(disc_prior+1))
 
-    nelbo=tf.reduce_mean(tf.log(tf.divide(disc_post+epsilon,1-disc_post+epsilon)))
+    nelbo=tf.reduce_mean(tf.log(disc_post+epsilon))
 
     post_vars = [weights['post_hidden11'],weights['post_hidden12'], weights['post_hidden2'], weights['post_hidden31'], weights['post_hidden32'], weights['post_out'],
     biases['post_hidden11'], biases['post_hidden12'], biases['post_hidden2'], biases['post_hidden31'], biases['post_hidden32'], biases['post_out']]
@@ -148,7 +149,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
 #with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     #Pre-Train Discriminator
-    for i in range(1001):
+    for i in range(5001):
         z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
         xin=np.repeat(xgen,batch_size)
         xin=xin.reshape(5*batch_size, 1)
@@ -214,7 +215,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
                 plt.ylim([xmin,xmax])
                 plt.xticks([])
                 plt.yticks([]);
-            plt.savefig('FiguresJCADV\Fig %i'%(j))
+            plt.savefig('FiguresJCADVR\Fig %i'%(j))
             plt.close()
 
 #Final plot thing
@@ -251,4 +252,3 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
         plt.xticks([])
         plt.yticks([]);
     plt.show()
-    
