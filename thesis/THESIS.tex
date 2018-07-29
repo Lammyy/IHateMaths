@@ -1,7 +1,7 @@
 % This goes at the from of the file - you can select different things here like 12pt, 11pt, paper size, double sided etc.
 
 \documentclass[a4paper,12pt]{article}
-
+\linespread{1.2}
 % Packages for different settings - there are many of these you can access by googling (item you want and latex).
 
 \usepackage{amsmath} % to create matrices, you should use this package
@@ -123,6 +123,521 @@ In machine learning, particularly for high dimensional applications such as imag
 \item Evaluation of the posterior density $p_\theta(z|x) = \frac{p(z)p(x|z)}{p(x)} = \frac{p(x|z)p(z)}{\int_z p(x,z)dz}$, so we can encode our data $x$ in an efficient representation $z$
 \item Marginal inference of $x$ ie. evaluating $p(x)$, so it can be used as a prior for other tasks
 \end{enumerate}
+\newpage
+\section{Learning}
+\subsection{Variational Inference}
+\subsubsection{Context}
+In Bayesian statistics, a common problem is to estimate posterior densities, so that we may perform inference to determine an unknown parameter. Consider a set of unknown, latent variables $\textbf{Z}=\{z_i\}^M_{i=1}$ and a dataset of known variables $\textbf{X}=\{x_i\}^N_{i=1}$. These sets have a joint density of $P(\textbf{Z},\textbf{X})$. In the Bayesian framework, inference is often performed on the posterior density (the distribution of the parameters $\textbf{Z}$ after the data $\textbf{X}$ is observed)
+$P(\textbf{Z}|\textbf{X})$, which, after applying Bayes' theorem, can be written as:
+\begin{equation*}P(\textbf{Z}|\textbf{X})=\frac{P(\textbf{Z})P(\textbf{X}|\textbf{Z})}{P(\textbf{X})}= \frac{P(\textbf{Z})P(\textbf{X}|\textbf{Z})}{\int_\mathcal{Z}P(\textbf{Z},\textbf{X})d\textbf{Z}}\end{equation*}
+where
+\begin{itemize}
+\item $P(\textbf{Z})$ is the prior distribution: the initial distribution of $\textbf{Z}$ before the data $\textbf{X}$ is observed. This can be initialised to represent our initial beliefs, or it can be parametrised randomly,
+\item $P(\textbf{X}|\textbf{Z})$ is the likelihood: the distribution of data $\textbf{X}$ conditioned on the parameters $\textbf{Z}$,
+\item $P(\textbf{X})=\int_\mathcal{Z}P(\textbf{Z},\textbf{X})d\textbf{Z}$ is the marginal likelihood, or the evidence: the density of the data averaged across all possible parameter values.
+\end{itemize}
+If the evidence integral $P(\textbf{X})=\int_\mathcal{Z}P(\textbf{Z},\textbf{X})d\textbf{Z}$ is impossible or difficult to compute (possibly because it is unavailable in closed form or the dimensionality is too high), then we are unable to evaluate the posterior density. Traditionally, MCMC(Markov Chain Monte Carlo) methods overcome this obstacle by constructing a Markov chain that converges to the stationary distribution $P(\textbf{Z}|\textbf{X})$, then sampling from the chain to create an empirical estimate for the posterior distribution. However, these methods rely on the speed of convergence, which can be slow for large datasets or complex models. When faced with these issues or when desiring a faster computation, one may instead apply variational inference, an alternative approach to density estimation.
+\subsubsection{Introduction to Variational Inference}
+Variational inference chooses another distribution $Q(\textbf{Z})$ from a select family of variational distributions (approximate densities) $\mathcal{Q}$ to serve as an approximation to $P(\textbf{Z}|\textbf{X})$, and then minimizes the divergence between the two distributions in an optimization problem:
+\begin{equation}
+Q^*(\textbf{Z})=\argmin_{Q(\textbf{Z})\in \mathcal{Q}}D(Q(\textbf{Z})||P(\textbf{Z}|\textbf{X}))
+\end{equation} where $D$ denotes an f-divergence (a measure of how divergent two probability distributions are, it is minimized if $Q=P$). This results in an analytical approximation to the posterior density. Additionally, a lower bound for the marginal likelihood of the dataset is derived, which can be used as a model selection criterion. Due to the stochastic nature of the optimization, variational inference methods can be much faster than MCMC, but the solution is only locally optimal as there is no guarantee of global convergence.
+\subsubsection{Derivation of the ELBO}
+The most common f-divergence used in variational inference is the KL(Kullback-Leibler) divergence, defined as the expected logarithmic difference between two distrbutions $Q$ and $P$ with respect to $Q$:
+\begin{equation*}
+KL(Q||P)=\int_{-\infty}^\infty Q(x)\log \frac{Q(x)}{P(x)}dx=\mathbb{E}_{Q(x)}\left[\log\frac{Q(x)}{P(x)}\right].
+\end{equation*}
+Note that the KL divergence is not symmetric. We use the reverse KL divergence instead of the forward KL divergence $KL(P||Q)$ because it leads to an expectation maximization algorithm as opposed to an expectation propagation algorithm.\\
+Using this expression, we can rewrite equation (1) as:
+\begin{align*}
+Q^*(\textbf{Z})&=\argmin_{Q(\textbf{Z})\in \mathcal{Q}}KL(Q(\textbf{Z})||P(\textbf{Z}|\textbf{X}))\\
+&= \argmin_{Q(\textbf{Z})\in \mathcal{Q}} \mathbb{E}_{Q(\textbf{Z})}[\log Q(\textbf{Z})-\log P(\textbf{Z}|\textbf{X})]\\
+&= \argmin_{Q(\textbf{Z})\in \mathcal{Q}} \mathbb{E}_{Q(\textbf{Z})}\left[\log Q(\textbf{Z})-\log\frac{P(\textbf{X}|\textbf{Z})P(\textbf{Z})}{P(\textbf{X})}\right]\\
+&= \argmin_{Q(\textbf{Z})\in \mathcal{Q}} \left(\mathbb{E}_{Q(\textbf{Z})}[\log Q(\textbf{Z})-\log P(\textbf{X}|\textbf{Z})-\log P(\textbf{Z})]+\log P(\textbf{X})\right).
+\end{align*}
+Note in the last line $\mathbb{E}_{Q(\textbf{Z})}[P(\textbf{X})]=P(\textbf{X})$ as it is not dependent on $Q(\textbf{Z})$. Also note that the KL divergence is dependent on $P(\textbf{X})$, which we have determined to be intractable, so this optimization problem cannot be solved in this form. This issue is resolved by rearranging the KL divergence expression as follows:
+\begin{align}
+KL(Q(\textbf{Z})||P(\textbf{Z}|\textbf{X}))&=\mathbb{E}_{Q(\textbf{Z})}[\log Q(\textbf{Z})-\log P(\textbf{X}|\textbf{Z})-\log P(\textbf{Z})]+\log P(\textbf{X}) \nonumber \\
+\log P(\textbf{X})-KL(Q(\textbf{Z})||P(\textbf{Z}|\textbf{X}))&=-\mathbb{E}_{Q(\textbf{Z})}[\log Q(\textbf{Z})-\log P(\textbf{X}|\textbf{Z})-\log P(\textbf{Z})]\nonumber \\
+&=\mathbb{E}_{Q(\textbf{Z})}[\log P(\textbf{X}|\textbf{Z})]-\mathbb{E}_{Q(\textbf{Z})}[\log Q(\textbf{Z})-\log P(\textbf{Z})]\nonumber \\
+&=\mathbb{E}_{Q(\textbf{Z})}[\log P(\textbf{X}|\textbf{Z})]-KL(Q(\textbf{Z})||P(\textbf{Z})).
+\end{align}
+We refer to $\log P(\textbf{X})-KL(Q(\textbf{Z})||P(\textbf{Z}|\textbf{X}))$ as $ELBO(Q)$ (evidence lower bound), as it is equal to the marginal probability of the data subtracted by a constant error term. This error term $KL(Q(\textbf{Z})||P(\textbf{Z}|\textbf{X}))$ becomes 0 when $Q(\textbf{Z})=P(\textbf{Z}|\textbf{X})$, maximizing the ELBO. Note that since $P(\textbf{X})$ is constant, maximizing the $ELBO$ is equal to minimizing the KL divergence between $Q(\textbf{Z})$ and $P(\textbf{Z}|\textbf{X})$, and that the expression on line (2) is entirely computable. We can therefore rewrite our optimization problem from equation (1) as:
+\begin{align*}
+Q^*(\textbf{Z})&=\argmin_{Q(\textbf{Z})\in \mathcal{Q}}D(Q(\textbf{Z})||P(\textbf{Z}|\textbf{X}))\\
+&= \argmax_{Q(\textbf{Z})\in \mathcal{Q}} ELBO(Q)\\
+&= \argmax_{Q(\textbf{Z})\in \mathcal{Q}} \left(\mathbb{E}_{Q(\textbf{Z})}[\log P(\textbf{X}|\textbf{Z})]-KL(Q(\textbf{Z})||P(\textbf{Z}))\right).
+\end{align*}
+\subsubsection{Mean-Field Variational Family}
+The family of variational distributions $\mathcal{Q}$ is typically a 'mean-field variational family', in which the distribution $Q(\textbf{Z})$ factorizes over the latent variables $\{z_i\}^M_{i=1}$:
+\begin{equation}
+Q(\textbf{Z})=\prod^M_{i=1}q_i(z_i).
+\end{equation}
+The individual factors $q_i(z_i)$ can take any form. We want to choose these factors so that $ELBO(Q)$ is maximized. To derive an expression for the optimal factor $q_i^*(z_i)$, we substitute equation (3) into the $ELBO$, factor out a specific $q_j(z_j)$ and equate the functional derivative of the resulting Lagrangian equation with 0. Firstly, we express $ELBO(Q)$ in an integral form as follows:
+\begin{align*}
+ELBO(Q)&= \mathbb{E}_{Q(Z)}[\log P(\textbf{X}|\textbf{Z})]-KL(Q(\textbf{Z})||P(\textbf{Z}))\\
+&= \mathbb{E}_{Q(Z)}[\log P(\textbf{X}|\textbf{Z})+\log P(\textbf{Z})-\log Q(\textbf{Z})]\\
+&= \mathbb{E}_{Q(Z)}[\log P(\textbf{X}, \textbf{Z})-\log Q(\textbf{Z})]\\
+&= \int_{\mathcal{Z}}Q(\textbf{Z})(\log P(\textbf{X},\textbf{Z})-\log Q(\textbf{Z}))d\textbf{Z}.
+\end{align*}
+Substituting $Q(\textbf{Z})=\prod^M_{i=1}q_i(z_i)$ and factoring out $q_j(z_j)$ yields:
+\begin{align}
+ELBO(Q)&= \int_\mathcal{Z}\left[\prod^M_{i=1}q_i(z_i)\right]\left(\log P(\textbf{X},\textbf{Z})-\sum_{i=1}^M\log q_i(z_i)\right)d\textbf{Z}\nonumber\\
+&= \int_\mathcal{z_j}q_j(z_j)\left(\int_\mathcal{z_{-j}}\log P(\textbf{X},\textbf{Z})\prod_{i\neq j}q_i(z_i)d\textbf{z}_{-j} \right) dz_j\nonumber\\
+&\quad -\int_{\mathcal{z_j}}q_j(z_j)\left(\int_{\mathcal{z}_{-j}}\left[\prod_{i\neq j}q_i(z_i)\right]\sum_{i=1}^M q_i(z_i)d\textbf{z}_{-j}\right)dz_j\nonumber\\
+&= \int_{\mathcal{z_j}}q_j(z_j)\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]dz_j-\int_{\mathcal{z_j}}q_j(z_j)\log q_j(z_j)\left(\int_{\mathcal{z}_{-j}}\prod_{i\neq j}q_i(z_i)dz_{-j}\right) dz_j\nonumber\\
+&\quad -\int_{\mathcal{z_j}}q_j(z_j)\left(\int_{\mathcal{z}_{-j}}\left[\prod_{i\neq j}q_i(z_i)\right]\sum_{i\neq j}q_i(z_i)d{\textbf{z}_{-j}}\right)dz_j\nonumber\\
+&= \int_\mathcal{z_j}q_j(z_j)\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]dz_j-\int_\mathcal{z_j}q_j(z_j)\log q_j(z_j)dz_j\nonumber\\
+&\quad -\int_{\mathcal{z}_{-j}}\left[\prod_{i\neq j}q_i(z_i)\right]\sum_{i\neq j}q_i(z_i)d{\textbf{z}_{-j}}
+\\&= \int_\mathcal{z_j}q_j(z_j)\left(\mathbb{E}_{\mathcal{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]-\log q_j(z_j)\right)dz_j+\text{const}.
+\end{align}
+The term in line (4) becomes a constant as it does not depend on $q_j(z_j)$. Now our Lagrangian equation with the constraint that $q_i(z_i)$ are probability density functions is:
+\begin{equation*}
+ELBO(Q)-\sum^M_{i=1}\lambda_i\int_\mathcal{z_i}q_i(z_i)dz_i=0
+\end{equation*}
+or using our expression for $ELBO(Q)$ in line (5),
+\begin{equation}
+\int_\mathcal{z_j}q_j(z_j)\left(\mathbb{E}_{\mathcal{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]-\log q_j(z_j)\right)dz_j-\sum^M_{i=1}\lambda_i\int_\mathcal{z_i}q_i(z_i)dz_i+\text{const}=0.
+\end{equation}
+Using the Euler-Lagrange equation (need to put this in), we then take the functional derivative of (6) with respect to $q_j(z_j)$ (in this case, the partial derivative with respect to $q_j(z_j)$ of the expression inside the integral):
+\begin{align}
+\frac{\partial ELBO(q)}{\partial q_j(z_j)}&= \frac{\partial}{\partial q_j(z_j)}\left[q_j(z_j)\left(\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]-\log q_j(z_j)\right)-\lambda_jq_j(z_j)\right]\nonumber
+\\&= \mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]-\log q_j(z_j)-1-\lambda_j
+\end{align}
+Equating expression (7) to 0 and letting $1+\lambda_j$ be a constant (as it is independent of $z$), we have:
+\begin{align*}
+\log q_j^*(z_j)&= \mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]-\text{const}\\
+q_j^*(z_j)&=\frac{e^{\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]}}{\text{const}}\\
+&= \frac{e^{\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]}}{\int e^{\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]}dz_j}.
+\end{align*}
+The normalization constant on the denominator can be easily derived by observing $q^*_j(z_j)$ as a density. Lastly, we derive a simpler expression of $q^*_j(z_j)$ by observing that terms independent of $z_j$ can be treated as a constant:
+\begin{align}
+q^*_j(z_j)&\propto \exp\left(\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]\right)\nonumber\\
+&\propto \exp\left(\mathbb{E}_{\textbf{z}_{-j}}[\log P(z_j|\textbf{z}_{-j},\textbf{X})]\right).
+\end{align}
+This expression can be used in an expectation-maximization algorithm, in which the $q^*_j(z_j)$ is evaluated and iterated from $j=1\dots M$. This particular algorithm is called coordinate ascent variational inference (CAVI) (Algorithm 1):\\
+\\
+\begin{algorithm}[H]
+\caption{Coordinate Ascent Variational Inference (CAVI)}
+\KwData{Dataset $\textbf{X}$ and Model P($\textbf{X},\textbf{Z}$)}
+\KwResult{Approximate density $Q(\textbf{Z})=\prod^M_{i=1}q_i(z_i)$}
+\BlankLine
+\Begin{
+Initialize random variational factors $q_j(z_j)$\;
+\While{ELBO(Q) has not converged}{
+
+	\For{$j=1$ \KwTo $m$}{
+	Set $q_j(z_j)\propto \exp(\mathbb{E}[\log P(z_j|\textbf{z}_{-j},\textbf{X})])$\;
+	}
+	Calculate $ELBO(Q)=\mathbb{E}[\log P(\textbf{Z},\textbf{X})]-\mathbb{E}[\log Q(\textbf{Z})]$\;
+}
+Return $Q(\textbf{Z})$\;
+}
+\end{algorithm}
+\subsubsection{Example: Bayesian mixture of Gaussians}
+To illustrate the variational inference approach, we will use the Bayesian mixture of Gaussians example from (Blei, 2018/16 idk).\\
+Consider the hierarchical model
+\begin{align*}
+\mu_k&\sim N(0,\sigma^2), &&k=1,\dots,K,\\
+c_i&\sim \text{Categorical}\left(\frac{1}{K},\dots,\frac{1}{K}\right), &&i=1,\dots,n,\\
+x_i|c_i,\bm{\mu}&\sim N(c^\top_i\bm{\mu},1), &&i=1,\dots,n.
+\end{align*}
+This is a Bayesian mixture of univariate Gaussian random variables with unit variance. In this model, we draw $K$ $\mu_k$ variables from a prior Gaussian distribution $N(0,\sigma^2)$ ($\sigma^2$ is a hyperparameter), forming the vector $\bm{\mu}=(\mu_1,\dots,\mu_K)^\top$. We then generate an indicator vector $c_i$ of length $K$ from a prior categorical distribution. This vector has zeros for every element except for one element, where it is a $1$. Each element has equal probability $1/K$ of being the element that contains the $1$. The transpose of this $c_i$ is then multiplied by $\bm{\mu}$, essentially choosing one of the $\bm{\mu}$ elements at random. We then draw $x_i$ from the resulting $N(c^\top_i\bm{\mu},1)$.\\
+Here, our latent variables are $\textbf{z}=\{\textbf{c},\bm{\mu}\}$. Assuming $n$ samples, our joint density is
+\begin{equation}
+p(\bm{\mu},\textbf{c},\textbf{x})=p(\bm{\mu})\prod^n_{i=1}p(c_i)p(x_i|c_i, \bm{\mu}).\end{equation}
+From this, we derive the marginal likelihood
+\[p(\textbf{x})=\int p(\bm{\mu})\prod^n_{i=1}\sum_{c_i}p(c_i)p(x_i|c_i,\bm{\mu})d\bm{\mu}.\]
+This integral is intractable, as the time complexity of evaluating it is $\mathcal{O}(K^n)$, which is exponential in $K$. To evaluate the posterior distribution over the latent variables $p(\bm{\mu},\textbf{c}|\textbf{x})$, we would have to apply variational inference, approximating it with a variational distribution $q(\bm{\mu},\textbf{c})$. We will assume this distribution follows the mean-field variational family:
+\[q(\bm{\mu},\textbf{c})=\prod^K_{k=1}q(\mu_k;m_k,s^2_k)\prod^n_{i=1}q(c_i;\bm{\phi_i}).\]
+In this distribution, we have $K$ Gaussian factors with mean $\mu_k$ and variance $s^2_k$, and $n$ categorical factors with index probabilities defined by the vector $\bm{\phi_i}$, such that
+\begin{align*}
+\mu_k&\sim N(m_k,s^2_k), &&k=1,\dots,K,\\
+x_i&\sim \text{Categorical}(\bm{\phi_i}), &&i=1,\dots,n.
+\end{align*}
+Using this and equation (9), we can derive the evidence lower bound as a function of the variational parameters:
+\begin{align*}
+ELBO(\textbf{m},\textbf{s}^2,\bm{\phi})&=\mathbb{E}[\log p(\textbf{z},\textbf{x})]-\mathbb{E}[\log q(\textbf{z})]\\
+&=\mathbb{E}[\log p(\bm{\mu,c},\textbf{x})]-\mathbb{E}[\log q(\bm{\mu,c})]\\
+&=\sum^K_{i=1}\mathbb{E}[\log p(\mu_k); m_k,s^2_k]+\sum^n_{i=1}\left(\mathbb{E}[\log p(c_i);\bm{\phi}_i]+\mathbb{E}[\log p(x_i|c_i,\bm{\mu});\bm{\phi}_i,\textbf{m},\textbf{s}^2]\right)\\
+&\quad -\sum^K_{k=1}\mathbb{E}[\log q(\mu_k;m_k,s^2_k)]-\sum^n_{i=1}\mathbb{E}[\log q(c_i;\bm{\phi}_i)]
+\end{align*}
+From equation (8), we derive the optimal categorical factor by only considering terms from the true distribution $p(.)$ dependent on $c_i$:
+\begin{equation}q^*(c_i;\bm{\phi}_i)\propto \exp\left(\log p(c_i)+\mathbb{E}[\log p(x_i|c_i,\bm{\mu});\textbf{m},\textbf{s}^2]\right).\end{equation}
+Now since $c_i$ is an indicator vector,
+\[p(x_i|c_i,\bm{\mu})=\prod^K_{k=1}p(x_i|\mu_k)^{c_{ik}}.\]
+We can now evaluate the second term of equation (10):
+\begin{align*}
+\mathbb{E}\left([\log p(x_i|c_i,\bm{\mu});\textbf{m},\textbf{s}^2]\right)&=\sum_{k=1}^K c_{ik}\mathbb{E}[\log p(x_i|\mu_k);m_k,s^2_k]\\
+&=\sum_{k=1}^K c_{ik}\mathbb{E}[-(x_i-\mu_k)^2/2;m_k,s^2_k]+\text{const}\\
+&=\sum_{k=1}^Kc_{ik}\left(\mathbb{E}[\mu_k;m_k,s^2_k]x_i-\mathbb{E}[\mu^2_k;m_k,s^2_k]/2\right)+\text{const}.
+\end{align*}
+In each line, terms constant with respect to $c_{ik}$ have been taken out of the expression. Our optimal categorical factor becomes
+\[q^*(c_i;\bm{\phi}_i)\propto \exp \left(\log p(c_i)+\sum_{k=1}^Kc_{ik}\left(\mathbb{E}[\mu_k;m_k,s^2_k]x_i-\mathbb{E}[\mu^2_k;m_k,s^2_k]/2\right)\right).\]
+By proportionality, we then have the variational update
+\[\phi_{ik}\propto \exp\left(\mathbb{E}[\mu_k;m_k,s^2_k]x_i-\mathbb{E}[\mu^2_k;m_k,s^2_k]/2\right).\]
+Now we find the variational density of the $k$th mixture component, again using equation (8) with the ELBO and ignoring terms independent of $p(.)$ and $\mu_k$:
+\[q(\mu_k;m_k,s^2_k)\propto \exp \left(\log p(\mu_k)+\sum^n_{i=1}\mathbb{E}[\log p(x_i|c_i,\bm{\mu});\phi_i, \textbf{m}_{-k},\textbf{s}^2_{-k}]\right).\]
+The log of this density is
+\begin{align*}
+\log q(\mu_k)&=\log p(\mu_k)+\sum_i^n \mathbb{E}[\log p(x_i|c_i,\bm{\mu});\phi_i,\textbf{m}_{-k},\textbf{s}^2_{-k}]+\text{const}\\
+&= \log p(\mu_k)+\sum_{i=1}^n\mathbb{E}[c_{ik}\log p(x_i|\mu_k);\phi_i]+\text{const}\\
+&= -\frac{\mu^2_k}{2\sigma^2}+\sum^n_{i=1}\mathbb{E}[c_{ik};\phi_i]\log p(x_i|\mu_k)+\text{const}\\
+&= -\frac{\mu^2_k}{2\sigma^2}+\sum^n_{i=1}\phi_{ik}\frac{-(x_i-\mu_k)^2}{2}+\text{const}\\
+&= -\frac{\mu^2_k}{2\sigma^2}+\sum^n_{i=1} \phi_{ik}x_i\mu_k-\frac{\phi_{ik}\mu^2_k}{2}+\text{const}\\
+&= \mu_k\left(\sum^n_{i=1}\phi_{ik}x_i\right)-\mu_k^2\left(\frac{1}{2\sigma^2}+\frac{\sum^n_{i=1}\phi_{ik}}{2}\right)+\text{const}\\
+&= -\frac{1}{2}\left(\frac{1}{\sigma^2}+\sum^n_{i=1}\phi_{ik}\right)\left(\mu_k^2-\frac{2\sum^n_{i=1}\phi_{ik}x_i}{1/\sigma^2+\sum^n_{i=1}\phi_{ik}}\mu_k\right)+\text{const}
+\end{align*}
+The density is therefore
+\[q(\mu_k)\propto \sqrt{\frac{1/\sigma^2+\sum^n_{i=1}\phi_{ik}}{2\pi}}\exp\left(-\frac{1}{2}\left(\frac{1}{\sigma^2}+\sum^n_{i=1}\phi_{ik}\right) \left(\mu_k-\frac{\sum^n_{i=1}\phi_{ik}x_i}{1/\sigma^2+\sum^n_{i=1}\phi_{ik}}\right)^2\right)\]
+It can be seen that $q(\mu_k)$ is a Gaussian distribution, so our variational updates for $m_k$ and $s^2_k$ are its mean and variance:
+\[m_k=\frac{\sum^n_{i=1}\phi_{ik}x_i}{1/\sigma^2+\sum^n_{i=1}\phi_{ik}}, \qquad s^2_k=\frac{1}{1/\sigma^2+\sum^n_{i=1}\phi_{ik}}.\]
+We can now formulate the CAVI algorithm (Algorithm 2), which simply iterates the cluster assignment probabilities $\phi_{ik}$ and the variational density parameters $m_k$ and $s^2_k$ until the ELBO converges.
+\begin{algorithm}
+\caption{CAVI Algorithm for Bayesian mixture of Gaussians}
+\KwData{Data $\textbf{x}$, Number of Gaussian components $K$, Hyperparameter value $\sigma^2$}
+\KwResult{Optimal variational factors $q(\mu_k;m_k,s^2_k)$ and $q(c_i;\bm{\phi_i)}$}
+\BlankLine
+\Begin{
+Randomly initialize parameters $\textbf{m}, \textbf{s}^2$ and $\bm{\phi}$\;
+\While{ELBO has not converged}{
+	\For{$i=1$ \KwTo $n$}{
+		Set $\phi_{ik}\propto\exp\left(\mathbb{E}[\mu_k;m_k,s^2_k]x_i-\mathbb{E}			[\mu^2_k;m_k,s^2_k]/2\right)$\;
+	}
+	\For{$k=1$ \KwTo $K$}{
+		Set $m_k=\frac{\sum_i\phi_{ik}x_i}{1/ \sigma^2+\sum_i\phi_{ik}}$\;
+		Set $s^2_k=\frac{1}{1/ \sigma^2+\sum_i \phi_{ik}}$\;
+	}
+	Compute $ELBO(\textbf{m},\textbf{s}^2,\bm{\phi})$\;
+}
+Return $q(\textbf{m},\textbf{s}^2,\bm{\phi})$\;
+}
+\end{algorithm}
+\subsubsection{References}
+To be organised properly and moved to the end later:\\
+$https://en.wikipedia.org/wiki/Variational_Bayesian_methods$ \\
+http://bjlkeng.github.io/posts/variational-bayes-and-the-mean-field-approximation/ \\
+https://arxiv.org/pdf/1601.00670.pdf \\
+Pattern recognition and machine learning by Bishop (2006) pages 461-dunno \\
+https://www.cs.cmu.edu/~epxing/Class/10708-17/notes-17/10708-scribe-lecture13.pdf \\
+http://dept.stat.lsa.umich.edu/~xuanlong/Papers/Nguyen-Wainwright-Jordan-10.pdf\\
+\newpage
+\subsection{Neural Networks}
+\subsubsection{Motivation}
+Originally, neural networks were an attempt creating an algorithm that mimics the human brain's method of solving problems. The first machines using a neural network structure were created in the 1950s, and they were used widely from the 1980s onwards, as computational power became sufficient for most applications at the time.\\
+\\
+One key feature of the brain structure is the capability for the neurons to adapt to suit any purpose. Neuroscientists have conducted experiments on animals where they rewired the optic nerve from the eye to the auditory cortex. They found that the auditory cortex eventually adapted to process the visual signals, and the animals were able to perform tasks requiring sight. This experiment can be repeated for almost any input sensor and the neurons will adjust accordingly to process the signals in a useful manner.\\
+\\
+It can be deduced that each neuron has a similar structure, regardless of its location in the brain, in which inputs in the form of electrical signals are changed in some way and outputted to other neurons. Furthermore, a network of neurons is capable of processing almost any input electrical signal in almost any way. These are the core principles behind neural networks.
+\subsubsection{Neural Network Structure}
+The primary goal of a neural network is to approximate some function $f^*(\textbf{x})$ using a mapping with parameters $\bm{\theta}$ from the input $\textbf{x}$ to the output $\textbf{y}$: $\textbf{y}=\textbf{f}_{\bm{\theta}}(\textbf{x})$. In fact, it is known that neural networks can approximate any function (universal approximation theorem). For example, a typical regression problem of estimating housing prices would have the network inputting the values of certain predictors such as size (continuous) and type of building (categorical), and outputting the price. Another example is the classification problem of recognizing handwritten digits (0-9) in a black and white image. There would be many inputs corresponding to the value of each pixel, and the network would have 10 outputs corresponding to the probability of each digit. Another function would be used to select the digit with the highest probability.\\
+\\
+Before discussing the overall structure of the neural network, we describe the structure of an individual node. A typical node takes in inputs from either the external input, or the outputs from other nodes, in addition to a 'bias' node, which is the equivalent of the intercept term in a regression problem. We label these inputs as $\textbf{x}=[x_0\quad x_1\quad x_2\quad x_3]^\top$, with $x_0=1$ corresponding to the bias node. These values are multiplied by weights $\bm{\theta}=[\theta_0\quad\theta_1\quad\theta_2\quad\theta_3]$, and then passed through an activation function that normalizes the result to a particular range. Denoting the overall node function with $h_{\bm{\theta}}(\textbf{x})$ and the activation function as $g(\bm{x})$, this can be shown in Figure idk below. \\
+\begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
+    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=50pt,inner sep=0pt]
+    \tikzstyle{input neuron}=[neuron, fill=green!50];
+    \tikzstyle{output neuron}=[neuron, fill=red!50];
+    \tikzstyle{hidden neuron}=[neuron, fill=blue!50];
+    \tikzstyle{annot} = [text width=4em, text centered]
+
+    % Draw the input layer nodes
+ %   \foreach \name / \y in {0,...,3}
+    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+        \node[input neuron, pin=left:Bias $x_0$] (I-0) at (0,-0) {$\theta_0 x_0$};
+	\foreach \name / \y in {1,...,3}
+    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+        \node[input neuron, pin=left:Input $x_{\y}$] (I-\name) at (0,-2*\y) {$\theta_{\y}x_\y$};
+    % Draw the hidden layer nodes
+    %\foreach \name / \y in {1,...,5}
+     %   \path[yshift=0.5cm]
+      %      node[hidden neuron] (H-\name) at (\layersep,-\y cm) {};
+
+    % Draw the output layer node
+    \node[output neuron,pin={[pin edge={->}]right:$h_{\bm{\theta}}(x)$}, right of=I-2, node distance=4cm] (O) {$g(\sum^3_{i=0}\theta_ix_i)$};
+
+    % Connect every node in the input layer with every node in the
+    % hidden layer.
+   % \foreach \source in {1,...,4}
+    %    \foreach \dest in {1,...,5}
+     %       \path (I-\source) edge (H-\dest);
+
+    % Connect every node in the hidden layer with the output layer
+    \foreach \source in {0,...,3}
+        \path (I-\source) edge (O);
+
+    % Annotate the layers
+%    \node[annot,above of=H-1, node distance=1cm] (hl) {Hidden layer};
+    \node[annot,above of=I-0, node distance=1.5cm](il) {Weighted Inputs};
+    \node[annot,right of=il, node distance=4cm] {Activation Function};
+\end{tikzpicture}
+\\
+The three most common activation functions are:
+\begin{itemize}
+\item The rectified linear unit or ReLU activation function output is within the range $[0,\infty)$. It has the formula $g(x)=\max\{0,x\}$ corresponding to node function $h_{\bm{\theta}}(\textbf{x})=\max\{0,\bm{\theta}^\top\textbf{x}\}$.
+\item The sigmoid or logistic activation function outputs are restricted to $[0,1)$, with the formula $g(x)=(1+\exp(-x))^{-1}$ corresponding to node function  $h_{\bm{\theta}}(\textbf{x})=(1+\exp(-\bm{\theta}^\top\textbf{x}))^{-1}$.
+\item The hyperbolic tangent function output ranges between $(-1,1)$, denoted as $g(x)=\tanh(x)$ corresponding to $h_{\bm{\theta}}(\textbf{x})=\tanh(\bm{\theta}^\top\textbf{x})$.
+\item The linear activation function is used to describe nodes with no activation function, as its formula is $g(x)=x$, corresponding to $h_{\bm{\theta}}(\textbf{x})=\bm{\theta}^\top\textbf{x}$. It therefore ranges in $(-\infty, \infty)$.
+\end{itemize}
+A typical neural network is made up of layers of interconnected nodes. The first layer, called the input layer, does not have an activation function or weights, rather it simply acts as an input interface for the network. The outputs from the nodes can only be sent to other nodes in succeeding layers, with the exception of the final output layer; it's result is simply the output of the network. The layers of nodes between the input and output layer are called the hidden layers, as its weights and outputs are not useful to the user. Hidden layers can have any number of nodes, whilst the nodes in the input and output layers are restricted to the number of inputs and outputs the program has. The figure below illustrates a simple neural network with 3 inputs, 1 hidden layer with 3 nodes and 1 output node.\\
+\begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
+    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=25pt,inner sep=0pt]
+    \tikzstyle{input neuron}=[neuron, fill=green!50];
+    \tikzstyle{output neuron}=[neuron, fill=red!50];
+    \tikzstyle{hidden neuron}=[neuron, fill=blue!50];
+    \tikzstyle{annot} = [text width=4em, text centered]
+    
+	\node[input neuron, pin=left:Bias] (I-0) at (0,0) {$x_0$};
+    % Draw the input layer nodes
+    \foreach \name / \y in {1,...,3}
+    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+        \node[input neuron, pin=left:Input \#\y] (I-\name) at (0,-\y) {$x_\y$};
+
+ \path[yshift=0cm]
+            node[hidden neuron, pin=left:Bias] (H-0) at (2.5cm,0) {$a^{(2)}_0$};
+    % Draw the hidden layer nodes
+    \foreach \name / \y in {1,...,3}
+        \path[yshift=0cm]
+            node[hidden neuron] (H-\name) at (2.5cm,-\y) {$a^{(2)}_\y$};
+
+    % Draw the output layer node
+	\path[yshift=1cm]    
+    node[output neuron,pin={[pin edge={->}]right:$f_\Theta(x)$}, right of=H-2] (O) {$a_1^{(3)}$};
+
+    % Connect every node in the input layer with every node in the
+    % hidden layer.
+    \foreach \source in {0,...,3}
+        \foreach \dest in {1,...,3}
+            \path (I-\source) edge (H-\dest);
+
+    % Connect every node in the hidden layer with the output layer
+    \foreach \source in {0,...,3}
+        \path (H-\source) edge (O);
+
+    % Annotate the layers
+    \node[annot,above of=H-0, node distance=1cm] (hl) {Hidden layer};
+    \node[annot,left of=hl] {Input layer};
+    \node[annot,right of=hl] {Output layer};
+\end{tikzpicture}\\
+In this example, we denote the activation function as $g$, the output of unit $i$ in layer $j$ as $a^{(j)}_i$, and the matrix of weights from layer $j$ to $j+1$ as $\Theta^{(j)}$. We also use the subscript $\Theta^{(j)}_{m,n}$ where $m$ is the row of the matrix corresponding to the unit $m$ in layer $j+1$, and $n$ is the column of the matrix relating to unit $n$ in layer $j$.\\
+Individually, the outputs in the hidden nodes and the output node are:
+\[x_0=1,\qquad a_0^{(2)}=1\]
+\[a_1^{(2)}=g(\Theta^{(1)}_{1,0}x_0+\Theta^{(1)}_{1,1}x_1+\Theta^{(1)}_{1,2}x_2+\Theta^{(1)}_{1,3}x_3)\]
+\[a_2^{(2)}=g(\Theta^{(1)}_{2,0}x_0+\Theta^{(1)}_{2,1}x_1+\Theta^{(1)}_{2,2}x_2+\Theta^{(1)}_{2,3}x_3)\]
+\[a_3^{(2)}=g(\Theta^{(1)}_{3,0}x_0+\Theta^{(1)}_{3,1}x_1+\Theta^{(1)}_{3,2}x_2+\Theta^{(1)}_{3,3}x_3)\]
+\[f_\Theta(\bm{x})=a_1^{(3)}=g(\Theta^{(2)}_{1,0}a_0^{(2)}+\Theta^{(2)}_{1,1}a_1^{(2)}+\Theta^{(2)}_{1,2}a_2^{(2)}+\Theta^{(2)}_{1,3}a_3^{(2)})\]
+Denoting the weights outputting to unit $i$ in layer $j+1$ as $\bm{\theta}^{(j)}_i = [\Theta_{i,0}^{(j)}\quad \Theta_{i,1}^{(j)}\dots \Theta_{i,k}^{(j)}]^\top$ where $k+1$ is the number of inputs, we have the vectorized notation:
+\[a_0^{(2)}=1\]
+\[a_1^{(2)}=g(\bm{\theta}^{(1)^\top}_1\bm{x})\]
+\[a_2^{(2)}=g(\bm{\theta}^{(1)^\top}_2\bm{x})\]
+\[a_3^{(2)}=g(\bm{\theta}^{(1)^\top}_3\bm{x})\]
+\[f_{\bm{\theta}}(\bm{x})=a_1^{(3)}=g(\bm{\theta}_1^{(2)^\top}\bm{a}^{(2)})\] 
+where $\bm{a}^{(2)}=[a_0^{(2)}\quad a_1^{(2)}\quad a_2^{(2)}\quad a_3^{(3)}]^\top$.\\
+An even simpler notation is:
+\[a_0^{(2)}=1\]
+\[[a_1^{(2)}\quad a_2^{(2)}\quad a_3^{(2)}]=g(\Theta^{(1)^\top}\bm{x})\]
+\[f_\Theta (\bm{x})=\bm{a}^{(3)}=g(\Theta^{(2)^\top}\bm{a}^{(2)})\]
+\subsubsection{Bias-per-node Representation}
+In practice, the bias node is often replaced with an intercept term added to the weighted input of a node before it passes through the activation function. These intercept terms are optimized alongside the weights. This representation is preferred in code as it makes the dimensionality of the weight matrices consistent, as the number of inputs of a layer becomes equal to the number of outputs of the previous layer. In both cases, the bias takes the form of a flat value added to the weighted inputs, which can be optimized, so there is no practical difference between these two notations. The sum of intercept terms in a layer is equivalent to the weight corresponding to a bias node for the layer. Below, we repeat the example of an individual node with three inputs, but with an individual intercept $b_i$ per node.\\
+\begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
+    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=50pt,inner sep=0pt]
+    \tikzstyle{input neuron}=[neuron, fill=green!50];
+    \tikzstyle{output neuron}=[neuron, fill=red!50];
+    \tikzstyle{hidden neuron}=[neuron, fill=blue!50];
+    \tikzstyle{annot} = [text width=4em, text centered]
+
+    % Draw the input layer nodes
+ %   \foreach \name / \y in {0,...,3}
+    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+      %  \node[input neuron, pin=left:Bias $x_0$] (I-0) at (0,-0) {$\theta_0 x_0$};
+	\foreach \name / \y in {1,...,3}
+    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+        \node[input neuron, pin=left:Input $x_{\y}$] (I-\name) at (0,-2*\y) {$\theta_{\y}x_\y+b_\y$};
+    % Draw the hidden layer nodes
+    %\foreach \name / \y in {1,...,5}
+     %   \path[yshift=0.5cm]
+      %      node[hidden neuron] (H-\name) at (\layersep,-\y cm) {};
+
+    % Draw the output layer node
+    \node[output neuron,pin={[pin edge={->}]right:$h_{\bm{\theta}}(x)$}, right of=I-2, node distance=4cm] (O) {$g(\sum^3_{i=1}(\theta_ix_i+b_i))$};
+
+    % Connect every node in the input layer with every node in the
+    % hidden layer.
+   % \foreach \source in {1,...,4}
+    %    \foreach \dest in {1,...,5}
+     %       \path (I-\source) edge (H-\dest);
+
+    % Connect every node in the hidden layer with the output layer
+    \foreach \source in {1,...,3}
+        \path (I-\source) edge (O);
+
+    % Annotate the layers
+%    \node[annot,above of=H-1, node distance=1cm] (hl) {Hidden layer};
+    \node[annot,above of=I-1](il) {Weighted Inputs};
+    \node[annot,right of=il, node distance=4cm] {Activation Function};
+\end{tikzpicture} \\
+Note here that $\sum^3_{i=1}b_i=\theta_0x_0$. The representation of the simple neural network example in the previous section becomes:
+\[a_1^{(2)}=g(\Theta^{(1)}_{1,1}x_1+b^{(1)}_1+\Theta^{(1)}_{1,2}x_2+b^{(1)}_2+\Theta^{(1)}_{1,3}x_3+b^{(1)}_3)\]
+\[a_2^{(2)}=g(\Theta^{(1)}_{2,1}x_1+b^{(1)}_1+\Theta^{(1)}_{2,2}x_2+b^{(1)}_2+\Theta^{(1)}_{2,3}x_3+b^{(1)}_3)\]
+\[a_3^{(2)}=g(\Theta^{(1)}_{3,1}x_1+b^{(1)}_1+\Theta^{(1)}_{3,2}x_2+b^{(1)}_2+\Theta^{(1)}_{3,3}x_3+b^{(1)}_3)\]
+\[f_\Theta(\bm{x})=a_1^{(3)}=g(\Theta^{(2)}_{1,1}a_1^{(2)}+b^{(2)}_1+\Theta^{(2)}_{1,2}a_2^{(2)}+b^{(2)}_2+\Theta^{(2)}_{1,3}a_3^{(2)}+b^{(2)}_3)\]
+or in vectorized notation,
+\[\bm{a}^{(2)}=g(\Theta^{(1)^\top}\bm{x})\]
+\[f_\Theta(\bm{x})=\bm{a}^{(3)}=g(\Theta^{(2)^\top}\bm{a}^{(2)})\]
+\begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
+    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=25pt,inner sep=0pt]
+    \tikzstyle{input neuron}=[neuron, fill=green!50];
+    \tikzstyle{output neuron}=[neuron, fill=red!50];
+    \tikzstyle{hidden neuron}=[neuron, fill=blue!50];
+    \tikzstyle{annot} = [text width=4em, text centered]
+    
+	%\node[input neuron, pin=left:Bias] (I-0) at (0,0) {$x_0$};
+    % Draw the input layer nodes
+    \foreach \name / \y in {1,...,3}
+    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+        \node[input neuron, pin=left:Input \#\y] (I-\name) at (0,-\y) {$x_\y$};
+
+ %\path[yshift=0cm]
+  %          node[hidden neuron, pin=left:Bias] (H-0) at (2.5cm,0) {$a^{(2)}_0$};
+    % Draw the hidden layer nodes
+    \foreach \name / \y in {1,...,3}
+        \path[yshift=0cm]
+            node[hidden neuron] (H-\name) at (2.5cm,-\y) {$a^{(2)}_\y$};
+
+    % Draw the output layer node
+	\path[yshift=1cm]    
+    node[output neuron,pin={[pin edge={->}]right:$f_\Theta(x)$}, right of=H-2] (O) {$a_1^{(3)}$};
+
+    % Connect every node in the input layer with every node in the
+    % hidden layer.
+    \foreach \source in {1,...,3}
+        \foreach \dest in {1,...,3}
+            \path (I-\source) edge (H-\dest);
+
+    % Connect every node in the hidden layer with the output layer
+    \foreach \source in {1,...,3}
+        \path (H-\source) edge (O);
+
+    % Annotate the layers
+    \node[annot,above of=H-1, node distance=1cm] (hl) {Hidden layer};
+    \node[annot,left of=hl] {Input layer};
+    \node[annot,right of=hl] {Output layer};
+\end{tikzpicture}
+\newpage
+\subsubsection{Choice of Activation Function}
+Recall in section idk the three most common activation functions:
+\begin{itemize}
+\item The rectified linear unit or ReLU activation function $g(x)=\max\{0,x\}$ ranging in $[0,\infty)$.
+\item The sigmoid or logistic activation function $g(x)=(1+\exp(-x))^{-1}$ restricted to $[0,1)$.
+\item The hyperbolic tangent function $g(x)=\tanh(x)$ ranging between $(-1,1)$.
+\item The linear activation function $g(x)=x$ ranging in $(-\infty, \infty)$.
+\end{itemize}
+In deep learning, rectified linear units are the default choice for the hidden layers for their many advantages:
+\begin{itemize}
+\item Reduces overfitting: since negative ReLU inputs result in a zero output, only half of the units are "active" (non-zero output) when the network is first initialized. The proportion of active units can increase or decrease during training such that overfitting and underfitting is minimized.
+\item Faster computation: a $\max\{0,x\}$ function is computed much faster than a function that uses $\exp$ or $\tanh$.
+\item Easier and more consistent training: weight training in a neural network (discussed in the next section) uses the gradient of overall node function, which is influenced by the activation function. The rectified linear unit has a consistent gradient $(1\times \theta)$ or $(0\times \theta)$ resulting in consistent training, as opposed to more complex units. 
+\end{itemize}
+As described in section , the input layer has no activation function, so it can be described as having a linear activation function.\\
+For the output layer, the activation function with the most reasonable output range is used. This depends on what the network is being used for. For example, in classification, the network assigns a probability to each case, so a sigmoid activation function would be most reasonable, as it ranges between 0 and 1. On the other hand, a rectified linear unit would be used for regression of a non-negative quantity such as price or time.
+\newpage
+\subsubsection{Optimization}
+The goal of optimizing the network is to train the weights of the network such that a loss function, which we will denote as $L$ as minimized. A common loss function is the squared error between the batch of network outputs and the actual results:
+\[\min_\Theta L(\Theta)=\frac12 (\bm{y}-\bm{f}_\Theta(\bm{x}))^\top(\bm{y}-\bm{f}_\Theta(\bm{x})).\]
+The $\frac12$ factor is included to eliminate the factor of 2 in the derivative, simplifying the derivations. The derivative is multiplied by an arbitrary training rate during optimization so there is no significant impact of including that term.\\
+The weights are initialized randomly, and their values are used to calculate the partial derivative of the loss function with respect to each individual weight (and intercept). These partial derivatives are used in the gradient-based optimization of the weights. There are many variations of neural network optimization algorithms, but they are all based off gradient descent, which we will cover in this section.\\
+Gradient descent is an algorithm used to find the minimizer $\bm{x}^*$ of a function $f$ by iterating on an arbitrary point $\bm{x}^{(n)}$, taking steps proportional to a descent direction $\bm{s}^{(n)}$:
+\[\bm{x}^{(n+1)}=\bm{x}^{(n)}+\alpha \bm{s}^{(n)},\qquad \alpha>0.\] 
+\textbf{Definition:} At point $\bm{x}^{(n)}$, $\bm{s}^{(n)}$ is a descent direction if $\nabla f(\bm{x}^{(n)})^\top \bm{s}^{(n)}<0$.\\
+\textbf{Preposition:} If $\bm{s}^{(n)}$ is a descent direction, then for small $\alpha>0$, $f(\bm{x}^{(n)}+\alpha \bm{s}^{(n)})<f(\bm{x}^{(n)})$.\\
+Proof: (proof copied from jeyakumar optimization lecture notes topic 6)\\
+First we show that
+\[\frac{d}{d\alpha}f(\bm{x}^{(n)}+\alpha \bm{s}^{(n)})=\nabla f(\bm{x}^{(n)}+\alpha \bm{s}^{(n)})^\top \bm{s}^{(n)}.\]
+where $\bm{x}^{(n)}=[x_1^{(n)},\dots,x_n^{(k)}]^\top$ and $\bm{s}^{(k)}=[s_1^{(n)},\dots,s_k^{(n)}]^\top$.\\
+Let
+\[x_i^{(n)}(\alpha)=x_i^{(n)}+\alpha s_i^{(n)},\quad i=1,\dots,n\]
+so that $\bm{x}^{(n)}+\alpha \bm{s}^{(n)}=[x_1^{(n)}(\alpha),\dots,x_k^{(n)}(\alpha)]^\top$.
+We have
+\begin{align*}
+\frac{d}{d\alpha}f(\bm{x}^{(n)}+\alpha\bm{s}^{(n)})&= \frac{d}{d\alpha}f(x_1^{(n)},\dots,x_k^{(n)}(\alpha))\\
+&= \frac{\partial f(\bm{x})}{\partial x_1}|_{\bm{x}=\bm{x}^{(n)}+\alpha \bm{s}^{(n)}}\frac{d(x_1^{(n)}(\alpha)}{d\alpha}+\dots+\frac{\partial f(\bm{x})}{\partial x_k}|_{\bm{x}=\bm{x}^{(n)}+\alpha \bm{s}^{(n)}}\frac{d(x_k^{(n)}(\alpha)}{d\alpha}\\
+&=\frac{\partial f(\bm{x})}{\partial x_1}|_{\bm{x}=\bm{x}^{(n)}+\alpha \bm{s}^{(n)}}\bm{s}_1^{(n)}+\dots+\frac{\partial f(\bm{x})}{\partial x_n}|_{\bm{x}=\bm{x}^{(n)}+\alpha \bm{s}^{(n)}}\bm{s}_k^{(n)}\\
+&=\nabla f(\bm{x}^{(n)}+\alpha \bm{s}^{(n)})^\top \bm{s}^{(n)}
+\end{align*}
+Setting $\alpha=0$ and using definition (),
+\[\frac{d}{d\alpha}f(\bm{x}^{(n)}+\alpha\bm{s}^{(n)})|_{\alpha=0}=\nabla f(\bm{x}^{(n)})^\top \bm{s}^{(n)}<0\]
+Therefore for small $\alpha>0$,
+\[f(x^{(n)}+\alpha s^{(n)})<f(x^{(n)}).\]
+QED.\\
+\\
+A common choice of descent direction is the negative of the gradient $-\nabla f(\bm{x}^{(n)})$, leading to the method of steepest descent. It is clearly a descent direction as $-\nabla f(\bm{x}^{(n)})^\top\nabla f(\bm{x}^{(n)})=-||\nabla f(\bm{x}^{(n)})||^2<0$.\\
+By nature, gradient descent is guaranteed to converge to a local minimum, which is problematic if the function has local minima which differ from the global minima. This is not an issue if the function is convex, as any local minima are also global minima, but neural networks are not convex as they can approximate any function, including non-convex functions. Those interested in global optimization can refer to (Deterministic Global Optimization, Floudas). In neural network training there are currently no commonly used methods of guaranteeing a global minimum, but the path may escape from a local minimum if randomness is introduced to the training process. This can be accomplished by stochastic gradient descent.\\
+Typically, the entire batch of data is used in each iteration to calculate the loss function and gradient values required for gradient descent. This method of batch gradient descent is very slow for large datasets, and as previously described, its smoothness can cause the algorithm to converge to local minima. In stochastic gradient descent, only one observation is used per iteration, so the latent randomness associated with each observation effectively leads to noise added to each step. In practice, a compromise between stochastic and batch gradient descent is typically used; mini-batch gradient descent involves using several observations per iteration, leading to a reduction in the gradient variance.\\
+Gradient descent convergence can be improved by using an adaptive learning rate (ie. decreasing $\alpha$ over the iterations), as a low learning rate in the process will make convergence slow, whilst a high learning rate can cause the algorithm to oscillate around the minima.\\
+The Adam algorithm (Kingma, Ba 2014) incorporates these two concepts to form an effective optimization algorithm that is widely used to optimize neural networks. In this thesis, we use this algorithm, but omit the specifics as they are beyond the scope of this thesis.
+\newpage
+\subsubsection{Back-propogation}
+In the back-propogation algorithm, the goal is to find the partial derivative of the loss function with respect to the individual weights \[\frac{\partial}{\partial\Theta_{m,n}^{(j)}}L(\Theta),\]
+so that gradient descent can be performed to optimize the weights. For each training sample $(\bm{x}^{(I)},\bm{y}^{(I)})$, $I=1,\dots,N$, the input signal is propogated forward throughout the network to calculate $\bm{a}^{(j)}$ for $j=2,\dots,J$, where $J$ is the total number of layers. The difference between the network output and the ideal result is calculated with 
+\[\bm{\delta}^{(J)}=\bm{a}^{(J)}-\bm{y}^{(I)},\] 
+and this error is propogated backwards through the network to find $\bm{\delta}^{(J-1)},\dots,\bm{\delta}^{(2)}$ by using the formula 
+\[\bm{\delta}^{(j)}=((\Theta^{(j)})^\top \bm{\delta}^{(j+1)}).*g'(\Theta^{(j)^\top} \bm{a}^{(j)}),\] 
+where $.*$ denotes element-wise multiplication and $g'$ is the derivative of the activation function. In this case, $g'$ takes in the sum of its weighted inputs, and as an example, the sigmoid activation function has the derivative $g'(\Theta^{(j)^\top} \bm{a}^{(j)})=\bm{a}^{(j)}.*(1-\bm{a}^{(j)})$. Note that $\bm{\delta}^{(1)}$ does not need to be calculated as the input layer is not weighted. \\
+The errors for each layer are multiplied by each of the preceeding layer's activation outputs to form the estimated partial derivative for the training sample. This result is added to an accumulator matrix, so that the average partial derivative from all the training samples can be computed:
+\[\Delta^{(j)}_{m,n}:=\Delta^{(j)}_{m,n}+a_n^{(j)}\delta_m^{(j+1)}\]
+or in matrix-vector form.
+\[\Delta^{(j)}:=\Delta^{(j)}+\bm{\delta}^{(j+1)}(\bm{a}^{(j)})^\top.\]
+Finally, we divide the accumulator matrix entries by the number of training samples to find the average partial derivative of the cost function with respect to the weights:
+\[\frac{\partial}{\partial \Theta^{(j)}_{m,n}}L(\Theta)=\frac1N \Delta_{m,n}^{(j)}\]
+When $n\neq0$ (i.e. not considering the bias node), we can optionally add a regularizer term $\lambda > 0$ which decreases the magnitude of the weights, preventing overfitting. 
+\[\frac{\partial}{\partial \Theta^{(j)}_{m,n}}L(\Theta)=\frac1N (\Delta_{m,n}^{(j)}+\lambda \Theta_{m,n}^{(j)})\]
+There is no significant change when the bias node is regularized.\\
+Pseudocode for the back-propogation algorithm is shown below.\\
+\begin{algorithm}
+\caption{Back-Propogation Algorithm}
+\KwData{Training Data $\{(\bm{x}^{(1)},\bm{y}^{(1)}),\dots ,(\bm{x}^{(N)},\bm{y}^{(N)})\}$, Regularizer Term $\lambda$}
+\KwResult{Cost Function Partial Derivatives $\frac{\partial}{\partial\Theta^{(j)}_{m,n}}L(\Theta)$}
+\BlankLine
+\Begin{Randomly initialize weights $\Theta$\;
+Set $\Delta^{(j)}_{m,n}=0 \quad \forall j,m,n$\;
+\For{$I=1$ \KwTo $N$}{
+Set $\bm{a}^{(1)}=\bm{x}^{(I)}$\;
+\For{$j=2$ \KwTo $J$}{
+Set $\bm{a}^{(j)}=\Theta^{(j-1)^\top}\bm{a}^{(j-1)}$\;}
+Set $\bm{\delta}^{(J)}=\bm{a}^{(J)}-\bm{y}^{(I)}$\;
+\For{$j=J-1$ \KwTo $2$}{
+Set $\bm{\delta}^{(j)}=((\Theta^{(j)})^\top \bm{\delta}^{(j+1)}).*g'(\Theta^{(j)^\top}\bm{a}^{(j)})$\;
+}
+\For{$j=1$ \KwTo $J-1$}{
+Set $\Delta^{(j)}=\Delta^{(j)}+\bm{\delta}^{(j+1)}(\bm{a}^{(j)})^\top$\;
+}}
+\For{all $j,m,n$}{
+\eIf{$n=0$}{Set $\frac{\partial}{\partial\Theta^{(j)}_{m,n}}L(\Theta)=\frac1N \Delta^{(j)}_{m,n}$\;
+}{Set $\frac{\partial}{\partial\Theta^{(j)}_{m,n}}L(\Theta)=\frac1N (\Delta^{(j)}_{m,n}+\lambda\Theta^{(j)}_{m,n})$\;}}}
+\end{algorithm}
+Having derived the partial derivatives of the loss function with respect to the individual weights, we can use gradient descent or some other optimization method to update the weights. The partial derivatives are re-calculated after each optimization update until convergence.
+\newpage
+\subsubsection{Weight Initialization}
+Proper initialization of the weights is ideal to improve convergence, as if the weights are too low, then the nodal outputs will continually decrease through the layers and become very small, requiring many iterations of back-propogation training to fix. Similarly, if the weights are too high, then the result output of forward propogation will be extremely large. In this section we discuss Xavier Initialization, which aims to keep the signal variance constant throughout the network. To derive the initialization algorithm, first consider a single node with $n$ inputs, and let $z$ denote the weighted sum of the inputs $\bm{\theta}^\top\textbf{x}$ before it is passed through the activation function. This is written as
+\[z=\theta_0x_0+\theta_1x_1+\dots+\theta_nx_n.\]
+$x_0$ is a constant term, so $\Var(\theta_0x_0)=0$. Now under the assumption that the inputs and weights have 0 mean, we find the variance of the other terms:
+\[\Var(\theta_ix_i)=\E[x_i]^2\Var(\theta_i)+\E[\theta_i]^2\Var(x_i)+\Var(\theta_i)\Var(x_i)=\Var(\theta_i)\Var(x_i).\]
+Assuming that the weights and inputs are also independent and identically distributed, we have
+\[\Var(z)=n\Var(\theta_i)\Var(x_i).\]
+Since we want constant variance of the signals throughout the network, we set $\Var(z)=\Var(x_i)$ and the result follows:
+\[\Var(\theta_i)=\frac1n.\]
+However, this result only considers forward propogation of the signal. A variation of this result accounts for back propogation by averaging the number of input and output nodes:
+\[\Var(\theta_i)=\frac{2}{n_{in}+n_{out}}.\]
+Thus, to enforce constant signal variance throughout the network, the ideal initialization of weights is to sample from a distribution, typically uniform or Gaussian, with $0$ mean and $\frac{2}{n_{in}+n_{out}}$ variance:
+\[\theta_i\sim U\left(-\sqrt{\frac{6}{n_{in}+n_{out}}},\sqrt{\frac{6}{n_{in}+n_{out}}}\right)\]
+or
+\[\theta_i\sim N\left(0,\frac{2}{n_{in}+n_{out}}\right).\]
+\subsubsection{References}
+http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf\\
+Machine Learning by Andrew Ng Stanford online course\\
 \newpage
 \subsection{Objective Derivation}
 \subsubsection{Implicit Prior}
@@ -512,503 +1027,6 @@ where $\mathcal{D}(u)=\frac{\mathcal{R}(u)}{\mathcal{R}(u)+1}$. Equality of the 
 \end{align*}
 which is the optimal discriminator of class probability estimation. Thus, our previous formulation of class probability estimation by minimizing the Bernoulli loss of a discriminator function is the same as maximizing the lower bound of a Jensen-Shannon divergence between the two distributions, in terms of a "discriminator" function.
 \newpage
-\section{Learning}
-\subsection{Variational Inference}
-\subsubsection{Context}
-In Bayesian statistics, a common problem is to estimate posterior densities, so that we may perform inference to determine an unknown parameter. Consider a set of unknown, latent variables $\textbf{Z}=\{z_i\}^M_{i=1}$ and a dataset of known variables $\textbf{X}=\{x_i\}^N_{i=1}$. These sets have a joint density of $P(\textbf{Z},\textbf{X})$. In the Bayesian framework, inference is often performed on the posterior density (the distribution of the parameters $\textbf{Z}$ after the data $\textbf{X}$ is observed)
-$P(\textbf{Z}|\textbf{X})$, which, after applying Bayes' theorem, can be written as:
-\begin{equation*}P(\textbf{Z}|\textbf{X})=\frac{P(\textbf{Z})P(\textbf{X}|\textbf{Z})}{P(\textbf{X})}= \frac{P(\textbf{Z})P(\textbf{X}|\textbf{Z})}{\int_\mathcal{Z}P(\textbf{Z},\textbf{X})d\textbf{Z}}\end{equation*}
-where
-\begin{itemize}
-\item $P(\textbf{Z})$ is the prior distribution: the initial distribution of $\textbf{Z}$ before the data $\textbf{X}$ is observed. This can be initialised to represent our initial beliefs, or it can be parametrised randomly,
-\item $P(\textbf{X}|\textbf{Z})$ is the likelihood: the distribution of data $\textbf{X}$ conditioned on the parameters $\textbf{Z}$,
-\item $P(\textbf{X})=\int_\mathcal{Z}P(\textbf{Z},\textbf{X})d\textbf{Z}$ is the marginal likelihood, or the evidence: the density of the data averaged across all possible parameter values.
-\end{itemize}
-If the evidence integral $P(\textbf{X})=\int_\mathcal{Z}P(\textbf{Z},\textbf{X})d\textbf{Z}$ is impossible or difficult to compute (possibly because it is unavailable in closed form or the dimensionality is too high), then we are unable to evaluate the posterior density. Traditionally, MCMC(Markov Chain Monte Carlo) methods overcome this obstacle by constructing a Markov chain that converges to the stationary distribution $P(\textbf{Z}|\textbf{X})$, then sampling from the chain to create an empirical estimate for the posterior distribution. However, these methods rely on the speed of convergence, which can be slow for large datasets or complex models. When faced with these issues or when desiring a faster computation, one may instead apply variational inference, an alternative approach to density estimation.
-\subsubsection{Introduction to Variational Inference}
-Variational inference chooses another distribution $Q(\textbf{Z})$ from a select family of variational distributions (approximate densities) $\mathcal{Q}$ to serve as an approximation to $P(\textbf{Z}|\textbf{X})$, and then minimizes the divergence between the two distributions in an optimization problem:
-\begin{equation}
-Q^*(\textbf{Z})=\argmin_{Q(\textbf{Z})\in \mathcal{Q}}D(Q(\textbf{Z})||P(\textbf{Z}|\textbf{X}))
-\end{equation} where $D$ denotes an f-divergence (a measure of how divergent two probability distributions are, it is minimized if $Q=P$). This results in an analytical approximation to the posterior density. Additionally, a lower bound for the marginal likelihood of the dataset is derived, which can be used as a model selection criterion. Due to the stochastic nature of the optimization, variational inference methods can be much faster than MCMC, but the solution is only locally optimal as there is no guarantee of global convergence.
-\subsubsection{Derivation of the ELBO}
-The most common f-divergence used in variational inference is the KL(Kullback-Leibler) divergence, defined as the expected logarithmic difference between two distrbutions $Q$ and $P$ with respect to $Q$:
-\begin{equation*}
-KL(Q||P)=\int_{-\infty}^\infty Q(x)\log \frac{Q(x)}{P(x)}dx=\mathbb{E}_{Q(x)}\left[\log\frac{Q(x)}{P(x)}\right].
-\end{equation*}
-Note that the KL divergence is not symmetric. We use the reverse KL divergence instead of the forward KL divergence $KL(P||Q)$ because it leads to an expectation maximization algorithm as opposed to an expectation propagation algorithm.\\
-Using this expression, we can rewrite equation (1) as:
-\begin{align*}
-Q^*(\textbf{Z})&=\argmin_{Q(\textbf{Z})\in \mathcal{Q}}KL(Q(\textbf{Z})||P(\textbf{Z}|\textbf{X}))\\
-&= \argmin_{Q(\textbf{Z})\in \mathcal{Q}} \mathbb{E}_{Q(\textbf{Z})}[\log Q(\textbf{Z})-\log P(\textbf{Z}|\textbf{X})]\\
-&= \argmin_{Q(\textbf{Z})\in \mathcal{Q}} \mathbb{E}_{Q(\textbf{Z})}\left[\log Q(\textbf{Z})-\log\frac{P(\textbf{X}|\textbf{Z})P(\textbf{Z})}{P(\textbf{X})}\right]\\
-&= \argmin_{Q(\textbf{Z})\in \mathcal{Q}} \left(\mathbb{E}_{Q(\textbf{Z})}[\log Q(\textbf{Z})-\log P(\textbf{X}|\textbf{Z})-\log P(\textbf{Z})]+\log P(\textbf{X})\right).
-\end{align*}
-Note in the last line $\mathbb{E}_{Q(\textbf{Z})}[P(\textbf{X})]=P(\textbf{X})$ as it is not dependent on $Q(\textbf{Z})$. Also note that the KL divergence is dependent on $P(\textbf{X})$, which we have determined to be intractable, so this optimization problem cannot be solved in this form. This issue is resolved by rearranging the KL divergence expression as follows:
-\begin{align}
-KL(Q(\textbf{Z})||P(\textbf{Z}|\textbf{X}))&=\mathbb{E}_{Q(\textbf{Z})}[\log Q(\textbf{Z})-\log P(\textbf{X}|\textbf{Z})-\log P(\textbf{Z})]+\log P(\textbf{X}) \nonumber \\
-\log P(\textbf{X})-KL(Q(\textbf{Z})||P(\textbf{Z}|\textbf{X}))&=-\mathbb{E}_{Q(\textbf{Z})}[\log Q(\textbf{Z})-\log P(\textbf{X}|\textbf{Z})-\log P(\textbf{Z})]\nonumber \\
-&=\mathbb{E}_{Q(\textbf{Z})}[\log P(\textbf{X}|\textbf{Z})]-\mathbb{E}_{Q(\textbf{Z})}[\log Q(\textbf{Z})-\log P(\textbf{Z})]\nonumber \\
-&=\mathbb{E}_{Q(\textbf{Z})}[\log P(\textbf{X}|\textbf{Z})]-KL(Q(\textbf{Z})||P(\textbf{Z})).
-\end{align}
-We refer to $\log P(\textbf{X})-KL(Q(\textbf{Z})||P(\textbf{Z}|\textbf{X}))$ as $ELBO(Q)$ (evidence lower bound), as it is equal to the marginal probability of the data subtracted by a constant error term. This error term $KL(Q(\textbf{Z})||P(\textbf{Z}|\textbf{X}))$ becomes 0 when $Q(\textbf{Z})=P(\textbf{Z}|\textbf{X})$, maximizing the ELBO. Note that since $P(\textbf{X})$ is constant, maximizing the $ELBO$ is equal to minimizing the KL divergence between $Q(\textbf{Z})$ and $P(\textbf{Z}|\textbf{X})$, and that the expression on line (2) is entirely computable. We can therefore rewrite our optimization problem from equation (1) as:
-\begin{align*}
-Q^*(\textbf{Z})&=\argmin_{Q(\textbf{Z})\in \mathcal{Q}}D(Q(\textbf{Z})||P(\textbf{Z}|\textbf{X}))\\
-&= \argmax_{Q(\textbf{Z})\in \mathcal{Q}} ELBO(Q)\\
-&= \argmax_{Q(\textbf{Z})\in \mathcal{Q}} \left(\mathbb{E}_{Q(\textbf{Z})}[\log P(\textbf{X}|\textbf{Z})]-KL(Q(\textbf{Z})||P(\textbf{Z}))\right).
-\end{align*}
-\subsubsection{Mean-Field Variational Family}
-The family of variational distributions $\mathcal{Q}$ is typically a 'mean-field variational family', in which the distribution $Q(\textbf{Z})$ factorizes over the latent variables $\{z_i\}^M_{i=1}$:
-\begin{equation}
-Q(\textbf{Z})=\prod^M_{i=1}q_i(z_i).
-\end{equation}
-The individual factors $q_i(z_i)$ can take any form. We want to choose these factors so that $ELBO(Q)$ is maximized. To derive an expression for the optimal factor $q_i^*(z_i)$, we substitute equation (3) into the $ELBO$, factor out a specific $q_j(z_j)$ and equate the functional derivative of the resulting Lagrangian equation with 0. Firstly, we express $ELBO(Q)$ in an integral form as follows:
-\begin{align*}
-ELBO(Q)&= \mathbb{E}_{Q(Z)}[\log P(\textbf{X}|\textbf{Z})]-KL(Q(\textbf{Z})||P(\textbf{Z}))\\
-&= \mathbb{E}_{Q(Z)}[\log P(\textbf{X}|\textbf{Z})+\log P(\textbf{Z})-\log Q(\textbf{Z})]\\
-&= \mathbb{E}_{Q(Z)}[\log P(\textbf{X}, \textbf{Z})-\log Q(\textbf{Z})]\\
-&= \int_{\mathcal{Z}}Q(\textbf{Z})(\log P(\textbf{X},\textbf{Z})-\log Q(\textbf{Z}))d\textbf{Z}.
-\end{align*}
-Substituting $Q(\textbf{Z})=\prod^M_{i=1}q_i(z_i)$ and factoring out $q_j(z_j)$ yields:
-\begin{align}
-ELBO(Q)&= \int_\mathcal{Z}\left[\prod^M_{i=1}q_i(z_i)\right]\left(\log P(\textbf{X},\textbf{Z})-\sum_{i=1}^M\log q_i(z_i)\right)d\textbf{Z}\nonumber\\
-&= \int_\mathcal{z_j}q_j(z_j)\left(\int_\mathcal{z_{-j}}\log P(\textbf{X},\textbf{Z})\prod_{i\neq j}q_i(z_i)d\textbf{z}_{-j} \right) dz_j\nonumber\\
-&\quad -\int_{\mathcal{z_j}}q_j(z_j)\left(\int_{\mathcal{z}_{-j}}\left[\prod_{i\neq j}q_i(z_i)\right]\sum_{i=1}^M q_i(z_i)d\textbf{z}_{-j}\right)dz_j\nonumber\\
-&= \int_{\mathcal{z_j}}q_j(z_j)\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]dz_j-\int_{\mathcal{z_j}}q_j(z_j)\log q_j(z_j)\left(\int_{\mathcal{z}_{-j}}\prod_{i\neq j}q_i(z_i)dz_{-j}\right) dz_j\nonumber\\
-&\quad -\int_{\mathcal{z_j}}q_j(z_j)\left(\int_{\mathcal{z}_{-j}}\left[\prod_{i\neq j}q_i(z_i)\right]\sum_{i\neq j}q_i(z_i)d{\textbf{z}_{-j}}\right)dz_j\nonumber\\
-&= \int_\mathcal{z_j}q_j(z_j)\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]dz_j-\int_\mathcal{z_j}q_j(z_j)\log q_j(z_j)dz_j\nonumber\\
-&\quad -\int_{\mathcal{z}_{-j}}\left[\prod_{i\neq j}q_i(z_i)\right]\sum_{i\neq j}q_i(z_i)d{\textbf{z}_{-j}}
-\\&= \int_\mathcal{z_j}q_j(z_j)\left(\mathbb{E}_{\mathcal{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]-\log q_j(z_j)\right)dz_j+\text{const}.
-\end{align}
-The term in line (4) becomes a constant as it does not depend on $q_j(z_j)$. Now our Lagrangian equation with the constraint that $q_i(z_i)$ are probability density functions is:
-\begin{equation*}
-ELBO(Q)-\sum^M_{i=1}\lambda_i\int_\mathcal{z_i}q_i(z_i)dz_i=0
-\end{equation*}
-or using our expression for $ELBO(Q)$ in line (5),
-\begin{equation}
-\int_\mathcal{z_j}q_j(z_j)\left(\mathbb{E}_{\mathcal{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]-\log q_j(z_j)\right)dz_j-\sum^M_{i=1}\lambda_i\int_\mathcal{z_i}q_i(z_i)dz_i+\text{const}=0.
-\end{equation}
-Using the Euler-Lagrange equation (need to put this in), we then take the functional derivative of (6) with respect to $q_j(z_j)$ (in this case, the partial derivative with respect to $q_j(z_j)$ of the expression inside the integral):
-\begin{align}
-\frac{\partial ELBO(q)}{\partial q_j(z_j)}&= \frac{\partial}{\partial q_j(z_j)}\left[q_j(z_j)\left(\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]-\log q_j(z_j)\right)-\lambda_jq_j(z_j)\right]\nonumber
-\\&= \mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]-\log q_j(z_j)-1-\lambda_j
-\end{align}
-Equating expression (7) to 0 and letting $1+\lambda_j$ be a constant (as it is independent of $z$), we have:
-\begin{align*}
-\log q_j^*(z_j)&= \mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]-\text{const}\\
-q_j^*(z_j)&=\frac{e^{\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]}}{\text{const}}\\
-&= \frac{e^{\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]}}{\int e^{\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]}dz_j}.
-\end{align*}
-The normalization constant on the denominator can be easily derived by observing $q^*_j(z_j)$ as a density. Lastly, we derive a simpler expression of $q^*_j(z_j)$ by observing that terms independent of $z_j$ can be treated as a constant:
-\begin{align}
-q^*_j(z_j)&\propto \exp\left(\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]\right)\nonumber\\
-&\propto \exp\left(\mathbb{E}_{\textbf{z}_{-j}}[\log P(z_j|\textbf{z}_{-j},\textbf{X})]\right).
-\end{align}
-This expression can be used in an expectation-maximization algorithm, in which the $q^*_j(z_j)$ is evaluated and iterated from $j=1\dots M$. This particular algorithm is called coordinate ascent variational inference (CAVI) (Algorithm 1):\\
-\\
-\begin{algorithm}[H]
-\caption{Coordinate Ascent Variational Inference (CAVI)}
-\KwData{Dataset $\textbf{X}$ and Model P($\textbf{X},\textbf{Z}$)}
-\KwResult{Approximate density $Q(\textbf{Z})=\prod^M_{i=1}q_i(z_i)$}
-\BlankLine
-\Begin{
-Initialize random variational factors $q_j(z_j)$\;
-\While{ELBO(Q) has not converged}{
-
-	\For{$j=1$ \KwTo $m$}{
-	Set $q_j(z_j)\propto \exp(\mathbb{E}[\log P(z_j|\textbf{z}_{-j},\textbf{X})])$\;
-	}
-	Calculate $ELBO(Q)=\mathbb{E}[\log P(\textbf{Z},\textbf{X})]-\mathbb{E}[\log Q(\textbf{Z})]$\;
-}
-Return $Q(\textbf{Z})$\;
-}
-\end{algorithm}
-\subsubsection{Example: Bayesian mixture of Gaussians}
-To illustrate the variational inference approach, we will use the Bayesian mixture of Gaussians example from (Blei, 2018/16 idk).\\
-Consider the hierarchical model
-\begin{align*}
-\mu_k&\sim N(0,\sigma^2), &&k=1,\dots,K,\\
-c_i&\sim \text{Categorical}\left(\frac{1}{K},\dots,\frac{1}{K}\right), &&i=1,\dots,n,\\
-x_i|c_i,\bm{\mu}&\sim N(c^\top_i\bm{\mu},1), &&i=1,\dots,n.
-\end{align*}
-This is a Bayesian mixture of univariate Gaussian random variables with unit variance. In this model, we draw $K$ $\mu_k$ variables from a prior Gaussian distribution $N(0,\sigma^2)$ ($\sigma^2$ is a hyperparameter), forming the vector $\bm{\mu}=(\mu_1,\dots,\mu_K)^\top$. We then generate an indicator vector $c_i$ of length $K$ from a prior categorical distribution. This vector has zeros for every element except for one element, where it is a $1$. Each element has equal probability $1/K$ of being the element that contains the $1$. The transpose of this $c_i$ is then multiplied by $\bm{\mu}$, essentially choosing one of the $\bm{\mu}$ elements at random. We then draw $x_i$ from the resulting $N(c^\top_i\bm{\mu},1)$.\\
-Here, our latent variables are $\textbf{z}=\{\textbf{c},\bm{\mu}\}$. Assuming $n$ samples, our joint density is
-\begin{equation}
-p(\bm{\mu},\textbf{c},\textbf{x})=p(\bm{\mu})\prod^n_{i=1}p(c_i)p(x_i|c_i, \bm{\mu}).\end{equation}
-From this, we derive the marginal likelihood
-\[p(\textbf{x})=\int p(\bm{\mu})\prod^n_{i=1}\sum_{c_i}p(c_i)p(x_i|c_i,\bm{\mu})d\bm{\mu}.\]
-This integral is intractable, as the time complexity of evaluating it is $\mathcal{O}(K^n)$, which is exponential in $K$. To evaluate the posterior distribution over the latent variables $p(\bm{\mu},\textbf{c}|\textbf{x})$, we would have to apply variational inference, approximating it with a variational distribution $q(\bm{\mu},\textbf{c})$. We will assume this distribution follows the mean-field variational family:
-\[q(\bm{\mu},\textbf{c})=\prod^K_{k=1}q(\mu_k;m_k,s^2_k)\prod^n_{i=1}q(c_i;\bm{\phi_i}).\]
-In this distribution, we have $K$ Gaussian factors with mean $\mu_k$ and variance $s^2_k$, and $n$ categorical factors with index probabilities defined by the vector $\bm{\phi_i}$, such that
-\begin{align*}
-\mu_k&\sim N(m_k,s^2_k), &&k=1,\dots,K,\\
-x_i&\sim \text{Categorical}(\bm{\phi_i}), &&i=1,\dots,n.
-\end{align*}
-Using this and equation (9), we can derive the evidence lower bound as a function of the variational parameters:
-\begin{align*}
-ELBO(\textbf{m},\textbf{s}^2,\bm{\phi})&=\mathbb{E}[\log p(\textbf{z},\textbf{x})]-\mathbb{E}[\log q(\textbf{z})]\\
-&=\mathbb{E}[\log p(\bm{\mu,c},\textbf{x})]-\mathbb{E}[\log q(\bm{\mu,c})]\\
-&=\sum^K_{i=1}\mathbb{E}[\log p(\mu_k); m_k,s^2_k]+\sum^n_{i=1}\left(\mathbb{E}[\log p(c_i);\bm{\phi}_i]+\mathbb{E}[\log p(x_i|c_i,\bm{\mu});\bm{\phi}_i,\textbf{m},\textbf{s}^2]\right)\\
-&\quad -\sum^K_{k=1}\mathbb{E}[\log q(\mu_k;m_k,s^2_k)]-\sum^n_{i=1}\mathbb{E}[\log q(c_i;\bm{\phi}_i)]
-\end{align*}
-From equation (8), we derive the optimal categorical factor by only considering terms from the true distribution $p(.)$ dependent on $c_i$:
-\begin{equation}q^*(c_i;\bm{\phi}_i)\propto \exp\left(\log p(c_i)+\mathbb{E}[\log p(x_i|c_i,\bm{\mu});\textbf{m},\textbf{s}^2]\right).\end{equation}
-Now since $c_i$ is an indicator vector,
-\[p(x_i|c_i,\bm{\mu})=\prod^K_{k=1}p(x_i|\mu_k)^{c_{ik}}.\]
-We can now evaluate the second term of equation (10):
-\begin{align*}
-\mathbb{E}\left([\log p(x_i|c_i,\bm{\mu});\textbf{m},\textbf{s}^2]\right)&=\sum_{k=1}^K c_{ik}\mathbb{E}[\log p(x_i|\mu_k);m_k,s^2_k]\\
-&=\sum_{k=1}^K c_{ik}\mathbb{E}[-(x_i-\mu_k)^2/2;m_k,s^2_k]+\text{const}\\
-&=\sum_{k=1}^Kc_{ik}\left(\mathbb{E}[\mu_k;m_k,s^2_k]x_i-\mathbb{E}[\mu^2_k;m_k,s^2_k]/2\right)+\text{const}.
-\end{align*}
-In each line, terms constant with respect to $c_{ik}$ have been taken out of the expression. Our optimal categorical factor becomes
-\[q^*(c_i;\bm{\phi}_i)\propto \exp \left(\log p(c_i)+\sum_{k=1}^Kc_{ik}\left(\mathbb{E}[\mu_k;m_k,s^2_k]x_i-\mathbb{E}[\mu^2_k;m_k,s^2_k]/2\right)\right).\]
-By proportionality, we then have the variational update
-\[\phi_{ik}\propto \exp\left(\mathbb{E}[\mu_k;m_k,s^2_k]x_i-\mathbb{E}[\mu^2_k;m_k,s^2_k]/2\right).\]
-Now we find the variational density of the $k$th mixture component, again using equation (8) with the ELBO and ignoring terms independent of $p(.)$ and $\mu_k$:
-\[q(\mu_k;m_k,s^2_k)\propto \exp \left(\log p(\mu_k)+\sum^n_{i=1}\mathbb{E}[\log p(x_i|c_i,\bm{\mu});\phi_i, \textbf{m}_{-k},\textbf{s}^2_{-k}]\right).\]
-The log of this density is
-\begin{align*}
-\log q(\mu_k)&=\log p(\mu_k)+\sum_i^n \mathbb{E}[\log p(x_i|c_i,\bm{\mu});\phi_i,\textbf{m}_{-k},\textbf{s}^2_{-k}]+\text{const}\\
-&= \log p(\mu_k)+\sum_{i=1}^n\mathbb{E}[c_{ik}\log p(x_i|\mu_k);\phi_i]+\text{const}\\
-&= -\frac{\mu^2_k}{2\sigma^2}+\sum^n_{i=1}\mathbb{E}[c_{ik};\phi_i]\log p(x_i|\mu_k)+\text{const}\\
-&= -\frac{\mu^2_k}{2\sigma^2}+\sum^n_{i=1}\phi_{ik}\frac{-(x_i-\mu_k)^2}{2}+\text{const}\\
-&= -\frac{\mu^2_k}{2\sigma^2}+\sum^n_{i=1} \phi_{ik}x_i\mu_k-\frac{\phi_{ik}\mu^2_k}{2}+\text{const}\\
-&= \mu_k\left(\sum^n_{i=1}\phi_{ik}x_i\right)-\mu_k^2\left(\frac{1}{2\sigma^2}+\frac{\sum^n_{i=1}\phi_{ik}}{2}\right)+\text{const}\\
-&= -\frac{1}{2}\left(\frac{1}{\sigma^2}+\sum^n_{i=1}\phi_{ik}\right)\left(\mu_k^2-\frac{2\sum^n_{i=1}\phi_{ik}x_i}{1/\sigma^2+\sum^n_{i=1}\phi_{ik}}\mu_k\right)+\text{const}
-\end{align*}
-The density is therefore
-\[q(\mu_k)\propto \sqrt{\frac{1/\sigma^2+\sum^n_{i=1}\phi_{ik}}{2\pi}}\exp\left(-\frac{1}{2}\left(\frac{1}{\sigma^2}+\sum^n_{i=1}\phi_{ik}\right) \left(\mu_k-\frac{\sum^n_{i=1}\phi_{ik}x_i}{1/\sigma^2+\sum^n_{i=1}\phi_{ik}}\right)^2\right)\]
-It can be seen that $q(\mu_k)$ is a Gaussian distribution, so our variational updates for $m_k$ and $s^2_k$ are its mean and variance:
-\[m_k=\frac{\sum^n_{i=1}\phi_{ik}x_i}{1/\sigma^2+\sum^n_{i=1}\phi_{ik}}, \qquad s^2_k=\frac{1}{1/\sigma^2+\sum^n_{i=1}\phi_{ik}}.\]
-We can now formulate the CAVI algorithm (Algorithm 2), which simply iterates the cluster assignment probabilities $\phi_{ik}$ and the variational density parameters $m_k$ and $s^2_k$ until the ELBO converges.
-\begin{algorithm}
-\caption{CAVI Algorithm for Bayesian mixture of Gaussians}
-\KwData{Data $\textbf{x}$, Number of Gaussian components $K$, Hyperparameter value $\sigma^2$}
-\KwResult{Optimal variational factors $q(\mu_k;m_k,s^2_k)$ and $q(c_i;\bm{\phi_i)}$}
-\BlankLine
-\Begin{
-Randomly initialize parameters $\textbf{m}, \textbf{s}^2$ and $\bm{\phi}$\;
-\While{ELBO has not converged}{
-	\For{$i=1$ \KwTo $n$}{
-		Set $\phi_{ik}\propto\exp\left(\mathbb{E}[\mu_k;m_k,s^2_k]x_i-\mathbb{E}			[\mu^2_k;m_k,s^2_k]/2\right)$\;
-	}
-	\For{$k=1$ \KwTo $K$}{
-		Set $m_k=\frac{\sum_i\phi_{ik}x_i}{1/ \sigma^2+\sum_i\phi_{ik}}$\;
-		Set $s^2_k=\frac{1}{1/ \sigma^2+\sum_i \phi_{ik}}$\;
-	}
-	Compute $ELBO(\textbf{m},\textbf{s}^2,\bm{\phi})$\;
-}
-Return $q(\textbf{m},\textbf{s}^2,\bm{\phi})$\;
-}
-\end{algorithm}
-\subsubsection{References}
-To be organised properly and moved to the end later:\\
-$https://en.wikipedia.org/wiki/Variational_Bayesian_methods$ \\
-http://bjlkeng.github.io/posts/variational-bayes-and-the-mean-field-approximation/ \\
-https://arxiv.org/pdf/1601.00670.pdf \\
-Pattern recognition and machine learning by Bishop (2006) pages 461-dunno \\
-https://www.cs.cmu.edu/~epxing/Class/10708-17/notes-17/10708-scribe-lecture13.pdf \\
-http://dept.stat.lsa.umich.edu/~xuanlong/Papers/Nguyen-Wainwright-Jordan-10.pdf\\
-\newpage
-\subsection{Neural Networks}
-\subsubsection{Motivation}
-Originally, neural networks were an attempt creating an algorithm that mimics the human brain's method of solving problems. The first machines using a neural network structure were created in the 1950s, and they were used widely from the 1980s onwards, as computational power became sufficient for most applications at the time.\\
-\\
-One key feature of the brain structure is the capability for the neurons to adapt to suit any purpose. Neuroscientists have conducted experiments on animals where they rewired the optic nerve from the eye to the auditory cortex. They found that the auditory cortex eventually adapted to process the visual signals, and the animals were able to perform tasks requiring sight. This experiment can be repeated for almost any input sensor and the neurons will adjust accordingly to process the signals in a useful manner.\\
-\\
-It can be deduced that each neuron has a similar structure, regardless of its location in the brain, in which inputs in the form of electrical signals are changed in some way and outputted to other neurons. Furthermore, a network of neurons is capable of processing almost any input electrical signal in almost any way. These are the core principles behind neural networks.
-\subsubsection{Neural Network Structure}
-The primary goal of a neural network is to approximate some function $f^*(\textbf{x})$ using a mapping with parameters $\bm{\theta}$ from the input $\textbf{x}$ to the output $\textbf{y}$: $\textbf{y}=\textbf{f}_{\bm{\theta}}(\textbf{x})$. In fact, it is known that neural networks can approximate any function (universal approximation theorem). For example, a typical regression problem of estimating housing prices would have the network inputting the values of certain predictors such as size (continuous) and type of building (categorical), and outputting the price. Another example is the classification problem of recognizing handwritten digits (0-9) in a black and white image. There would be many inputs corresponding to the value of each pixel, and the network would have 10 outputs corresponding to the probability of each digit. Another function would be used to select the digit with the highest probability.\\
-\\
-Before discussing the overall structure of the neural network, we describe the structure of an individual node. A typical node takes in inputs from either the external input, or the outputs from other nodes, in addition to a 'bias' node, which is the equivalent of the intercept term in a regression problem. We label these inputs as $\textbf{x}=[x_0\quad x_1\quad x_2\quad x_3]^\top$, with $x_0=1$ corresponding to the bias node. These values are multiplied by weights $\bm{\theta}=[\theta_0\quad\theta_1\quad\theta_2\quad\theta_3]$, and then passed through an activation function that normalizes the result to a particular range. Denoting the overall node function with $h_{\bm{\theta}}(\textbf{x})$ and the activation function as $g(\bm{x})$, this can be shown in Figure idk below. \\
-\begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
-    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
-    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=50pt,inner sep=0pt]
-    \tikzstyle{input neuron}=[neuron, fill=green!50];
-    \tikzstyle{output neuron}=[neuron, fill=red!50];
-    \tikzstyle{hidden neuron}=[neuron, fill=blue!50];
-    \tikzstyle{annot} = [text width=4em, text centered]
-
-    % Draw the input layer nodes
- %   \foreach \name / \y in {0,...,3}
-    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
-        \node[input neuron, pin=left:Bias $x_0$] (I-0) at (0,-0) {$\theta_0 x_0$};
-	\foreach \name / \y in {1,...,3}
-    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
-        \node[input neuron, pin=left:Input $x_{\y}$] (I-\name) at (0,-2*\y) {$\theta_{\y}x_\y$};
-    % Draw the hidden layer nodes
-    %\foreach \name / \y in {1,...,5}
-     %   \path[yshift=0.5cm]
-      %      node[hidden neuron] (H-\name) at (\layersep,-\y cm) {};
-
-    % Draw the output layer node
-    \node[output neuron,pin={[pin edge={->}]right:$h_{\bm{\theta}}(x)$}, right of=I-2, node distance=4cm] (O) {$g(\sum^3_{i=0}\theta_ix_i)$};
-
-    % Connect every node in the input layer with every node in the
-    % hidden layer.
-   % \foreach \source in {1,...,4}
-    %    \foreach \dest in {1,...,5}
-     %       \path (I-\source) edge (H-\dest);
-
-    % Connect every node in the hidden layer with the output layer
-    \foreach \source in {0,...,3}
-        \path (I-\source) edge (O);
-
-    % Annotate the layers
-%    \node[annot,above of=H-1, node distance=1cm] (hl) {Hidden layer};
-    \node[annot,above of=I-0, node distance=1.5cm](il) {Weighted Inputs};
-    \node[annot,right of=il, node distance=4cm] {Activation Function};
-\end{tikzpicture}
-\\
-The three most common activation functions are:
-\begin{itemize}
-\item The rectified linear unit or ReLU activation function output is within the range $[0,\infty)$. It has the formula $g(x)=\max\{0,x\}$ corresponding to node function $h_{\bm{\theta}}(\textbf{x})=\max\{0,\bm{\theta}^\top\textbf{x}\}$.
-\item The sigmoid or logistic activation function outputs are restricted to $[0,1)$, with the formula $g(x)=(1+\exp(-x))^{-1}$ corresponding to node function  $h_{\bm{\theta}}(\textbf{x})=(1+\exp(-\bm{\theta}^\top\textbf{x}))^{-1}$.
-\item The hyperbolic tangent function output ranges between $(-1,1)$, denoted as $g(x)=\tanh(x)$ corresponding to $h_{\bm{\theta}}(\textbf{x})=\tanh(\bm{\theta}^\top\textbf{x})$.
-\end{itemize}
-A typical neural network is made up of layers of interconnected nodes. The first layer, called the input layer, does not have an activation function or weights, rather it simply acts as an input interface for the network. The outputs from the nodes can only be sent to other nodes in succeeding layers, with the exception of the final output layer; it's result is simply the output of the network. The layers of nodes between the input and output layer are called the hidden layers, as its weights and outputs are not useful to the user. Hidden layers can have any number of nodes, whilst the nodes in the input and output layers are restricted to the number of inputs and outputs the program has. The figure below illustrates a simple neural network with 3 inputs, 1 hidden layer with 3 nodes and 1 output node.\\
-\begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
-    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
-    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=25pt,inner sep=0pt]
-    \tikzstyle{input neuron}=[neuron, fill=green!50];
-    \tikzstyle{output neuron}=[neuron, fill=red!50];
-    \tikzstyle{hidden neuron}=[neuron, fill=blue!50];
-    \tikzstyle{annot} = [text width=4em, text centered]
-    
-	\node[input neuron, pin=left:Bias] (I-0) at (0,0) {$x_0$};
-    % Draw the input layer nodes
-    \foreach \name / \y in {1,...,3}
-    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
-        \node[input neuron, pin=left:Input \#\y] (I-\name) at (0,-\y) {$x_\y$};
-
- \path[yshift=0cm]
-            node[hidden neuron, pin=left:Bias] (H-0) at (2.5cm,0) {$a^{(2)}_0$};
-    % Draw the hidden layer nodes
-    \foreach \name / \y in {1,...,3}
-        \path[yshift=0cm]
-            node[hidden neuron] (H-\name) at (2.5cm,-\y) {$a^{(2)}_\y$};
-
-    % Draw the output layer node
-	\path[yshift=1cm]    
-    node[output neuron,pin={[pin edge={->}]right:$f_\Theta(x)$}, right of=H-2] (O) {$a_1^{(3)}$};
-
-    % Connect every node in the input layer with every node in the
-    % hidden layer.
-    \foreach \source in {0,...,3}
-        \foreach \dest in {1,...,3}
-            \path (I-\source) edge (H-\dest);
-
-    % Connect every node in the hidden layer with the output layer
-    \foreach \source in {0,...,3}
-        \path (H-\source) edge (O);
-
-    % Annotate the layers
-    \node[annot,above of=H-0, node distance=1cm] (hl) {Hidden layer};
-    \node[annot,left of=hl] {Input layer};
-    \node[annot,right of=hl] {Output layer};
-\end{tikzpicture}\\
-In this example, we denote the activation function as $g$, the output of unit $i$ in layer $j$ as $a^{(j)}_i$, and the matrix of weights from layer $j$ to $j+1$ as $\Theta^{(j)}$. We also use the subscript $\Theta^{(j)}_{m,n}$ where $m$ is the row of the matrix corresponding to the unit $m$ in layer $j+1$, and $n$ is the column of the matrix relating to unit $n$ in layer $j$.\\
-Individually, the outputs in the hidden nodes and the output node are:
-\[x_0=1,\qquad a_0^{(2)}=1\]
-\[a_1^{(2)}=g(\Theta^{(1)}_{1,0}x_0+\Theta^{(1)}_{1,1}x_1+\Theta^{(1)}_{1,2}x_2+\Theta^{(1)}_{1,3}x_3)\]
-\[a_2^{(2)}=g(\Theta^{(1)}_{2,0}x_0+\Theta^{(1)}_{2,1}x_1+\Theta^{(1)}_{2,2}x_2+\Theta^{(1)}_{2,3}x_3)\]
-\[a_3^{(2)}=g(\Theta^{(1)}_{3,0}x_0+\Theta^{(1)}_{3,1}x_1+\Theta^{(1)}_{3,2}x_2+\Theta^{(1)}_{3,3}x_3)\]
-\[f_\Theta(\bm{x})=a_1^{(3)}=g(\Theta^{(2)}_{1,0}a_0^{(2)}+\Theta^{(2)}_{1,1}a_1^{(2)}+\Theta^{(2)}_{1,2}a_2^{(2)}+\Theta^{(2)}_{1,3}a_3^{(2)})\]
-Denoting the weights outputting to unit $i$ in layer $j+1$ as $\bm{\theta}^{(j)}_i = [\Theta_{i,0}^{(j)}\quad \Theta_{i,1}^{(j)}\dots \Theta_{i,k}^{(j)}]^\top$ where $k+1$ is the number of inputs, we have the vectorized notation:
-\[a_0^{(2)}=1\]
-\[a_1^{(2)}=g(\bm{\theta}^{(1)^\top}_1\bm{x})\]
-\[a_2^{(2)}=g(\bm{\theta}^{(1)^\top}_2\bm{x})\]
-\[a_3^{(2)}=g(\bm{\theta}^{(1)^\top}_3\bm{x})\]
-\[f_{\bm{\theta}}(\bm{x})=a_1^{(3)}=g(\bm{\theta}_1^{(2)^\top}\bm{a}^{(2)})\] 
-where $\bm{a}^{(2)}=[a_0^{(2)}\quad a_1^{(2)}\quad a_2^{(2)}\quad a_3^{(3)}]^\top$.\\
-An even simpler notation is:
-\[a_0^{(2)}=1\]
-\[[a_1^{(2)}\quad a_2^{(2)}\quad a_3^{(2)}]=g(\Theta^{(1)^\top}\bm{x})\]
-\[f_\Theta (\bm{x})=\bm{a}^{(3)}=g(\Theta^{(2)^\top}\bm{a}^{(2)})\]
-\subsubsection{Bias-per-node Representation}
-In practice, the bias node is often replaced with an intercept term added to the weighted input of a node before it passes through the activation function. These intercept terms are optimized alongside the weights. This representation is preferred in code as it makes the dimensionality of the weight matrices consistent, as the number of inputs of a layer becomes equal to the number of outputs of the previous layer. In both cases, the bias takes the form of a flat value added to the weighted inputs, which can be optimized, so there is no practical difference between these two notations. The sum of intercept terms in a layer is equivalent to the weight corresponding to a bias node for the layer. Below, we repeat the example of an individual node with three inputs, but with an individual intercept $b_i$ per node.\\
-\begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
-    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
-    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=50pt,inner sep=0pt]
-    \tikzstyle{input neuron}=[neuron, fill=green!50];
-    \tikzstyle{output neuron}=[neuron, fill=red!50];
-    \tikzstyle{hidden neuron}=[neuron, fill=blue!50];
-    \tikzstyle{annot} = [text width=4em, text centered]
-
-    % Draw the input layer nodes
- %   \foreach \name / \y in {0,...,3}
-    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
-      %  \node[input neuron, pin=left:Bias $x_0$] (I-0) at (0,-0) {$\theta_0 x_0$};
-	\foreach \name / \y in {1,...,3}
-    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
-        \node[input neuron, pin=left:Input $x_{\y}$] (I-\name) at (0,-2*\y) {$\theta_{\y}x_\y+b_\y$};
-    % Draw the hidden layer nodes
-    %\foreach \name / \y in {1,...,5}
-     %   \path[yshift=0.5cm]
-      %      node[hidden neuron] (H-\name) at (\layersep,-\y cm) {};
-
-    % Draw the output layer node
-    \node[output neuron,pin={[pin edge={->}]right:$h_{\bm{\theta}}(x)$}, right of=I-2, node distance=4cm] (O) {$g(\sum^3_{i=1}(\theta_ix_i+b_i))$};
-
-    % Connect every node in the input layer with every node in the
-    % hidden layer.
-   % \foreach \source in {1,...,4}
-    %    \foreach \dest in {1,...,5}
-     %       \path (I-\source) edge (H-\dest);
-
-    % Connect every node in the hidden layer with the output layer
-    \foreach \source in {1,...,3}
-        \path (I-\source) edge (O);
-
-    % Annotate the layers
-%    \node[annot,above of=H-1, node distance=1cm] (hl) {Hidden layer};
-    \node[annot,above of=I-1](il) {Weighted Inputs};
-    \node[annot,right of=il, node distance=4cm] {Activation Function};
-\end{tikzpicture} \\
-Note here that $\sum^3_{i=1}b_i=\theta_0x_0$. The representation of the simple neural network example in the previous section becomes:
-\[a_1^{(2)}=g(\Theta^{(1)}_{1,1}x_1+b^{(1)}_1+\Theta^{(1)}_{1,2}x_2+b^{(1)}_2+\Theta^{(1)}_{1,3}x_3+b^{(1)}_3)\]
-\[a_2^{(2)}=g(\Theta^{(1)}_{2,1}x_1+b^{(1)}_1+\Theta^{(1)}_{2,2}x_2+b^{(1)}_2+\Theta^{(1)}_{2,3}x_3+b^{(1)}_3)\]
-\[a_3^{(2)}=g(\Theta^{(1)}_{3,1}x_1+b^{(1)}_1+\Theta^{(1)}_{3,2}x_2+b^{(1)}_2+\Theta^{(1)}_{3,3}x_3+b^{(1)}_3)\]
-\[f_\Theta(\bm{x})=a_1^{(3)}=g(\Theta^{(2)}_{1,1}a_1^{(2)}+b^{(2)}_1+\Theta^{(2)}_{1,2}a_2^{(2)}+b^{(2)}_2+\Theta^{(2)}_{1,3}a_3^{(2)}+b^{(2)}_3)\]
-or in vectorized notation,
-\[\bm{a}^{(2)}=g(\Theta^{(1)^\top}\bm{x})\]
-\[f_\Theta(\bm{x})=\bm{a}^{(3)}=g(\Theta^{(2)^\top}\bm{a}^{(2)})\]
-\begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
-    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
-    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=25pt,inner sep=0pt]
-    \tikzstyle{input neuron}=[neuron, fill=green!50];
-    \tikzstyle{output neuron}=[neuron, fill=red!50];
-    \tikzstyle{hidden neuron}=[neuron, fill=blue!50];
-    \tikzstyle{annot} = [text width=4em, text centered]
-    
-	%\node[input neuron, pin=left:Bias] (I-0) at (0,0) {$x_0$};
-    % Draw the input layer nodes
-    \foreach \name / \y in {1,...,3}
-    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
-        \node[input neuron, pin=left:Input \#\y] (I-\name) at (0,-\y) {$x_\y$};
-
- %\path[yshift=0cm]
-  %          node[hidden neuron, pin=left:Bias] (H-0) at (2.5cm,0) {$a^{(2)}_0$};
-    % Draw the hidden layer nodes
-    \foreach \name / \y in {1,...,3}
-        \path[yshift=0cm]
-            node[hidden neuron] (H-\name) at (2.5cm,-\y) {$a^{(2)}_\y$};
-
-    % Draw the output layer node
-	\path[yshift=1cm]    
-    node[output neuron,pin={[pin edge={->}]right:$f_\Theta(x)$}, right of=H-2] (O) {$a_1^{(3)}$};
-
-    % Connect every node in the input layer with every node in the
-    % hidden layer.
-    \foreach \source in {1,...,3}
-        \foreach \dest in {1,...,3}
-            \path (I-\source) edge (H-\dest);
-
-    % Connect every node in the hidden layer with the output layer
-    \foreach \source in {1,...,3}
-        \path (H-\source) edge (O);
-
-    % Annotate the layers
-    \node[annot,above of=H-1, node distance=1cm] (hl) {Hidden layer};
-    \node[annot,left of=hl] {Input layer};
-    \node[annot,right of=hl] {Output layer};
-\end{tikzpicture}\\
-\newpage
-\subsubsection{Optimization}
-The goal of optimizing the network is to train the weights of the network such that a loss function, which we will denote as $L$ as minimized. A common loss function is the squared error between the batch of network outputs and the actual results:
-\[\min_\Theta L(\Theta)=\frac12 (\bm{y}-\bm{f}_\Theta(\bm{x}))^\top(\bm{y}-\bm{f}_\Theta(\bm{x})).\]
-The $\frac12$ factor is included to eliminate the factor of 2 in the derivative, simplifying the derivations. The derivative is multiplied by an arbitrary training rate during optimization so there is no significant impact of including that term.\\
-The weights are initialized randomly, and their values are used to calculate the partial derivative of the loss function with respect to each individual weight (and intercept). These partial derivatives are used in the gradient-based optimization of the weights. There are many variations of neural network optimization algorithms, but they are all based off gradient descent, which we will cover in this section.\\
-Gradient descent is an algorithm used to find the minimizer $\bm{x}^*$ of a function $f$ by iterating on an arbitrary point $\bm{x}^{(n)}$, taking steps proportional to a descent direction $\bm{s}^{(n)}$:
-\[\bm{x}^{(n+1)}=\bm{x}^{(n)}+\alpha \bm{s}^{(n)},\qquad \alpha>0.\] 
-\textbf{Definition:} At point $\bm{x}^{(n)}$, $\bm{s}^{(n)}$ is a descent direction if $\nabla f(\bm{x}^{(n)})^\top \bm{s}^{(n)}<0$.\\
-\textbf{Preposition:} If $\bm{s}^{(n)}$ is a descent direction, then for small $\alpha>0$, $f(\bm{x}^{(n)}+\alpha \bm{s}^{(n)})<f(\bm{x}^{(n)})$.\\
-Proof: (proof copied from jeyakumar optimization lecture notes topic 6)\\
-First we show that
-\[\frac{d}{d\alpha}f(\bm{x}^{(n)}+\alpha \bm{s}^{(n)})=\nabla f(\bm{x}^{(n)}+\alpha \bm{s}^{(n)})^\top \bm{s}^{(n)}.\]
-where $\bm{x}^{(n)}=[x_1^{(n)},\dots,x_n^{(k)}]^\top$ and $\bm{s}^{(k)}=[s_1^{(n)},\dots,s_k^{(n)}]^\top$.\\
-Let
-\[x_i^{(n)}(\alpha)=x_i^{(n)}+\alpha s_i^{(n)},\quad i=1,\dots,n\]
-so that $\bm{x}^{(n)}+\alpha \bm{s}^{(n)}=[x_1^{(n)}(\alpha),\dots,x_k^{(n)}(\alpha)]^\top$.
-We have
-\begin{align*}
-\frac{d}{d\alpha}f(\bm{x}^{(n)}+\alpha\bm{s}^{(n)})&= \frac{d}{d\alpha}f(x_1^{(n)},\dots,x_k^{(n)}(\alpha))\\
-&= \frac{\partial f(\bm{x})}{\partial x_1}|_{\bm{x}=\bm{x}^{(n)}+\alpha \bm{s}^{(n)}}\frac{d(x_1^{(n)}(\alpha)}{d\alpha}+\dots+\frac{\partial f(\bm{x})}{\partial x_k}|_{\bm{x}=\bm{x}^{(n)}+\alpha \bm{s}^{(n)}}\frac{d(x_k^{(n)}(\alpha)}{d\alpha}\\
-&=\frac{\partial f(\bm{x})}{\partial x_1}|_{\bm{x}=\bm{x}^{(n)}+\alpha \bm{s}^{(n)}}\bm{s}_1^{(n)}+\dots+\frac{\partial f(\bm{x})}{\partial x_n}|_{\bm{x}=\bm{x}^{(n)}+\alpha \bm{s}^{(n)}}\bm{s}_k^{(n)}\\
-&=\nabla f(\bm{x}^{(n)}+\alpha \bm{s}^{(n)})^\top \bm{s}^{(n)}
-\end{align*}
-Setting $\alpha=0$ and using definition (),
-\[\frac{d}{d\alpha}f(\bm{x}^{(n)}+\alpha\bm{s}^{(n)})|_{\alpha=0}=\nabla f(\bm{x}^{(n)})^\top \bm{s}^{(n)}<0\]
-Therefore for small $\alpha>0$,
-\[f(x^{(n)}+\alpha s^{(n)})<f(x^{(n)}).\]
-QED.\\
-\\
-A common choice of descent direction is the negative of the gradient $-\nabla f(\bm{x}^{(n)})$, leading to the method of steepest descent. It is clearly a descent direction as $-\nabla f(\bm{x}^{(n)})^\top\nabla f(\bm{x}^{(n)})=-||\nabla f(\bm{x}^{(n)})||^2<0$.\\
-By nature, gradient descent is guaranteed to converge to a local minimum, which is problematic if the function has local minima which differ from the global minima. This is not an issue if the function is convex, as any local minima are also global minima, but neural networks are not convex as they can approximate any function, including non-convex functions. Those interested in global optimization can refer to (Deterministic Global Optimization, Floudas). In neural network training there are currently no commonly used methods of guaranteeing a global minimum, but the path may escape from a local minimum if randomness is introduced to the training process. This can be accomplished by stochastic gradient descent.\\
-Typically, the entire batch of data is used in each iteration to calculate the loss function and gradient values required for gradient descent. This method of batch gradient descent is very slow for large datasets, and as previously described, its smoothness can cause the algorithm to converge to local minima. In stochastic gradient descent, only one observation is used per iteration, so the latent randomness associated with each observation effectively leads to noise added to each step. In practice, a compromise between stochastic and batch gradient descent is typically used; mini-batch gradient descent involves using several observations per iteration, leading to a reduction in the gradient variance.\\
-Gradient descent convergence can be improved by using an adaptive learning rate (ie. decreasing $\alpha$ over the iterations), as a low learning rate in the process will make convergence slow, whilst a high learning rate can cause the algorithm to oscillate around the minima.\\
-The Adam algorithm (Kingma, Ba 2014) incorporates these two concepts to form an effective optimization algorithm that is widely used to optimize neural networks. In this thesis, we use this algorithm, but omit the specifics as they are beyond the scope of this thesis.
-\newpage
-\subsubsection{Back-propogation}
-In the back-propogation algorithm, the goal is to find the partial derivative of the loss function with respect to the individual weights \[\frac{\partial}{\partial\Theta_{m,n}^{(j)}}L(\Theta),\]
-so that gradient descent can be performed to optimize the weights. For each training sample $(\bm{x}^{(I)},\bm{y}^{(I)})$, $I=1,\dots,N$, the input signal is propogated forward throughout the network to calculate $\bm{a}^{(j)}$ for $j=2,\dots,J$, where $J$ is the total number of layers. The difference between the network output and the ideal result is calculated with 
-\[\bm{\delta}^{(J)}=\bm{a}^{(J)}-\bm{y}^{(I)},\] 
-and this error is propogated backwards through the network to find $\bm{\delta}^{(J-1)},\dots,\bm{\delta}^{(2)}$ by using the formula 
-\[\bm{\delta}^{(j)}=((\Theta^{(j)})^\top \bm{\delta}^{(j+1)}).*g'(\Theta^{(j)^\top} \bm{a}^{(j)}),\] 
-where $.*$ denotes element-wise multiplication and $g'$ is the derivative of the activation function. In this case, $g'$ takes in the sum of its weighted inputs, and as an example, the sigmoid activation function has the derivative $g'(\Theta^{(j)^\top} \bm{a}^{(j)})=\bm{a}^{(j)}.*(1-\bm{a}^{(j)})$. Note that $\bm{\delta}^{(1)}$ does not need to be calculated as the input layer is not weighted. \\
-The errors for each layer are multiplied by each of the preceeding layer's activation outputs to form the estimated partial derivative for the training sample. This result is added to an accumulator matrix, so that the average partial derivative from all the training samples can be computed:
-\[\Delta^{(j)}_{m,n}:=\Delta^{(j)}_{m,n}+a_n^{(j)}\delta_m^{(j+1)}\]
-or in matrix-vector form.
-\[\Delta^{(j)}:=\Delta^{(j)}+\bm{\delta}^{(j+1)}(\bm{a}^{(j)})^\top.\]
-Finally, we divide the accumulator matrix entries by the number of training samples to find the average partial derivative of the cost function with respect to the weights:
-\[\frac{\partial}{\partial \Theta^{(j)}_{m,n}}L(\Theta)=\frac1N \Delta_{m,n}^{(j)}\]
-When $n\neq0$ (i.e. not considering the bias node), we can optionally add a regularizer term $\lambda > 0$ which decreases the magnitude of the weights, preventing overfitting. 
-\[\frac{\partial}{\partial \Theta^{(j)}_{m,n}}L(\Theta)=\frac1N (\Delta_{m,n}^{(j)}+\lambda \Theta_{m,n}^{(j)})\]
-There is no significant change when the bias node is regularized.\\
-Pseudocode for the back-propogation algorithm is shown below.\\
-\begin{algorithm}
-\caption{Back-Propogation Algorithm}
-\KwData{Training Data $\{(\bm{x}^{(1)},\bm{y}^{(1)}),\dots ,(\bm{x}^{(N)},\bm{y}^{(N)})\}$, Regularizer Term $\lambda$}
-\KwResult{Cost Function Partial Derivatives $\frac{\partial}{\partial\Theta^{(j)}_{m,n}}L(\Theta)$}
-\BlankLine
-\Begin{Randomly initialize weights $\Theta$\;
-Set $\Delta^{(j)}_{m,n}=0 \quad \forall j,m,n$\;
-\For{$I=1$ \KwTo $N$}{
-Set $\bm{a}^{(1)}=\bm{x}^{(I)}$\;
-\For{$j=2$ \KwTo $J$}{
-Set $\bm{a}^{(j)}=\Theta^{(j-1)^\top}\bm{a}^{(j-1)}$\;}
-Set $\bm{\delta}^{(J)}=\bm{a}^{(J)}-\bm{y}^{(I)}$\;
-\For{$j=J-1$ \KwTo $2$}{
-Set $\bm{\delta}^{(j)}=((\Theta^{(j)})^\top \bm{\delta}^{(j+1)}).*g'(\Theta^{(j)^\top}\bm{a}^{(j)})$\;
-}
-\For{$j=1$ \KwTo $J-1$}{
-Set $\Delta^{(j)}=\Delta^{(j)}+\bm{\delta}^{(j+1)}(\bm{a}^{(j)})^\top$\;
-}}
-\For{all $j,m,n$}{
-\eIf{$n=0$}{Set $\frac{\partial}{\partial\Theta^{(j)}_{m,n}}L(\Theta)=\frac1N \Delta^{(j)}_{m,n}$\;
-}{Set $\frac{\partial}{\partial\Theta^{(j)}_{m,n}}L(\Theta)=\frac1N (\Delta^{(j)}_{m,n}+\lambda\Theta^{(j)}_{m,n})$\;}}}
-\end{algorithm}
-Having derived the partial derivatives of the loss function with respect to the individual weights, we can use gradient descent or some other optimization method to update the weights. The partial derivatives are re-calculated after each optimization update until convergence.
-\newpage
-\subsubsection{Weight Initialization}
-Proper initialization of the weights is ideal to improve convergence, as if the weights are too low, then the nodal outputs will continually decrease through the layers and become very small, requiring many iterations of back-propogation training to fix. Similarly, if the weights are too high, then the result output of forward propogation will be extremely large. In this section we discuss Xavier Initialization, which aims to keep the signal variance constant throughout the network. To derive the initialization algorithm, first consider a single node with $n$ inputs, and let $z$ denote the weighted sum of the inputs $\bm{\theta}^\top\textbf{x}$ before it is passed through the activation function. This is written as
-\[z=\theta_0x_0+\theta_1x_1+\dots+\theta_nx_n.\]
-$x_0$ is a constant term, so $\Var(\theta_0x_0)=0$. Now under the assumption that the inputs and weights have 0 mean, we find the variance of the other terms:
-\[\Var(\theta_ix_i)=\E[x_i]^2\Var(\theta_i)+\E[\theta_i]^2\Var(x_i)+\Var(\theta_i)\Var(x_i)=\Var(\theta_i)\Var(x_i).\]
-Assuming that the weights and inputs are also independent and identically distributed, we have
-\[\Var(z)=n\Var(\theta_i)\Var(x_i).\]
-Since we want constant variance of the signals throughout the network, we set $\Var(z)=\Var(x_i)$ and the result follows:
-\[\Var(\theta_i)=\frac1n.\]
-However, this result only considers forward propogation of the signal. A variation of this result accounts for back propogation by averaging the number of input and output nodes:
-\[\Var(\theta_i)=\frac{2}{n_{in}+n_{out}}.\]
-Thus, to enforce constant signal variance throughout the network, the ideal initialization of weights is to sample from a distribution, typically uniform or Gaussian, with $0$ mean and $\frac{2}{n_{in}+n_{out}}$ variance:
-\[\theta_i\sim U\left(-\sqrt{\frac{6}{n_{in}+n_{out}}},\sqrt{\frac{6}{n_{in}+n_{out}}}\right)\]
-or
-\[\theta_i\sim N\left(0,\frac{2}{n_{in}+n_{out}}\right).\]
-\subsubsection{References}
-http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf\\
-Machine Learning by Andrew Ng Stanford online course\\
-\newpage
 \section{Experiments}
 \subsection{"Sprinkler" Example}
 \subsubsection{Problem Context}
@@ -1019,9 +1037,101 @@ This problem exhibits "explaining away" (Explaining "Explaining away" Wellman 19
 \\
 In the experiment, we let $\sigma^2=2$, and consider observations $x=0,5,8,12,50$. To plot the true posterior $p(z|x)$, we simply use a range of equally spaced points from $(z_1,z_2)=[(-5,-5),\dots, (5,5)]$ to form the log prior values and log likelihood values for each observation value, and graph the exponential of the sum of these values. The plots are as shown in Figure (\textbf{need to insert figure}).\\
 \\
-As $x$ increases, the posteriors become increasingly multimodal and unusually shaped. Clearly, a flexible model for the posterior distribution is required, as a typical Gaussian model is too simple here.
-\subsubsection{Network Structure}
+As $x$ increases, the posteriors become increasingly multimodal and unusually shaped. Clearly, a flexible model for the posterior distribution is required, as a typical multivariate Gaussian model is too simple here.
+\subsubsection{Program Structure}
+As described in section (), our generator $\mathcal{G}_\phi(x,\epsilon)$ is a neural network that takes in noise $\epsilon\sim \pi(\epsilon)$ along with the data sample $x\sim q^*(x)$ to create a sample from the variational posterior distribution $z\sim q_\phi(z,x)$. In this experiment, we have 3 noise inputs $\epsilon_1,\epsilon_2,\epsilon_3$ along with 1 data input $x$, and 2 posterior outputs $z_1, z_2$. The structure of the neural network is as depicted in Figure idk:
+\begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
+    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=25pt,inner sep=0pt]
+    \tikzstyle{input neuron}=[neuron, fill=green!50];
+    \tikzstyle{output neuron}=[neuron, fill=red!50];
+    \tikzstyle{hidden neuron}=[neuron, fill=blue!50];
+    \tikzstyle{annot} = [text width=4em, text centered]
+    
+	%\node[input neuron, pin=left:Bias] (I-0) at (0,0) {$x_0$};
+    % Draw the input layer nodes
+    %\foreach \name / \y in {1,...,3}
+    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+    \node[input neuron, pin=left:Input $x$] (I-1) at (0,-1) {$1$};
+	\node[input neuron, pin=left:Input $\bm{\epsilon}$] (I-2) at (0,-3) {$3$};
 
+    \path[yshift=0cm] node[hidden neuron] (H-11) at (2.0cm,-1) {$40$};
+	\path[yshift=0cm] node[hidden neuron] (H-12) at (4.0cm,-1) {$80$};
+    \path[yshift=0cm] node[hidden neuron] (H-2) at (4.0cm,-3) {$80$};
+    \path[yshift=0cm] node[hidden neuron] (H-3) at (6.0cm,-2) {$160$};
+    \path[yshift=0cm] node[hidden neuron] (H-31) at (8.0cm,-2) {$40$};
+    \path[yshift=0cm] node[hidden neuron] (H-32) at (10.0cm,-2) {$80$};
+	\path[yshift=0cm] node[output neuron,pin={[pin edge={->}]right:Output $\bm{z}$}] (O) at (12.0cm, -2) {$2$};
+    \path (I-1) edge (H-11);
+    \path (H-11) edge (H-12);
+	\path (I-2) edge (H-2);
+	\path (H-12) edge (H-3);
+	\path (H-2) edge (H-3);
+	\path (H-3) edge (H-31);
+	\path (H-31) edge (H-32);
+	\path (H-32) edge (O);
+    % Annotate the layers
+    \node[annot,above of=I-1, node distance=1cm] {Linear};
+    \node[annot,above of=I-2, node distance=1cm] {Linear};
+    \node[annot,above of=H-11, node distance=1cm] {ReLU};
+    \node[annot,above of=H-12, node distance=1cm] {ReLU};
+    \node[annot,above of=H-2, node distance=1cm] {ReLU};
+    \node[annot,above of=H-3, node distance=1cm] {Concat.};
+    \node[annot,above of=H-31, node distance=1cm] {ReLU};
+    \node[annot,above of=H-32, node distance=1cm] {ReLU};
+    \node[annot,above of=O, node distance=1cm] {Linear};
+\end{tikzpicture}\\
+The number inside the node indicates how many nodes the layer has, and the text above the node describes the activation function in the layer. Recall that the input layer does not have an activation function (Linear), and Rectified Linear Units (ReLU) are used for most of the hidden layers due to their many advantages. In the Concat. layer, the two input vectors are concatenated and there is no activation function placed on the layer. Since arbitrary probability distribution samples can take any real number, we do not use an activation function for the output layer.\\
+\\
+The structure of the estimator (discriminator $\mathcal{D}_\alpha(z,x)$ or ratio estimator $\mathcal{R}_\alpha(z,x)$) is similar to that of the the generator, with an additional hidden layer associated with the $z$ input and a different activation function for the output layer, corresponding to the estimator's identity. Note that in terms of code, the only differences between class probability estimation and divergence minimisation are the activation function of the estimator's output layer and the loss functions being minimised. A sigmoid output layer is used for a discriminator, whilst a rectified linear output is used for a ratio estimator. The estimator structure is shown in Figure below:\\
+\begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
+    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=25pt,inner sep=0pt]
+    \tikzstyle{input neuron}=[neuron, fill=green!50];
+    \tikzstyle{output neuron}=[neuron, fill=red!50];
+    \tikzstyle{hidden neuron}=[neuron, fill=blue!50];
+    \tikzstyle{annot} = [text width=4em, text centered]
+    
+	%\node[input neuron, pin=left:Bias] (I-0) at (0,0) {$x_0$};
+    % Draw the input layer nodes
+    %\foreach \name / \y in {1,...,3}
+    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+    \node[input neuron, pin=left:Input $x$] (I-1) at (0,-1) {$1$};
+	\node[input neuron, pin=left:Input $\bm{z}$] (I-2) at (0,-3) {$2$};
+
+    \path[yshift=0cm] node[hidden neuron] (H-11) at (2.0cm,-1) {$40$};
+	\path[yshift=0cm] node[hidden neuron] (H-12) at (4.0cm,-1) {$80$};
+	\path[yshift=0cm] node[hidden neuron] (H-21) at (2.0cm,-3) {$40$};
+    \path[yshift=0cm] node[hidden neuron] (H-22) at (4.0cm,-3) {$80$};
+    \path[yshift=0cm] node[hidden neuron] (H-3) at (6.0cm,-2) {$160$};
+    \path[yshift=0cm] node[hidden neuron] (H-31) at (8.0cm,-2) {$40$};
+    \path[yshift=0cm] node[hidden neuron] (H-32) at (10.0cm,-2) {$80$};
+	\path[yshift=0cm] node[output neuron,pin={[pin edge={->}]right:Output $\genfrac{}{}{0pt}{}{\hat{\frac{q(z,x)}{q(z,x)+p(z,x)}}}{\hat{\frac{q(z,x)}{p(z,x)}}}$}] (O) at (12.0cm, -2) {$2$};
+    \path (I-1) edge (H-11);
+    \path (H-11) edge (H-12);
+	\path (I-2) edge (H-21);
+	\path (H-21) edge (H-22);
+	\path (H-12) edge (H-3);
+	\path (H-22) edge (H-3);
+	\path (H-3) edge (H-31);
+	\path (H-31) edge (H-32);
+	\path (H-32) edge (O);
+    % Annotate the layers
+    \node[annot,above of=I-1, node distance=1cm] {Linear};
+    \node[annot,above of=I-2, node distance=1cm] {Linear};
+    \node[annot,above of=H-11, node distance=1cm] {ReLU};
+    \node[annot,above of=H-12, node distance=1cm] {ReLU};
+    \node[annot,above of=H-21, node distance=1cm] {ReLU};
+    \node[annot,above of=H-22, node distance=1cm] {ReLU};
+    \node[annot,above of=H-3, node distance=1cm] {Concat.};
+    \node[annot,above of=H-31, node distance=1cm] {ReLU};
+    \node[annot,above of=H-32, node distance=1cm] {ReLU};
+    \node[annot,above of=O, node distance=1cm] {Sigmoid($\mathcal{D}$)/ ReLU($\mathcal{R}$)};
+\end{tikzpicture}\\
+The network weights are initialized with Xavier initialization, and trained using the Adam optimizer with learning rate $0.00001$. The network is only trained on the data values $x=0,5,8,12,50$; in each training iteration, 500 samples are taken for each x-value, corresponding to a batch size of 2500. This relatively large batch size makes training more consistent, as performing back-propagation along a stochastic neural network can lead to random and erratic training. The estimator is pre-trained for 5000 iterations to ensure that it converges to its optimal value. This is particularly desired as training the generator with an inaccurate ELBO estimate is pointless. Afterwards, the program runs for 50000 iterations, alternating between 100 training steps of the estimator and 1 training step of the generator. This process for class probability estimation and divergence minimisation is shown in Algorithm and Algorithm below:
+\begin{algorithm}
+
+\end{algorithm}
 \subsubsection{Results}
 nothing works lol
 \subsection{Lotka-Volterra Predator-Prey model}

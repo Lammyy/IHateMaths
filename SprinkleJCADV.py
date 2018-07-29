@@ -148,7 +148,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
 #with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     #Pre-Train Discriminator
-    for i in range(1001):
+    for i in range(5001):
         z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
         xin=np.repeat(xgen,batch_size)
         xin=xin.reshape(5*batch_size, 1)
@@ -194,7 +194,12 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             #plug into posterior
             z_samples=posterior(x_gen,noise)
             z_samples=tf.reshape(z_samples,[xgen.shape[0], N_samples, 2]).eval()
-            #print(z_samples)
+            z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
+            xin=np.repeat(xgen,batch_size)
+            xin=xin.reshape(5*batch_size, 1)
+            noise=np.random.randn(5*batch_size, noise_dim)
+            feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
+            dl, NELBO = sess.run([disc_loss, nelbo], feed_dict=feed_dict)
             #Plots
             for i in range(5):
                 plt.subplot(2,5,i+1)
@@ -214,6 +219,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
                 plt.ylim([xmin,xmax])
                 plt.xticks([])
                 plt.yticks([]);
+            plt.text(-33,20,'Disc loss: %f, NELBO: %f' % (dl, NELBO))
             plt.savefig('FiguresJCADV\Fig %i'%(j))
             plt.close()
 
@@ -251,4 +257,3 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
         plt.xticks([])
         plt.yticks([]);
     plt.show()
-    

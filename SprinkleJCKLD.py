@@ -188,6 +188,12 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             #plug into posterior
             z_samples=posterior(x_gen,noise)
             z_samples=tf.reshape(z_samples,[xgen.shape[0], N_samples, 2]).eval()
+            z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
+            xin=np.repeat(xgen,batch_size)
+            xin=xin.reshape(5*batch_size, 1)
+            noise=np.random.randn(5*batch_size, noise_dim)
+            feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
+            dl, NELBO = sess.run([ratio_loss, nelbo], feed_dict=feed_dict)
             #print(z_samples)
             #Plots
             for i in range(5):
@@ -208,6 +214,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
                 plt.ylim([xmin,xmax])
                 plt.xticks([])
                 plt.yticks([]);
+            plt.text(-33,20,'Ratio loss: %f, NELBO: %f' % (dl, NELBO))
             plt.savefig('FiguresJCKLD\Fig %i'%(j))
             plt.close()
 
