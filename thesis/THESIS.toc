@@ -36,8 +36,5 @@
 \contentsline {subsubsection}{\numberline {3.1.1}Problem Context}{}{subsubsection.3.1.1}
 \contentsline {subsubsection}{\numberline {3.1.2}Program Structure}{}{subsubsection.3.1.2}
 \contentsline {subsubsection}{\numberline {3.1.3}Results}{}{subsubsection.3.1.3}
-\contentsline {subsection}{\numberline {3.2}Lotka-Volterra Predator-Prey model}{}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.2}Autoencoding Variational Bayes (MNIST image generation)}{}{subsection.3.2}
 \contentsline {subsubsection}{\numberline {3.2.1}Problem Context}{}{subsubsection.3.2.1}
-\contentsline {subsection}{\numberline {3.3}Autoencoding Variational Bayes (MNIST image generation)}{}{subsection.3.3}
-\contentsline {subsubsection}{\numberline {3.3.1}Problem Context}{}{subsubsection.3.3.1}
-\contentsline {subsection}{\numberline {3.4}no idea lol}{}{subsection.3.4}
