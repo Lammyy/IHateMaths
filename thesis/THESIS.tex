@@ -99,7 +99,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % paper margins settings.
 \pagestyle{fancy}  
-\pagenumbering{gobble} 
+\pagenumbering{arabic} 
 \oddsidemargin0cm
 \hoffset-1cm
 \voffset-0.5cm
@@ -294,6 +294,7 @@ The density is therefore
 It can be seen that $q(\mu_k)$ is a Gaussian distribution, so our variational updates for $m_k$ and $s^2_k$ are its mean and variance:
 \[m_k=\frac{\sum^n_{i=1}\phi_{ik}x_i}{1/\sigma^2+\sum^n_{i=1}\phi_{ik}}, \qquad s^2_k=\frac{1}{1/\sigma^2+\sum^n_{i=1}\phi_{ik}}.\]
 We can now formulate the CAVI algorithm (Algorithm 2), which simply iterates the cluster assignment probabilities $\phi_{ik}$ and the variational density parameters $m_k$ and $s^2_k$ until the ELBO converges.
+\newpage
 \begin{algorithm}
 \caption{CAVI Algorithm for Bayesian mixture of Gaussians}
 \KwData{Data $\textbf{x}$, Number of Gaussian components $K$, Hyperparameter value $\sigma^2$}
@@ -476,7 +477,7 @@ In practice, the bias node is often replaced with an intercept term added to the
 
     % Annotate the layers
 %    \node[annot,above of=H-1, node distance=1cm] (hl) {Hidden layer};
-    \node[annot,above of=I-1](il) {Weighted Inputs};
+    \node[annot,above of=I-1, node distance=1.4cm](il) {Weighted Inputs};
     \node[annot,right of=il, node distance=4cm] {Activation Function};
 \end{tikzpicture} \\
 Note here that $\sum^3_{i=1}b_i=\theta_0x_0$. The representation of the simple neural network example in the previous section becomes:
@@ -575,7 +576,7 @@ Therefore for small $\alpha>0$,
 QED.\\
 \\
 A common choice of descent direction is the negative of the gradient $-\nabla f(\bm{x}^{(n)})$, leading to the method of steepest descent. It is clearly a descent direction as $-\nabla f(\bm{x}^{(n)})^\top\nabla f(\bm{x}^{(n)})=-||\nabla f(\bm{x}^{(n)})||^2<0$.\\
-By nature, gradient descent is guaranteed to converge to a local minimum, which is problematic if the function has local minima which differ from the global minima. This is not an issue if the function is convex, as any local minima are also global minima, but neural networks are not convex as they can approximate any function, including non-convex functions. Those interested in global optimization can refer to (Deterministic Global Optimization, Floudas). In neural network training there are currently no commonly used methods of guaranteeing a global minimum, but the path may escape from a local minimum if randomness is introduced to the training process. This can be accomplished by stochastic gradient descent.\\
+By nature, gradient descent is guaranteed to converge to a local minimum, which is problematic if the function has local minima which differ from the global minima. This is not an issue in this thesis, as all the loss functions we use are convex, so any local minima are also global minima. Those interested in global optimization can refer to (Deterministic Global Optimization, Floudas). When training a neural network on a non-convex loss function there are currently no commonly used methods of guaranteeing a global minimum, but the path may escape from a local minimum if randomness is introduced to the training process. This can be accomplished by stochastic gradient descent.\\
 Typically, the entire batch of data is used in each iteration to calculate the loss function and gradient values required for gradient descent. This method of batch gradient descent is very slow for large datasets, and as previously described, its smoothness can cause the algorithm to converge to local minima. In stochastic gradient descent, only one observation is used per iteration, so the latent randomness associated with each observation effectively leads to noise added to each step. In practice, a compromise between stochastic and batch gradient descent is typically used; mini-batch gradient descent involves using several observations per iteration, leading to a reduction in the gradient variance.\\
 Gradient descent convergence can be improved by using an adaptive learning rate (ie. decreasing $\alpha$ over the iterations), as a low learning rate in the process will make convergence slow, whilst a high learning rate can cause the algorithm to oscillate around the minima.\\
 The Adam algorithm (Kingma, Ba 2014) incorporates these two concepts to form an effective optimization algorithm that is widely used to optimize neural networks. In this thesis, we use this algorithm, but omit the specifics as they are beyond the scope of this thesis.
@@ -640,6 +641,24 @@ or
 http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf\\
 Machine Learning by Andrew Ng Stanford online course\\
 \newpage
+\subsection{Kernel Density Estimation}
+Kernel density estimation is a non-parametric method used to estimate the probability density function of a distribution, using only samples. It can therefore be used to estimate implicit distributions. For simplicity we only explain the univariate form of the kernel density estimator, though the multivariate form is used in this thesis.\\
+\\
+Let $\{x^{(i)}\}^n_{i=1}$ be an independent and identically distributed sample from a distribution with unknown probability density function $f$. Its kernel density estimator is defined as
+\[\hat{f}_h(x)=\frac{1}{nh}\sum^n_{i=1}K\left(\frac{x-x^{(i)}}{h}\right).\]
+$K$ is the kernel, a symmetric non-negative weighting function that integrates to 1. Examples of kernel functions are:
+\begin{itemize}
+\item Epanechnikov: $K(u)=\frac{3}{4}(1-u^2), |u|\leq 1$
+\item Uniform: $K(u)=\frac12, |u|\leq 1$
+\item Gaussian: $K(u)=\frac{1}{\sqrt{2\pi}}\exp\left(-\frac{1}{2}u^2\right)$.
+\end{itemize}
+Typically, the Gaussian kernel is used due to its statistical properties, but the choice of kernel is not as important as the choice of $h$, the bandwidth.\\
+\\
+The bandwidth $h>0$ acts as a smoothing parameter, determining the width of the kernel. If $h$ is too small, $\hat{f}$ will be 'undersmoothed' as too much weight is placed on the areas nearest the data-points, leading to a spiky estimate with high variance. On the other hand, if $h$ is too large, $\hat{f}$ will be 'oversmoothed' with too little weight on areas nearest to the data-points, resulting in a relatively flat estimate with high bias. It is therefore ideal to choose $h$ such that the mean integrated square error $MISE(h)=\E\left[\int(\hat{f}_h(x)-f(x))^2dx\right]$ is minimized. For a Gaussian kernel, this is approximately $h=1.06\hat{\sigma}n^{-1/5}$ where $\hat{\sigma}$ is the sample standard deviation. We omit the proof in this thesis.\\
+\\
+The kernel density estimator works by placing a kernel on each data point and summing up the kernels to produce a smooth curve. Each point on the curve is essentially a weighted average of nearby data points. Regions of the curve with many data points will therefore have a high estimated probability density.
+\newpage
+\section{Our Problem}
 \subsection{Objective Derivation}
 \subsubsection{Implicit Prior}
 The posterior distribution cannot be computed efficiently if $\int_z p(x,z)dz$ is intractable, which is often the case with large datasets or high dimensional data. Furthermore, the prior $p(z)$ or the likelihood $p(x|z)$ may be implicit. In the framework of variational inference, we approximate the posterior distribution $p_\theta (z|x)$ with a variational distribution parametrized by $\phi$: $q_\phi (z)$. We aim to minimize the KL divergence between these distributions, defined as 
@@ -1034,9 +1053,16 @@ which is the optimal discriminator of class probability estimation. Thus, our pr
 For the first experiment, we use the simple "Continuous Sprinkler" model as described in (Huszar 2017). The latent variables $z_1$ and $z_2$ represent the sprinkler and the rain respectively, and the observation $x$ represents the wetness of the grass.
 \[p(z_1,z_2)\sim \N (0,\sigma^2 I_{2\times 2})\]
 \[p(x|\bm{z})\sim EXP(3+\max(0,z_1)^3+\max(0,z_2)^3)\]
+The unnormalised true posterior is derived as shown below. The lack of normalisation does not affect the variational distribution as the true posterior is assumed to be unknown, and the algorithm only uses samples from the prior and likelihood.
+\textbf{Posterior Calculation:}
+\begin{align*}
+p(z_1,z_2|x)&= \exp(\log p(z_1,z_2)+\log p(x|z_1,z_2))\\
+&\propto\exp\left(\frac12\bm{z}^T(\sigma^{-2}I_{2\times 2})\bm{z}-\log (3+\max(0,z_1)^3+\max(0,z_2)^3)-\frac{x}{3+\max(0,z_1)^3+\max(0,z_2)^3}\right)\\
+&\propto \exp\left(\frac{1}{2\sigma^2}(z_1^2+z_2^2)-\log (3+\max(0,z_1)^3+\max(0,z_2)^3)-\frac{x}{3+\max(0,z_1)^3+\max(0,z_2)^3}\right)
+\end{align*}
 This problem exhibits "explaining away" (Explaining "Explaining away" Wellman 1993), a pattern of reasoning in which the confirmation of one cause of an effect reduces the need to discuss alternative causes. In this example, despite the two possible causes of the wet grass being independent, when we condition on the observation of wet grass, the causes become dependent, as either cause being significant could lead to wet grass.\\
 \\
-In the experiment, we let $\sigma^2=2$, and consider observations $x=0,5,8,12,50$. To plot the true posterior $p(z|x)$, we simply use a range of equally spaced points from $(z_1,z_2)=[(-5,-5),\dots, (5,5)]$ to form the log prior values and log likelihood values for each observation value, and graph the exponential of the sum of these values. The plots are as shown in Figure (\textbf{need to insert figure}).\\
+In the experiment, we let $\sigma^2=2$, and consider observations $x=0,5,8,12,50$. To plot the true (unnormalised) posterior $p(z|x)$, we simply use a range of equally spaced points from $(z_1,z_2)=[(-5,-5),\dots, (5,5)]$ to form the log prior values and log likelihood values for each observation value, and graph the exponential of the sum of these values. The expressions are as derived above. The plots are as shown in Figure (\textbf{need to insert figure}). The plots are not affected by the lack of normalisation, as $p(x)$ is constant for each x-value, and the purpose of the plots is to show the shape and relative density of the posterior distribution.\\
 \\
 As $x$ increases, the posteriors become increasingly multimodal and unusually shaped. Clearly, a flexible model for the posterior distribution is required, as a typical multivariate Gaussian model is too simple here.
 \subsubsection{Program Structure}
@@ -1214,8 +1240,14 @@ The network weights are initialized with Xavier initialization, and trained usin
 	}
 }
 \end{algorithm}
+\newpage
 \subsubsection{Results}
-To compare the techniques, we compare the number of iterations until convergence, as well as the values of the estimator loss and the ELBO after 10,000 iterations. 
+To compare the techniques, we compare the number of iterations until convergence and how much the variational posterior has converged after x0000 iterations. We define convergence as when the average KL divergence of the 5 posterior distributions $\E_{q^*(x)}KL(q(z|x)||p(z|x)) = \E_{q^*(x)}\E_{q(z|x)}\log \frac{q(z|x)}{p(z|x)}$ falls below insert number here. We do not use the ELBO output of the program to calculate this KL divergence, nor do we compare the ELBOs of the algorithms, as the accuracy of the ELBO estimator is dependent on the algorithm used. Instead, we use a non-parametric approach, estimating the probability density function of the variational posterior output with a Gaussian kernel density estimator $\hat{q}(z|x)$. By using five kernel density estimators for the five data points, we are able to create an estimate of the average KL divergence with an accuracy that is independent of the algorithm used: $\E_{q^*(x)}KL(\hat{q}(z|x)||p(z|x)) = \E_{q^*(x)}\E_{\hat{q}(z|x)}\log \frac{\hat{q}(z|x)}{p(z|x)}$.\\
+Overall, we found that class probability estimation performed consistently better than KL divergence minimisation. Insert metrics here. Each iteration took approximately the same amount of time to compute (0.42 seconds on me PC), as the bulk of the training time is spent training the neural networks, which have similar structures.\\
+Furthermore, in approximately half of the simulations, the ratio loss of the KL divergence minimisation algorithm would start at a relatively high number (22.3 as opposed to 3.5), and it would be stuck there for the entire runtime of the program; the thousands of iterations spent minimizing the ratio loss had little effect decreasing it (the pre-training period of 5000 iterations only lowered the ratio loss to about 22.2). The high ratio loss signifies a very inaccurate ratio estimator, leading to a completely inaccurate variational posterior (i have a fig to isnert here). Thus, the program would have to be restarted every time the ratio loss initialized at a high number, until a reasonable value was initialized.
+\subsection{haha why is CPE better than KL min its conspiracy theory time}
+Begin looking at problem through optimization perspective.
+\subsection{Experiments to prove me theory}
 \subsection{Autoencoding Variational Bayes (MNIST image generation)}
 \subsubsection{Problem Context}
 \end{document}

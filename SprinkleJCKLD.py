@@ -4,10 +4,12 @@ import numpy as np
 import tensorflow as tf
 from matplotlib import pylab as plt
 import seaborn as sns
+import statsmodels.api as sm
+import time
 tf.reset_default_graph()
 #params
-epsilon=0.0000000001
-batch_size=500
+epsilon=1E-18
+batch_size=400
 learning_rate_p=0.00001
 learning_rate_d=0.00001
 z_dim = 2
@@ -124,9 +126,9 @@ with tf.device('/gpu:0'):
     ratio_prior = ratiomator(prior_input, xlike)
     ratio_post = ratiomator(post_sample, x_input)
 
-    ratio_loss = -tf.reduce_mean(tf.log((ratio_post+epsilon)/(1-ratio_post+epsilon)))+tf.reduce_mean((ratio_prior+epsilon)/(1-ratio_prior+epsilon))
+    ratio_loss = -tf.reduce_mean(tf.log((ratio_post+epsilon)/(1-ratio_post+epsilon)))+tf.reduce_mean((ratio_prior)/(1-ratio_prior))
 
-    nelbo=tf.reduce_mean(tf.log((ratio_post+epsilon)/(1-ratio_post+epsilon)))
+    nelbo=tf.reduce_mean(tf.log(tf.divide(ratio_post+epsilon,1-ratio_post+epsilon)))
 
     post_vars = [weights['post_hidden11'],weights['post_hidden12'], weights['post_hidden2'], weights['post_hidden31'], weights['post_hidden32'], weights['post_out'],
     biases['post_hidden11'], biases['post_hidden12'], biases['post_hidden2'], biases['post_hidden31'], biases['post_hidden32'], biases['post_out']]
@@ -153,9 +155,10 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
         if i % 500 == 0:
             print('Step %i: ratiomator Loss: %f' % (i, dl))
     for j in range(50001):
+        start=time.time()
         print('Iteration %i' % (j))
         #Train ratiomator
-        for i in range(101):
+        for i in range(81):
             #Prior sample N(0,I_2x2)
             z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
             xin=np.repeat(xgen,batch_size)
@@ -163,7 +166,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             noise=np.random.randn(5*batch_size, noise_dim)
             feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
             _, dl = sess.run([train_ratio, ratio_loss], feed_dict=feed_dict)
-            if i % 100 == 0:
+            if i % 80 == 0:
                 print('Step %i: ratiomator Loss: %f' % (i, dl))
         #Train Posterior on the 5 values of x specified at the start
         for k in range(1):
@@ -174,7 +177,8 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             _, nelboo = sess.run([train_elbo, nelbo], feed_dict=feed_dict)
             #if k % 1000 == 0 or k ==1:
             print('Step %i: NELBO: %f' % (k, nelboo))
-
+        stop=time.time()
+        print('Duration:%f' % (stop-start))
         if j % 500 == 0:
             sns.set_style('whitegrid')
             sns.set_context('poster')
@@ -188,6 +192,33 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             #plug into posterior
             z_samples=posterior(x_gen,noise)
             z_samples=tf.reshape(z_samples,[xgen.shape[0], N_samples, 2]).eval()
+            #start of KDE estimation of KL Div
+            z_samples0=np.transpose(z_samples[0,:,:])
+            z_samples1=np.transpose(z_samples[1,:,:])
+            z_samples2=np.transpose(z_samples[2,:,:])
+            z_samples3=np.transpose(z_samples[3,:,:])
+            z_samples4=np.transpose(z_samples[4,:,:])
+            z_samples0=z_samples0.reshape(2,N_samples)
+            z_samples1=z_samples1.reshape(2,N_samples)
+            z_samples2=z_samples2.reshape(2,N_samples)
+            z_samples3=z_samples3.reshape(2,N_samples)
+            z_samples4=z_samples4.reshape(2,N_samples)
+            truepost0 = -(z_samples0**2).sum(axis=0)/2/prior_variance+likelihoodd(z_samples0,0)
+            truepost1 = -(z_samples1**2).sum(axis=0)/2/prior_variance+likelihoodd(z_samples1,5)
+            truepost2 = -(z_samples2**2).sum(axis=0)/2/prior_variance+likelihoodd(z_samples2,8)
+            truepost3 = -(z_samples3**2).sum(axis=0)/2/prior_variance+likelihoodd(z_samples3,12)
+            truepost4 = -(z_samples4**2).sum(axis=0)/2/prior_variance+likelihoodd(z_samples4,50)
+            kernel0=sm.nonparametric.KDEMultivariate(data=z_samples0, var_type='cc', bw='normal_reference')
+            kernel1=sm.nonparametric.KDEMultivariate(data=z_samples1, var_type='cc', bw='normal_reference')
+            kernel2=sm.nonparametric.KDEMultivariate(data=z_samples2, var_type='cc', bw='normal_reference')
+            kernel3=sm.nonparametric.KDEMultivariate(data=z_samples3, var_type='cc', bw='normal_reference')
+            kernel4=sm.nonparametric.KDEMultivariate(data=z_samples4, var_type='cc', bw='normal_reference')
+            KL0=np.mean(np.log(kernel0.pdf(z_samples0))-truepost0)
+            KL1=np.mean(np.log(kernel1.pdf(z_samples1))-truepost1)
+            KL2=np.mean(np.log(kernel2.pdf(z_samples2))-truepost2)
+            KL3=np.mean(np.log(kernel3.pdf(z_samples3))-truepost3)
+            KL4=np.mean(np.log(kernel4.pdf(z_samples4))-truepost4)
+            #end of KDE estimation of KL Div
             z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
             xin=np.repeat(xgen,batch_size)
             xin=xin.reshape(5*batch_size, 1)
@@ -214,7 +245,8 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
                 plt.ylim([xmin,xmax])
                 plt.xticks([])
                 plt.yticks([]);
-            plt.text(-33,20,'Ratio loss: %f, NELBO: %f' % (dl, NELBO))
+            plt.text(-50,20,'Disc loss: %f, NELBO: %f, KL0: %f, KL1: %f, KL2: %f, KL3: %f, KL4: %f' % (dl, NELBO, KL0, KL1, KL2, KL3, KL4))
+            plt.text(-28,-6,'KLAVG: %f' %(np.mean([KL0,KL1,KL2,KL3,KL4])))
             plt.savefig('FiguresJCKLD\Fig %i'%(j))
             plt.close()
 
