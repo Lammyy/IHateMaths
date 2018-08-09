@@ -7,6 +7,9 @@ import seaborn as sns
 import statsmodels.api as sm
 import time
 tf.reset_default_graph()
+# arrays to store values for graphs
+KLAVGBRUH=[None]*501
+ISTHISLOSS=[None]*501
 #params
 epsilon=1E-25
 batch_size=400
@@ -180,7 +183,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             print('Step %i: NELBO: %f' % (k, nelboo))
         stop=time.time()
         print('Duration:%f' % (stop-start))
-        if j % 500 == 0:
+        if j % 100 == 0:
             sns.set_style('whitegrid')
             sns.set_context('poster')
 
@@ -219,6 +222,9 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             KL2=np.mean(np.log(kernel2.pdf(z_samples2))-truepost2)
             KL3=np.mean(np.log(kernel3.pdf(z_samples3))-truepost3)
             KL4=np.mean(np.log(kernel4.pdf(z_samples4))-truepost4)
+            indexuu=int(j/100)
+            KLAVG=np.mean([KL0,KL1,KL2,KL3,KL4])
+            KLAVGBRUH[indexuu]=KLAVG
             #end of KDE estimation of KL Div
             z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
             xin=np.repeat(xgen,batch_size)
@@ -226,6 +232,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             noise=np.random.randn(5*batch_size, noise_dim)
             feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
             dl, NELBO = sess.run([ratio_loss, nelbo], feed_dict=feed_dict)
+            ISTHISLOSS[indexuu]=dl
             #print(z_samples)
             #Plots
             for i in range(5):
@@ -246,42 +253,52 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
                 plt.ylim([xmin,xmax])
                 plt.xticks([])
                 plt.yticks([]);
-            plt.text(-50,20,'Disc loss: %f, NELBO: %f, KL0: %f, KL1: %f, KL2: %f, KL3: %f, KL4: %f' % (dl, NELBO, KL0, KL1, KL2, KL3, KL4))
-            plt.text(-28,-6,'KLAVG: %f' %(np.mean([KL0,KL1,KL2,KL3,KL4])))
+            plt.text(-50,20,'KLlog Loss: %f, NELBO: %f, KL0: %f, KL1: %f, KL2: %f, KL3: %f, KL4: %f' % (dl, NELBO, KL0, KL1, KL2, KL3, KL4))
+            plt.text(-28,-6,'KLAVG: %f' %(KLAVG))
             plt.savefig('FiguresJCKLlog\Fig %i'%(j))
             plt.close()
+    plt.subplot(2,1,1)
+    plt.plot(KLAVGBRUH)
+    plt.xlabel('Iterations (x100)')
+    plt.ylabel('Avg KL Div')
+    plt.subplot(2,1,2)
+    plt.plot(ISTHISLOSS)
+    plt.xlabel('Iterations (x100)')
+    plt.ylabel('JSD Loss')
+    plt.subplots_adjust(top=0.95,bottom=0.15,right=0.95,hspace=0.4)
+    plt.savefig('FiguresJCADV\Diag Plot', bbox_inches='tight')
+    plt.close()
 
-
-    sns.set_style('whitegrid')
-    sns.set_context('poster')
-
-    plt.subplots(figsize=(20,8))
-    #make 5000 noise and 1000 of each x sample
-    N_samples=1000
-    noise=np.random.randn(5*N_samples, noise_dim).astype('float32')
-    x_gen=np.repeat(xgen,1000)
-    x_gen=x_gen.reshape(5000,1)
-    #plug into posterior
-    z_samples=posterior(x_gen,noise)
-    z_samples=tf.reshape(z_samples,[xgen.shape[0], N_samples, 2]).eval()
-    #print(z_samples)
-    #Plots
-    for i in range(5):
-        plt.subplot(2,5,i+1)
-        sns.kdeplot(z_samples[i,:,0], z_samples[i,:,1], cmap='Greens')
-        #plt.scatter(z_samples[i,:,0],z_samples[i,:,1])
-        plt.axis('square');
-        plt.title('q(z|x={})'.format(y[i]))
-        plt.xlim([xmin,xmax])
-        plt.ylim([xmin,xmax])
-        plt.xticks([])
-        plt.yticks([]);
-        plt.subplot(2,5,5+i+1)
-        plt.contour(xrange, xrange, np.exp(logprior+llh[i]).reshape(300,300).T, cmap='Greens')
-        plt.axis('square');
-        plt.title('p(z|x={})'.format(y[i]))
-        plt.xlim([xmin,xmax])
-        plt.ylim([xmin,xmax])
-        plt.xticks([])
-        plt.yticks([]);
-    plt.show()
+    # sns.set_style('whitegrid')
+    # sns.set_context('poster')
+    #
+    # plt.subplots(figsize=(20,8))
+    # #make 5000 noise and 1000 of each x sample
+    # N_samples=1000
+    # noise=np.random.randn(5*N_samples, noise_dim).astype('float32')
+    # x_gen=np.repeat(xgen,1000)
+    # x_gen=x_gen.reshape(5000,1)
+    # #plug into posterior
+    # z_samples=posterior(x_gen,noise)
+    # z_samples=tf.reshape(z_samples,[xgen.shape[0], N_samples, 2]).eval()
+    # #print(z_samples)
+    # #Plots
+    # for i in range(5):
+    #     plt.subplot(2,5,i+1)
+    #     sns.kdeplot(z_samples[i,:,0], z_samples[i,:,1], cmap='Greens')
+    #     #plt.scatter(z_samples[i,:,0],z_samples[i,:,1])
+    #     plt.axis('square');
+    #     plt.title('q(z|x={})'.format(y[i]))
+    #     plt.xlim([xmin,xmax])
+    #     plt.ylim([xmin,xmax])
+    #     plt.xticks([])
+    #     plt.yticks([]);
+    #     plt.subplot(2,5,5+i+1)
+    #     plt.contour(xrange, xrange, np.exp(logprior+llh[i]).reshape(300,300).T, cmap='Greens')
+    #     plt.axis('square');
+    #     plt.title('p(z|x={})'.format(y[i]))
+    #     plt.xlim([xmin,xmax])
+    #     plt.ylim([xmin,xmax])
+    #     plt.xticks([])
+    #     plt.yticks([]);
+    # plt.show()
