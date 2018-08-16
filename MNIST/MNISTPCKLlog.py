@@ -72,7 +72,7 @@ weights = {
     'like_hidden1': tf.Variable(xavier_init(z_dim, like_hidden_dim1)),
     'like_hidden2': tf.Variable(xavier_init(like_hidden_dim1,like_hidden_dim2)),
     'like_out': tf.Variable(xavier_init(like_hidden_dim2, data_dim)),
-    #disc_hidden11 and disc_hidden12 work on z input
+    #ratio_hidden11 and ratio_hidden12 work on z input
     'ratio_hidden11': tf.Variable(xavier_init(z_dim, ratio_hidden_dim1)),
     'ratio_hidden12': tf.Variable(xavier_init(ratio_hidden_dim1, ratio_hidden_dim2)),
     #ratio_hidden21 and ratio_hidden22 work on x input
@@ -138,7 +138,7 @@ with tf.device('/gpu:0'):
     #pi(eps)
     noise_input = tf.placeholder(tf.float32, shape=[None, noise_dim], name='noise_input')
     #p(z)
-    prior_input = tf.placeholder(tf.float32, shape=[None, z_dim], name='disc_input')
+    prior_input = tf.placeholder(tf.float32, shape=[None, z_dim], name='ratio_input')
     z_samp = tf.placeholder(tf.float32, shape=[None, z_dim], name = 'z_samp')
     #G(eps;x)
     post_sample = posterior(x_input, noise_input)
@@ -157,37 +157,37 @@ with tf.device('/gpu:0'):
     post_vars = [weights['post_hidden11'],weights['post_hidden12'], weights['post_hidden2'], weights['post_hidden31'], weights['post_hidden32'], weights['post_out'],
     biases['post_hidden11'], biases['post_hidden12'], biases['post_hidden2'], biases['post_hidden31'], biases['post_hidden32'], biases['post_out']]
 
-    disc_vars = [weights['disc_hidden11'], weights['disc_hidden12'], weights['disc_hidden21'], weights['disc_hidden22'], weights['disc_hidden31'], weights['disc_hidden32'], weights['disc_out'],
-    biases['disc_hidden11'], biases['disc_hidden12'], biases['disc_hidden21'], biases['disc_hidden22'], biases['disc_hidden31'], biases['disc_hidden32'], biases['disc_out']]
+    ratio_vars = [weights['ratio_hidden11'], weights['ratio_hidden12'], weights['ratio_hidden21'], weights['ratio_hidden22'], weights['ratio_hidden31'], weights['ratio_hidden32'], weights['ratio_out'],
+    biases['ratio_hidden11'], biases['ratio_hidden12'], biases['ratio_hidden21'], biases['ratio_hidden22'], biases['ratio_hidden31'], biases['ratio_hidden32'], biases['ratio_out']]
     like_vars = [weights['like_hidden1'], weights['like_hidden2'], weights['like_out'], biases['like_hidden1'], biases['like_hidden2'], biases['like_out']]
     train_elbo = tf.train.AdamOptimizer(learning_rate=learning_rate_p).minimize(nelbo, var_list=post_vars+like_vars)
-    train_disc = tf.train.AdamOptimizer(learning_rate=learning_rate_d).minimize(disc_loss, var_list=disc_vars)
+    train_ratio = tf.train.AdamOptimizer(learning_rate=learning_rate_d).minimize(ratio_loss, var_list=ratio_vars)
 
 #if no NVIDIA CUDA take out config=...
 with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_placement=False)) as sess:
 #with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
-    #Pre-Train Discriminator
+    #Pre-Train ratioriminator
     for i in range(5001):
         z=np.random.randn(batch_size, z_dim)
         xin, _ = mnist.train.next_batch(mb_size)
         noise=np.random.randn(batch_size, noise_dim)
         feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
-        _, dl = sess.run([train_disc, disc_loss], feed_dict=feed_dict)
+        _, rl = sess.run([train_ratio, ratio_loss], feed_dict=feed_dict)
         if i % 500 == 0:
-            print('Step %i: Discriminator Loss: %f' % (i, dl))
+            print('Step %i: ratioriminator Loss: %f' % (i, rl))
     for j in range(50001):
         print('Iteration %i' % (j))
-        #Train Discriminator
+        #Train ratioriminator
         for i in range(81):
             #Prior sample N(0,I_2x2)
             z=np.random.randn(batch_size, z_dim)
             xin, _ = mnist.train.next_batch(mb_size)
             noise=np.random.randn(batch_size, noise_dim)
             feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
-            _, dl = sess.run([train_disc, disc_loss], feed_dict=feed_dict)
+            _, rl = sess.run([train_ratio, ratio_loss], feed_dict=feed_dict)
             if i % 80 == 0:
-                print('Step %i: Discriminator Loss: %f' % (i, dl))
+                print('Step %i: ratioriminator Loss: %f' % (i, rl))
         #Train Posterior on the 5 values of x specified at the start
         for k in range(1):
             xin, _ = mnist.train.next_batch(mb_size)
@@ -198,7 +198,6 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             print('Step %i: NELBO: %f' % (k, nelboo))
         if j % 100 == 0:
             samples = sess.run(X_samples, feed_dict={z_samp: np.random.randn(16, z_dim)})
-
             fig = plot(samples)
             plt.savefig('FiguresMNISTPCKL\Fig %i'%(j), bbox_inches='tight')
             plt.close(fig)

@@ -20,8 +20,8 @@ noise_dim=3
 gen_hidden_dim1=40
 gen_hidden_dim2=80
 data_dim=1
-disc_hidden_dim1=40
-disc_hidden_dim2=80
+ratio_hidden_dim1=40
+ratio_hidden_dim2=80
 #Stuff for making true posterior graph (copied from Huszar)
 xmin = -5
 xmax = 5
@@ -155,9 +155,9 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
         xin=xin.reshape(5*batch_size, 1)
         noise=np.random.randn(5*batch_size, noise_dim)
         feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
-        _, dl = sess.run([train_ratio, ratio_loss], feed_dict=feed_dict)
+        _, rl = sess.run([train_ratio, ratio_loss], feed_dict=feed_dict)
         if i % 500 == 0:
-            print('Step %i: ratiomator Loss: %f' % (i, dl))
+            print('Step %i: ratiomator Loss: %f' % (i, rl))
     for j in range(50001):
         print('Iteration %i' % (j))
         #Train ratiomator
@@ -168,9 +168,9 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             xin=xin.reshape(5*batch_size, 1)
             noise=np.random.randn(5*batch_size, noise_dim)
             feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
-            _, dl = sess.run([train_ratio, ratio_loss], feed_dict=feed_dict)
+            _, rl = sess.run([train_ratio, ratio_loss], feed_dict=feed_dict)
             if i % 80 == 0:
-                print('Step %i: ratiomator Loss: %f' % (i, dl))
+                print('Step %i: ratiomator Loss: %f' % (i, rl))
         #Train Posterior on the 5 values of x specified at the start
         for k in range(1):
             xin=np.repeat(xgen,batch_size)
@@ -229,8 +229,8 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             xin=xin.reshape(5*batch_size, 1)
             noise=np.random.randn(5*batch_size, noise_dim)
             feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
-            dl, NELBO = sess.run([disc_loss, nelbo], feed_dict=feed_dict)
-            ISTHISLOSS[indexuu]=dl
+            rl, NELBO = sess.run([ratio_loss, nelbo], feed_dict=feed_dict)
+            ISTHISLOSS[indexuu]=rl
             #Plots
             for i in range(5):
                 plt.subplot(2,5,i+1)
@@ -250,7 +250,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
                 plt.ylim([xmin,xmax])
                 plt.xticks([])
                 plt.yticks([])
-            plt.text(-50,20,'Disc loss: %f, NELBO: %f, KL0: %f, KL1: %f, KL2: %f, KL3: %f, KL4: %f' % (dl, NELBO, KL0, KL1, KL2, KL3, KL4))
+            plt.text(-50,20,'Ratio loss: %f, NELBO: %f, KL0: %f, KL1: %f, KL2: %f, KL3: %f, KL4: %f' % (rl, NELBO, KL0, KL1, KL2, KL3, KL4))
             plt.text(-28,-6,'KLAVG: %f' %(np.mean([KL0,KL1,KL2,KL3,KL4])))
             plt.savefig('FiguresPCKLD\Fig %i'%(j))
             plt.close()
