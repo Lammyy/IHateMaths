@@ -11,7 +11,7 @@ tf.reset_default_graph()
 KLAVGBRUH=[None]*501
 ISTHISLOSS=[None]*501
 #params
-epsilon=1E-25
+epsilon=1E-18
 batch_size=400
 learning_rate_p=0.00001
 learning_rate_d=0.00001
@@ -20,8 +20,8 @@ noise_dim=3
 gen_hidden_dim1=40
 gen_hidden_dim2=80
 data_dim=1
-ratio_hidden_dim1=40
-ratio_hidden_dim2=80
+disc_hidden_dim1=40
+disc_hidden_dim2=80
 #Stuff for making true posterior graph (copied from Huszar)
 xmin = -5
 xmax = 5
@@ -90,12 +90,12 @@ biases = {
     'ratio_out': tf.Variable(tf.zeros([1]))
 }
 #likeli = p(x|z)
-#def likelihood(z, x, beta_0=3., beta_1=1.):
-#    beta = beta_0 + tf.reduce_sum(beta_1*tf.maximum(0.0, z**3), 1)
-#    return -tf.log(beta) - x/beta
+def likelihood(z, x, beta_0=3., beta_1=1.):
+    beta = beta_0 + beta_1*(tf.reduce_sum((tf.nn.relu(z)**3), axis=1,keepdims=True))
+    return -tf.log(beta) - x/beta
 
-def problikelihood(z):
-    return tf.transpose(tf.random_gamma(shape=[data_dim], alpha=1, beta=1/(3+tf.pow(tf.maximum(0.0,z[:,0]),3)+tf.pow(tf.maximum(0.0,z[:,1]),3))))
+#def likelihood(z):
+#    return tf.random_gamma(shape=(data_dim, batch_size), alpha=1, beta=3+tf.pow(tf.maximum(0.0,z[:,0]),3)+tf.pow(tf.maximum(0.0,z[:,1]),3))
 #post = q(z|x,eps)
 def posterior(x, noise):
     hidden_layer11 = tf.nn.relu(tf.matmul(x, weights['post_hidden11'])+biases['post_hidden11'])
@@ -117,22 +117,22 @@ def ratiomator(z, x):
     hidden_layer32 = tf.nn.relu(tf.matmul(hidden_layer31, weights['ratio_hidden32'])+biases['ratio_hidden32'])
     out_layer = tf.matmul(hidden_layer32, weights['ratio_out'])+biases['ratio_out']
     out_layer = tf.nn.relu(out_layer)
-    #out_layer = tf.log(out_layer+epsilon)
     return out_layer
 #Build Networks
 #if no NVIDIA CUDA remove this line and unindent following lines
 with tf.device('/gpu:0'):
+
     x_input = tf.placeholder(tf.float32, shape=[None, data_dim], name='x_input')
     noise_input = tf.placeholder(tf.float32, shape=[None, noise_dim], name='noise_input')
     prior_input = tf.placeholder(tf.float32, shape=[None, z_dim], name='prior_input')
     post_sample = posterior(x_input, noise_input)
-    xlike = problikelihood(prior_input)
-    ratio_prior = ratiomator(prior_input, xlike)
+
+    ratio_prior = ratiomator(prior_input, x_input)
     ratio_post = ratiomator(post_sample, x_input)
 
     ratio_loss = -tf.reduce_mean(tf.log(ratio_post+epsilon))+tf.reduce_mean(ratio_prior)
 
-    nelbo=tf.reduce_mean(tf.log(ratio_post+epsilon))
+    nelbo=-tf.reduce_mean(likelihood(post_sample, x_input))+tf.reduce_mean(tf.log(ratio_post+epsilon))
 
     post_vars = [weights['post_hidden11'],weights['post_hidden12'], weights['post_hidden2'], weights['post_hidden31'], weights['post_hidden32'], weights['post_out'],
     biases['post_hidden11'], biases['post_hidden12'], biases['post_hidden2'], biases['post_hidden31'], biases['post_hidden32'], biases['post_out']]
@@ -159,7 +159,6 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
         if i % 500 == 0:
             print('Step %i: ratiomator Loss: %f' % (i, dl))
     for j in range(50001):
-        start = time.time()
         print('Iteration %i' % (j))
         #Train ratiomator
         for i in range(81):
@@ -181,9 +180,8 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             _, nelboo = sess.run([train_elbo, nelbo], feed_dict=feed_dict)
             #if k % 1000 == 0 or k ==1:
             print('Step %i: NELBO: %f' % (k, nelboo))
-        stop=time.time()
-        print('Duration:%f' % (stop-start))
-        if j % 100 == 0:
+
+        if j % 500 == 0:
             sns.set_style('whitegrid')
             sns.set_context('poster')
 
@@ -231,14 +229,14 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             xin=xin.reshape(5*batch_size, 1)
             noise=np.random.randn(5*batch_size, noise_dim)
             feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
-            dl, NELBO = sess.run([ratio_loss, nelbo], feed_dict=feed_dict)
+            dl, NELBO = sess.run([disc_loss, nelbo], feed_dict=feed_dict)
             ISTHISLOSS[indexuu]=dl
             #Plots
             for i in range(5):
                 plt.subplot(2,5,i+1)
                 sns.kdeplot(z_samples[i,:,0], z_samples[i,:,1], cmap='Greens')
                 #plt.scatter(z_samples[i,:,0],z_samples[i,:,1])
-                plt.axis('square');
+                plt.axis('square')
                 plt.title('q(z|x={})'.format(y[i]))
                 plt.xlim([xmin,xmax])
                 plt.ylim([xmin,xmax])
@@ -246,15 +244,15 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
                 plt.yticks([]);
                 plt.subplot(2,5,5+i+1)
                 plt.contour(xrange, xrange, np.exp(logprior+llh[i]).reshape(300,300).T, cmap='Greens')
-                plt.axis('square');
+                plt.axis('square')
                 plt.title('p(z|x={})'.format(y[i]))
                 plt.xlim([xmin,xmax])
                 plt.ylim([xmin,xmax])
                 plt.xticks([])
-                plt.yticks([]);
-            plt.text(-50,20,'KLR Loss: %f, NELBO: %f, KL0: %f, KL1: %f, KL2: %f, KL3: %f, KL4: %f' % (dl, NELBO, KL0, KL1, KL2, KL3, KL4))
-            plt.text(-28,-6,'KLAVG: %f' %(KLAVG))
-            plt.savefig('FiguresJCKL\Fig %i'%(j))
+                plt.yticks([])
+            plt.text(-50,20,'Disc loss: %f, NELBO: %f, KL0: %f, KL1: %f, KL2: %f, KL3: %f, KL4: %f' % (dl, NELBO, KL0, KL1, KL2, KL3, KL4))
+            plt.text(-28,-6,'KLAVG: %f' %(np.mean([KL0,KL1,KL2,KL3,KL4])))
+            plt.savefig('FiguresPCKL\Fig %i'%(j))
             plt.close()
     plt.subplot(2,1,1)
     plt.plot(KLAVGBRUH)
@@ -265,5 +263,5 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
     plt.xlabel('Iterations (x100)')
     plt.ylabel('KLR Loss')
     plt.subplots_adjust(top=0.95,bottom=0.15,right=0.95,hspace=0.4)
-    plt.savefig('FiguresJCKL\Diag Plot', bbox_inches='tight')
+    plt.savefig('FiguresPCKL\Diag Plot', bbox_inches='tight')
     plt.close()

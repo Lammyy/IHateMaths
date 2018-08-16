@@ -11,7 +11,7 @@ tf.reset_default_graph()
 KLAVGBRUH=[None]*501
 ISTHISLOSS=[None]*501
 #params
-epsilon=1E-25
+epsilon=1E-18
 batch_size=400
 learning_rate_p=0.00001
 learning_rate_d=0.00001
@@ -20,8 +20,8 @@ noise_dim=3
 gen_hidden_dim1=40
 gen_hidden_dim2=80
 data_dim=1
-ratio_hidden_dim1=40
-ratio_hidden_dim2=80
+disc_hidden_dim1=40
+disc_hidden_dim2=80
 #Stuff for making true posterior graph (copied from Huszar)
 xmin = -5
 xmax = 5
@@ -63,16 +63,16 @@ weights = {
     'post_hidden31': tf.Variable(xavier_init(gen_hidden_dim2+gen_hidden_dim2, gen_hidden_dim1)),
     'post_hidden32': tf.Variable(xavier_init(gen_hidden_dim1, gen_hidden_dim2)),
     'post_out': tf.Variable(xavier_init(gen_hidden_dim2, z_dim)),
-    #ratio_hidden11 and ratio_hidden12 work on z input
-    'ratio_hidden11': tf.Variable(xavier_init(z_dim, ratio_hidden_dim1)),
-    'ratio_hidden12': tf.Variable(xavier_init(ratio_hidden_dim1, ratio_hidden_dim2)),
-    #ratio_hidden21 and ratio_hidden22 work on x input
-    'ratio_hidden21': tf.Variable(xavier_init(data_dim, ratio_hidden_dim1)),
-    'ratio_hidden22': tf.Variable(xavier_init(ratio_hidden_dim1, ratio_hidden_dim2)),
-    #ratio_hidden31, ratio_hidden32 and ratio_out work on concatenated z and x
-    'ratio_hidden31': tf.Variable(xavier_init(ratio_hidden_dim2+ratio_hidden_dim2, ratio_hidden_dim1)),
-    'ratio_hidden32': tf.Variable(xavier_init(ratio_hidden_dim1, ratio_hidden_dim2)),
-    'ratio_out': tf.Variable(xavier_init(ratio_hidden_dim2, 1))
+    #disc_hidden11 and disc_hidden12 work on z input
+    'disc_hidden11': tf.Variable(xavier_init(z_dim, disc_hidden_dim1)),
+    'disc_hidden12': tf.Variable(xavier_init(disc_hidden_dim1, disc_hidden_dim2)),
+    #disc_hidden21 and disc_hidden22 work on x input
+    'disc_hidden21': tf.Variable(xavier_init(data_dim, disc_hidden_dim1)),
+    'disc_hidden22': tf.Variable(xavier_init(disc_hidden_dim1, disc_hidden_dim2)),
+    #disc_hidden31, disc_hidden32 and disc_out work on concatenated z and x
+    'disc_hidden31': tf.Variable(xavier_init(disc_hidden_dim2+disc_hidden_dim2, disc_hidden_dim1)),
+    'disc_hidden32': tf.Variable(xavier_init(disc_hidden_dim1, disc_hidden_dim2)),
+    'disc_out': tf.Variable(xavier_init(disc_hidden_dim2, 1))
 }
 biases = {
     'post_hidden11': tf.Variable(tf.zeros([gen_hidden_dim1])),
@@ -81,21 +81,21 @@ biases = {
     'post_hidden31': tf.Variable(tf.zeros([gen_hidden_dim1])),
     'post_hidden32': tf.Variable(tf.zeros([gen_hidden_dim2])),
     'post_out': tf.Variable(tf.zeros([z_dim])),
-    'ratio_hidden11': tf.Variable(tf.zeros([ratio_hidden_dim1])),
-    'ratio_hidden12': tf.Variable(tf.zeros([ratio_hidden_dim2])),
-    'ratio_hidden21': tf.Variable(tf.zeros([ratio_hidden_dim1])),
-    'ratio_hidden22': tf.Variable(tf.zeros([ratio_hidden_dim2])),
-    'ratio_hidden31': tf.Variable(tf.zeros([ratio_hidden_dim1])),
-    'ratio_hidden32': tf.Variable(tf.zeros([ratio_hidden_dim2])),
-    'ratio_out': tf.Variable(tf.zeros([1]))
+    'disc_hidden11': tf.Variable(tf.zeros([disc_hidden_dim1])),
+    'disc_hidden12': tf.Variable(tf.zeros([disc_hidden_dim2])),
+    'disc_hidden21': tf.Variable(tf.zeros([disc_hidden_dim1])),
+    'disc_hidden22': tf.Variable(tf.zeros([disc_hidden_dim2])),
+    'disc_hidden31': tf.Variable(tf.zeros([disc_hidden_dim1])),
+    'disc_hidden32': tf.Variable(tf.zeros([disc_hidden_dim2])),
+    'disc_out': tf.Variable(tf.zeros([1]))
 }
 #likeli = p(x|z)
-#def likelihood(z, x, beta_0=3., beta_1=1.):
-#    beta = beta_0 + tf.reduce_sum(beta_1*tf.maximum(0.0, z**3), 1)
-#    return -tf.log(beta) - x/beta
+def likelihood(z, x, beta_0=3., beta_1=1.):
+    beta = beta_0 + beta_1*(tf.reduce_sum((tf.nn.relu(z)**3), axis=1,keepdims=True))
+    return -tf.log(beta) - x/beta
 
-def problikelihood(z):
-    return tf.transpose(tf.random_gamma(shape=[data_dim], alpha=1, beta=1/(3+tf.pow(tf.maximum(0.0,z[:,0]),3)+tf.pow(tf.maximum(0.0,z[:,1]),3))))
+#def likelihood(z):
+#    return tf.random_gamma(shape=(data_dim, batch_size), alpha=1, beta=3+tf.pow(tf.maximum(0.0,z[:,0]),3)+tf.pow(tf.maximum(0.0,z[:,1]),3))
 #post = q(z|x,eps)
 def posterior(x, noise):
     hidden_layer11 = tf.nn.relu(tf.matmul(x, weights['post_hidden11'])+biases['post_hidden11'])
@@ -107,61 +107,60 @@ def posterior(x, noise):
     out_layer = tf.matmul(hidden_layer32, weights['post_out'])+biases['post_out']
     return out_layer
 
-def ratiomator(z, x):
-    hidden_layer11 = tf.nn.relu(tf.matmul(z, weights['ratio_hidden11'])+biases['ratio_hidden11'])
-    hidden_layer12 = tf.nn.relu(tf.matmul(hidden_layer11, weights['ratio_hidden12'])+biases['ratio_hidden12'])
-    hidden_layer21 = tf.nn.relu(tf.matmul(x, weights['ratio_hidden21'])+biases['ratio_hidden21'])
-    hidden_layer22 = tf.nn.relu(tf.matmul(hidden_layer21, weights['ratio_hidden22'])+biases['ratio_hidden22'])
+def discriminator(z, x):
+    hidden_layer11 = tf.nn.relu(tf.matmul(z, weights['disc_hidden11'])+biases['disc_hidden11'])
+    hidden_layer12 = tf.nn.relu(tf.matmul(hidden_layer11, weights['disc_hidden12'])+biases['disc_hidden12'])
+    hidden_layer21 = tf.nn.relu(tf.matmul(x, weights['disc_hidden21'])+biases['disc_hidden21'])
+    hidden_layer22 = tf.nn.relu(tf.matmul(hidden_layer21, weights['disc_hidden22'])+biases['disc_hidden22'])
     hidden_layer = tf.concat([hidden_layer12, hidden_layer22], axis=1)
-    hidden_layer31 = tf.nn.relu(tf.matmul(hidden_layer, weights['ratio_hidden31'])+biases['ratio_hidden31'])
-    hidden_layer32 = tf.nn.relu(tf.matmul(hidden_layer31, weights['ratio_hidden32'])+biases['ratio_hidden32'])
-    out_layer = tf.matmul(hidden_layer32, weights['ratio_out'])+biases['ratio_out']
-    out_layer = tf.nn.relu(out_layer)
-    #out_layer = tf.log(out_layer+epsilon)
+    hidden_layer31 = tf.nn.relu(tf.matmul(hidden_layer, weights['disc_hidden31'])+biases['disc_hidden31'])
+    hidden_layer32 = tf.nn.relu(tf.matmul(hidden_layer31, weights['disc_hidden32'])+biases['disc_hidden32'])
+    notsig = tf.matmul(hidden_layer32, weights['disc_out'])+biases['disc_out']
+    out_layer = tf.nn.sigmoid(notsig)
     return out_layer
 #Build Networks
 #if no NVIDIA CUDA remove this line and unindent following lines
 with tf.device('/gpu:0'):
+
     x_input = tf.placeholder(tf.float32, shape=[None, data_dim], name='x_input')
     noise_input = tf.placeholder(tf.float32, shape=[None, noise_dim], name='noise_input')
-    prior_input = tf.placeholder(tf.float32, shape=[None, z_dim], name='prior_input')
+    prior_input = tf.placeholder(tf.float32, shape=[None, z_dim], name='disc_input')
     post_sample = posterior(x_input, noise_input)
-    xlike = problikelihood(prior_input)
-    ratio_prior = ratiomator(prior_input, xlike)
-    ratio_post = ratiomator(post_sample, x_input)
 
-    ratio_loss = -tf.reduce_mean(tf.log(ratio_post+epsilon))+tf.reduce_mean(ratio_prior)
+    disc_prior = discriminator(prior_input, x_input)
+    disc_post = discriminator(post_sample, x_input)
 
-    nelbo=tf.reduce_mean(tf.log(ratio_post+epsilon))
+    disc_loss = -tf.reduce_mean(tf.log(disc_post+epsilon))-tf.reduce_mean(tf.log(1.0-disc_prior+epsilon))
+
+    nelbo=-tf.reduce_mean(likelihood(post_sample, x_input))+tf.reduce_mean(tf.log(tf.divide(disc_post+epsilon,1-disc_post+epsilon)))
 
     post_vars = [weights['post_hidden11'],weights['post_hidden12'], weights['post_hidden2'], weights['post_hidden31'], weights['post_hidden32'], weights['post_out'],
     biases['post_hidden11'], biases['post_hidden12'], biases['post_hidden2'], biases['post_hidden31'], biases['post_hidden32'], biases['post_out']]
 
-    ratio_vars = [weights['ratio_hidden11'], weights['ratio_hidden12'], weights['ratio_hidden21'], weights['ratio_hidden22'], weights['ratio_hidden31'], weights['ratio_hidden32'], weights['ratio_out'],
-    biases['ratio_hidden11'], biases['ratio_hidden12'], biases['ratio_hidden21'], biases['ratio_hidden22'], biases['ratio_hidden31'], biases['ratio_hidden32'], biases['ratio_out']]
+    disc_vars = [weights['disc_hidden11'], weights['disc_hidden12'], weights['disc_hidden21'], weights['disc_hidden22'], weights['disc_hidden31'], weights['disc_hidden32'], weights['disc_out'],
+    biases['disc_hidden11'], biases['disc_hidden12'], biases['disc_hidden21'], biases['disc_hidden22'], biases['disc_hidden31'], biases['disc_hidden32'], biases['disc_out']]
 
     train_elbo = tf.train.AdamOptimizer(learning_rate=learning_rate_p).minimize(nelbo, var_list=post_vars)
-    train_ratio = tf.train.AdamOptimizer(learning_rate=learning_rate_d).minimize(ratio_loss, var_list=ratio_vars)
+    train_disc = tf.train.AdamOptimizer(learning_rate=learning_rate_d).minimize(disc_loss, var_list=disc_vars)
 
 
 #if no NVIDIA CUDA take out config=...
 with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_placement=False)) as sess:
 #with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
-    #Pre-Train ratiomator
+    #Pre-Train Discriminator
     for i in range(5001):
         z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
         xin=np.repeat(xgen,batch_size)
         xin=xin.reshape(5*batch_size, 1)
         noise=np.random.randn(5*batch_size, noise_dim)
         feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
-        _, dl = sess.run([train_ratio, ratio_loss], feed_dict=feed_dict)
+        _, dl = sess.run([train_disc, disc_loss], feed_dict=feed_dict)
         if i % 500 == 0:
-            print('Step %i: ratiomator Loss: %f' % (i, dl))
+            print('Step %i: Discriminator Loss: %f' % (i, dl))
     for j in range(50001):
-        start = time.time()
         print('Iteration %i' % (j))
-        #Train ratiomator
+        #Train Discriminator
         for i in range(81):
             #Prior sample N(0,I_2x2)
             z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
@@ -169,9 +168,9 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             xin=xin.reshape(5*batch_size, 1)
             noise=np.random.randn(5*batch_size, noise_dim)
             feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
-            _, dl = sess.run([train_ratio, ratio_loss], feed_dict=feed_dict)
+            _, dl = sess.run([train_disc, disc_loss], feed_dict=feed_dict)
             if i % 80 == 0:
-                print('Step %i: ratiomator Loss: %f' % (i, dl))
+                print('Step %i: Discriminator Loss: %f' % (i, dl))
         #Train Posterior on the 5 values of x specified at the start
         for k in range(1):
             xin=np.repeat(xgen,batch_size)
@@ -181,9 +180,8 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             _, nelboo = sess.run([train_elbo, nelbo], feed_dict=feed_dict)
             #if k % 1000 == 0 or k ==1:
             print('Step %i: NELBO: %f' % (k, nelboo))
-        stop=time.time()
-        print('Duration:%f' % (stop-start))
-        if j % 100 == 0:
+
+        if j % 500 == 0:
             sns.set_style('whitegrid')
             sns.set_context('poster')
 
@@ -231,14 +229,14 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             xin=xin.reshape(5*batch_size, 1)
             noise=np.random.randn(5*batch_size, noise_dim)
             feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
-            dl, NELBO = sess.run([ratio_loss, nelbo], feed_dict=feed_dict)
+            dl, NELBO = sess.run([disc_loss, nelbo], feed_dict=feed_dict)
             ISTHISLOSS[indexuu]=dl
             #Plots
             for i in range(5):
                 plt.subplot(2,5,i+1)
                 sns.kdeplot(z_samples[i,:,0], z_samples[i,:,1], cmap='Greens')
                 #plt.scatter(z_samples[i,:,0],z_samples[i,:,1])
-                plt.axis('square');
+                plt.axis('square')
                 plt.title('q(z|x={})'.format(y[i]))
                 plt.xlim([xmin,xmax])
                 plt.ylim([xmin,xmax])
@@ -246,15 +244,15 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
                 plt.yticks([]);
                 plt.subplot(2,5,5+i+1)
                 plt.contour(xrange, xrange, np.exp(logprior+llh[i]).reshape(300,300).T, cmap='Greens')
-                plt.axis('square');
+                plt.axis('square')
                 plt.title('p(z|x={})'.format(y[i]))
                 plt.xlim([xmin,xmax])
                 plt.ylim([xmin,xmax])
                 plt.xticks([])
-                plt.yticks([]);
-            plt.text(-50,20,'KLR Loss: %f, NELBO: %f, KL0: %f, KL1: %f, KL2: %f, KL3: %f, KL4: %f' % (dl, NELBO, KL0, KL1, KL2, KL3, KL4))
-            plt.text(-28,-6,'KLAVG: %f' %(KLAVG))
-            plt.savefig('FiguresJCKL\Fig %i'%(j))
+                plt.yticks([])
+            plt.text(-50,20,'Disc loss: %f, NELBO: %f, KL0: %f, KL1: %f, KL2: %f, KL3: %f, KL4: %f' % (dl, NELBO, KL0, KL1, KL2, KL3, KL4))
+            plt.text(-28,-6,'KLAVG: %f' %(np.mean([KL0,KL1,KL2,KL3,KL4])))
+            plt.savefig('FiguresPCADV\Fig %i'%(j))
             plt.close()
     plt.subplot(2,1,1)
     plt.plot(KLAVGBRUH)
@@ -263,7 +261,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
     plt.subplot(2,1,2)
     plt.plot(ISTHISLOSS)
     plt.xlabel('Iterations (x100)')
-    plt.ylabel('KLR Loss')
+    plt.ylabel('JSD Loss')
     plt.subplots_adjust(top=0.95,bottom=0.15,right=0.95,hspace=0.4)
-    plt.savefig('FiguresJCKL\Diag Plot', bbox_inches='tight')
+    plt.savefig('FiguresPCADV\Diag Plot', bbox_inches='tight')
     plt.close()

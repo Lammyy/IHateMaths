@@ -4,19 +4,24 @@ import numpy as np
 import tensorflow as tf
 from matplotlib import pylab as plt
 import seaborn as sns
+import statsmodels.api as sm
+import time
 tf.reset_default_graph()
+# arrays to store values for graphs
+KLAVGBRUH=[None]*501
+ISTHISLOSS=[None]*501
 #params
-epsilon=0.0000000001
-batch_size=64
-learning_rate_p=0.0003
-learning_rate_d=0.0003
+epsilon=1E-18
+batch_size=400
+learning_rate_p=0.00001
+learning_rate_d=0.00001
 z_dim = 2
 noise_dim=3
-gen_hidden_dim1=30
-gen_hidden_dim2=60
+gen_hidden_dim1=40
+gen_hidden_dim2=80
 data_dim=1
-disc_hidden_dim1=30
-disc_hidden_dim2=60
+disc_hidden_dim1=40
+disc_hidden_dim2=80
 #Stuff for making true posterior graph (copied from Huszar)
 xmin = -5
 xmax = 5
@@ -86,7 +91,7 @@ biases = {
 }
 #likeli = p(x|z)
 def likelihood(z, x, beta_0=3., beta_1=1.):
-    beta = beta_0 + tf.reduce_sum(beta_1*tf.maximum(0.0, z**3), 1)
+    beta = beta_0 + beta_1*(tf.reduce_sum((tf.nn.relu(z)**3), axis=1,keepdims=True))
     return -tf.log(beta) - x/beta
 
 #def likelihood(z):
@@ -110,8 +115,7 @@ def discriminator(z, x):
     hidden_layer = tf.concat([hidden_layer12, hidden_layer22], axis=1)
     hidden_layer31 = tf.nn.relu(tf.matmul(hidden_layer, weights['disc_hidden31'])+biases['disc_hidden31'])
     hidden_layer32 = tf.nn.relu(tf.matmul(hidden_layer31, weights['disc_hidden32'])+biases['disc_hidden32'])
-    out_layer = tf.matmul(hidden_layer32, weights['disc_out'])+biases['disc_out']
-    out_layer = tf.nn.sigmoid(out_layer)
+    out_layer = tf.nn.relu(tf.matmul(hidden_layer32, weights['disc_out'])+biases['disc_out'])
     return out_layer
 #Build Networks
 #if no NVIDIA CUDA remove this line and unindent following lines
@@ -125,11 +129,9 @@ with tf.device('/gpu:0'):
     disc_prior = discriminator(prior_input, x_input)
     disc_post = discriminator(post_sample, x_input)
 
-    disc_loss = -tf.reduce_mean(tf.log(disc_post+epsilon))-tf.reduce_mean(tf.log(1.0-disc_prior+epsilon))
+    disc_loss = -tf.reduce_mean(tf.log(tf.divide(disc_post+epsilon, (disc_post+1))))+tf.reduce_mean(tf.log(disc_prior+1))
 
-    negLL=-tf.reduce_mean(likelihood(post_sample, x_input))
-    ratio=tf.reduce_mean(tf.log(tf.divide(disc_post+epsilon,1-disc_post+epsilon)))
-    nelbo=ratio+negLL
+    nelbo=-tf.reduce_mean(likelihood(post_sample, x_input))+tf.reduce_mean(tf.log(disc_post+epsilon))
 
     post_vars = [weights['post_hidden11'],weights['post_hidden12'], weights['post_hidden2'], weights['post_hidden31'], weights['post_hidden32'], weights['post_out'],
     biases['post_hidden11'], biases['post_hidden12'], biases['post_hidden2'], biases['post_hidden31'], biases['post_hidden32'], biases['post_out']]
@@ -142,23 +144,23 @@ with tf.device('/gpu:0'):
 
 
 #if no NVIDIA CUDA take out config=...
-with tf.Session(config=tf.ConfigProto(log_device_placement=False)) as sess:
+with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_placement=False)) as sess:
 #with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     #Pre-Train Discriminator
-    for i in range(8000):
+    for i in range(5001):
         z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
         xin=np.repeat(xgen,batch_size)
         xin=xin.reshape(5*batch_size, 1)
         noise=np.random.randn(5*batch_size, noise_dim)
         feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
         _, dl = sess.run([train_disc, disc_loss], feed_dict=feed_dict)
-        if i % 1000 == 0 or i == 1:
+        if i % 500 == 0:
             print('Step %i: Discriminator Loss: %f' % (i, dl))
-    for j in range(1000):
+    for j in range(50001):
         print('Iteration %i' % (j))
         #Train Discriminator
-        for i in range(1001):
+        for i in range(81):
             #Prior sample N(0,I_2x2)
             z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
             xin=np.repeat(xgen,batch_size)
@@ -166,7 +168,7 @@ with tf.Session(config=tf.ConfigProto(log_device_placement=False)) as sess:
             noise=np.random.randn(5*batch_size, noise_dim)
             feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
             _, dl = sess.run([train_disc, disc_loss], feed_dict=feed_dict)
-            if i % 1000 == 0 or i == 1:
+            if i % 80 == 0:
                 print('Step %i: Discriminator Loss: %f' % (i, dl))
         #Train Posterior on the 5 values of x specified at the start
         for k in range(1):
@@ -178,7 +180,7 @@ with tf.Session(config=tf.ConfigProto(log_device_placement=False)) as sess:
             #if k % 1000 == 0 or k ==1:
             print('Step %i: NELBO: %f' % (k, nelboo))
 
-        if j % 10 == 0 or j == 1:
+        if j % 500 == 0:
             sns.set_style('whitegrid')
             sns.set_context('poster')
 
@@ -186,18 +188,54 @@ with tf.Session(config=tf.ConfigProto(log_device_placement=False)) as sess:
             #make 5000 noise and 1000 of each x sample
             N_samples=1000
             noise=np.random.randn(5*N_samples, noise_dim).astype('float32')
-            x_gen=np.repeat(xgen,N_samples)
-            x_gen=x_gen.reshape(5*N_samples,1)
+            x_gen=np.repeat(xgen,1000)
+            x_gen=x_gen.reshape(5000,1)
             #plug into posterior
             z_samples=posterior(x_gen,noise)
             z_samples=tf.reshape(z_samples,[xgen.shape[0], N_samples, 2]).eval()
-            #print(z_samples)
+            #start of KDE estimation of KL Div
+            z_samples0=np.transpose(z_samples[0,:,:])
+            z_samples1=np.transpose(z_samples[1,:,:])
+            z_samples2=np.transpose(z_samples[2,:,:])
+            z_samples3=np.transpose(z_samples[3,:,:])
+            z_samples4=np.transpose(z_samples[4,:,:])
+            z_samples0=z_samples0.reshape(2,N_samples)
+            z_samples1=z_samples1.reshape(2,N_samples)
+            z_samples2=z_samples2.reshape(2,N_samples)
+            z_samples3=z_samples3.reshape(2,N_samples)
+            z_samples4=z_samples4.reshape(2,N_samples)
+            truepost0 = -(z_samples0**2).sum(axis=0)/2/prior_variance+likelihoodd(z_samples0,0)
+            truepost1 = -(z_samples1**2).sum(axis=0)/2/prior_variance+likelihoodd(z_samples1,5)
+            truepost2 = -(z_samples2**2).sum(axis=0)/2/prior_variance+likelihoodd(z_samples2,8)
+            truepost3 = -(z_samples3**2).sum(axis=0)/2/prior_variance+likelihoodd(z_samples3,12)
+            truepost4 = -(z_samples4**2).sum(axis=0)/2/prior_variance+likelihoodd(z_samples4,50)
+            kernel0=sm.nonparametric.KDEMultivariate(data=z_samples0, var_type='cc', bw='normal_reference')
+            kernel1=sm.nonparametric.KDEMultivariate(data=z_samples1, var_type='cc', bw='normal_reference')
+            kernel2=sm.nonparametric.KDEMultivariate(data=z_samples2, var_type='cc', bw='normal_reference')
+            kernel3=sm.nonparametric.KDEMultivariate(data=z_samples3, var_type='cc', bw='normal_reference')
+            kernel4=sm.nonparametric.KDEMultivariate(data=z_samples4, var_type='cc', bw='normal_reference')
+            KL0=np.mean(np.log(kernel0.pdf(z_samples0))-truepost0)
+            KL1=np.mean(np.log(kernel1.pdf(z_samples1))-truepost1)
+            KL2=np.mean(np.log(kernel2.pdf(z_samples2))-truepost2)
+            KL3=np.mean(np.log(kernel3.pdf(z_samples3))-truepost3)
+            KL4=np.mean(np.log(kernel4.pdf(z_samples4))-truepost4)
+            indexuu=int(j/100)
+            KLAVG=np.mean([KL0,KL1,KL2,KL3,KL4])
+            KLAVGBRUH[indexuu]=KLAVG
+            #end of KDE estimation of KL Div
+            z=np.sqrt(2)*np.random.randn(5*batch_size, z_dim)
+            xin=np.repeat(xgen,batch_size)
+            xin=xin.reshape(5*batch_size, 1)
+            noise=np.random.randn(5*batch_size, noise_dim)
+            feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
+            dl, NELBO = sess.run([disc_loss, nelbo], feed_dict=feed_dict)
+            ISTHISLOSS[indexuu]=dl
             #Plots
             for i in range(5):
                 plt.subplot(2,5,i+1)
                 sns.kdeplot(z_samples[i,:,0], z_samples[i,:,1], cmap='Greens')
                 #plt.scatter(z_samples[i,:,0],z_samples[i,:,1])
-                plt.axis('square');
+                plt.axis('square')
                 plt.title('q(z|x={})'.format(y[i]))
                 plt.xlim([xmin,xmax])
                 plt.ylim([xmin,xmax])
@@ -205,46 +243,24 @@ with tf.Session(config=tf.ConfigProto(log_device_placement=False)) as sess:
                 plt.yticks([]);
                 plt.subplot(2,5,5+i+1)
                 plt.contour(xrange, xrange, np.exp(logprior+llh[i]).reshape(300,300).T, cmap='Greens')
-                plt.axis('square');
+                plt.axis('square')
                 plt.title('p(z|x={})'.format(y[i]))
                 plt.xlim([xmin,xmax])
                 plt.ylim([xmin,xmax])
                 plt.xticks([])
-                plt.yticks([]);
-            plt.savefig('FiguresPCADV\Fig %i'%(j))
+                plt.yticks([])
+            plt.text(-50,20,'Disc loss: %f, NELBO: %f, KL0: %f, KL1: %f, KL2: %f, KL3: %f, KL4: %f' % (dl, NELBO, KL0, KL1, KL2, KL3, KL4))
+            plt.text(-28,-6,'KLAVG: %f' %(np.mean([KL0,KL1,KL2,KL3,KL4])))
+            plt.savefig('FiguresPCADVR\Fig %i'%(j))
             plt.close()
-
-#Final plot thing
-    sns.set_style('whitegrid')
-    sns.set_context('poster')
-
-    plt.subplots(figsize=(20,8))
-    #make 5000 noise and 1000 of each x sample
-    N_samples=2000
-    noise=np.random.randn(5*N_samples, noise_dim).astype('float32')
-    x_gen=np.repeat(xgen,2000)
-    x_gen=x_gen.reshape(10000,1)
-    #plug into posterior
-    z_samples=posterior(x_gen,noise)
-    z_samples=tf.reshape(z_samples,[xgen.shape[0], N_samples, 2]).eval()
-    #print(z_samples)
-    #Plots
-    for i in range(5):
-        plt.subplot(2,5,i+1)
-        sns.kdeplot(z_samples[i,:,0], z_samples[i,:,1], cmap='Greens')
-        #plt.scatter(z_samples[i,:,0],z_samples[i,:,1])
-        plt.axis('square');
-        plt.title('q(z|x={})'.format(y[i]))
-        plt.xlim([xmin,xmax])
-        plt.ylim([xmin,xmax])
-        plt.xticks([])
-        plt.yticks([]);
-        plt.subplot(2,5,5+i+1)
-        plt.contour(xrange, xrange, np.exp(logprior+llh[i]).reshape(300,300).T, cmap='Greens')
-        plt.axis('square');
-        plt.title('p(z|x={})'.format(y[i]))
-        plt.xlim([xmin,xmax])
-        plt.ylim([xmin,xmax])
-        plt.xticks([])
-        plt.yticks([]);
-    plt.show()
+    plt.subplot(2,1,1)
+    plt.plot(KLAVGBRUH)
+    plt.xlabel('Iterations (x100)')
+    plt.ylabel('Avg KL Div')
+    plt.subplot(2,1,2)
+    plt.plot(ISTHISLOSS)
+    plt.xlabel('Iterations (x100)')
+    plt.ylabel('JSR Loss')
+    plt.subplots_adjust(top=0.95,bottom=0.15,right=0.95,hspace=0.4)
+    plt.savefig('FiguresPCADVR\Diag Plot', bbox_inches='tight')
+    plt.close()
