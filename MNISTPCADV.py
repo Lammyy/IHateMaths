@@ -3,16 +3,17 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import numpy as np
 import tensorflow as tf
 from matplotlib import pylab as plt
+import matplotlib.gridspec as gridspec
 import seaborn as sns
 import statsmodels.api as sm
 import time
 tf.reset_default_graph()
 from tensorflow.examples.tutorials.mnist import input_data
-
+#from official.mnist import dataset
 
 mnist = input_data.read_data_sets('../../MNIST_data', one_hot=True)
 mb_size = 32
-z_dim = 3
+z_dim = 10
 noise_dim = 4
 data_dim = mnist.train.images.shape[1]
 y_dim = mnist.train.labels.shape[1]
@@ -20,12 +21,29 @@ y_dim = mnist.train.labels.shape[1]
 h_dim = 128
 lr = 1e-3
 epsilon=1E-18
-disc_hidden_dim1=40
-disc_hidden_dim2=80
-gen_hidden_dim1=40
-gen_hidden_dim2=80
+disc_hidden_dim1=100
+disc_hidden_dim2=200
+gen_hidden_dim1=100
+batch_size=32
+gen_hidden_dim2=200
+like_hidden_dim1=100
+like_hidden_dim2=200
+learning_rate_p=0.001
+learning_rate_d=0.00001
+def plot(samples):
+    fig = plt.figure(figsize=(4, 4))
+    gs = gridspec.GridSpec(4, 4)
+    gs.update(wspace=0.05, hspace=0.05)
 
+    for i, sample in enumerate(samples):
+        ax = plt.subplot(gs[i])
+        plt.axis('off')
+        ax.set_xticklabels([])
+        ax.set_yticklabels([])
+        ax.set_aspect('equal')
+        plt.imshow(sample.reshape(28, 28), cmap='Greys_r')
 
+    return fig
 def xavier_init(fan_in, fan_out, constant=1):
     low=-constant*np.sqrt(6.0/(fan_in+fan_out))
     high=constant*np.sqrt(6.0/(fan_in+fan_out))
@@ -51,6 +69,9 @@ weights = {
     'post_hidden31': tf.Variable(xavier_init(gen_hidden_dim2+gen_hidden_dim2, gen_hidden_dim1)),
     'post_hidden32': tf.Variable(xavier_init(gen_hidden_dim1, gen_hidden_dim2)),
     'post_out': tf.Variable(xavier_init(gen_hidden_dim2, z_dim)),
+    'like_hidden1': tf.Variable(xavier_init(z_dim, like_hidden_dim1)),
+    'like_hidden2': tf.Variable(xavier_init(like_hidden_dim1,like_hidden_dim2)),
+    'like_out': tf.Variable(xavier_init(like_hidden_dim2, data_dim)),
     #disc_hidden11 and disc_hidden12 work on z input
     'disc_hidden11': tf.Variable(xavier_init(z_dim, disc_hidden_dim1)),
     'disc_hidden12': tf.Variable(xavier_init(disc_hidden_dim1, disc_hidden_dim2)),
@@ -69,6 +90,9 @@ biases = {
     'post_hidden31': tf.Variable(tf.zeros([gen_hidden_dim1])),
     'post_hidden32': tf.Variable(tf.zeros([gen_hidden_dim2])),
     'post_out': tf.Variable(tf.zeros([z_dim])),
+    'like_hidden1': tf.Variable(tf.zeros([like_hidden_dim1])),
+    'like_hidden2': tf.Variable(tf.zeros([like_hidden_dim2])),
+    'like_out': tf.Variable(tf.zeros([data_dim])),
     'disc_hidden11': tf.Variable(tf.zeros([disc_hidden_dim1])),
     'disc_hidden12': tf.Variable(tf.zeros([disc_hidden_dim2])),
     'disc_hidden21': tf.Variable(tf.zeros([disc_hidden_dim1])),
@@ -79,7 +103,6 @@ biases = {
 }
 
 def posterior(x, noise):
-    x=tf.flatten(x)
     hidden_layer11 = tf.nn.relu(tf.matmul(x, weights['post_hidden11'])+biases['post_hidden11'])
     hidden_layer12 = tf.nn.relu(tf.matmul(hidden_layer11, weights['post_hidden12'])+biases['post_hidden12'])
     hidden_layer2 = tf.nn.relu(tf.matmul(noise, weights['post_hidden2'])+biases['post_hidden2'])
@@ -89,8 +112,14 @@ def posterior(x, noise):
     out_layer = tf.matmul(hidden_layer32, weights['post_out'])+biases['post_out']
     return out_layer
 
+def likelihood(z):
+    hidden_layer1 = tf.nn.relu(tf.matmul(z, weights['like_hidden1'])+biases['like_hidden1'])
+    hidden_layer2 = tf.nn.relu(tf.matmul(hidden_layer1, weights['like_hidden2'])+biases['like_hidden2'])
+    logits = tf.matmul(hidden_layer2, weights['like_out'])+biases['like_out']
+    out_layer = tf.nn.sigmoid(logits)
+    return out_layer, logits
+
 def discriminator(z, x):
-    x=tf.flatten(x)
     hidden_layer11 = tf.nn.relu(tf.matmul(z, weights['disc_hidden11'])+biases['disc_hidden11'])
     hidden_layer12 = tf.nn.relu(tf.matmul(hidden_layer11, weights['disc_hidden12'])+biases['disc_hidden12'])
     hidden_layer21 = tf.nn.relu(tf.matmul(x, weights['disc_hidden21'])+biases['disc_hidden21'])
@@ -104,29 +133,33 @@ def discriminator(z, x):
 
 with tf.device('/gpu:0'):
     #q*(x)
-    x_input = tf.placeholder(tf.float32, shape=[None, data_dim, data_dim], name='x_input')
+    x_input = tf.placeholder(tf.float32, shape=[None, data_dim], name='x_input')
     #pi(eps)
     noise_input = tf.placeholder(tf.float32, shape=[None, noise_dim], name='noise_input')
     #p(z)
     prior_input = tf.placeholder(tf.float32, shape=[None, z_dim], name='disc_input')
+    z_samp = tf.placeholder(tf.float32, shape=[None, z_dim], name = 'z_samp')
     #G(eps;x)
     post_sample = posterior(x_input, noise_input)
-    #p(x|z)
-    xlike = problikelihood(prior_input)
-    disc_prior = discriminator(prior_input, xlike)
+    X_samples, _ = likelihood(z_samp)
+    disc_prior = discriminator(prior_input, x_input)
     disc_post = discriminator(post_sample, x_input)
-
+    _, data_logits = likelihood(post_sample)
+    likeli = tf.reduce_sum(
+        tf.nn.sigmoid_cross_entropy_with_logits(logits=data_logits, labels=x_input),
+        axis=1
+    )
     disc_loss = -tf.reduce_mean(tf.log(disc_post+epsilon))-tf.reduce_mean(tf.log(1.0-disc_prior+epsilon))
 
-    nelbo=tf.reduce_mean(tf.log(tf.divide(disc_post+epsilon,1-disc_post+epsilon)))
+    nelbo=tf.reduce_mean(likeli)+tf.reduce_mean(tf.log(tf.divide(disc_post+epsilon,1-disc_post+epsilon)))
 
     post_vars = [weights['post_hidden11'],weights['post_hidden12'], weights['post_hidden2'], weights['post_hidden31'], weights['post_hidden32'], weights['post_out'],
     biases['post_hidden11'], biases['post_hidden12'], biases['post_hidden2'], biases['post_hidden31'], biases['post_hidden32'], biases['post_out']]
 
     disc_vars = [weights['disc_hidden11'], weights['disc_hidden12'], weights['disc_hidden21'], weights['disc_hidden22'], weights['disc_hidden31'], weights['disc_hidden32'], weights['disc_out'],
     biases['disc_hidden11'], biases['disc_hidden12'], biases['disc_hidden21'], biases['disc_hidden22'], biases['disc_hidden31'], biases['disc_hidden32'], biases['disc_out']]
-
-    train_elbo = tf.train.AdamOptimizer(learning_rate=learning_rate_p).minimize(nelbo, var_list=post_vars)
+    like_vars = [weights['like_hidden1'], weights['like_hidden2'], weights['like_out'], biases['like_hidden1'], biases['like_hidden2'], biases['like_out']]
+    train_elbo = tf.train.AdamOptimizer(learning_rate=learning_rate_p).minimize(nelbo, var_list=post_vars+like_vars)
     train_disc = tf.train.AdamOptimizer(learning_rate=learning_rate_d).minimize(disc_loss, var_list=disc_vars)
 
 #if no NVIDIA CUDA take out config=...
@@ -137,8 +170,34 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
     for i in range(5001):
         z=np.random.randn(batch_size, z_dim)
         xin, _ = mnist.train.next_batch(mb_size)
-        noise=np.random.randn(5*batch_size, noise_dim)
+        noise=np.random.randn(batch_size, noise_dim)
         feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
         _, dl = sess.run([train_disc, disc_loss], feed_dict=feed_dict)
         if i % 500 == 0:
             print('Step %i: Discriminator Loss: %f' % (i, dl))
+    for j in range(50001):
+        print('Iteration %i' % (j))
+        #Train Discriminator
+        for i in range(81):
+            #Prior sample N(0,I_2x2)
+            z=np.random.randn(batch_size, z_dim)
+            xin, _ = mnist.train.next_batch(mb_size)
+            noise=np.random.randn(batch_size, noise_dim)
+            feed_dict = {prior_input: z, x_input: xin, noise_input: noise}
+            _, dl = sess.run([train_disc, disc_loss], feed_dict=feed_dict)
+            if i % 80 == 0:
+                print('Step %i: Discriminator Loss: %f' % (i, dl))
+        #Train Posterior on the 5 values of x specified at the start
+        for k in range(1):
+            xin, _ = mnist.train.next_batch(mb_size)
+            noise=np.random.randn(batch_size, noise_dim)
+            feed_dict = {x_input: xin, noise_input: noise}
+            _, nelboo = sess.run([train_elbo, nelbo], feed_dict=feed_dict)
+            #if k % 1000 == 0 or k ==1:
+            print('Step %i: NELBO: %f' % (k, nelboo))
+        if j % 100 == 0:
+            samples = sess.run(X_samples, feed_dict={z_samp: np.random.randn(16, z_dim)})
+
+            fig = plot(samples)
+            plt.savefig('FiguresMNISTPCADV\Fig %i'%(j), bbox_inches='tight')
+            plt.close(fig)
