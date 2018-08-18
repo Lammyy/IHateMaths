@@ -1081,12 +1081,14 @@ where $\mathcal{D}(u)=\frac{\mathcal{R}(u)}{\mathcal{R}(u)+1}$. Equality of the 
 which is the optimal discriminator of class probability estimation. Thus, our previous formulation of class probability estimation by minimizing the Bernoulli loss of a discriminator function is the same as maximizing the lower bound of a Jensen-Shannon divergence between the two distributions, in terms of a "discriminator" function.
 \newpage
 \section{Experiments}
-\subsection{"Sprinkler" Example}
+\subsection{Inference - "Sprinkler" Example}
 \subsubsection{Problem Context}
 For the first experiment, we use the simple "Continuous Sprinkler" model as described in (Huszar 2017). The latent variables $z_1$ and $z_2$ represent the sprinkler and the rain respectively, and the observation $x$ represents the wetness of the grass.
 \[p(z_1,z_2)\sim \N (0,\sigma^2 I_{2\times 2})\]
 \[p(x|\bm{z})\sim EXP(3+\max(0,z_1)^3+\max(0,z_2)^3)\]
-The unnormalised true posterior is derived as shown below. The lack of normalisation does not affect the variational distribution as the true posterior is assumed to be unknown, and the algorithm only uses samples from the prior and likelihood.
+Since the joint-contrastive algorithms assume both the prior and likelihood distributions are implicit, therefore only requiring samples from them, their likelihood functions are not required. The prior-contrastive algorithm requires the likelihood function of the likelihood distribution:
+\[p(x|z)=-\log (3+\max (0,z_1)^3+\max(0,z_2)^3)-\frac{x}{3+\max (0,z_1)^3+\max(0,z_2)^3}\]
+The unnormalised true posterior is derived as shown below. The lack of normalisation does not affect the variational distribution as the true posterior is assumed to be unknown, and the algorithm only uses samples from the prior and likelihood.\\
 \textbf{Posterior Calculation:}
 \begin{align*}
 p(z_1,z_2|x)&= \exp(\log p(z_1,z_2)+\log p(x|z_1,z_2))\\
@@ -1188,99 +1190,190 @@ The structure of the estimator (discriminator $\mathcal{D}_\alpha(z,x)$ or ratio
     \node[annot,above of=H-32, node distance=1cm] {ReLU};
     \node[annot,above of=O, node distance=1cm] {Sigmoid($\mathcal{D}$)/ ReLU($\mathcal{R}$)};
 \end{tikzpicture}\\
-The network weights are initialized with Xavier initialization, and trained using the Adam optimizer with learning rate $0.00001$. The network is only trained on the data values $x=0,5,8,12,50$; in each training iteration, 500 samples are taken for each x-value, corresponding to a batch size of 2500. This relatively large batch size makes training more consistent, as performing back-propagation along a stochastic neural network can lead to random and erratic training. The estimator is pre-trained for 5000 iterations to ensure that it converges to its optimal value. This is particularly desired as training the generator with an inaccurate ELBO estimate is pointless. Afterwards, the program runs for 50000 iterations, alternating between 100 training steps of the estimator and 1 training step of the generator. This process for class probability estimation and divergence minimisation is shown in Algorithm and Algorithm below:
+The network weights are initialized with Xavier initialization, and trained using the Adam optimizer with learning rate $0.00001$. This is the highest learning rate at which both algorithms converge consistently; any higher learning rates lead to inconsistent results. The network is only trained on the data values $x=0,5,8,12,50$; in each training iteration, 400 samples are taken for each x-value, corresponding to a batch size of 2000. This relatively large batch size makes training more consistent, as performing back-propagation along a stochastic neural network can lead to random and erratic training. The estimator is pre-trained for 5000 iterations to ensure that it converges to its optimal value. This is particularly desired as training the generator with an inaccurate ELBO estimate is pointless. Afterwards, the program runs for 50000 iterations, alternating between 80 training steps of the estimator and 1 training step of the generator. This process for class probability estimation and divergence minimisation is shown in Algorithm and Algorithm below:
 \begin{algorithm}
 \SetKw{update}{update}
-\caption{Sprinkler Class Probability Estimation}
+\caption{Sprinkler Prior-Contrastive Class Probability Estimation}
 \KwData{Dataset $q^*(x)=\{0,5,8,12,20\}$, true (implicit) prior $p(z)\sim \mathcal{N}(0,2I_{2\times 2})$, true (implicit) likelihood $p(x|z)\sim EXP(3+\max(0,z_1)^3+\max(0,z_2)^3)$, noise distribution $\pi(\epsilon)\sim \mathcal{N}(0,I_{3\times 3})$}
 \KwResult{Optimized posterior generator $\mathcal{G}_\phi(\epsilon;x)$}
 \BlankLine
 \For{$j=1$ \KwTo $5001$}{
-	Sample $\{\epsilon^{(i,j)}\}^{2500}_{i=1}\sim \pi(\epsilon)$\;
-		Sample $\{0,5,8,12,50\}^{500}_{i=1}=\{x^{(i,j)}_q\}^{2500}_{i=1}\sim q^*(x)$\;
-		Sample $\{z^{(i,j)}_p\}^{2500}_{i=1}\sim p(z)$\;
+	Sample $\{\epsilon^{(i,j)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
+		Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i,j)}_q\}^{2000}_{i=1}\sim q^*(x)$\;
+		Sample $\{z^{(i,j)}_p\}^{2000}_{i=1}\sim p(z)$\;
 		\ForEach{$\epsilon^{(i,j)},x^{(i,j)}$}{
-			Sample $\{z^{(i,j)}_q\}^{2500}_{i=1}=\mathcal{G}(\epsilon^{(i,j)};x^{(i,j}_q)$\;
+			Sample $\{z^{(i,j)}_q\}^{2000}_{i=1}=\mathcal{G}(\epsilon^{(i,j)};x^{(i,j}_q)$\;
 		}
 		\ForEach{$z^{(i,j)}_p$}{
-			Sample $\{x^{(i,j)}_p\}^{2500}_{i=1}\sim p(x|z)$\;
+			Sample $\{x^{(i,j)}_p\}^{2000}_{i=1}\sim p(x|z)$\;
 		}
 		\update{$\alpha$ by optimization step on}{
-			$\min_\alpha -\frac{1}{2500}\sum_{i=1}^{2500}\{\log [D_\alpha(\mathcal{G}_\phi(\epsilon^{(i,j)};x_q^{(i,j)}), x_q^{(i,j)})]+\log [1-D_\alpha(z_p^{(i,j)},x_p^{(i,j)})]\}$\;
+			$\min_\alpha -\frac{1}{2000}\sum_{i=1}^{2000}\{\log [D_\alpha(\mathcal{G}_\phi(\epsilon^{(i,j)};x_q^{(i,j)}), x_q^{(i,j)})]+\log [1-D_\alpha(z_p^{(i,j)},x_p^{(i,j)})]\}$\;
 		}
 }
 \For{$j=1$ \KwTo $50001$}{
-	\For{$k=1$ \KwTo $100$}{	
-		Sample $\{\epsilon^{(i,k)}\}^{2500}_{i=1}\sim \pi(\epsilon)$\;
-		Sample $\{0,5,8,12,50\}^{500}_{i=1}=\{x^{(i,k)}_q\}^{2500}_{i=1}\sim q^*(x)$\;
-		Sample $\{z^{(i,k)}_p\}^{2500}_{i=1}\sim p(z)$\;
+	\For{$k=1$ \KwTo $80$}{	
+		Sample $\{\epsilon^{(i,k)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
+		Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i,k)}_q\}^{2000}_{i=1}\sim q^*(x)$\;
+		Sample $\{z^{(i,k)}_p\}^{2000}_{i=1}\sim p(z)$\;
 		\ForEach{$\epsilon^{(i,k)},x^{(i,k)}$}{
-			Sample $\{z^{(i,k)}_q\}^{2500}_{i=1}=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
+			Sample $\{z^{(i,k)}_q\}^{2000}_{i=1}=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
 		}
 		\ForEach{$z^{(i,k)}_p$}{
-			Sample $\{x^{(i,k)}_p\}^{2500}_{i=1}\sim p(x|z)$\;
+			Sample $\{x^{(i,k)}_p\}^{2000}_{i=1}\sim p(x|z)$\;
 		}
 		\update{$\alpha$ by optimization step on}{
-			$\min_\alpha -\frac{1}{2500}\sum_{i=1}^{2500}\{\log [D_\alpha(\mathcal{G}_\phi(\epsilon^{(i,k)};x_q^{(i,k)}), x_q^{(i,k)})]+\log [1-D_\alpha(z_p^{(i,k)},x_p^{(i,k)})]\}$\;
+			$\min_\alpha -\frac{1}{2000}\sum_{i=1}^{2000}\{\log [D_\alpha(\mathcal{G}_\phi(\epsilon^{(i,k)};x_q^{(i,k)}), x_q^{(i,k)})]+\log [1-D_\alpha(z_p^{(i,k)},x_p^{(i,k)})]\}$\;
 		}
 	}
-	Sample $\{\epsilon^{(i)}\}^{2500}_{i=1}\sim \pi(\epsilon)$\;
-	Sample $\{0,5,8,12,50\}^{500}_{i=1}=\{x^{(i)}_q\}^{2500}_{i=1}\sim q^*(x)$\;
+	Sample $\{\epsilon^{(i)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
+	Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i)}_q\}^{2000}_{i=1}\sim q^*(x)$\;
 	\update{$\phi$ by optimization step on}{
-		$\min_\phi \frac{1}{2500}\sum^{2500}_{i=1}\log\frac{D_\alpha(\mathcal{G}_\phi(\epsilon^{(i)};x_q^{(i)}),x_q^{(i)})}{1-D_\alpha(\mathcal{G}_\phi(\epsilon^{(i)};x_q^{(i)}),x_q^{(i)})}$\;
+		$\min_\phi \frac{1}{2000}\sum^{2000}_{i=1}\{-\log p(x|\mathcal{G}_\phi(\epsilon^{(i)};x_q^{(i)}))+\log\frac{D_\alpha(\mathcal{G}_\phi(\epsilon^{(i)};x_q^{(i)}),x_q^{(i)})}{1-D_\alpha(\mathcal{G}_\phi(\epsilon^{(i)};x_q^{(i)}),x_q^{(i)})}\}$\;
 	}
 }
 \end{algorithm}
 \begin{algorithm}
 \SetKw{update}{update}
-\caption{Sprinkler KL Divergence Minimisation}
+\caption{Sprinkler Prior-Contrastive KL Divergence Minimisation}
 \KwData{Dataset $q^*(x)=\{0,5,8,12,20\}$, true (implicit) prior $p(z)\sim \mathcal{N}(0,2I_{2\times 2})$, true (implicit) likelihood $p(x|z)\sim EXP(3+\max(0,z_1)^3+\max(0,z_2)^3)$, noise distribution $\pi(\epsilon)\sim \mathcal{N}(0,I_{3\times 3})$}
 \KwResult{Optimized posterior generator $\mathcal{G}_\phi(\epsilon;x)$}
 \BlankLine
 \For{$j=1$ \KwTo $5001$}{
-	Sample $\{\epsilon^{(i,j)}\}^{2500}_{i=1}\sim \pi(\epsilon)$\;
-		Sample $\{0,5,8,12,50\}^{500}_{i=1}=\{x^{(i,j)}_q\}^{2500}_{i=1}\sim q^*(x)$\;
-		Sample $\{z^{(i,j)}_p\}^{2500}_{i=1}\sim p(z)$\;
+	Sample $\{\epsilon^{(i,j)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
+		Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i,j)}_q\}^{2000}_{i=1}\sim q^*(x)$\;
+		Sample $\{z^{(i,j)}_p\}^{2000}_{i=1}\sim p(z)$\;
 		\ForEach{$\epsilon^{(i,j)},x^{(i,j)}$}{
-			Sample $\{z^{(i,j)}_q\}^{2500}_{i=1}=\mathcal{G}(\epsilon^{(i,j)};x^{(i,j}_q)$\;
+			Sample $\{z^{(i,j)}_q\}^{2000}_{i=1}=\mathcal{G}(\epsilon^{(i,j)};x^{(i,j}_q)$\;
 		}
 		\ForEach{$z^{(i,j)}_p$}{
-			Sample $\{x^{(i,j)}_p\}^{2500}_{i=1}\sim p(x|z)$\;
+			Sample $\{x^{(i,j)}_p\}^{2000}_{i=1}\sim p(x|z)$\;
 		}
 		\update{$\alpha$ by optimization step on}{
-			$\min_\alpha -\frac{1}{2500}\sum_{i=1}^{2500}\{\log [r_\alpha(\mathcal{G}_\phi(\epsilon^{(i,j)};x_q^{(i,j)}), x_q^{(i,j)})]+r_\alpha(z_p^{(i,j)},x_p^{(i,j)})\}$\;
+			$\min_\alpha -\frac{1}{2000}\sum_{i=1}^{2000}\{\log [r_\alpha(\mathcal{G}_\phi(\epsilon^{(i,j)};x_q^{(i,j)}), x_q^{(i,j)})]+r_\alpha(z_p^{(i,j)},x_p^{(i,j)})\}$\;
 		}
 }
 \For{$j=1$ \KwTo $50001$}{
-	\For{$k=1$ \KwTo $100$}{	
-		Sample $\{\epsilon^{(i,k)}\}^{2500}_{i=1}\sim \pi(\epsilon)$\;
-		Sample $\{0,5,8,12,50\}^{500}_{i=1}=\{x^{(i,k)}_q\}^{2500}_{i=1}\sim q^*(x)$\;
-		Sample $\{z^{(i,k)}_p\}^{2500}_{i=1}\sim p(z)$\;
+	\For{$k=1$ \KwTo $80$}{	
+		Sample $\{\epsilon^{(i,k)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
+		Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i,k)}_q\}^{2000}_{i=1}\sim q^*(x)$\;
+		Sample $\{z^{(i,k)}_p\}^{2000}_{i=1}\sim p(z)$\;
 		\ForEach{$\epsilon^{(i,k)},x^{(i,k)}$}{
-			Sample $\{z^{(i,k)}_q\}^{2500}_{i=1}=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
+			Sample $\{z^{(i,k)}_q\}^{2000}_{i=1}=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
 		}
 		\ForEach{$z^{(i,k)}_p$}{
-			Sample $\{x^{(i,k)}_p\}^{2500}_{i=1}\sim p(x|z)$\;
+			Sample $\{x^{(i,k)}_p\}^{2000}_{i=1}\sim p(x|z)$\;
 		}
 		\update{$\alpha$ by optimization step on}{
-			$\min_\alpha -\frac{1}{2500}\sum_{i=1}^{2500}\{\log [r_\alpha(\mathcal{G}_\phi(\epsilon^{(i,k)};x_q^{(i,k)}), x_q^{(i,k)})]+r_\alpha(z_p^{(i,k)},x_p^{(i,k)})\}$\;
+			$\min_\alpha -\frac{1}{2000}\sum_{i=1}^{2000}\{\log [r_\alpha(\mathcal{G}_\phi(\epsilon^{(i,k)};x_q^{(i,k)}), x_q^{(i,k)})]+r_\alpha(z_p^{(i,k)},x_p^{(i,k)})\}$\;
 		}
 	}
-	Sample $\{\epsilon^{(i)}\}^{2500}_{i=1}\sim \pi(\epsilon)$\;
-	Sample $\{0,5,8,12,50\}^{500}_{i=1}=\{x^{(i)}_q\}^{2500}_{i=1}\sim q^*(x)$\;
+	Sample $\{\epsilon^{(i)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
+	Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i)}_q\}^{2000}_{i=1}\sim q^*(x)$\;
 	\update{$\phi$ by optimization step on}{
-		$\min_\phi \frac{1}{2500}\sum^{2500}_{i=1}\log r_\alpha(\mathcal{G}_\phi(\epsilon^{(i)};x_q^{(i)}),x_q^{(i)})$\;
+		$\min_\phi \frac{1}{2000}\sum^{2000}_{i=1}\{-\log p(x|\mathcal{G}_\phi(\epsilon^{(i)};x_q^{(i)}))+\log r_\alpha(\mathcal{G}_\phi(\epsilon^{(i)};x_q^{(i)}),x_q^{(i)})\}$\;
+	}
+}
+\end{algorithm}
+\begin{algorithm}
+\SetKw{update}{update}
+\caption{Sprinkler Joint-Contrastive Class Probability Estimation}
+\KwData{Dataset $q^*(x)=\{0,5,8,12,20\}$, true (implicit) prior $p(z)\sim \mathcal{N}(0,2I_{2\times 2})$, true (implicit) likelihood $p(x|z)\sim EXP(3+\max(0,z_1)^3+\max(0,z_2)^3)$, noise distribution $\pi(\epsilon)\sim \mathcal{N}(0,I_{3\times 3})$}
+\KwResult{Optimized posterior generator $\mathcal{G}_\phi(\epsilon;x)$}
+\BlankLine
+\For{$j=1$ \KwTo $5001$}{
+	Sample $\{\epsilon^{(i,j)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
+		Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i,j)}_q\}^{2000}_{i=1}\sim q^*(x)$\;
+		Sample $\{z^{(i,j)}_p\}^{2000}_{i=1}\sim p(z)$\;
+		\ForEach{$\epsilon^{(i,j)},x^{(i,j)}$}{
+			Sample $\{z^{(i,j)}_q\}^{2000}_{i=1}=\mathcal{G}(\epsilon^{(i,j)};x^{(i,j}_q)$\;
+		}
+		\ForEach{$z^{(i,j)}_p$}{
+			Sample $\{x^{(i,j)}_p\}^{2000}_{i=1}\sim p(x|z)$\;
+		}
+		\update{$\alpha$ by optimization step on}{
+			$\min_\alpha -\frac{1}{2000}\sum_{i=1}^{2000}\{\log [D_\alpha(\mathcal{G}_\phi(\epsilon^{(i,j)};x_q^{(i,j)}), x_q^{(i,j)})]+\log [1-D_\alpha(z_p^{(i,j)},x_p^{(i,j)})]\}$\;
+		}
+}
+\For{$j=1$ \KwTo $50001$}{
+	\For{$k=1$ \KwTo $80$}{	
+		Sample $\{\epsilon^{(i,k)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
+		Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i,k)}_q\}^{2000}_{i=1}\sim q^*(x)$\;
+		Sample $\{z^{(i,k)}_p\}^{2000}_{i=1}\sim p(z)$\;
+		\ForEach{$\epsilon^{(i,k)},x^{(i,k)}$}{
+			Sample $\{z^{(i,k)}_q\}^{2000}_{i=1}=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
+		}
+		\ForEach{$z^{(i,k)}_p$}{
+			Sample $\{x^{(i,k)}_p\}^{2000}_{i=1}\sim p(x|z)$\;
+		}
+		\update{$\alpha$ by optimization step on}{
+			$\min_\alpha -\frac{1}{2000}\sum_{i=1}^{2000}\{\log [D_\alpha(\mathcal{G}_\phi(\epsilon^{(i,k)};x_q^{(i,k)}), x_q^{(i,k)})]+\log [1-D_\alpha(z_p^{(i,k)},x_p^{(i,k)})]\}$\;
+		}
+	}
+	Sample $\{\epsilon^{(i)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
+	Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i)}_q\}^{2000}_{i=1}\sim q^*(x)$\;
+	\update{$\phi$ by optimization step on}{
+		$\min_\phi \frac{1}{2000}\sum^{2000}_{i=1}\log\frac{D_\alpha(\mathcal{G}_\phi(\epsilon^{(i)};x_q^{(i)}),x_q^{(i)})}{1-D_\alpha(\mathcal{G}_\phi(\epsilon^{(i)};x_q^{(i)}),x_q^{(i)})}$\;
+	}
+}
+\end{algorithm}
+\begin{algorithm}
+\SetKw{update}{update}
+\caption{Sprinkler Joint-Contrastive KL Divergence Minimisation}
+\KwData{Dataset $q^*(x)=\{0,5,8,12,20\}$, true (implicit) prior $p(z)\sim \mathcal{N}(0,2I_{2\times 2})$, true (implicit) likelihood $p(x|z)\sim EXP(3+\max(0,z_1)^3+\max(0,z_2)^3)$, noise distribution $\pi(\epsilon)\sim \mathcal{N}(0,I_{3\times 3})$}
+\KwResult{Optimized posterior generator $\mathcal{G}_\phi(\epsilon;x)$}
+\BlankLine
+\For{$j=1$ \KwTo $5001$}{
+	Sample $\{\epsilon^{(i,j)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
+		Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i,j)}_q\}^{2000}_{i=1}\sim q^*(x)$\;
+		Sample $\{z^{(i,j)}_p\}^{2000}_{i=1}\sim p(z)$\;
+		\ForEach{$\epsilon^{(i,j)},x^{(i,j)}$}{
+			Sample $\{z^{(i,j)}_q\}^{2000}_{i=1}=\mathcal{G}(\epsilon^{(i,j)};x^{(i,j}_q)$\;
+		}
+		\ForEach{$z^{(i,j)}_p$}{
+			Sample $\{x^{(i,j)}_p\}^{2000}_{i=1}\sim p(x|z)$\;
+		}
+		\update{$\alpha$ by optimization step on}{
+			$\min_\alpha -\frac{1}{2000}\sum_{i=1}^{2000}\{\log [r_\alpha(\mathcal{G}_\phi(\epsilon^{(i,j)};x_q^{(i,j)}), x_q^{(i,j)})]+r_\alpha(z_p^{(i,j)},x_p^{(i,j)})\}$\;
+		}
+}
+\For{$j=1$ \KwTo $50001$}{
+	\For{$k=1$ \KwTo $80$}{	
+		Sample $\{\epsilon^{(i,k)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
+		Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i,k)}_q\}^{2000}_{i=1}\sim q^*(x)$\;
+		Sample $\{z^{(i,k)}_p\}^{2000}_{i=1}\sim p(z)$\;
+		\ForEach{$\epsilon^{(i,k)},x^{(i,k)}$}{
+			Sample $\{z^{(i,k)}_q\}^{2000}_{i=1}=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
+		}
+		\ForEach{$z^{(i,k)}_p$}{
+			Sample $\{x^{(i,k)}_p\}^{2000}_{i=1}\sim p(x|z)$\;
+		}
+		\update{$\alpha$ by optimization step on}{
+			$\min_\alpha -\frac{1}{2000}\sum_{i=1}^{2000}\{\log [r_\alpha(\mathcal{G}_\phi(\epsilon^{(i,k)};x_q^{(i,k)}), x_q^{(i,k)})]+r_\alpha(z_p^{(i,k)},x_p^{(i,k)})\}$\;
+		}
+	}
+	Sample $\{\epsilon^{(i)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
+	Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i)}_q\}^{2000}_{i=1}\sim q^*(x)$\;
+	\update{$\phi$ by optimization step on}{
+		$\min_\phi \frac{1}{2000}\sum^{2000}_{i=1}\log r_\alpha(\mathcal{G}_\phi(\epsilon^{(i)};x_q^{(i)}),x_q^{(i)})$\;
 	}
 }
 \end{algorithm}
 \newpage
 \subsubsection{Results}
-To compare the techniques, we compare the number of iterations until convergence and how much the variational posterior has converged after x0000 iterations. We define convergence as when the average KL divergence of the 5 posterior distributions $\E_{q^*(x)}KL(q(z|x)||p(z|x)) = \E_{q^*(x)}\E_{q(z|x)}\log \frac{q(z|x)}{p(z|x)}$ falls below insert number here. We do not use the ELBO output of the program to calculate this KL divergence, nor do we compare the ELBOs of the algorithms, as the accuracy of the ELBO estimator is dependent on the algorithm used. Instead, we use a non-parametric approach, estimating the probability density function of the variational posterior output with a Gaussian kernel density estimator $\hat{q}(z|x)$. By using five kernel density estimators for the five data points, we are able to create an estimate of the average KL divergence with an accuracy that is independent of the algorithm used: $\E_{q^*(x)}KL(\hat{q}(z|x)||p(z|x)) = \E_{q^*(x)}\E_{\hat{q}(z|x)}\log \frac{\hat{q}(z|x)}{p(z|x)}$.\\
-Overall, we found that class probability estimation performed consistently better than KL divergence minimisation. Insert metrics here. Each iteration took approximately the same amount of time to compute (0.42 seconds on me PC), as the bulk of the training time is spent training the neural networks, which have similar structures.\\
-Furthermore, in approximately half of the simulations, the ratio loss of the KL divergence minimisation algorithm would start at a relatively high number (22.3 as opposed to 3.5), and it would be stuck there for the entire runtime of the program; the thousands of iterations spent minimizing the ratio loss had little effect decreasing it (the pre-training period of 5000 iterations only lowered the ratio loss to about 22.2). The high ratio loss signifies a very inaccurate ratio estimator, leading to a completely inaccurate variational posterior (i have a fig to isnert here). Thus, the program would have to be restarted every time the ratio loss initialized at a high number, until a reasonable value was initialized.
+To compare the techniques, we compare the number of iterations until convergence and how much the variational posterior has converged after x0000 iterations. We define convergence as when the average KL divergence of the 5 posterior distributions $\E_{q^*(x)}KL(q(z|x)||p(z|x)) = \E_{q^*(x)}\E_{q(z|x)}\log \frac{q(z|x)}{p(z|x)}$ falls below 1.35. We do not use the ELBO output of the program to calculate this KL divergence, nor do we compare the ELBOs of the algorithms, as the accuracy of the ELBO estimator is dependent on the algorithm used. Instead, we use a non-parametric approach, estimating the probability density function of the variational posterior output with a Gaussian kernel density estimator $\hat{q}(z|x)$. By using five kernel density estimators for the five data points, we are able to create an estimate of the average KL divergence with an accuracy that is independent of the algorithm used: $\E_{q^*(x)}KL(\hat{q}(z|x)||p(z|x)) = \E_{q^*(x)}\E_{q(z|x)}\log \frac{\hat{q}(z|x)}{p(z|x)}$.\\
+Clearly, the prior-contrastive algorithms converged much faster their joint-contrastive equivalent, as expected since knowledge of the likelihood improves posterior optimization. Overall, for both PC and JC, we found that class probability estimation performed consistently better than KL divergence minimisation. Insert metrics here. Each iteration took approximately the same amount of time to compute (0.32 seconds on me PC), as the bulk of the training time is spent training the neural networks, which have similar structures.\\
+Furthermore, in approximately half of the simulations, the ratio loss of the KL divergence minimisation algorithm would start at a relatively high number (42.3 as opposed to 3.5), and it would be stuck there for the entire runtime of the program; the thousands of iterations spent minimizing the ratio loss had little effect decreasing it (the pre-training period of 5000 iterations only lowered the ratio loss to about 39.2). The high ratio loss signifies a very inaccurate ratio estimator, leading to a completely inaccurate variational posterior (i have a fig to isnert here). Thus, the program would have to be restarted every time the ratio loss initialized at a high number, until a reasonable value was initialized.
+\newpage
 \subsection{haha why is CPE better than KL min its conspiracy theory time}
-Begin looking at problem through optimization perspective.
+For both the prior-contrastive and joint-contrastive formulations, it can be seen that the only differences between CPE and KL min are the function that is optimized to formulate the density ratio estimator, and the parametrization of the estimator. Recall that optimization of the estimator for the KL min algorithm follows the lower bound:
+\[D_{KL}(p||q)\geq \sup_{\alpha}\{\mathbb{E}_{q(u)}[1+\log r_\alpha(u)]-\mathbb{E}_{p(u)}[r_\alpha(u)]\}\]
+with equality at $r_\alpha(u)=\frac{q(u)}{p(u)}$ and that optimization for class probability estimation follows:
+\[2D_{JS}(p||q)-\log 4\geq \sup_\alpha\{\mathbb{E}_{q(u)}[\log \mathcal{D}_\alpha(u)]+\mathbb{E}_{p(u)}[\log(1-\mathcal{D}(u))]\}\]
+with equality at $D_\alpha(u)=\frac{q(u)}{q(u)+p(u)}$.\\
+These two estimators can be used interchangeably, as $D_\alpha(u)=\frac{r_\alpha(u)}{r_\alpha(u)+1}$ and $r_\alpha(u)=\frac{D_\alpha(u)}{1-D_\alpha(u)}$. In fact, the former transformation is used to derive this formulation of the discriminative loss for class probability estimation. From this we can formulate two new algorithms:
+\[\]
 \subsection{Experiments to prove me theory}
-\subsection{Autoencoding Variational Bayes (MNIST image generation)}
+\subsection{Adversarial Variational Bayes (MNIST image generation)}
 \subsubsection{Problem Context}
 \end{document}

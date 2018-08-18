@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  15 AUG 2018 12:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  18 AUG 2018 01:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -956,20 +956,21 @@ Overfull \hbox (12.71707pt too wide) in paragraph at lines 1064--1064
  []
 
 [42] [43]
-Overfull \hbox (23.93736pt too wide) in paragraph at lines 1095--1095
+Overfull \hbox (23.93736pt too wide) in paragraph at lines 1097--1097
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1095--1101
+Underfull \hbox (badness 10000) in paragraph at lines 1097--1103
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1095--1101
+Underfull \hbox (badness 10000) in paragraph at lines 1097--1103
 
  []
 
+[44]
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -977,56 +978,68 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (18.72885pt too wide) in paragraph at lines 1189--1189
+Overfull \hbox (18.72885pt too wide) in paragraph at lines 1191--1191
  [][][][]\OT1/cmr/m/n/12 Sigmoid($\OMS/cmsy/m/n/12 D$\OT1/cmr/m/n/12 )/ 
  []
 
 
-Overfull \hbox (2.32848pt too wide) in paragraph at lines 1189--1189
+Overfull \hbox (2.32848pt too wide) in paragraph at lines 1191--1191
  \OT1/cmr/m/n/12 ReLU($\OMS/cmsy/m/n/12 R$\OT1/cmr/m/n/12 ) 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1102--1276
+Underfull \hbox (badness 10000) in paragraph at lines 1104--1362
 
  []
 
 
-Overfull \hbox (33.01653pt too wide) in paragraph at lines 1102--1276
+Overfull \hbox (33.01653pt too wide) in paragraph at lines 1104--1362
 [] 
  []
 
-[44] [45] [46pdfTeX warning (ext4): destination with the same identifier (name{
+[45] [46] [47pdfTeX warning (ext4): destination with the same identifier (name{
 algocf.8}) has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.1276 \newpage
-               ] [47pdfTeX warning (ext4): destination with the same identifier
+l.1362 \newpage
+               ] [48pdfTeX warning (ext4): destination with the same identifier
  (name{algocf.9}) has been already used, duplicate ignored
 
 \@EveryShipout@Output ...@Org@Shipout \box \@cclv 
                                                   
-l.1276 \newpage
-               ] [48]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1286.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1286.
+l.1362 \newpage
+               ] [49pdfTeX warning (ext4): destination with the same identifier
+ (name{algocf.10}) has been already used, duplicate ignored
+
+\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
+                                                  
+l.1362 \newpage
+               ] [50pdfTeX warning (ext4): destination with the same identifier
+ (name{algocf.11}) has been already used, duplicate ignored
+
+\@EveryShipout@Output ...@Org@Shipout \box \@cclv 
+                                                  
+l.1362 \newpage
+               ] [51] [52]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1378.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1378.
  (./THESIS.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1286.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1286.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1378.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1378.
 
 Package rerunfilecheck Info: File `THESIS.out' has not changed.
-(rerunfilecheck)             Checksum: 1EFB60AF99595E9EA6C90F4ED811C113;3629.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1286.
+(rerunfilecheck)             Checksum: AFED3AB489C2DFECC21F82FB5CB110A8;3640.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1378.
  ) 
 Here is how much of TeX's memory you used:
- 19721 strings out of 492990
- 364591 string characters out of 6136334
- 473105 words of memory out of 5000000
+ 19729 strings out of 492990
+ 364663 string characters out of 6136334
+ 481104 words of memory out of 5000000
  22799 multiletter control sequences out of 15000+600000
  13726 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,19n,68p,1058b,911s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,19n,68p,1087b,911s stack positions out of 5000i,500n,10000p,200000b,80000s
 <c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/tex
 live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx6.pfb><c:/texlive/2017/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2017/texmf-dist
@@ -1044,10 +1057,10 @@ ic/amsfonts/cm/cmsy6.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmsy8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti1
 2.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pf
 b>
-Output written on THESIS.pdf (48 pages, 336942 bytes).
+Output written on THESIS.pdf (52 pages, 345301 bytes).
 PDF statistics:
- 580 PDF objects out of 1000 (max. 8388607)
- 506 compressed objects within 6 object streams
- 127 named destinations out of 1000 (max. 500000)
+ 602 PDF objects out of 1000 (max. 8388607)
+ 524 compressed objects within 6 object streams
+ 135 named destinations out of 1000 (max. 500000)
  381 words of extra memory for PDF output out of 10000 (max. 10000000)
 
