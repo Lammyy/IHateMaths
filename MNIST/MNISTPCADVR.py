@@ -13,7 +13,7 @@ from tensorflow.examples.tutorials.mnist import input_data
 
 mnist = input_data.read_data_sets('../../MNIST_data', one_hot=True)
 mb_size = 32
-z_dim = 10
+z_dim = 24
 noise_dim = 4
 data_dim = mnist.train.images.shape[1]
 y_dim = mnist.train.labels.shape[1]
@@ -21,14 +21,14 @@ y_dim = mnist.train.labels.shape[1]
 h_dim = 128
 lr = 1e-3
 epsilon=1E-18
-disc_hidden_dim1=100
-disc_hidden_dim2=200
-gen_hidden_dim1=100
+disc_hidden_dim1=200
+disc_hidden_dim2=400
+gen_hidden_dim1=200
 batch_size=32
-gen_hidden_dim2=200
-like_hidden_dim1=100
-like_hidden_dim2=200
-learning_rate_p=0.001
+gen_hidden_dim2=400
+like_hidden_dim1=500
+like_hidden_dim2=1000
+learning_rate_p=0.0005
 learning_rate_d=0.00001
 def plot(samples):
     fig = plt.figure(figsize=(4, 4))
@@ -115,7 +115,8 @@ def posterior(x, noise):
 def likelihood(z):
     hidden_layer1 = tf.nn.relu(tf.matmul(z, weights['like_hidden1'])+biases['like_hidden1'])
     hidden_layer2 = tf.nn.relu(tf.matmul(hidden_layer1, weights['like_hidden2'])+biases['like_hidden2'])
-    logits = tf.matmul(hidden_layer2, weights['like_out'])+biases['like_out']
+    hidden_layer3 = tf.nn.relu(tf.matmul(hidden_layer2, weights['like_hidden3'])+biases['like_hidden3'])
+    logits = tf.matmul(hidden_layer3, weights['like_out'])+biases['like_out']
     out_layer = tf.nn.sigmoid(logits)
     return out_layer, logits
 

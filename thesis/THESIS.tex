@@ -1363,16 +1363,42 @@ The network weights are initialized with Xavier initialization, and trained usin
 \subsubsection{Results}
 To compare the techniques, we compare the number of iterations until convergence and how much the variational posterior has converged after x0000 iterations. We define convergence as when the average KL divergence of the 5 posterior distributions $\E_{q^*(x)}KL(q(z|x)||p(z|x)) = \E_{q^*(x)}\E_{q(z|x)}\log \frac{q(z|x)}{p(z|x)}$ falls below 1.35. We do not use the ELBO output of the program to calculate this KL divergence, nor do we compare the ELBOs of the algorithms, as the accuracy of the ELBO estimator is dependent on the algorithm used. Instead, we use a non-parametric approach, estimating the probability density function of the variational posterior output with a Gaussian kernel density estimator $\hat{q}(z|x)$. By using five kernel density estimators for the five data points, we are able to create an estimate of the average KL divergence with an accuracy that is independent of the algorithm used: $\E_{q^*(x)}KL(\hat{q}(z|x)||p(z|x)) = \E_{q^*(x)}\E_{q(z|x)}\log \frac{\hat{q}(z|x)}{p(z|x)}$.\\
 Clearly, the prior-contrastive algorithms converged much faster their joint-contrastive equivalent, as expected since knowledge of the likelihood improves posterior optimization. Overall, for both PC and JC, we found that class probability estimation performed consistently better than KL divergence minimisation. Insert metrics here. Each iteration took approximately the same amount of time to compute (0.32 seconds on me PC), as the bulk of the training time is spent training the neural networks, which have similar structures.\\
-Furthermore, in approximately half of the simulations, the ratio loss of the KL divergence minimisation algorithm would start at a relatively high number (42.3 as opposed to 3.5), and it would be stuck there for the entire runtime of the program; the thousands of iterations spent minimizing the ratio loss had little effect decreasing it (the pre-training period of 5000 iterations only lowered the ratio loss to about 39.2). The high ratio loss signifies a very inaccurate ratio estimator, leading to a completely inaccurate variational posterior (i have a fig to isnert here). Thus, the program would have to be restarted every time the ratio loss initialized at a high number, until a reasonable value was initialized.
+Furthermore, in approximately half of the simulations, the ratio loss of the KL divergence minimisation algorithm would start at a relatively high number (42.3 as opposed to 3.5), and it would be stuck there for the entire runtime of the program; the thousands of iterations spent minimizing the ratio loss had little effect decreasing it (the pre-training period of 5000 iterations only lowered the ratio loss to about 39.2). The high ratio loss signifies a very inaccurate ratio estimator, leading to a completely inaccurate variational posterior (i have a fig to isnert here). Thus, the program would have to be restarted every time the ratio loss initialized at a high number, until a reasonable value was initialized. 
 \newpage
 \subsection{haha why is CPE better than KL min its conspiracy theory time}
+\subsection{Introduction to my mad theory}
 For both the prior-contrastive and joint-contrastive formulations, it can be seen that the only differences between CPE and KL min are the function that is optimized to formulate the density ratio estimator, and the parametrization of the estimator. Recall that optimization of the estimator for the KL min algorithm follows the lower bound:
 \[D_{KL}(p||q)\geq \sup_{\alpha}\{\mathbb{E}_{q(u)}[1+\log r_\alpha(u)]-\mathbb{E}_{p(u)}[r_\alpha(u)]\}\]
 with equality at $r_\alpha(u)=\frac{q(u)}{p(u)}$ and that optimization for class probability estimation follows:
-\[2D_{JS}(p||q)-\log 4\geq \sup_\alpha\{\mathbb{E}_{q(u)}[\log \mathcal{D}_\alpha(u)]+\mathbb{E}_{p(u)}[\log(1-\mathcal{D}(u))]\}\]
+\[2D_{JS}(p||q)-\log 4\geq \sup_\alpha\{\mathbb{E}_{q(u)}[\log \mathcal{D}_\alpha(u)]+\mathbb{E}_{p(u)}[\log(1-\mathcal{D}_\alpha(u))]\}\]
 with equality at $D_\alpha(u)=\frac{q(u)}{q(u)+p(u)}$.\\
-These two estimators can be used interchangeably, as $D_\alpha(u)=\frac{r_\alpha(u)}{r_\alpha(u)+1}$ and $r_\alpha(u)=\frac{D_\alpha(u)}{1-D_\alpha(u)}$. In fact, the former transformation is used to derive this formulation of the discriminative loss for class probability estimation. From this we can formulate two new algorithms:
-\[\]
+These two estimators can be used interchangeably, as $D_\alpha(u)=\frac{r_\alpha(u)}{r_\alpha(u)+1}$ and $r_\alpha(u)=\frac{D_\alpha(u)}{1-D_\alpha(u)}$. In fact, the former transformation is used to derive this formulation of the discriminative loss for class probability estimation. By transforming the estimators used in the two f-divergences, we can formulate two new estimator optimization problems:
+\[\min_\alpha \mathbb{E}_{q(u)}[\log D_\alpha (u)-\log(1-D_\alpha(u))]-\mathbb{E}_{p(u)}\frac{D_\alpha(u)}{1-D_\alpha(u)}\]
+and
+\[\min_\alpha \mathbb{E}_{q(u)}[\log r_\alpha(u)-\log (r_\alpha(u)+1)]-\mathbb{E}_{p(u)}[\log(r_\alpha(u)+1)].\]
+The optimization problem for the ELBO in both prior-contrastive and joint-contrastive methods involves density ratio estimation between the true and variational distributions, and the optimization of the likelihood term in the prior-contrastive method is independent of the ratio estimator. We can therefore denote the two ELBO optimization problems for the two estimator parametrizations $D_\alpha (u)$ and $r_\alpha(u)$ as:
+\[\min_\phi \mathbb{E}_{q_\phi(u)}\log \frac{D_\alpha (u)}{1-D_\alpha (u)}\quad(+\text{ Likelihood})\]
+and
+\[\min_\phi \mathbb{E}_{q_\phi(u)}\log r_\alpha (u)\quad(+\text{ Likelihood}).\]
+For the KL divergence, there is an additional parametrization of the estimator: $T_\alpha(u)=\log r_\alpha(u)$. This parametrization is not used in the CPE divergence as it involves evaluating a $\log (r_\alpha(u)+1)$ term. The optimization algorithm for this specific combination is:
+\[\min_\alpha -\mathbb{E}_{q(u)}[T_\alpha(u)]+\mathbb{E}_{p(u)}[\exp(T_\alpha (u))]\]
+\[\min_\phi -\mathbb{E}_{q_\phi(u)}T_\alpha(u)\quad(+\text{ Likelihood}).\]
+\subsubsection{Recap because its confusing}
+To recap, we have mathematically simplified the choice of algorithm for training implicit variational neural networks to a choice of f-divergence:
+\begin{itemize}
+\item KL Divergence: $D_{KL}(p||q)=\mathbb{E}_{q(u)}[1+\log \frac{q(u)}{p(u)}]-\mathbb{E}_{p(u)}\left[\frac{q(u)}{p(u)}\right]$
+\item CPE Divergence: $D_{CPE}(p||q)=\mathbb{E}_{q(u)}\left[\log \frac{q(u)}{q(u)+p(u)}\right]+\mathbb{E}_{p(u)}\left[\log \frac{p(u)}{q(u)+p(u)}\right]$
+\end{itemize}
+and a choice of estimator parametrization:
+\begin{itemize}
+\item Direct ratio estimator: $r^*_\alpha(u)=\frac{q(u)}{p(u)}$
+\item "Class probability" estimator: $D^*_\alpha(u)=\frac{q(u)}{q(u)+p(u)}$
+\item Direct log ratio estimator (KL Div only): $T^*_\alpha(u)=\log \frac{q(u)}{p(u)}$
+\end{itemize}
+The original "KL minimization approach" simply chooses the KL Divergence and the direct ratio estimator, and "Class probability estimation" uses the CPE Divergence and the "Class probability" estimator. These are just 2 variations of the 5 available algorithms.\\
+\subsubsection{Difference between divergences}
+\subsubsection{Difference between estimators}
+
 \subsection{Experiments to prove me theory}
 \subsection{Adversarial Variational Bayes (MNIST image generation)}
 \subsubsection{Problem Context}
