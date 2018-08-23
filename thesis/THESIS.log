@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  21 AUG 2018 14:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  22 AUG 2018 15:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1022,21 +1022,21 @@ l.1362 \newpage
                                                   
 l.1362 \newpage
                ] [51] [52] [53]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1401.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1401.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1408.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1408.
  (./THESIS.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1401.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1401.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1408.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1408.
 
 Package rerunfilecheck Info: File `THESIS.out' has not changed.
-(rerunfilecheck)             Checksum: 3B02C3D8AABB5B349C0C4A64478C3161;3806.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1401.
+(rerunfilecheck)             Checksum: A693D23F93F34FFBB26609DA1AA3C5E4;3985.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1408.
  ) 
 Here is how much of TeX's memory you used:
- 19734 strings out of 492990
- 364740 string characters out of 6136334
+ 19738 strings out of 492990
+ 364820 string characters out of 6136334
  481105 words of memory out of 5000000
- 22801 multiletter control sequences out of 15000+600000
+ 22803 multiletter control sequences out of 15000+600000
  13726 words of font info for 52 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,19n,68p,1087b,911s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1057,10 +1057,10 @@ ic/amsfonts/cm/cmsy6.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmsy8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti1
 2.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pf
 b>
-Output written on THESIS.pdf (53 pages, 348472 bytes).
+Output written on THESIS.pdf (53 pages, 348825 bytes).
 PDF statistics:
- 616 PDF objects out of 1000 (max. 8388607)
- 537 compressed objects within 6 object streams
- 138 named destinations out of 1000 (max. 500000)
- 397 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 627 PDF objects out of 1000 (max. 8388607)
+ 548 compressed objects within 6 object streams
+ 140 named destinations out of 1000 (max. 500000)
+ 413 words of extra memory for PDF output out of 10000 (max. 10000000)
 

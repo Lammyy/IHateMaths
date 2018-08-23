@@ -1395,9 +1395,12 @@ and a choice of estimator parametrization:
 \item "Class probability" estimator: $D^*_\alpha(u)=\frac{q(u)}{q(u)+p(u)}$
 \item Direct log ratio estimator (KL Div only): $T^*_\alpha(u)=\log \frac{q(u)}{p(u)}$
 \end{itemize}
-The original "KL minimization approach" simply chooses the KL Divergence and the direct ratio estimator, and "Class probability estimation" uses the CPE Divergence and the "Class probability" estimator. These are just 2 variations of the 5 available algorithms.\\
+The original "KL minimization approach" simply chooses the KL Divergence and the direct ratio estimator, and "Class probability estimation" uses the CPE Divergence and the "Class probability" estimator. These are just 2 variations of the 5 available algorithms.
 \subsubsection{Difference between divergences}
+Recall that both divergences attain the same global minimum, which is a parametrization 
 \subsubsection{Difference between estimators}
+
+
 
 \subsection{Experiments to prove me theory}
 \subsection{Adversarial Variational Bayes (MNIST image generation)}

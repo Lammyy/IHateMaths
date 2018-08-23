@@ -10,7 +10,8 @@ import time
 tf.reset_default_graph()
 from tensorflow.examples.tutorials.mnist import input_data
 #from official.mnist import dataset
-
+RECON=[None]*501
+ISTHISLOSS=[None]*501
 mnist = input_data.read_data_sets('../../MNIST_data', one_hot=True)
 mb_size = 32
 z_dim = 24
@@ -44,6 +45,30 @@ def plot(samples):
         plt.imshow(sample.reshape(28, 28), cmap='Greys_r')
 
     return fig
+
+def doubleplot(samples1, samples2, loss, recondiff):
+    fig = plt.figure(figsize=(8,4))
+    gs = gridspec.GridSpec(4, 10)
+    gs.update(wspace=0.05, hspace=0.05)
+
+    for i, sample in enumerate(samples1):
+        ax = plt.subplot(gs[i])
+        plt.axis('off')
+        ax.set_xticklabels([])
+        ax.set_yticklabels([])
+        ax.set_aspect('equal')
+        plt.imshow(sample.reshape(28, 28), cmap='Greys_r')
+    for i, sample in enumerate(samples2):
+        ax = plt.subplot(gs[i+10])
+        plt.axis('off')
+        ax.set_xticklabels([])
+        ax.set_yticklabels([])
+        ax.set_aspect('equal')
+        plt.imshow(sample.reshape(28, 28), cmap='Greys_r')
+    plt.text(-250, 45,'Estimator Loss: %f' %(loss), fontsize=17)
+    plt.text(-250, 60,'Mean Reconstruction Error: %f' %(recondiff), fontsize=17)
+    return fig
+
 def xavier_init(fan_in, fan_out, constant=1):
     low=-constant*np.sqrt(6.0/(fan_in+fan_out))
     high=constant*np.sqrt(6.0/(fan_in+fan_out))
@@ -188,6 +213,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             _, rl = sess.run([train_ratio, ratio_loss], feed_dict=feed_dict)
             if i % 80 == 0:
                 print('Step %i: ratioriminator Loss: %f' % (i, rl))
+                ISTHISLOSS[int(j/100)]=dl
         #Train Posterior on the 5 values of x specified at the start
         for k in range(1):
             xin, _ = mnist.train.next_batch(mb_size)
@@ -201,3 +227,23 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             fig = plot(samples)
             plt.savefig('FiguresMNISTPCKLD\Fig %i'%(j), bbox_inches='tight')
             plt.close(fig)
+            noise=np.random.randn(20, noise_dim)
+            xin, _ = mnist.train.next_batch(20)
+            z=sess.run(post_sample, feed_dict={x_input: xin, noise_input: noise})
+            xout=sess.run(X_samples, feed_dict={z_samp: z})
+            diff=np.mean(np.absolute(xin-xout))
+            RECON[int(j/100)]=diff
+            fig2 = doubleplot(xin, xout, ISTHISLOSS[int(j/100)], diff)
+            plt.savefig('FiguresMNISTPCKLD\Fig %i'%(j+1), bbox_inches='tight')
+            plt.close(fig2)
+    plt.subplot(2,1,1)
+    plt.plot(RECON)
+    plt.xlabel('Iterations (x100)')
+    plt.ylabel('Avg Recon Error')
+    plt.subplot(2,1,2)
+    plt.plot(ISTHISLOSS)
+    plt.xlabel('Iterations (x100)')
+    plt.ylabel('Estimator Loss')
+    plt.subplots_adjust(top=0.95,bottom=0.15,right=0.95,hspace=0.4)
+    plt.savefig('FiguresMNISTPCKLD\Diag Plot', bbox_inches='tight')
+    plt.close()
