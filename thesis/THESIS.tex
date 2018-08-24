@@ -1366,7 +1366,7 @@ Clearly, the prior-contrastive algorithms converged much faster their joint-cont
 Furthermore, in approximately half of the simulations, the ratio loss of the KL divergence minimisation algorithm would start at a relatively high number (42.3 as opposed to 3.5), and it would be stuck there for the entire runtime of the program; the thousands of iterations spent minimizing the ratio loss had little effect decreasing it (the pre-training period of 5000 iterations only lowered the ratio loss to about 39.2). The high ratio loss signifies a very inaccurate ratio estimator, leading to a completely inaccurate variational posterior (i have a fig to isnert here). Thus, the program would have to be restarted every time the ratio loss initialized at a high number, until a reasonable value was initialized. 
 \newpage
 \subsection{haha why is CPE better than KL min its conspiracy theory time}
-\subsection{Introduction to my mad theory}
+\subsubsection{Introduction to my mad theory}
 For both the prior-contrastive and joint-contrastive formulations, it can be seen that the only differences between CPE and KL min are the function that is optimized to formulate the density ratio estimator, and the parametrization of the estimator. Recall that optimization of the estimator for the KL min algorithm follows the lower bound:
 \[D_{KL}(p||q)\geq \sup_{\alpha}\{\mathbb{E}_{q(u)}[1+\log r_\alpha(u)]-\mathbb{E}_{p(u)}[r_\alpha(u)]\}\]
 with equality at $r_\alpha(u)=\frac{q(u)}{p(u)}$ and that optimization for class probability estimation follows:
@@ -1375,7 +1375,7 @@ with equality at $D_\alpha(u)=\frac{q(u)}{q(u)+p(u)}$.\\
 These two estimators can be used interchangeably, as $D_\alpha(u)=\frac{r_\alpha(u)}{r_\alpha(u)+1}$ and $r_\alpha(u)=\frac{D_\alpha(u)}{1-D_\alpha(u)}$. In fact, the former transformation is used to derive this formulation of the discriminative loss for class probability estimation. By transforming the estimators used in the two f-divergences, we can formulate two new estimator optimization problems:
 \[\min_\alpha \mathbb{E}_{q(u)}[\log D_\alpha (u)-\log(1-D_\alpha(u))]-\mathbb{E}_{p(u)}\frac{D_\alpha(u)}{1-D_\alpha(u)}\]
 and
-\[\min_\alpha \mathbb{E}_{q(u)}[\log r_\alpha(u)-\log (r_\alpha(u)+1)]-\mathbb{E}_{p(u)}[\log(r_\alpha(u)+1)].\]
+\[\min_\alpha -\mathbb{E}_{q(u)}[\log r_\alpha(u)-\log (r_\alpha(u)+1)]+\mathbb{E}_{p(u)}[\log(r_\alpha(u)+1)].\]
 The optimization problem for the ELBO in both prior-contrastive and joint-contrastive methods involves density ratio estimation between the true and variational distributions, and the optimization of the likelihood term in the prior-contrastive method is independent of the ratio estimator. We can therefore denote the two ELBO optimization problems for the two estimator parametrizations $D_\alpha (u)$ and $r_\alpha(u)$ as:
 \[\min_\phi \mathbb{E}_{q_\phi(u)}\log \frac{D_\alpha (u)}{1-D_\alpha (u)}\quad(+\text{ Likelihood})\]
 and
@@ -1397,7 +1397,38 @@ and a choice of estimator parametrization:
 \end{itemize}
 The original "KL minimization approach" simply chooses the KL Divergence and the direct ratio estimator, and "Class probability estimation" uses the CPE Divergence and the "Class probability" estimator. These are just 2 variations of the 5 available algorithms.
 \subsubsection{Difference between divergences}
-Recall that both divergences attain the same global minimum, which is a parametrization 
+Recall that both divergences attain the same global minimum, which is a parametrization of the estimator, and that these estimators are optimized via stochastic gradient descent. Thus, for a fixed estimator parametrization, the divergences will have varying rates of convergence, which can be analyzed by observing the first and second derivatives. We first take the "Class probability" parametrization and observe its optimization problem for the CPE divergence:
+\begin{align*}
+f_{CPE}(u)&=-\E_{q(u)}[\log D(u)]-\E_{p(u)}[\log (1-D(u))]\\
+&=-\int_u q(u)\log D(u) du -\int_u p(u)\log(1-D)du\\
+\frac{df}{dD(u)}&=-\frac{q(u)}{D(u)}+\frac{p(u)}{1-D(u)}\\
+\frac{d^2f}{dD^2(u)}&=\frac{q(u)}{D^2(u)}+\frac{p(u)}{(1-D(u))^2}\\
+&>0 \quad \forall q(u)\in(0,1), p(u)\in (0,1), D(u)\in (0,1) 
+\end{align*}
+Since the second derivative is always greater than zero, the function is strictly convex and therefore converges linearly with gradient descent.\\
+Now observe the optimization problem for the KL Divergence:
+\begin{align*}
+f_{KL}(u)&=-\E_{q(u)}\left(\log \frac{D(u)}{1-D(u)}\right)+\E_{p(u)}\left(\frac{D(u)}{1-D(u)}\right)\\
+&=-\int_u q(u)\left(\log \frac{D(u)}{1-D(u)}\right)du+\int_u p(u)\left(\frac{D(u)}{1-D(u)}\right)du\\
+\frac{df}{dD(u)}&=-\frac{q(u)}{D(u)}-\frac{q(u)}{1-D(u)}+\frac{p(u)}{1-D(u)}+\frac{p(u)D(u)}{(1-D(u))^2}\\
+&=-\frac{q(u)}{D(u)}-\frac{q(u)}{1-D(u)}+\frac{p(u)}{(1-D(u))^2}\\
+\frac{d^2f}{dD^2(u)}&=\frac{q(u)}{D^2(u)}-\frac{q(u)}{(1-D(u))^2}+\frac{2p(u)}{(1-D(u))^3}
+\end{align*}
+CPE with ratio parametrisation:
+\begin{align*}
+f_{CPE}(u)&=-\E_{q(u)}\left[\log \frac{r(u)}{r(u)+1}\right]+\E_{p(u)}\left[\log(r(u)+1)\right]\\
+&=-\int_u q(u)\left[\log \frac{r(u)}{r(u)+1}\right]du+\int_u p(u)\left[\log(r(u)+1)\right]du\\
+\frac{df}{dr(u)}&=-\frac{q(u)}{r(u)}+\frac{q(u)}{r(u)+1}+\frac{p(u)}{r(u)+1}\\
+\frac{d^2f}{dr^2(u)}&=\frac{q(u)}{r^2(u)}-\frac{q(u)}{(r(u)+1)^2}-\frac{p(u)}{(r(u)+1)^2}
+\end{align*}
+KL with ratio parametrisation:
+\begin{align*}
+f_{KL}(u)&=-\E_{q(u)}(\log r(u))+\E_{p(u)}r\\
+&=-\int_u q(u)\log r(u) du+\int_u p(u)r(u)du\\
+\frac{df}{dr(u)}&=-\frac{q(u)}{r(u)}+p(u)\\
+\frac{d^2f}{dr^2(u)}&=\frac{q(u)}{r^2(u)}\\
+&>0
+\end{align*}
 \subsubsection{Difference between estimators}
 
 

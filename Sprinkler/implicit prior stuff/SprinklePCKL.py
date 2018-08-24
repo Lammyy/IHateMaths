@@ -2,6 +2,8 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import numpy as np
 import tensorflow as tf
+import matplotlib
+matplotlib.use('Agg')
 from matplotlib import pylab as plt
 import seaborn as sns
 import statsmodels.api as sm
@@ -12,9 +14,9 @@ KLAVGBRUH=[None]*501
 ISTHISLOSS=[None]*501
 #params
 epsilon=1E-18
-batch_size=400
-learning_rate_p=0.00001
-learning_rate_d=0.00001
+batch_size=200
+learning_rate_p=0.0001
+learning_rate_d=0.0001
 z_dim = 2
 noise_dim=3
 gen_hidden_dim1=40
@@ -181,7 +183,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             #if k % 1000 == 0 or k ==1:
             print('Step %i: NELBO: %f' % (k, nelboo))
 
-        if j % 500 == 0:
+        if j % 100 == 0:
             sns.set_style('whitegrid')
             sns.set_context('poster')
 
@@ -250,8 +252,8 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
                 plt.ylim([xmin,xmax])
                 plt.xticks([])
                 plt.yticks([])
-            plt.text(-50,20,'Ratio loss: %f, NELBO: %f, KL0: %f, KL1: %f, KL2: %f, KL3: %f, KL4: %f' % (rl, NELBO, KL0, KL1, KL2, KL3, KL4))
-            plt.text(-28,-6,'KLAVG: %f' %(np.mean([KL0,KL1,KL2,KL3,KL4])))
+            plt.text(-60,20,'Ratio loss: %f, NELBO: %f, KL0: %f, KL1: %f, KL2: %f, KL3: %f, KL4: %f' % (rl, NELBO, KL0, KL1, KL2, KL3, KL4))
+            plt.text(-28,-7,'KLAVG: %f' %(np.mean([KL0,KL1,KL2,KL3,KL4])))
             plt.savefig('FiguresPCKL\Fig %i'%(j))
             plt.close()
     plt.subplot(2,1,1)

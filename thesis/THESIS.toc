@@ -41,10 +41,10 @@
 \contentsline {subsubsection}{\numberline {4.1.2}Program Structure}{45}{subsubsection.4.1.2}
 \contentsline {subsubsection}{\numberline {4.1.3}Results}{51}{subsubsection.4.1.3}
 \contentsline {subsection}{\numberline {4.2}haha why is CPE better than KL min its conspiracy theory time}{52}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Introduction to my mad theory}{52}{subsection.4.3}
-\contentsline {subsubsection}{\numberline {4.3.1}Recap because its confusing}{53}{subsubsection.4.3.1}
-\contentsline {subsubsection}{\numberline {4.3.2}Difference between divergences}{53}{subsubsection.4.3.2}
-\contentsline {subsubsection}{\numberline {4.3.3}Difference between estimators}{53}{subsubsection.4.3.3}
-\contentsline {subsection}{\numberline {4.4}Experiments to prove me theory}{53}{subsection.4.4}
-\contentsline {subsection}{\numberline {4.5}Adversarial Variational Bayes (MNIST image generation)}{53}{subsection.4.5}
-\contentsline {subsubsection}{\numberline {4.5.1}Problem Context}{53}{subsubsection.4.5.1}
+\contentsline {subsubsection}{\numberline {4.2.1}Introduction to my mad theory}{52}{subsubsection.4.2.1}
+\contentsline {subsubsection}{\numberline {4.2.2}Recap because its confusing}{53}{subsubsection.4.2.2}
+\contentsline {subsubsection}{\numberline {4.2.3}Difference between divergences}{53}{subsubsection.4.2.3}
+\contentsline {subsubsection}{\numberline {4.2.4}Difference between estimators}{54}{subsubsection.4.2.4}
+\contentsline {subsection}{\numberline {4.3}Experiments to prove me theory}{54}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}Adversarial Variational Bayes (MNIST image generation)}{54}{subsection.4.4}
+\contentsline {subsubsection}{\numberline {4.4.1}Problem Context}{54}{subsubsection.4.4.1}
