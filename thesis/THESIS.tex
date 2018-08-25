@@ -1380,11 +1380,14 @@ The optimization problem for the ELBO in both prior-contrastive and joint-contra
 \[\min_\phi \mathbb{E}_{q_\phi(u)}\log \frac{D_\alpha (u)}{1-D_\alpha (u)}\quad(+\text{ Likelihood})\]
 and
 \[\min_\phi \mathbb{E}_{q_\phi(u)}\log r_\alpha (u)\quad(+\text{ Likelihood}).\]
-For the KL divergence, there is an additional parametrization of the estimator: $T_\alpha(u)=\log r_\alpha(u)$. This parametrization is not used in the CPE divergence as it involves evaluating a $\log (r_\alpha(u)+1)$ term. The optimization algorithm for this specific combination is:
-\[\min_\alpha -\mathbb{E}_{q(u)}[T_\alpha(u)]+\mathbb{E}_{p(u)}[\exp(T_\alpha (u))]\]
-\[\min_\phi -\mathbb{E}_{q_\phi(u)}T_\alpha(u)\quad(+\text{ Likelihood}).\]
+Additionally, we can parametrize the estimator such that it estimates the log ratio directly: $T_\alpha(u)=\log r_\alpha(u)$. This simplifies the objective function for our variational neural network weights to:
+\[\min_\phi -\mathbb{E}_{q_\phi(u)}[T_\alpha(u)]\quad(+\text{ Likelihood}).\]
+For the KL Divergence, the estimator is optimized as follows:
+\[\min_\alpha -\mathbb{E}_{q(u)}[T_\alpha(u)]+\mathbb{E}_{p(u)}[e^{T_\alpha (u)}]\]
+The CPE divergence equivalent is:
+\[\min_\alpha -\E_{q(u)}\left[\log \frac{e^{T_\alpha(u)}}{e^{T_\alpha(u)}+1}\right]+\E_{p(u)}[\log(e^{T_\alpha(u)}+1)]\]
 \subsubsection{Recap because its confusing}
-To recap, we have mathematically simplified the choice of algorithm for training implicit variational neural networks to a choice of f-divergence:
+To recap, we have mathematically simplified the choice of algorithm for training ratio estimators for implicit variational neural networks to a choice of f-divergence:
 \begin{itemize}
 \item KL Divergence: $D_{KL}(p||q)=\mathbb{E}_{q(u)}[1+\log \frac{q(u)}{p(u)}]-\mathbb{E}_{p(u)}\left[\frac{q(u)}{p(u)}\right]$
 \item CPE Divergence: $D_{CPE}(p||q)=\mathbb{E}_{q(u)}\left[\log \frac{q(u)}{q(u)+p(u)}\right]+\mathbb{E}_{p(u)}\left[\log \frac{p(u)}{q(u)+p(u)}\right]$
@@ -1393,11 +1396,11 @@ and a choice of estimator parametrization:
 \begin{itemize}
 \item Direct ratio estimator: $r^*_\alpha(u)=\frac{q(u)}{p(u)}$
 \item "Class probability" estimator: $D^*_\alpha(u)=\frac{q(u)}{q(u)+p(u)}$
-\item Direct log ratio estimator (KL Div only): $T^*_\alpha(u)=\log \frac{q(u)}{p(u)}$
+\item Direct log ratio estimator: $T^*_\alpha(u)=\log \frac{q(u)}{p(u)}$
 \end{itemize}
-The original "KL minimization approach" simply chooses the KL Divergence and the direct ratio estimator, and "Class probability estimation" uses the CPE Divergence and the "Class probability" estimator. These are just 2 variations of the 5 available algorithms.
-\subsubsection{Difference between divergences}
-Recall that both divergences attain the same global minimum, which is a parametrization of the estimator, and that these estimators are optimized via stochastic gradient descent. Thus, for a fixed estimator parametrization, the divergences will have varying rates of convergence, which can be analyzed by observing the first and second derivatives. We first take the "Class probability" parametrization and observe its optimization problem for the CPE divergence:
+The original "KL minimization approach" simply chooses the KL Divergence and the direct ratio estimator, and "Class probability estimation" uses the CPE Divergence and the "Class probability" estimator. These are just 2 variations of the 6 available algorithms.
+\subsubsection{First and Second Derivatives of all 6 possible algorithms}
+To evaluate the effectiveness of gradient descent optimization in these algorithms, we formulate the first and second derivatives of the objective functions. We first take the "Class probability" parametrization and observe its optimization problem for the CPE divergence:
 \begin{align*}
 f_{CPE}(u)&=-\E_{q(u)}[\log D(u)]-\E_{p(u)}[\log (1-D(u))]\\
 &=-\int_u q(u)\log D(u) du -\int_u p(u)\log(1-D)du\\
@@ -1429,6 +1432,26 @@ f_{KL}(u)&=-\E_{q(u)}(\log r(u))+\E_{p(u)}r\\
 \frac{d^2f}{dr^2(u)}&=\frac{q(u)}{r^2(u)}\\
 &>0
 \end{align*}
+CPE with log ratio parametrisation:
+\begin{align*}
+f_{CPE}(u)&=-\E_{q(u)}[T(u)-\log(e^{T(u)}+1)]+\E_{p(u)}[\log(e^{T(u)}+1)]\\
+&=\int_u q(u)[\log(e^{T(u)}+1)-T(u)] du+\int_u p(u)[\log(e^{T(u)}+1)]du\\
+\frac{df}{dT(u)}&=-q(u)+\frac{(q(u)+p(u))e^{T(u)}}{e^{T(u)}+1}\\
+\frac{d^2f}{dT^2(u)}&=\frac{(q(u)+p(u))\exp(T(u))}{e^{T(u)}+1}-\frac{(q(u)+p(u))e^{2T(u)}}{(e^{T(u)}+1)^2}\\
+&=\frac{(q(u)+p(u))(e^{2T(u)}+e^{T(u)})-(q(u)+p(u))e^{2T(u)}}{(e^{T(u)}+1)^2}\\
+&=\frac{(q(u)+p(u))e^{T(u)}}{(e^{T(u)}+1)^2}\\
+&>0
+\end{align*}
+KL with log ratio parametrisation:
+\begin{align*}
+f_{KL}(u)&=-\E_{q(u)}[T(u)]+\E_{p(u)}[e^{T(u)}]\\
+&=-\int_u q(u)T(u)du+\int_u p(u)e^{T(u)}du\\
+\frac{df}{dT(u)}&=-q(u)+p(u)e^{T(u)}\\
+\frac{d^2f}{dT^2(u)}&=p(u)e^{T(u)}\\
+&>0
+\end{align*}
+\subsubsection{Difference between divergences}
+Recall that both divergences attain the same global minimum, which is a parametrization of the estimator, and that these estimators are optimized via stochastic gradient descent. Thus, for a fixed estimator parametrization, the divergences will have varying rates of convergence, which can be analyzed by observing the first and second derivatives. 
 \subsubsection{Difference between estimators}
 
 
@@ -1436,4 +1459,6 @@ f_{KL}(u)&=-\E_{q(u)}(\log r(u))+\E_{p(u)}r\\
 \subsection{Experiments to prove me theory}
 \subsection{Adversarial Variational Bayes (MNIST image generation)}
 \subsubsection{Problem Context}
+\section{Related Work and Discussion}
+\section{Conclusion}
 \end{document}
