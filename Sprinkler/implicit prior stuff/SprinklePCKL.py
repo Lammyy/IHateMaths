@@ -8,6 +8,7 @@ from matplotlib import pylab as plt
 import seaborn as sns
 import statsmodels.api as sm
 import time
+import sys
 tf.reset_default_graph()
 # arrays to store values for graphs
 KLAVGBRUH=[None]*501
@@ -160,6 +161,10 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
         _, rl = sess.run([train_ratio, ratio_loss], feed_dict=feed_dict)
         if i % 500 == 0:
             print('Step %i: ratiomator Loss: %f' % (i, rl))
+        if i == 5000:
+            if rl > 30:
+                python = sys.executable
+                os.execl(python, python, *sys.argv)
     for j in range(50001):
         print('Iteration %i' % (j))
         #Train ratiomator

@@ -29,8 +29,8 @@ batch_size=32
 gen_hidden_dim2=400
 like_hidden_dim1=500
 like_hidden_dim2=1000
-learning_rate_p=0.0005
-learning_rate_d=0.00001
+learning_rate_p=0.0002
+learning_rate_d=0.0002
 def plot(samples):
     fig = plt.figure(figsize=(4, 4))
     gs = gridspec.GridSpec(4, 4)
@@ -186,7 +186,7 @@ with tf.device('/gpu:0'):
 
     disc_vars = [weights['disc_hidden11'], weights['disc_hidden12'], weights['disc_hidden21'], weights['disc_hidden22'], weights['disc_hidden31'], weights['disc_hidden32'], weights['disc_out'],
     biases['disc_hidden11'], biases['disc_hidden12'], biases['disc_hidden21'], biases['disc_hidden22'], biases['disc_hidden31'], biases['disc_hidden32'], biases['disc_out']]
-    like_vars = [weights['like_hidden1'], weights['like_hidden2'], weights['like_out'], biases['like_hidden1'], biases['like_hidden2'], biases['like_out']]
+    like_vars = [weights['like_hidden1'], weights['like_hidden2'], weights['like_hidden3'], weights['like_out'], biases['like_hidden1'], biases['like_hidden2'], biases['like_hidden3'], biases['like_out']]
     train_elbo = tf.train.AdamOptimizer(learning_rate=learning_rate_p).minimize(nelbo, var_list=post_vars+like_vars)
     train_disc = tf.train.AdamOptimizer(learning_rate=learning_rate_d).minimize(disc_loss, var_list=disc_vars)
 

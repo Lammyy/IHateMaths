@@ -29,8 +29,8 @@ batch_size=32
 gen_hidden_dim2=400
 like_hidden_dim1=500
 like_hidden_dim2=1000
-learning_rate_p=0.0005
-learning_rate_d=0.00001
+learning_rate_p=0.0002
+learning_rate_d=0.0002
 def plot(samples):
     fig = plt.figure(figsize=(4, 4))
     gs = gridspec.GridSpec(4, 4)
@@ -59,7 +59,7 @@ def doubleplot(samples1, samples2, loss, recondiff):
         ax.set_aspect('equal')
         plt.imshow(sample.reshape(28, 28), cmap='Greys_r')
     for i, sample in enumerate(samples2):
-        ax = plt.subplot(gs[i+10])
+        ax = plt.subplot(gs[i+20])
         plt.axis('off')
         ax.set_xticklabels([])
         ax.set_yticklabels([])
@@ -96,6 +96,7 @@ weights = {
     'post_out': tf.Variable(xavier_init(gen_hidden_dim2, z_dim)),
     'like_hidden1': tf.Variable(xavier_init(z_dim, like_hidden_dim1)),
     'like_hidden2': tf.Variable(xavier_init(like_hidden_dim1,like_hidden_dim2)),
+    'like_hidden3': tf.Variable(xavier_init(like_hidden_dim2,like_hidden_dim2)),
     'like_out': tf.Variable(xavier_init(like_hidden_dim2, data_dim)),
     #ratio_hidden11 and ratio_hidden12 work on z input
     'ratio_hidden11': tf.Variable(xavier_init(z_dim, ratio_hidden_dim1)),
@@ -117,6 +118,7 @@ biases = {
     'post_out': tf.Variable(tf.zeros([z_dim])),
     'like_hidden1': tf.Variable(tf.zeros([like_hidden_dim1])),
     'like_hidden2': tf.Variable(tf.zeros([like_hidden_dim2])),
+    'like_hidden3': tf.Variable(tf.zeros([like_hidden_dim2])),
     'like_out': tf.Variable(tf.zeros([data_dim])),
     'ratio_hidden11': tf.Variable(tf.zeros([ratio_hidden_dim1])),
     'ratio_hidden12': tf.Variable(tf.zeros([ratio_hidden_dim2])),
@@ -184,7 +186,7 @@ with tf.device('/gpu:0'):
 
     ratio_vars = [weights['ratio_hidden11'], weights['ratio_hidden12'], weights['ratio_hidden21'], weights['ratio_hidden22'], weights['ratio_hidden31'], weights['ratio_hidden32'], weights['ratio_out'],
     biases['ratio_hidden11'], biases['ratio_hidden12'], biases['ratio_hidden21'], biases['ratio_hidden22'], biases['ratio_hidden31'], biases['ratio_hidden32'], biases['ratio_out']]
-    like_vars = [weights['like_hidden1'], weights['like_hidden2'], weights['like_out'], biases['like_hidden1'], biases['like_hidden2'], biases['like_out']]
+    like_vars = [weights['like_hidden1'], weights['like_hidden2'], weights['like_hidden3'], weights['like_out'], biases['like_hidden1'], biases['like_hidden2'], biases['like_hidden3'], biases['like_out']]
     train_elbo = tf.train.AdamOptimizer(learning_rate=learning_rate_p).minimize(nelbo, var_list=post_vars+like_vars)
     train_ratio = tf.train.AdamOptimizer(learning_rate=learning_rate_d).minimize(ratio_loss, var_list=ratio_vars)
 
@@ -213,7 +215,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
             _, rl = sess.run([train_ratio, ratio_loss], feed_dict=feed_dict)
             if i % 80 == 0:
                 print('Step %i: ratioriminator Loss: %f' % (i, rl))
-                ISTHISLOSS[int(j/100)]=dl
+                ISTHISLOSS[int(j/100)]=rl
         #Train Posterior on the 5 values of x specified at the start
         for k in range(1):
             xin, _ = mnist.train.next_batch(mb_size)
