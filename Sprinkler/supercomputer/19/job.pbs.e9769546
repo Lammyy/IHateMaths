@@ -1,0 +1,34 @@
+2018-09-03 22:58:00.819953: E tensorflow/stream_executor/cuda/cuda_driver.cc:406] failed call to cuInit: CUDA_ERROR_UNKNOWN
+/apps/python3/3.6.2/lib/python3.6/site-packages/numpy-1.14.2-py3.6-linux-x86_64.egg/numpy/core/_methods.py:29: RuntimeWarning: invalid value encountered in reduce
+  return umr_minimum(a, axis, None, out, keepdims)
+/apps/python3/3.6.2/lib/python3.6/site-packages/numpy-1.14.2-py3.6-linux-x86_64.egg/numpy/core/_methods.py:26: RuntimeWarning: invalid value encountered in reduce
+  return umr_maximum(a, axis, None, out, keepdims)
+/apps/python3/3.6.2/lib/python3.6/site-packages/matplotlib/contour.py:1514: UserWarning: Warning: converting a masked element to nan.
+  self.zmax = float(z.max())
+/apps/python3/3.6.2/lib/python3.6/site-packages/matplotlib/contour.py:1515: UserWarning: Warning: converting a masked element to nan.
+  self.zmin = float(z.min())
+/apps/python3/3.6.2/lib/python3.6/site-packages/matplotlib/contour.py:1153: RuntimeWarning: invalid value encountered in greater
+  return lev[(lev > zmin) & (lev < zmax)]
+/apps/python3/3.6.2/lib/python3.6/site-packages/matplotlib/contour.py:1153: RuntimeWarning: invalid value encountered in less
+  return lev[(lev > zmin) & (lev < zmax)]
+Traceback (most recent call last):
+  File "./SprinkleJCKLD.py", line 267, in <module>
+    sns.kdeplot(z_samples[i,:,0], z_samples[i,:,1], cmap='Greens')
+  File "/home/561/al7266/.local/lib/python3.6/site-packages/seaborn/distributions.py", line 687, in kdeplot
+    cbar, cbar_ax, cbar_kws, ax, **kwargs)
+  File "/home/561/al7266/.local/lib/python3.6/site-packages/seaborn/distributions.py", line 423, in _bivariate_kdeplot
+    cset = contour_func(xx, yy, z, n_levels, **kwargs)
+  File "/apps/python3/3.6.2/lib/python3.6/site-packages/matplotlib/__init__.py", line 1898, in inner
+    return func(ax, *args, **kwargs)
+  File "/apps/python3/3.6.2/lib/python3.6/site-packages/matplotlib/axes/_axes.py", line 5825, in contour
+    contours = mcontour.QuadContourSet(self, *args, **kwargs)
+  File "/apps/python3/3.6.2/lib/python3.6/site-packages/matplotlib/contour.py", line 865, in __init__
+    self._process_levels()
+  File "/apps/python3/3.6.2/lib/python3.6/site-packages/matplotlib/contour.py", line 1199, in _process_levels
+    self.vmin = np.amin(self.levels)
+  File "/apps/python3/3.6.2/lib/python3.6/site-packages/numpy-1.14.2-py3.6-linux-x86_64.egg/numpy/core/fromnumeric.py", line 2420, in amin
+    out=out, **kwargs)
+  File "/apps/python3/3.6.2/lib/python3.6/site-packages/numpy-1.14.2-py3.6-linux-x86_64.egg/numpy/core/_methods.py", line 29, in _amin
+    return umr_minimum(a, axis, None, out, keepdims)
+ValueError: zero-size array to reduction operation minimum which has no identity
+2018-09-04 02:48:32.700860: E tensorflow/stream_executor/cuda/cuda_driver.cc:406] failed call to cuInit: CUDA_ERROR_UNKNOWN

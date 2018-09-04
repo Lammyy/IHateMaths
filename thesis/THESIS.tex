@@ -1190,7 +1190,7 @@ The structure of the estimator (discriminator $\mathcal{D}_\alpha(z,x)$ or ratio
     \node[annot,above of=H-32, node distance=1cm] {ReLU};
     \node[annot,above of=O, node distance=1cm] {Sigmoid($\mathcal{D}$)/ ReLU($\mathcal{R}$)};
 \end{tikzpicture}\\
-The network weights are initialized with Xavier initialization, and trained using the Adam optimizer with learning rate $0.00001$. This is the highest learning rate at which both algorithms converge consistently; any higher learning rates lead to inconsistent results. The network is only trained on the data values $x=0,5,8,12,50$; in each training iteration, 400 samples are taken for each x-value, corresponding to a batch size of 2000. This relatively large batch size makes training more consistent, as performing back-propagation along a stochastic neural network can lead to random and erratic training. To prevent problems associated with taking $\log 0$, we add a small constant $c=10^{-18}$ to the log function's input. The estimator is pre-trained for 5000 iterations to ensure that it converges to its optimal value. This is particularly desired as training the generator with an inaccurate ELBO estimate is pointless. Afterwards, the program runs for 50000 iterations, alternating between 80 training steps of the estimator and 1 training step of the generator. This process for class probability estimation and divergence minimisation is shown in Algorithm and Algorithm below:
+The network weights are initialized with Xavier initialization, and trained using the Adam optimizer with learning rate $0.0001$ for the prior-contrastive setting and $0.00001$ for joint-contrastive. Preliminary runs show that these are the highest learning rates at which both algorithms converge consistently; any higher learning rates lead to inconsistent results. The network is only trained on the data values $x=0,5,8,12,50$; in each training iteration, 200 samples are taken for each x-value, corresponding to a batch size of 1000. This relatively large batch size makes training more consistent, as performing back-propagation along a stochastic neural network can lead to random and erratic training. To prevent problems associated with taking $\log 0$, we add a small constant $c=10^{-18}$ to the log function's input. The estimator is pre-trained for 5000 iterations to ensure that optimization of the variational network begins with an optimal estimator; an inaccurate ratio estimation leads to incorrect optimization of the posterior network. The variance of the results is also reduced as the initial weights and biases of the estimator will be approximately the same for a fixed initialization of the generator. Afterwards, the generator is optimized for 10000 iterations in the implicit prior formulation, and 40000 iterations when we have an implicit likelihood. The algorithm alternates between 100 training steps of the estimator and 1 training step of the generator. This process for class probability estimation and divergence minimisation is shown in Algorithm and Algorithm below:
 \begin{algorithm}
 \SetKw{update}{update}
 \caption{Sprinkler Prior-Contrastive Class Probability Estimation}
@@ -1198,32 +1198,32 @@ The network weights are initialized with Xavier initialization, and trained usin
 \KwResult{Optimized posterior generator $\mathcal{G}_\phi(\epsilon;x)$}
 \BlankLine
 \For{$j=1$ \KwTo $5001$}{
-	Sample $\{\epsilon^{(i,j)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
-		Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i,j)}\}^{2000}_{i=1}\sim q^*(x)$\;
-		Sample $\{z^{(i,j)}_p\}^{2000}_{i=1}\sim p(z)$\;
+	Sample $\{\epsilon^{(i,j)}\}^{1000}_{i=1}\sim \pi(\epsilon)$\;
+		Sample $\{0,5,8,12,50\}^{200}_{i=1}=\{x^{(i,j)}\}^{1000}_{i=1}\sim q^*(x)$\;
+		Sample $\{z^{(i,j)}_p\}^{1000}_{i=1}\sim p(z)$\;
 		\ForEach{$\epsilon^{(i,j)},x^{(i,j)}$}{
-			Sample $\{z^{(i,j)}_q\}^{2000}_{i=1}=\mathcal{G}(\epsilon^{(i,j)};x^{(i,j}_q)$\;
+			Sample $\{z^{(i,j)}_q\}^{1000}_{i=1}=\mathcal{G}(\epsilon^{(i,j)};x^{(i,j}_q)$\;
 		}
 		\update{$\alpha$ by optimization step on}{
-			$\min_\alpha -\frac{1}{2000}\sum_{i=1}^{2000}\{\log [D_\alpha(\mathcal{G}_\phi(\epsilon^{(i,j)};x^{(i,j)}), x^{(i,j)})]+\log [1-D_\alpha(z_p^{(i,j)},x^{(i,j)})]\}$\;
+			$\min_\alpha -\frac{1}{1000}\sum_{i=1}^{1000}\{\log [D_\alpha(\mathcal{G}_\phi(\epsilon^{(i,j)};x^{(i,j)}), x^{(i,j)})]+\log [1-D_\alpha(z_p^{(i,j)},x^{(i,j)})]\}$\;
 		}
 }
-\For{$j=1$ \KwTo $50001$}{
-	\For{$k=1$ \KwTo $80$}{	
-		Sample $\{\epsilon^{(i,k)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
-		Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i,k)}\}^{2000}_{i=1}\sim q^*(x)$\;
-		Sample $\{z^{(i,k)}_p\}^{2000}_{i=1}\sim p(z)$\;
+\For{$j=1$ \KwTo $10001$}{
+	\For{$k=1$ \KwTo $100$}{	
+		Sample $\{\epsilon^{(i,k)}\}^{1000}_{i=1}\sim \pi(\epsilon)$\;
+		Sample $\{0,5,8,12,50\}^{200}_{i=1}=\{x^{(i,k)}\}^{1000}_{i=1}\sim q^*(x)$\;
+		Sample $\{z^{(i,k)}_p\}^{1000}_{i=1}\sim p(z)$\;
 		\ForEach{$\epsilon^{(i,k)},x^{(i,k)}$}{
-			Sample $\{z^{(i,k)}_q\}^{2000}_{i=1}=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
+			Sample $\{z^{(i,k)}_q\}^{1000}_{i=1}=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
 		}
 		\update{$\alpha$ by optimization step on}{
-			$\min_\alpha -\frac{1}{2000}\sum_{i=1}^{2000}\{\log [D_\alpha(\mathcal{G}_\phi(\epsilon^{(i,k)};x^{(i,k)}), x^{(i,k)})]+\log [1-D_\alpha(z_p^{(i,k)},x^{(i,k)})]\}$\;
+			$\min_\alpha -\frac{1}{1000}\sum_{i=1}^{1000}\{\log [D_\alpha(\mathcal{G}_\phi(\epsilon^{(i,k)};x^{(i,k)}), x^{(i,k)})]+\log [1-D_\alpha(z_p^{(i,k)},x^{(i,k)})]\}$\;
 		}
 	}
-	Sample $\{\epsilon^{(i)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
-	Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i)}\}^{2000}_{i=1}\sim q^*(x)$\;
+	Sample $\{\epsilon^{(i)}\}^{1000}_{i=1}\sim \pi(\epsilon)$\;
+	Sample $\{0,5,8,12,50\}^{200}_{i=1}=\{x^{(i)}\}^{1000}_{i=1}\sim q^*(x)$\;
 	\update{$\phi$ by optimization step on}{
-		$\min_\phi \frac{1}{2000}\sum^{2000}_{i=1}\{-\log p(x|\mathcal{G}_\phi(\epsilon^{(i)};x^{(i)}))+\log\frac{D_\alpha(\mathcal{G}_\phi(\epsilon^{(i)};x^{(i)}),x^{(i)})}{1-D_\alpha(\mathcal{G}_\phi(\epsilon^{(i)};x^{(i)}),x^{(i)})}\}$\;
+		$\min_\phi \frac{1}{1000}\sum^{1000}_{i=1}\{-\log p(x|\mathcal{G}_\phi(\epsilon^{(i)};x^{(i)}))+\log\frac{D_\alpha(\mathcal{G}_\phi(\epsilon^{(i)};x^{(i)}),x^{(i)})}{1-D_\alpha(\mathcal{G}_\phi(\epsilon^{(i)};x^{(i)}),x^{(i)})}\}$\;
 	}
 }
 \end{algorithm}
@@ -1244,22 +1244,22 @@ The network weights are initialized with Xavier initialization, and trained usin
 			$\min_\alpha -\frac{1}{2000}\sum_{i=1}^{2000}\{\log [r_\alpha(\mathcal{G}_\phi(\epsilon^{(i,j)};x^{(i,j)}), x^{(i,j)})]+r_\alpha(z_p^{(i,j)},x^{(i,j)})\}$\;
 		}
 }
-\For{$j=1$ \KwTo $50001$}{
-	\For{$k=1$ \KwTo $80$}{	
-		Sample $\{\epsilon^{(i,k)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
-		Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i,k)}\}^{2000}_{i=1}\sim q^*(x)$\;
-		Sample $\{z^{(i,k)}_p\}^{2000}_{i=1}\sim p(z)$\;
+\For{$j=1$ \KwTo $10001$}{
+	\For{$k=1$ \KwTo $100$}{	
+		Sample $\{\epsilon^{(i,k)}\}^{1000}_{i=1}\sim \pi(\epsilon)$\;
+		Sample $\{0,5,8,12,50\}^{200}_{i=1}=\{x^{(i,k)}\}^{1000}_{i=1}\sim q^*(x)$\;
+		Sample $\{z^{(i,k)}_p\}^{1000}_{i=1}\sim p(z)$\;
 		\ForEach{$\epsilon^{(i,k)},x^{(i,k)}$}{
-			Sample $\{z^{(i,k)}_q\}^{2000}_{i=1}=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
+			Sample $\{z^{(i,k)}_q\}^{1000}_{i=1}=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
 		}
 		\update{$\alpha$ by optimization step on}{
-			$\min_\alpha -\frac{1}{2000}\sum_{i=1}^{2000}\{\log [r_\alpha(\mathcal{G}_\phi(\epsilon^{(i,k)};x^{(i,k)}), x^{(i,k)})]+r_\alpha(z_p^{(i,k)},x^{(i,k)})\}$\;
+			$\min_\alpha -\frac{1}{1000}\sum_{i=1}^{1000}\{\log [r_\alpha(\mathcal{G}_\phi(\epsilon^{(i,k)};x^{(i,k)}), x^{(i,k)})]+r_\alpha(z_p^{(i,k)},x^{(i,k)})\}$\;
 		}
 	}
-	Sample $\{\epsilon^{(i)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
-	Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i)}\}^{2000}_{i=1}\sim q^*(x)$\;
+	Sample $\{\epsilon^{(i)}\}^{1000}_{i=1}\sim \pi(\epsilon)$\;
+	Sample $\{0,5,8,12,50\}^{200}_{i=1}=\{x^{(i)}\}^{1000}_{i=1}\sim q^*(x)$\;
 	\update{$\phi$ by optimization step on}{
-		$\min_\phi \frac{1}{2000}\sum^{2000}_{i=1}\{-\log p(x|\mathcal{G}_\phi(\epsilon^{(i)};x^{(i)}))+\log r_\alpha(\mathcal{G}_\phi(\epsilon^{(i)};x^{(i)}),x^{(i)})\}$\;
+		$\min_\phi \frac{1}{1000}\sum^{1000}_{i=1}\{-\log p(x|\mathcal{G}_\phi(\epsilon^{(i)};x^{(i)}))+\log r_\alpha(\mathcal{G}_\phi(\epsilon^{(i)};x^{(i)}),x^{(i)})\}$\;
 	}
 }
 \end{algorithm}
@@ -1270,38 +1270,38 @@ The network weights are initialized with Xavier initialization, and trained usin
 \KwResult{Optimized posterior generator $\mathcal{G}_\phi(\epsilon;x)$}
 \BlankLine
 \For{$j=1$ \KwTo $5001$}{
-	Sample $\{\epsilon^{(i,j)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
-		Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i,j)}_q\}^{2000}_{i=1}\sim q^*(x)$\;
-		Sample $\{z^{(i,j)}_p\}^{2000}_{i=1}\sim p(z)$\;
+	Sample $\{\epsilon^{(i,j)}\}^{1000}_{i=1}\sim \pi(\epsilon)$\;
+		Sample $\{0,5,8,12,50\}^{200}_{i=1}=\{x^{(i,j)}_q\}^{1000}_{i=1}\sim q^*(x)$\;
+		Sample $\{z^{(i,j)}_p\}^{1000}_{i=1}\sim p(z)$\;
 		\ForEach{$\epsilon^{(i,j)},x^{(i,j)}$}{
-			Sample $\{z^{(i,j)}_q\}^{2000}_{i=1}=\mathcal{G}(\epsilon^{(i,j)};x^{(i,j}_q)$\;
+			Sample $\{z^{(i,j)}_q\}^{1000}_{i=1}=\mathcal{G}(\epsilon^{(i,j)};x^{(i,j}_q)$\;
 		}
 		\ForEach{$z^{(i,j)}_p$}{
-			Sample $\{x^{(i,j)}_p\}^{2000}_{i=1}\sim p(x|z)$\;
+			Sample $\{x^{(i,j)}_p\}^{1000}_{i=1}\sim p(x|z)$\;
 		}
 		\update{$\alpha$ by optimization step on}{
-			$\min_\alpha -\frac{1}{2000}\sum_{i=1}^{2000}\{\log [D_\alpha(\mathcal{G}_\phi(\epsilon^{(i,j)};x_q^{(i,j)}), x_q^{(i,j)})]+\log [1-D_\alpha(z_p^{(i,j)},x_p^{(i,j)})]\}$\;
+			$\min_\alpha -\frac{1}{1000}\sum_{i=1}^{1000}\{\log [D_\alpha(\mathcal{G}_\phi(\epsilon^{(i,j)};x_q^{(i,j)}), x_q^{(i,j)})]+\log [1-D_\alpha(z_p^{(i,j)},x_p^{(i,j)})]\}$\;
 		}
 }
-\For{$j=1$ \KwTo $50001$}{
-	\For{$k=1$ \KwTo $80$}{	
-		Sample $\{\epsilon^{(i,k)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
-		Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i,k)}_q\}^{2000}_{i=1}\sim q^*(x)$\;
-		Sample $\{z^{(i,k)}_p\}^{2000}_{i=1}\sim p(z)$\;
+\For{$j=1$ \KwTo $40001$}{
+	\For{$k=1$ \KwTo $100$}{	
+		Sample $\{\epsilon^{(i,k)}\}^{1000}_{i=1}\sim \pi(\epsilon)$\;
+		Sample $\{0,5,8,12,50\}^{200}_{i=1}=\{x^{(i,k)}_q\}^{1000}_{i=1}\sim q^*(x)$\;
+		Sample $\{z^{(i,k)}_p\}^{1000}_{i=1}\sim p(z)$\;
 		\ForEach{$\epsilon^{(i,k)},x^{(i,k)}$}{
-			Sample $\{z^{(i,k)}_q\}^{2000}_{i=1}=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
+			Sample $\{z^{(i,k)}_q\}^{1000}_{i=1}=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
 		}
 		\ForEach{$z^{(i,k)}_p$}{
-			Sample $\{x^{(i,k)}_p\}^{2000}_{i=1}\sim p(x|z)$\;
+			Sample $\{x^{(i,k)}_p\}^{1000}_{i=1}\sim p(x|z)$\;
 		}
 		\update{$\alpha$ by optimization step on}{
-			$\min_\alpha -\frac{1}{2000}\sum_{i=1}^{2000}\{\log [D_\alpha(\mathcal{G}_\phi(\epsilon^{(i,k)};x_q^{(i,k)}), x_q^{(i,k)})]+\log [1-D_\alpha(z_p^{(i,k)},x_p^{(i,k)})]\}$\;
+			$\min_\alpha -\frac{1}{1000}\sum_{i=1}^{1000}\{\log [D_\alpha(\mathcal{G}_\phi(\epsilon^{(i,k)};x_q^{(i,k)}), x_q^{(i,k)})]+\log [1-D_\alpha(z_p^{(i,k)},x_p^{(i,k)})]\}$\;
 		}
 	}
-	Sample $\{\epsilon^{(i)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
-	Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i)}_q\}^{2000}_{i=1}\sim q^*(x)$\;
+	Sample $\{\epsilon^{(i)}\}^{1000}_{i=1}\sim \pi(\epsilon)$\;
+	Sample $\{0,5,8,12,50\}^{200}_{i=1}=\{x^{(i)}_q\}^{1000}_{i=1}\sim q^*(x)$\;
 	\update{$\phi$ by optimization step on}{
-		$\min_\phi \frac{1}{2000}\sum^{2000}_{i=1}\log\frac{D_\alpha(\mathcal{G}_\phi(\epsilon^{(i)};x_q^{(i)}),x_q^{(i)})}{1-D_\alpha(\mathcal{G}_\phi(\epsilon^{(i)};x_q^{(i)}),x_q^{(i)})}$\;
+		$\min_\phi \frac{1}{1000}\sum^{1000}_{i=1}\log\frac{D_\alpha(\mathcal{G}_\phi(\epsilon^{(i)};x_q^{(i)}),x_q^{(i)})}{1-D_\alpha(\mathcal{G}_\phi(\epsilon^{(i)};x_q^{(i)}),x_q^{(i)})}$\;
 	}
 }
 \end{algorithm}
@@ -1312,46 +1312,46 @@ The network weights are initialized with Xavier initialization, and trained usin
 \KwResult{Optimized posterior generator $\mathcal{G}_\phi(\epsilon;x)$}
 \BlankLine
 \For{$j=1$ \KwTo $5001$}{
-	Sample $\{\epsilon^{(i,j)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
-		Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i,j)}_q\}^{2000}_{i=1}\sim q^*(x)$\;
-		Sample $\{z^{(i,j)}_p\}^{2000}_{i=1}\sim p(z)$\;
+	Sample $\{\epsilon^{(i,j)}\}^{1000}_{i=1}\sim \pi(\epsilon)$\;
+		Sample $\{0,5,8,12,50\}^{200}_{i=1}=\{x^{(i,j)}_q\}^{1000}_{i=1}\sim q^*(x)$\;
+		Sample $\{z^{(i,j)}_p\}^{1000}_{i=1}\sim p(z)$\;
 		\ForEach{$\epsilon^{(i,j)},x^{(i,j)}$}{
-			Sample $\{z^{(i,j)}_q\}^{2000}_{i=1}=\mathcal{G}(\epsilon^{(i,j)};x^{(i,j}_q)$\;
+			Sample $\{z^{(i,j)}_q\}^{1000}_{i=1}=\mathcal{G}(\epsilon^{(i,j)};x^{(i,j}_q)$\;
 		}
 		\ForEach{$z^{(i,j)}_p$}{
-			Sample $\{x^{(i,j)}_p\}^{2000}_{i=1}\sim p(x|z)$\;
+			Sample $\{x^{(i,j)}_p\}^{1000}_{i=1}\sim p(x|z)$\;
 		}
 		\update{$\alpha$ by optimization step on}{
-			$\min_\alpha -\frac{1}{2000}\sum_{i=1}^{2000}\{\log [r_\alpha(\mathcal{G}_\phi(\epsilon^{(i,j)};x_q^{(i,j)}), x_q^{(i,j)})]+r_\alpha(z_p^{(i,j)},x_p^{(i,j)})\}$\;
+			$\min_\alpha -\frac{1}{1000}\sum_{i=1}^{1000}\{\log [r_\alpha(\mathcal{G}_\phi(\epsilon^{(i,j)};x_q^{(i,j)}), x_q^{(i,j)})]+r_\alpha(z_p^{(i,j)},x_p^{(i,j)})\}$\;
 		}
 }
-\For{$j=1$ \KwTo $50001$}{
-	\For{$k=1$ \KwTo $80$}{	
-		Sample $\{\epsilon^{(i,k)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
-		Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i,k)}_q\}^{2000}_{i=1}\sim q^*(x)$\;
-		Sample $\{z^{(i,k)}_p\}^{2000}_{i=1}\sim p(z)$\;
+\For{$j=1$ \KwTo $40001$}{
+	\For{$k=1$ \KwTo $100$}{	
+		Sample $\{\epsilon^{(i,k)}\}^{1000}_{i=1}\sim \pi(\epsilon)$\;
+		Sample $\{0,5,8,12,50\}^{200}_{i=1}=\{x^{(i,k)}_q\}^{1000}_{i=1}\sim q^*(x)$\;
+		Sample $\{z^{(i,k)}_p\}^{1000}_{i=1}\sim p(z)$\;
 		\ForEach{$\epsilon^{(i,k)},x^{(i,k)}$}{
-			Sample $\{z^{(i,k)}_q\}^{2000}_{i=1}=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
+			Sample $\{z^{(i,k)}_q\}^{1000}_{i=1}=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
 		}
 		\ForEach{$z^{(i,k)}_p$}{
-			Sample $\{x^{(i,k)}_p\}^{2000}_{i=1}\sim p(x|z)$\;
+			Sample $\{x^{(i,k)}_p\}^{1000}_{i=1}\sim p(x|z)$\;
 		}
 		\update{$\alpha$ by optimization step on}{
-			$\min_\alpha -\frac{1}{2000}\sum_{i=1}^{2000}\{\log [r_\alpha(\mathcal{G}_\phi(\epsilon^{(i,k)};x_q^{(i,k)}), x_q^{(i,k)})]+r_\alpha(z_p^{(i,k)},x_p^{(i,k)})\}$\;
+			$\min_\alpha -\frac{1}{1000}\sum_{i=1}^{1000}\{\log [r_\alpha(\mathcal{G}_\phi(\epsilon^{(i,k)};x_q^{(i,k)}), x_q^{(i,k)})]+r_\alpha(z_p^{(i,k)},x_p^{(i,k)})\}$\;
 		}
 	}
-	Sample $\{\epsilon^{(i)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
-	Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i)}_q\}^{2000}_{i=1}\sim q^*(x)$\;
+	Sample $\{\epsilon^{(i)}\}^{1000}_{i=1}\sim \pi(\epsilon)$\;
+	Sample $\{0,5,8,12,50\}^{200}_{i=1}=\{x^{(i)}_q\}^{1000}_{i=1}\sim q^*(x)$\;
 	\update{$\phi$ by optimization step on}{
-		$\min_\phi \frac{1}{2000}\sum^{2000}_{i=1}\log r_\alpha(\mathcal{G}_\phi(\epsilon^{(i)};x_q^{(i)}),x_q^{(i)})$\;
+		$\min_\phi \frac{1}{1000}\sum^{1000}_{i=1}\log r_\alpha(\mathcal{G}_\phi(\epsilon^{(i)};x_q^{(i)}),x_q^{(i)})$\;
 	}
 }
 \end{algorithm}
 \newpage
 \subsubsection{Results}
-To compare the techniques, we compare the number of iterations until convergence and how much the variational posterior has converged after x0000 iterations. We define convergence as when the average KL divergence of the 5 posterior distributions $\E_{q^*(x)}KL(q(z|x)||p(z|x)) = \E_{q^*(x)}\E_{q(z|x)}\log \frac{q(z|x)}{p(z|x)}$ falls below 1.35. We do not use the ELBO output of the program to calculate this KL divergence, nor do we compare the ELBOs of the algorithms, as the accuracy of the ELBO estimator is dependent on the algorithm used. Instead, we use a non-parametric approach, estimating the probability density function of the variational posterior output with a Gaussian kernel density estimator $\hat{q}(z|x)$. By using five kernel density estimators for the five data points, we are able to create an estimate of the average KL divergence with an accuracy that is independent of the algorithm used: $\E_{q^*(x)}KL(\hat{q}(z|x)||p(z|x)) = \E_{q^*(x)}\E_{q(z|x)}\log \frac{\hat{q}(z|x)}{p(z|x)}$.\\
+We evaluate the techniques by comparing the average KL divergence between the true and variational posterior distributions at the end of the program's runtime: $\E_{q^*(x)}KL(q(z|x)||p(z|x)) = \E_{q^*(x)}\E_{q(z|x)}\log \frac{q(z|x)}{p(z|x)}$. We do not use the ELBO output of the program to calculate this KL divergence, nor do we compare the ELBOs of the algorithms, as the accuracy of the ELBO estimator is dependent on the algorithm used. Instead, we use a non-parametric approach, estimating the probability density function of the variational posterior output with a Gaussian kernel density estimator $\hat{q}(z|x)$. By using five kernel density estimators for the five data points, we are able to create an estimate of the average KL divergence with an accuracy that is independent of the algorithm used: $\E_{q^*(x)}KL(\hat{q}(z|x)||p(z|x)) = \E_{q^*(x)}\E_{q(z|x)}\log \frac{\hat{q}(z|x)}{p(z|x)}$.\\
 Clearly, the prior-contrastive algorithms converged much faster their joint-contrastive equivalent, as expected since knowledge of the likelihood improves posterior optimization. Overall, for both PC and JC, we found that class probability estimation performed consistently better than KL divergence minimisation. Insert metrics here. Each iteration took approximately the same amount of time to compute (0.32 seconds on me PC), as the bulk of the training time is spent training the neural networks, which have similar structures.\\
-Furthermore, in approximately half of the simulations, the ratio loss of the KL divergence minimisation algorithm would start at a relatively high number (42.3 as opposed to 3.5), and it would be stuck there for the entire runtime of the program; the thousands of iterations spent minimizing the ratio loss had little effect decreasing it (the pre-training period of 5000 iterations only lowered the ratio loss to about 39.2). The high ratio loss signifies a very inaccurate ratio estimator, leading to a completely inaccurate variational posterior (i have a fig to isnert here). Thus, the program would have to be restarted every time the ratio loss initialized at a high number, until a reasonable value was initialized. 
+Furthermore, in approximately half of the simulations, the ratio loss of the KL divergence minimisation algorithm would start at a relatively high number (42.3 as opposed to 3.5), and it would be stuck there for the entire runtime of the program; the thousands of iterations spent minimizing the ratio loss did not decrease it. At higher training rates, the KL minimization algorithm would sometimes enter this "failure" stage during the main optimization stage. The high ratio loss signifies a very inaccurate ratio estimator, leading to a completely inaccurate variational posterior (i have a fig to isnert here). Thus, the program was programmed to restart every time the ratio loss initialized at a high number, until a reasonable value was initialized. 
 \newpage
 \subsection{Theorycraftintime}
 In an attempt to explain why class probability estimation is significantly superior to KL minimization, we compare the two techniques in terms of their 'lower bound' formulation, and analyze their fundamental differences.
@@ -1448,7 +1448,7 @@ Now consider the bounds on the
 We now address the "failures" experienced by the KL minimization algorithm. Consider that the activation function of the estimator network's output layer, influencing the output range, varies between the estimators. For the direct ratio estimator, ReLU is used for the output, meaning that a 0 is outputted if the previous matrix operations lead to a negative number. Now recall that we take the log of the ratio estimator's output in all of the related optimization problems, and that a small constant $c$ is added to prevent taking the log of $0$. This explains the 'failures' of the KL minimization algorithm: the neural network has been initialised such that a $0$ is outputted, signifying that the previous matrix operations led to a negative number. Its loss function takes a large value according to this scenario (e.g. for KL minimization, it is $-\log c$), and does not decrease over training iterations, as a slight change in the network weights would still output the same result, meaning that the partial derivative of the weights with respect to the loss function is $0$. Due to this occurrence, the "failures" would additionally occur in the direct log ratio estimator, as its output layer is simply the log of a ReLU output, which would suffer from the same problem. On the other hand, the sigmoid activation function of the "Class probability" estimator is bound in $(0,1)$, so it does not experience any "failures".\\
 Aside from the failures, the difference in output activation functions could also explain our experimental results; the rectified linear unit models the density ratio in a linear manner, meaning that it would be asymmetric, in the sense that cases where $q(u)>p(u)$ result in any output in $(1,\infty)$, but if $p(u)<q(u)$, then the outputted is limited to $(0,1)$. On the other hand, the sigmoid function has symmetric output, as if $q(u)>p(u)$, it is bound in $(0.5,1)$, and if $q(u)<p(u)$, the outputs lie within $(0,0.5)$. Taking the log of the rectified linear output and optimizing the objective functions with respect to it may partially resolve this issue, as the cases will become bound in $(0,\infty)$ and $(-\infty,0)$ respectively, but it would retain an additional issue: having a rectified linear unit for the output layer restricts the previous matrix operations to have an output in $\R^{+}\backslash \{0\}$, as its surjective mapping truncates $\R^-$. On the other hand, the sigmoid output layer has a bijective mapping from $\R$ to $(0,1)$.
 \subsection{Experiments to prove me theory}
-\subsection{Adversarial Variational Bayes (MNIST image generation)}
+\subsection{Data Generation - (MNIST image generation)}
 \subsubsection{Problem Context}
 \section{Related Work and Discussion}
 \section{Conclusion}

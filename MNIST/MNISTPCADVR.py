@@ -195,7 +195,7 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
 #with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     #Pre-Train Discriminator
-    for i in range(5001):
+    for i in range(50001):
         z=np.random.randn(batch_size, z_dim)
         xin, _ = mnist.train.next_batch(mb_size)
         noise=np.random.randn(batch_size, noise_dim)
