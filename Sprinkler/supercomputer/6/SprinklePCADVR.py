@@ -1,3 +1,4 @@
+import sys
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import numpy as np
@@ -161,6 +162,9 @@ with tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_plac
         _, dl = sess.run([train_disc, disc_loss], feed_dict=feed_dict)
         if i % 500 == 0:
             print('Step %i: Discriminator Loss: %f' % (i, dl))
+        if i==5000:
+            if dl>40:
+                os.execv(sys.executable, ['python3'] + sys.argv)    
     for j in range(10001):
         print('Iteration %i' % (j))
         #Train Discriminator

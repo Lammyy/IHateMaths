@@ -1,7 +1,7 @@
 #!/bin/bash
 #PBS -P lg14
 #PBS -q normal
-#PBS -l walltime=16:00:00
+#PBS -l walltime=4:30:00
 #PBS -l ncpus=6
 #PBS -l mem=2GB
 #PBS -l software=python3
@@ -10,5 +10,3 @@
 module load python3/3.6.2
 module load tensorflow/1.8-cudnn7.1-python3.6
 python3 ./SprinklePCKL.py
-python3 ./SprinkleJCADVR.py
-python3 ./SprinkleJCADVexp.py
