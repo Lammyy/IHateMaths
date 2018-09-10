@@ -49,7 +49,15 @@
 \BOOKMARK [2][-]{subsection.4.3}{Determining optimal activation function}{section.4}% 49
 \BOOKMARK [3][-]{subsubsection.4.3.1}{Experiment Outline}{subsection.4.3}% 50
 \BOOKMARK [3][-]{subsubsection.4.3.2}{Results}{subsection.4.3}% 51
-\BOOKMARK [2][-]{subsection.4.4}{Data Generation - \(MNIST image generation\)}{section.4}% 52
-\BOOKMARK [3][-]{subsubsection.4.4.1}{Problem Context}{subsection.4.4}% 53
-\BOOKMARK [1][-]{section.5}{Related Work and Discussion}{}% 54
-\BOOKMARK [1][-]{section.6}{Conclusion}{}% 55
+\BOOKMARK [2][-]{subsection.4.4}{Comparing Estimator Accuracies}{section.4}% 52
+\BOOKMARK [3][-]{subsubsection.4.4.1}{Experiment Outline}{subsection.4.4}% 53
+\BOOKMARK [3][-]{subsubsection.4.4.2}{Results}{subsection.4.4}% 54
+\BOOKMARK [2][-]{subsection.4.5}{Comparing Accuracies of Undertrained Estimators}{section.4}% 55
+\BOOKMARK [3][-]{subsubsection.4.5.1}{Experiment Outline}{subsection.4.5}% 56
+\BOOKMARK [3][-]{subsubsection.4.5.2}{Results}{subsection.4.5}% 57
+\BOOKMARK [2][-]{subsection.4.6}{Data Generation - \(MNIST image generation\)}{section.4}% 58
+\BOOKMARK [3][-]{subsubsection.4.6.1}{Problem Context}{subsection.4.6}% 59
+\BOOKMARK [3][-]{subsubsection.4.6.2}{Program Structure}{subsection.4.6}% 60
+\BOOKMARK [3][-]{subsubsection.4.6.3}{Results}{subsection.4.6}% 61
+\BOOKMARK [1][-]{section.5}{Related Work and Discussion}{}% 62
+\BOOKMARK [1][-]{section.6}{Conclusion}{}% 63
