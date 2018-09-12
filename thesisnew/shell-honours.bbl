@@ -1,0 +1,59 @@
+\begin{thebibliography}{10}
+
+\bibitem{optim}
+Stephen Boyd and Lieven Vandenberghe.
+\newblock {\em Convex Optimization}.
+\newblock Cambridge University Press, 2004.
+
+\bibitem{neuralstat}
+Bing Cheng and D.~M. Titterington.
+\newblock Neural networks: A review from a statistical perspective.
+\newblock {\em Statist. Sci.}, 9(1):2--30, 02 1994.
+
+\bibitem{backprop}
+David E.~Rumelhart, Geoffrey E.~Hinton, and Ronald J.~Williams.
+\newblock Learning representations by back propagating errors.
+\newblock 323:533--536, 10 1986.
+
+\bibitem{floudas}
+Christodoulos~A. Floudas.
+\newblock {\em Deterministic Global Optimization: Theory, Methods and
+  (NONCONVEX OPTIMIZATION AND ITS APPLICATIONS Volume 37) (Nonconvex
+  Optimization and Its Applications)}.
+\newblock Springer-Verlag, Berlin, Heidelberg, 2005.
+
+\bibitem{xavier}
+Xavier Glorot and Yoshua Bengio.
+\newblock Understanding the difficulty of training deep feedforward neural
+  networks.
+\newblock In {\em Proceedings of the thirteenth international conference on
+  artificial intelligence and statistics}, pages 249--256, 2010.
+
+\bibitem{DeepLearning}
+Ian Goodfellow, Yoshua Bengio, and Aaron Courville.
+\newblock {\em Deep Learning}.
+\newblock MIT Press, 2016.
+
+\bibitem{universal}
+Kurt Hornik.
+\newblock Approximation capabilities of multilayer feedforward networks.
+\newblock {\em Neural Networks}, 4(2):251 -- 257, 1991.
+
+\bibitem{adam}
+Diederik~P. Kingma and Jimmy Ba.
+\newblock Adam: {A} method for stochastic optimization.
+\newblock {\em CoRR}, abs/1412.6980, 2014.
+
+\bibitem{optimneural}
+Sebastian Ruder.
+\newblock An overview of gradient descent optimization algorithms.
+\newblock {\em CoRR}, abs/1609.04747, 2016.
+
+\bibitem{neuroplast}
+Karl Zilles.
+\newblock Neuronal plasticity as an adaptive property of the central nervous
+  system.
+\newblock {\em Annals of Anatomy - Anatomischer Anzeiger}, 174(5):383 -- 391,
+  1992.
+
+\end{thebibliography}

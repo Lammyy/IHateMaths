@@ -6,59 +6,57 @@
 \contentsline {section}{\numberline {2.3}Neural Network Structure}{5}
 \contentsline {section}{\numberline {2.4}Bias-per-node Representation}{7}
 \contentsline {section}{\numberline {2.5}Choice of Activation Function}{8}
-\contentsline {section}{\numberline {2.6}Optimization}{9}
-\contentsline {section}{\numberline {2.7}Back-propogation}{12}
-\contentsline {section}{\numberline {2.8}Weight Initialization}{15}
-\contentsline {section}{\numberline {2.9}References}{16}
-\contentsline {chapter}{\numberline {Chapter 3}Variational Inference}{17}
-\contentsline {section}{\numberline {3.1}Context}{17}
-\contentsline {section}{\numberline {3.2}Introduction to Variational Inference}{18}
-\contentsline {section}{\numberline {3.3}Derivation of the ELBO}{18}
-\contentsline {section}{\numberline {3.4}Mean-Field Variational Family (need to fix notations)}{19}
-\contentsline {section}{\numberline {3.5}Example: Bayesian mixture of Gaussians}{22}
-\contentsline {section}{\numberline {3.6}Amortized Inference}{28}
-\contentsline {section}{\numberline {3.7}Example: Variational Autoencoder}{29}
-\contentsline {section}{\numberline {3.8}References}{30}
-\contentsline {chapter}{\numberline {Chapter 4}Our Problem}{31}
-\contentsline {section}{\numberline {4.1}Objective Derivation}{31}
-\contentsline {subsection}{\numberline {4.1.1}Implicit Prior}{31}
-\contentsline {subsection}{\numberline {4.1.2}Implicit Likelihood (\& Prior)}{34}
-\contentsline {section}{\numberline {4.2}Class Probability Estimation}{35}
-\contentsline {subsection}{\numberline {4.2.1}Derivation}{35}
-\contentsline {subsection}{\numberline {4.2.2}Implicit Prior}{36}
-\contentsline {subsection}{\numberline {4.2.3}Implicit Likelihood (\& Prior)}{39}
-\contentsline {subsection}{\numberline {4.2.4}Optimal functions}{42}
-\contentsline {section}{\numberline {4.3}Divergence Minimisation}{44}
-\contentsline {subsection}{\numberline {4.3.1}Derivation}{44}
-\contentsline {subsection}{\numberline {4.3.2}Implicit Prior}{46}
-\contentsline {subsection}{\numberline {4.3.3}Implicit Likelihood (\& Prior)}{49}
-\contentsline {subsection}{\numberline {4.3.4}Optimal functions}{52}
-\contentsline {subsection}{\numberline {4.3.5}Alternative Derivation of Class Probability Estimation}{53}
-\contentsline {chapter}{\numberline {Chapter 5}Initial Experiment - Inference, "Sprinkler" Example}{55}
-\contentsline {section}{\numberline {5.1}Problem Context}{55}
-\contentsline {section}{\numberline {5.2}Program Structure}{56}
-\contentsline {section}{\numberline {5.3}Results}{62}
-\contentsline {chapter}{\numberline {Chapter 6}Theory Crafting}{64}
-\contentsline {section}{\numberline {6.1}Introduction}{64}
-\contentsline {section}{\numberline {6.2}Recap because its confusing}{65}
-\contentsline {section}{\numberline {6.3}First and Second Derivatives of all 6 possible algorithms}{66}
-\contentsline {section}{\numberline {6.4}Difference between divergences}{68}
-\contentsline {section}{\numberline {6.5}Difference between estimators}{68}
-\contentsline {chapter}{\numberline {Chapter 7}Inference Experiments - "Sprinkler"}{72}
-\contentsline {section}{\numberline {7.1}Determining optimal activation function}{72}
-\contentsline {subsection}{\numberline {7.1.1}Experiment Outline}{72}
-\contentsline {subsection}{\numberline {7.1.2}Results}{72}
-\contentsline {section}{\numberline {7.2}Comparing Estimator Accuracies}{73}
-\contentsline {subsection}{\numberline {7.2.1}Experiment Outline}{73}
-\contentsline {subsection}{\numberline {7.2.2}Results}{73}
-\contentsline {section}{\numberline {7.3}Comparing Accuracies of Undertrained Estimators}{74}
-\contentsline {subsection}{\numberline {7.3.1}Experiment Outline}{74}
-\contentsline {subsection}{\numberline {7.3.2}Results}{74}
-\contentsline {chapter}{\numberline {Chapter 8}Data Generation - (MNIST image generation)}{75}
-\contentsline {section}{\numberline {8.1}Problem Context}{75}
-\contentsline {section}{\numberline {8.2}Program Structure}{75}
-\contentsline {section}{\numberline {8.3}Results}{76}
-\contentsline {chapter}{\numberline {Chapter 9}Related Work and Discussion}{78}
-\contentsline {chapter}{\numberline {Chapter 10}Conclusion}{79}
-\contentsline {chapter}{References}{80}
-\contentsline {chapter}{\numberline {Appendix A}Kernel Density Estimation}{82}
+\contentsline {section}{\numberline {2.6}Weight Initialization}{9}
+\contentsline {section}{\numberline {2.7}Optimization}{10}
+\contentsline {section}{\numberline {2.8}Back-propagation}{13}
+\contentsline {chapter}{\numberline {Chapter 3}Variational Inference}{16}
+\contentsline {section}{\numberline {3.1}Context}{16}
+\contentsline {section}{\numberline {3.2}Introduction to Variational Inference}{17}
+\contentsline {section}{\numberline {3.3}Derivation of the ELBO}{17}
+\contentsline {section}{\numberline {3.4}Mean-Field Variational Family (need to fix notations)}{18}
+\contentsline {section}{\numberline {3.5}Example: Bayesian mixture of Gaussians}{21}
+\contentsline {section}{\numberline {3.6}Amortized Inference}{27}
+\contentsline {section}{\numberline {3.7}Example: Variational Autoencoder}{28}
+\contentsline {section}{\numberline {3.8}References}{29}
+\contentsline {chapter}{\numberline {Chapter 4}Our Problem}{30}
+\contentsline {section}{\numberline {4.1}Objective Derivation}{30}
+\contentsline {subsection}{\numberline {4.1.1}Implicit Prior}{30}
+\contentsline {subsection}{\numberline {4.1.2}Implicit Likelihood (\& Prior)}{33}
+\contentsline {section}{\numberline {4.2}Class Probability Estimation}{34}
+\contentsline {subsection}{\numberline {4.2.1}Derivation}{34}
+\contentsline {subsection}{\numberline {4.2.2}Implicit Prior}{35}
+\contentsline {subsection}{\numberline {4.2.3}Implicit Likelihood (\& Prior)}{38}
+\contentsline {subsection}{\numberline {4.2.4}Optimal functions}{41}
+\contentsline {section}{\numberline {4.3}Divergence Minimisation}{43}
+\contentsline {subsection}{\numberline {4.3.1}Derivation}{43}
+\contentsline {subsection}{\numberline {4.3.2}Implicit Prior}{45}
+\contentsline {subsection}{\numberline {4.3.3}Implicit Likelihood (\& Prior)}{48}
+\contentsline {subsection}{\numberline {4.3.4}Optimal functions}{51}
+\contentsline {subsection}{\numberline {4.3.5}Alternative Derivation of Class Probability Estimation}{52}
+\contentsline {chapter}{\numberline {Chapter 5}Initial Experiment - Inference, "Sprinkler" Example}{54}
+\contentsline {section}{\numberline {5.1}Problem Context}{54}
+\contentsline {section}{\numberline {5.2}Program Structure}{55}
+\contentsline {section}{\numberline {5.3}Results}{61}
+\contentsline {chapter}{\numberline {Chapter 6}Theory Crafting}{63}
+\contentsline {section}{\numberline {6.1}Introduction}{63}
+\contentsline {section}{\numberline {6.2}Recap because its confusing}{64}
+\contentsline {section}{\numberline {6.3}First and Second Derivatives of all 6 possible algorithms}{65}
+\contentsline {section}{\numberline {6.4}Difference between divergences}{67}
+\contentsline {section}{\numberline {6.5}Difference between estimators}{67}
+\contentsline {chapter}{\numberline {Chapter 7}Inference Experiments - "Sprinkler"}{71}
+\contentsline {section}{\numberline {7.1}Determining optimal activation function}{71}
+\contentsline {subsection}{\numberline {7.1.1}Experiment Outline}{71}
+\contentsline {subsection}{\numberline {7.1.2}Results}{71}
+\contentsline {section}{\numberline {7.2}Comparing Estimator Accuracies}{72}
+\contentsline {subsection}{\numberline {7.2.1}Experiment Outline}{72}
+\contentsline {subsection}{\numberline {7.2.2}Results}{72}
+\contentsline {section}{\numberline {7.3}Comparing Accuracies of Undertrained Estimators}{73}
+\contentsline {subsection}{\numberline {7.3.1}Experiment Outline}{73}
+\contentsline {subsection}{\numberline {7.3.2}Results}{73}
+\contentsline {chapter}{\numberline {Chapter 8}Data Generation - (MNIST image generation)}{74}
+\contentsline {section}{\numberline {8.1}Problem Context}{74}
+\contentsline {section}{\numberline {8.2}Program Structure}{74}
+\contentsline {section}{\numberline {8.3}Results}{75}
+\contentsline {chapter}{\numberline {Chapter 9}Related Work and Discussion}{77}
+\contentsline {chapter}{\numberline {Chapter 10}Conclusion}{78}
+\contentsline {chapter}{\numberline {Appendix A}Kernel Density Estimation}{80}
