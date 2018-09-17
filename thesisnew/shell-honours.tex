@@ -24,6 +24,7 @@
 \usepackage[ ]{algorithm2e}
 \usepackage{bm}
 \usepackage{tikz}
+\usepackage{boondox-cal}
 \usepackage{cite}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -152,7 +153,7 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Density Ratio Estimators in Variational Bayesian Machine Learning}
+\title{Density Ratio Estimators for Variational Methods in Bayesian Neural Networks}
 
 \authornameonly{Alexander Lam}
 
@@ -635,115 +636,120 @@ Set $\Delta^{(j)}=\Delta^{(j)}+\bm{\delta}^{(j+1)}(\bm{a}^{(j)})^\top$\;
 Having derived the partial derivatives of the loss function with respect to the individual weights, we can use a gradient descent based optimization method to update the weights. The partial derivatives are re-calculated after each optimization update until convergence is achieved.
 \chapter{Variational Inference}
 \section{Context}
-In Bayesian statistics, a common problem is to estimate posterior densities, so that we may perform inference to determine an unknown parameter. Consider a set of unknown, latent variables $\textbf{Z}=\{z_i\}^M_{i=1}$ and a dataset of known variables $\textbf{X}=\{x_i\}^N_{i=1}$. These sets have a joint density of $P(\textbf{Z},\textbf{X})$. In the Bayesian framework, inference is often performed on the posterior density (the distribution of the parameters $\textbf{Z}$ after the data $\textbf{X}$ is observed)
-$P(\textbf{Z}|\textbf{X})$, which, after applying Bayes' theorem, can be written as:
-\begin{equation*}P(\textbf{Z}|\textbf{X})=\frac{P(\textbf{Z})P(\textbf{X}|\textbf{Z})}{P(\textbf{X})}= \frac{P(\textbf{Z})P(\textbf{X}|\textbf{Z})}{\int_\mathcal{Z}P(\textbf{Z},\textbf{X})d\textbf{Z}}\end{equation*}
+In Bayesian statistics, a common problem is to estimate posterior densities, so that we may perform inference to determine an unknown parameter \cite{blei}. Consider a set of unknown, latent variables $\textbf{z}=\{z_i\}^M_{i=1}$ and a dataset of known variables $\textbf{x}=\{x_i\}^N_{i=1}$. These sets have a joint density of $p(\textbf{z},\textbf{x})$. In the Bayesian framework, inference is often performed on the posterior density (the distribution of the parameters $\textbf{z}$ after the data $\textbf{x}$ is observed)
+$p(\textbf{z}|\textbf{x})$, which, after applying Bayes' theorem, can be written as:
+\begin{equation*}
+p(\textbf{z}|\textbf{x})=\frac{p(\textbf{z})p(\textbf{x}|\textbf{z})}{p(\textbf{x})}= \frac{p(\textbf{z})p(\textbf{x}|\textbf{z})}{\int_\mathbcal{z}p(\textbf{z},\textbf{x})d\textbf{z}}\end{equation*}
 where
 \begin{itemize}
-\item $P(\textbf{Z})$ is the prior distribution: the initial distribution of $\textbf{Z}$ before the data $\textbf{X}$ is observed. This can be initialised to represent our initial beliefs, or it can be parametrised randomly,
-\item $P(\textbf{X}|\textbf{Z})$ is the likelihood: the distribution of data $\textbf{X}$ conditioned on the parameters $\textbf{Z}$,
-\item $P(\textbf{X})=\int_\mathcal{Z}P(\textbf{Z},\textbf{X})d\textbf{Z}$ is the marginal likelihood, or the evidence: the density of the data averaged across all possible parameter values.
+\item $p(\textbf{z})$ is the prior distribution: the initial distribution of $\textbf{z}$ before the data $\textbf{x}$ is observed. This can be initialised to represent our initial beliefs, or it can be parametrised randomly,
+\item $p(\textbf{x}|\textbf{z})$ is the likelihood: the distribution of data $\textbf{x}$ conditioned on the parameters $\textbf{z}$,
+\item $p(\textbf{x})=\int_\mathcal{z}p(\textbf{z},\textbf{x})d\textbf{z}$ is the marginal likelihood, or the evidence: the density of the data averaged across all possible parameter values.
 \end{itemize}
-If the evidence integral $P(\textbf{X})=\int_\mathcal{Z}P(\textbf{Z},\textbf{X})d\textbf{Z}$ is impossible or difficult to compute (possibly because it is unavailable in closed form or the dimensionality is too high), then we are unable to evaluate the posterior density. Traditionally, MCMC(Markov Chain Monte Carlo) methods overcome this obstacle by constructing a Markov chain that converges to the stationary distribution $P(\textbf{Z}|\textbf{X})$, then sampling from the chain to create an empirical estimate for the posterior distribution. However, these methods rely on the speed of convergence, which can be slow for large datasets or complex models. When faced with these issues or when desiring a faster computation, one may instead apply variational inference, an alternative approach to density estimation.
+If the evidence integral $p(\textbf{x})=\int_\mathbcal{z}p(\textbf{z},\textbf{x})d\textbf{z}$ is impossible or difficult to compute (possibly because it is unavailable in closed form or the dimensionality is too high), then we are unable to evaluate the posterior density. Traditionally, MCMC (Markov Chain Monte Carlo) methods overcome this obstacle by constructing a Markov chain that converges to the stationary distribution $p(\textbf{z}|\textbf{x})$, then sampling from the chain to create an empirical estimate for the posterior distribution. However, these methods rely on the speed of convergence, which can be slow for large datasets or complex models. When faced with these issues or when desiring a faster computation, one may instead apply variational inference, an alternative approach to density estimation.
 \section{Introduction to Variational Inference}
-Variational inference chooses another distribution $Q(\textbf{Z})$ from a select family of variational distributions (approximate densities) $\mathcal{Q}$ to serve as an approximation to $P(\textbf{Z}|\textbf{X})$, and then minimizes the divergence between the two distributions in an optimization problem:
+Variational inference chooses another distribution $q(\textbf{z})$ from a select family of variational distributions (approximate densities) $\mathcal{Q}$ to serve as an approximation to $p(\textbf{z}|\textbf{x})$, and then minimizes the f-divergence between the two distributions in an optimization problem:
 \begin{equation}
-Q^*(\textbf{Z})=\argmin_{Q(\textbf{Z})\in \mathcal{Q}}D(Q(\textbf{Z})||P(\textbf{Z}|\textbf{X}))
-\end{equation} where $D$ denotes an f-divergence (a measure of how divergent two probability distributions are, it is minimized if $Q=P$). This results in an analytical approximation to the posterior density. Additionally, a lower bound for the marginal likelihood of the dataset is derived, which can be used as a model selection criterion. Due to the stochastic nature of the optimization, variational inference methods can be much faster than MCMC, but the solution is only locally optimal as there is no guarantee of global convergence.
+q^*(\textbf{z})=\argmin_{q(\textbf{z})\in \mathcal{Q}}D_f(q(\textbf{z})||p(\textbf{z}|\textbf{x}))
+\end{equation} where $D_f$ denotes an f-divergence (a measure of how divergent two probability distributions are, it is minimized if $q=p$). This results in an analytical approximation to the posterior density. As shown in Section 3.3, a lower bound for the marginal likelihood of the dataset is derived during the optimization procedure, which can be used as a model selection criterion. Due to the stochastic nature of the optimization, variational inference methods can be much faster than MCMC, but the solution is only locally optimal as there is no guarantee of global convergence.
 \section{Derivation of the ELBO}
-The most common f-divergence used in variational inference is the KL(Kullback-Leibler) divergence, defined as the expected logarithmic difference between two distrbutions $Q$ and $P$ with respect to $Q$:
+The most common f-divergence used in variational inference is the KL (Kullback-Leibler) divergence, defined as the expected logarithmic difference between two distributions $Q$ and $P$ with respect to $Q$:
 \begin{equation*}
-KL(Q||P)=\int_{-\infty}^\infty Q(x)\log \frac{Q(x)}{P(x)}dx=\mathbb{E}_{Q(x)}\left[\log\frac{Q(x)}{P(x)}\right].
+KL(q(x)||p(x))=\int_{-\infty}^\infty q(x)\log \frac{q(x)}{p(x)}dx=\mathbb{E}_{q(x)}\left[\log\frac{q(x)}{p(x)}\right].
 \end{equation*}
-Note that the KL divergence is not symmetric. We use the reverse KL divergence instead of the forward KL divergence $KL(P||Q)$ because it leads to an expectation maximization algorithm as opposed to an expectation propagation algorithm.\\
-Using this expression, we can rewrite equation (1) as:
+Note that the KL divergence is not symmetric. We use the reverse KL divergence instead of the forward KL divergence $KL(p(x)||q(x))$ because we are unable to sample from $p(z|x)$, and because it leads to an expectation maximization algorithm as opposed to an expectation propagation algorithm.\\
+Using this expression, we can rewrite equation 3.2.1 as:
 \begin{align*}
-Q^*(\textbf{Z})&=\argmin_{Q(\textbf{Z})\in \mathcal{Q}}KL(Q(\textbf{Z})||P(\textbf{Z}|\textbf{X}))\\
-&= \argmin_{Q(\textbf{Z})\in \mathcal{Q}} \mathbb{E}_{Q(\textbf{Z})}[\log Q(\textbf{Z})-\log P(\textbf{Z}|\textbf{X})]\\
-&= \argmin_{Q(\textbf{Z})\in \mathcal{Q}} \mathbb{E}_{Q(\textbf{Z})}\left[\log Q(\textbf{Z})-\log\frac{P(\textbf{X}|\textbf{Z})P(\textbf{Z})}{P(\textbf{X})}\right]\\
-&= \argmin_{Q(\textbf{Z})\in \mathcal{Q}} \left(\mathbb{E}_{Q(\textbf{Z})}[\log Q(\textbf{Z})-\log P(\textbf{X}|\textbf{Z})-\log P(\textbf{Z})]+\log P(\textbf{X})\right).
+q^*(\textbf{z})&=\argmin_{q(\textbf{z})\in \mathcal{Q}}KL(q(\textbf{z})||p(\textbf{z}|\textbf{x}))\\
+&= \argmin_{q(\textbf{z})\in \mathcal{Q}} \mathbb{E}_{q(\textbf{z})}[\log q(\textbf{z})-\log p(\textbf{z}|\textbf{x})]\\
+&= \argmin_{q(\textbf{z})\in \mathcal{Q}} \mathbb{E}_{q(\textbf{z})}\left[\log q(\textbf{z})-\log\frac{p(\textbf{x}|\textbf{z})p(\textbf{z})}{p(\textbf{x})}\right]\\
+&= \argmin_{q(\textbf{z})\in \mathcal{Q}} \left(\mathbb{E}_{q(\textbf{z})}[\log q(\textbf{z})-\log p(\textbf{x}|\textbf{z})-\log p(\textbf{z})]+\log p(\textbf{x})\right).
 \end{align*}
-Note in the last line $\mathbb{E}_{Q(\textbf{Z})}[P(\textbf{X})]=P(\textbf{X})$ as it is not dependent on $Q(\textbf{Z})$. Also note that the KL divergence is dependent on $P(\textbf{X})$, which we have determined to be intractable, so this optimization problem cannot be solved in this form. This issue is resolved by rearranging the KL divergence expression as follows:
+Note in the last line $\mathbb{E}_{q(\textbf{z})}[p(\textbf{x})]=p(\textbf{x})$ as it is not dependent on $q(\textbf{z})$. The KL divergence is dependent on $p(\textbf{x})$, which is often intractable, so the optimization problem cannot be solved in this form. This issue is resolved by rearranging the KL divergence expression as follows:
 \begin{align}
-KL(Q(\textbf{Z})||P(\textbf{Z}|\textbf{X}))&=\mathbb{E}_{Q(\textbf{Z})}[\log Q(\textbf{Z})-\log P(\textbf{X}|\textbf{Z})-\log P(\textbf{Z})]+\log P(\textbf{X}) \nonumber \\
-\log P(\textbf{X})-KL(Q(\textbf{Z})||P(\textbf{Z}|\textbf{X}))&=-\mathbb{E}_{Q(\textbf{Z})}[\log Q(\textbf{Z})-\log P(\textbf{X}|\textbf{Z})-\log P(\textbf{Z})]\nonumber \\
-&=\mathbb{E}_{Q(\textbf{Z})}[\log P(\textbf{X}|\textbf{Z})]-\mathbb{E}_{Q(\textbf{Z})}[\log Q(\textbf{Z})-\log P(\textbf{Z})]\nonumber \\
-&=\mathbb{E}_{Q(\textbf{Z})}[\log P(\textbf{X}|\textbf{Z})]-KL(Q(\textbf{Z})||P(\textbf{Z})).
+KL(q(\textbf{z})||p(\textbf{z}|\textbf{x}))&=\mathbb{E}_{q(\textbf{z})}[\log q(\textbf{z})-\log p(\textbf{x}|\textbf{z})-\log p(\textbf{z})]+\log p(\textbf{x}) \nonumber \\
+\log p(\textbf{x})-KL(q(\textbf{z})||p(\textbf{z}|\textbf{x}))&=-\mathbb{E}_{q(\textbf{z})}[\log q(\textbf{z})-\log p(\textbf{x}|\textbf{z})-\log p(\textbf{z})]\nonumber \\
+&=\mathbb{E}_{q(\textbf{z})}[\log p(\textbf{x}|\textbf{z})]-\mathbb{E}_{q(\textbf{z})}[\log q(\textbf{z})-\log p(\textbf{z})]\nonumber \\
+&=\mathbb{E}_{q(\textbf{z})}[\log p(\textbf{x}|\textbf{z})]-KL(q(\textbf{z})||p(\textbf{z})).
 \end{align}
-We refer to $\log P(\textbf{X})-KL(Q(\textbf{Z})||P(\textbf{Z}|\textbf{X}))$ as $ELBO(Q)$ (evidence lower bound), as it is equal to the marginal probability of the data subtracted by a constant error term. This error term $KL(Q(\textbf{Z})||P(\textbf{Z}|\textbf{X}))$ becomes 0 when $Q(\textbf{Z})=P(\textbf{Z}|\textbf{X})$, maximizing the ELBO. Note that since $P(\textbf{X})$ is constant, maximizing the $ELBO$ is equal to minimizing the KL divergence between $Q(\textbf{Z})$ and $P(\textbf{Z}|\textbf{X})$, and that the expression on line (2) is entirely computable. We can therefore rewrite our optimization problem from equation (1) as:
+We refer to $\log p(\textbf{x})-KL(q(\textbf{z})||p(\textbf{z}|\textbf{x}))$ as $ELBO(q)$ (evidence lower bound), as it is equal to the marginal probability of the data subtracted by a constant 'error term'. Now our problem of minimizing the KL divergence between $q(\textbf{z})$ and $p(\textbf{z}|\textbf{x})$ is equivalent to maximizing $ELBO(q)$, which is equal to the tractable expression on line 3.3.1. We can therefore rewrite our optimization problem from equation 3.2.1 as:
 \begin{align*}
-Q^*(\textbf{Z})&=\argmin_{Q(\textbf{Z})\in \mathcal{Q}}D(Q(\textbf{Z})||P(\textbf{Z}|\textbf{X}))\\
-&= \argmax_{Q(\textbf{Z})\in \mathcal{Q}} ELBO(Q)\\
-&= \argmax_{Q(\textbf{Z})\in \mathcal{Q}} \left(\mathbb{E}_{Q(\textbf{Z})}[\log P(\textbf{X}|\textbf{Z})]-KL(Q(\textbf{Z})||P(\textbf{Z}))\right).
+q^*(\textbf{z})&=\argmin_{q(\textbf{z})\in \mathcal{Q}}D(q(\textbf{z})||p(\textbf{z}|\textbf{x}))\\
+&= \argmax_{q(\textbf{z})\in \mathcal{Q}} ELBO(q)\\
+&= \argmax_{q(\textbf{z})\in \mathcal{Q}} \left(\mathbb{E}_{q(\textbf{z})}[\log p(\textbf{x}|\textbf{z})]-KL(q(\textbf{z})||p(\textbf{z}))\right).
 \end{align*}
-\section{Mean-Field Variational Family (need to fix notations)}
-The family of variational distributions $\mathcal{Q}$ is typically a 'mean-field variational family', in which the distribution $Q(\textbf{Z})$ factorizes over the latent variables $\{z_i\}^M_{i=1}$, each with an individual set of parameters $\{\phi_i\}^M_{i=1}$:
+\newpage
+\section{Mean-Field Variational Family}
+The family of variational distributions $\mathcal{Q}$ is typically a 'mean-field variational family', in which the distribution $q(\textbf{z})$ factorizes over the latent variables $\{z_i\}^M_{i=1}$, each with an individual set of parameters $\{\phi_i\}^M_{i=1}$:
 \begin{equation}
-Q(\textbf{Z})=\prod^M_{i=1}q^{(i)}_{\phi_i}(z_i).
+q(\textbf{z})=\prod^M_{i=1}q_{\phi_i}(z_i).
 \end{equation}
-The individual factors $q^{(i)}_{\phi_i}(z_i)$ can take any form, but they are assumed to be independent, which simplifies derivations but is less accurate when the true latent variables exhibit dependence. Fixing the forms of the individual factors, we want to choose the parameters $\phi_i$ so that $ELBO(Q)$ is maximized. Since the density of the true posterior is dependent on the value of the data point, each data point $x_i$ has its own associated set of parameters. To derive an expression for the optimal factor $q_i^*(z_i)$, we substitute equation (3) into the $ELBO$, factor out a specific $q_j(z_j)$ and equate the functional derivative of the resulting Lagrangian equation with 0. Firstly, we express $ELBO(Q)$ in an integral form as follows:
+The individual factors $q_{\phi_i}(z_i)$ can take any form, but they are assumed to be independent, which simplifies derivations but is less accurate when the true latent variables exhibit dependence. Fixing the forms of the individual factors, we want to choose the parameters $\phi_i$ so that $ELBO(q)$ is maximized. To derive an expression for the optimal factor $q_i^*(z_i)$, we substitute equation 3.4.1 into the $ELBO$, factor out a specific $q_j(z_j)$ and equate the functional derivative of the resulting Lagrangian equation with 0. \\
+Firstly, we express $ELBO(q)$ in an integral form as follows:
 \begin{align*}
-ELBO(Q)&= \mathbb{E}_{Q(Z)}[\log P(\textbf{X}|\textbf{Z})]-KL(Q(\textbf{Z})||P(\textbf{Z}))\\
-&= \mathbb{E}_{Q(Z)}[\log P(\textbf{X}|\textbf{Z})+\log P(\textbf{Z})-\log Q(\textbf{Z})]\\
-&= \mathbb{E}_{Q(Z)}[\log P(\textbf{X}, \textbf{Z})-\log Q(\textbf{Z})]\\
-&= \int_{\mathcal{Z}}Q(\textbf{Z})(\log P(\textbf{X},\textbf{Z})-\log Q(\textbf{Z}))d\textbf{Z}.
+ELBO(q)&= \mathbb{E}_{q(z)}[\log p(\textbf{x}|\textbf{z})]-KL(q(\textbf{z})||p(\textbf{z}))\\
+&= \mathbb{E}_{q(x)}[\log p(\textbf{x}|\textbf{z})+\log p(\textbf{z})-\log q(\textbf{z})]\\
+&= \mathbb{E}_{q(z)}[\log p(\textbf{x}, \textbf{z})-\log q(\textbf{z})]\\
+&= \int_{\mathbcal{z}}q(\textbf{z})(\log p(\textbf{x},\textbf{z})-\log q(\textbf{z}))d\textbf{z}.
 \end{align*}
-Substituting $Q(\textbf{Z})=\prod^M_{i=1}q_i(z_i)$ and factoring out $q_j(z_j)$ yields:
+Substituting $q(\textbf{z})=\prod^M_{i=1}q_i(z_i)$ and factoring out $q_j(z_j)$ yields:
 \begin{align}
-ELBO(Q)&= \int_\mathcal{Z}\left[\prod^M_{i=1}q_i(z_i)\right]\left(\log P(\textbf{X},\textbf{Z})-\sum_{i=1}^M\log q_i(z_i)\right)d\textbf{Z}\nonumber\\
-&= \int_\mathcal{z_j}q_j(z_j)\left(\int_\mathcal{z_{-j}}\log P(\textbf{X},\textbf{Z})\prod_{i\neq j}q_i(z_i)d\textbf{z}_{-j} \right) dz_j\nonumber\\
+ELBO(q)&= \int_\mathbcal{z}\left[\prod^M_{i=1}q_i(z_i)\right]\left(\log p(\textbf{x},\textbf{z})-\sum_{i=1}^M\log q_i(z_i)\right)d\textbf{z}\nonumber\\
+&= \int_\mathcal{z_j}q_j(z_j)\left(\int_\mathcal{z_{-j}}\log p(\textbf{x},\textbf{z})\prod_{i\neq j}q_i(z_i)d\textbf{z}_{-j} \right) dz_j\nonumber\\
 &\quad -\int_{\mathcal{z_j}}q_j(z_j)\left(\int_{\mathcal{z}_{-j}}\left[\prod_{i\neq j}q_i(z_i)\right]\sum_{i=1}^M q_i(z_i)d\textbf{z}_{-j}\right)dz_j\nonumber\\
-&= \int_{\mathcal{z_j}}q_j(z_j)\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]dz_j-\int_{\mathcal{z_j}}q_j(z_j)\log q_j(z_j)\left(\int_{\mathcal{z}_{-j}}\prod_{i\neq j}q_i(z_i)dz_{-j}\right) dz_j\nonumber\\
+&= \int_{\mathcal{z_j}}q_j(z_j)\mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]dz_j\nonumber\\
+&\quad -\int_{\mathcal{z_j}}q_j(z_j)\log q_j(z_j)\left(\int_{\mathcal{z}_{-j}}\prod_{i\neq j}q_i(z_i)dz_{-j}\right) dz_j\nonumber\\
 &\quad -\int_{\mathcal{z_j}}q_j(z_j)\left(\int_{\mathcal{z}_{-j}}\left[\prod_{i\neq j}q_i(z_i)\right]\sum_{i\neq j}q_i(z_i)d{\textbf{z}_{-j}}\right)dz_j\nonumber\\
-&= \int_\mathcal{z_j}q_j(z_j)\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]dz_j-\int_\mathcal{z_j}q_j(z_j)\log q_j(z_j)dz_j\nonumber\\
+&= \int_\mathcal{z_j}q_j(z_j)\mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]dz_j-\int_\mathcal{z_j}q_j(z_j)\log q_j(z_j)dz_j\nonumber\\
 &\quad -\int_{\mathcal{z}_{-j}}\left[\prod_{i\neq j}q_i(z_i)\right]\sum_{i\neq j}q_i(z_i)d{\textbf{z}_{-j}}
-\\&= \int_\mathcal{z_j}q_j(z_j)\left(\mathbb{E}_{\mathcal{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]-\log q_j(z_j)\right)dz_j+\text{const}.
+\\&= \int_\mathcal{z_j}q_j(z_j)\left(\mathbb{E}_{\mathcal{z}_{-j}}[\log p(\textbf{x},\textbf{z})]-\log q_j(z_j)\right)dz_j+\text{const}.
 \end{align}
-The term in line (4) becomes a constant as it does not depend on $q_j(z_j)$. Now our Lagrangian equation with the constraint that $q_i(z_i)$ are probability density functions is:
+The term in line 3.4.2 is a constant as it does not depend on $q_j(z_j)$. Now our Lagrangian equation with the constraint that $q_i(z_i)$ are probability density functions is:
 \begin{equation*}
-ELBO(Q)-\sum^M_{i=1}\lambda_i\int_\mathcal{z_i}q_i(z_i)dz_i=0
+ELBO(q)-\sum^M_{i=1}\lambda_i\int_\mathcal{z_i}q_i(z_i)dz_i=0
 \end{equation*}
-or using our expression for $ELBO(Q)$ in line (5),
+or using our expression for $ELBO(q)$ in line 3.4.3,
 \begin{equation}
-\int_\mathcal{z_j}q_j(z_j)\left(\mathbb{E}_{\mathcal{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]-\log q_j(z_j)\right)dz_j-\sum^M_{i=1}\lambda_i\int_\mathcal{z_i}q_i(z_i)dz_i+\text{const}=0.
+\int_\mathcal{z_j}q_j(z_j)\left(\mathbb{E}_{\mathcal{z}_{-j}}[\log p(\textbf{x},\textbf{z})]-\log q_j(z_j)\right)dz_j-\sum^M_{i=1}\lambda_i\int_\mathcal{z_i}q_i(z_i)dz_i+\text{const}=0.
 \end{equation}
-Using the Euler-Lagrange equation (need to put this in), we then take the functional derivative of (6) with respect to $q_j(z_j)$ (in this case, the partial derivative with respect to $q_j(z_j)$ of the expression inside the integral):
+\newpage 
+We then take the functional derivative of Equation 3.4.4 with respect to $q_j(z_j)$:
 \begin{align}
 \frac{\partial ELBO(q)}{\partial q_j(z_j)}&= \frac{\partial}{\partial q_j(z_j)}\left[q_j(z_j)\left(\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]-\log q_j(z_j)\right)-\lambda_jq_j(z_j)\right]\nonumber
 \\&= \mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]-\log q_j(z_j)-1-\lambda_j
 \end{align}
-Equating expression (7) to 0 and letting $1+\lambda_j$ be a constant (as it is independent of $z$), we have:
-\begin{align*}
-\log q_j^*(z_j)&= \mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]-\text{const}\\
-q_j^*(z_j)&=\frac{e^{\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]}}{\text{const}}\\
-&= \frac{e^{\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]}}{\int e^{\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]}dz_j}.
-\end{align*}
-The normalization constant on the denominator can be easily derived by observing $q^*_j(z_j)$ as a density. Lastly, we derive a simpler expression of $q^*_j(z_j)$ by observing that terms independent of $z_j$ can be treated as a constant:
+Equating expression 3.4.5 to 0 and letting $1+\lambda_j$ be a constant (as it is independent of $z$), we have:
 \begin{align}
-q^*_j(z_j)&\propto \exp\left(\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]\right)\nonumber\\
-&\propto \exp\left(\mathbb{E}_{\textbf{z}_{-j}}[\log P(z_j|\textbf{z}_{-j},\textbf{X})]\right).
+\log q_j^*(z_j)&= \mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]-\text{const} \nonumber\\
+q_j^*(z_j)&=\frac{e^{\mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]}}{\exp{\text{const}}}\nonumber\\
+&= \frac{e^{\mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]}}{\int e^{\mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]}dz_j}.
 \end{align}
-This expression can be used in an expectation-maximization algorithm, in which the $q^*_j(z_j)$ is evaluated and iterated from $j=1\dots M$. This particular algorithm is called coordinate ascent variational inference (CAVI) (Algorithm 1):\\
+The normalization constant on the denominator of 3.4.6 is derived by observing $q^*_j(z_j)$ as a density. Finally, we derive a simpler expression of $q^*_j(z_j)$ by observing that terms independent of $z_j$ can be treated as a constant:
+\begin{align}
+q^*_j(z_j)&\propto \exp\left(\mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]\right)\nonumber\\
+&\propto \exp\left(\mathbb{E}_{\textbf{z}_{-j}}[\log p(z_j|\textbf{z}_{-j},\textbf{x})]\right).
+\end{align}
+This expression can be used in an expectation-maximization algorithm, in which the $q^*_j(z_j)$ is evaluated and iterated from $j=1\dots M$. This particular algorithm is called coordinate ascent variational inference (CAVI) (Algorithm 2):\\
 \\
 \begin{algorithm}[H]
 \caption{Coordinate Ascent Variational Inference (CAVI)}
-\KwData{Dataset $\textbf{X}$ and Model P($\textbf{X},\textbf{Z}$)}
-\KwResult{Approximate density $Q(\textbf{Z})=\prod^M_{i=1}q_i(z_i)$}
+\KwData{Dataset $\textbf{x}$ and Model p($\textbf{x},\textbf{z}$)}
+\KwResult{Approximate density $q(\textbf{z})=\prod^M_{i=1}q_i(z_i)$}
 \BlankLine
 \Begin{
 Initialize random variational factors $q_j(z_j)$\;
-\While{ELBO(Q) has not converged}{
+\While{ELBO(q) has not converged}{
 
 	\For{$j=1$ \KwTo $m$}{
-	Set $q_j(z_j)\propto \exp(\mathbb{E}[\log P(z_j|\textbf{z}_{-j},\textbf{X})])$\;
+	Set $q_j(z_j)\propto \exp(\mathbb{E}[\log p(z_j|\textbf{z}_{-j},\textbf{x})])$\;
 	}
-	Calculate $ELBO(Q)=\mathbb{E}[\log P(\textbf{Z},\textbf{X})]-\mathbb{E}[\log Q(\textbf{Z})]$\;
+	Calculate $ELBO(q)=\mathbb{E}[\log p(\textbf{z},\textbf{x})]-\mathbb{E}[\log q(\textbf{z})]$\;
 }
-Return $Q(\textbf{Z})$\;
+Return $q(\textbf{z})$\;
 }
 \end{algorithm}
 \section{Example: Bayesian mixture of Gaussians}
-To illustrate the variational inference approach, we will use the Bayesian mixture of Gaussians example from (Blei, 2018/16 idk).\\
+To illustrate the mean-field variational inference approach, we closely follow the Bayesian mixture of Gaussians example from Variational Inference: A Review for Statisticians by Blei \cite{blei}.\\
 Consider the hierarchical model
 \begin{align*}
 \mu_k&\sim N(0,\sigma^2), &&k=1,\dots,K,\\
@@ -763,18 +769,19 @@ In this distribution, we have $K$ Gaussian factors with mean $\mu_k$ and varianc
 \mu_k&\sim N(m_k,s^2_k), &&k=1,\dots,K,\\
 x_i&\sim \text{Categorical}(\bm{\phi_i}), &&i=1,\dots,n.
 \end{align*}
-Using this and equation (9), we can derive the evidence lower bound as a function of the variational parameters:
+Using this and equation 3.5.1, we can derive the evidence lower bound as a function of the variational parameters:
 \begin{align*}
 ELBO(\textbf{m},\textbf{s}^2,\bm{\phi})&=\mathbb{E}[\log p(\textbf{z},\textbf{x})]-\mathbb{E}[\log q(\textbf{z})]\\
 &=\mathbb{E}[\log p(\bm{\mu,c},\textbf{x})]-\mathbb{E}[\log q(\bm{\mu,c})]\\
-&=\sum^K_{i=1}\mathbb{E}[\log p(\mu_k); m_k,s^2_k]+\sum^n_{i=1}\left(\mathbb{E}[\log p(c_i);\bm{\phi}_i]+\mathbb{E}[\log p(x_i|c_i,\bm{\mu});\bm{\phi}_i,\textbf{m},\textbf{s}^2]\right)\\
+&=\sum^K_{i=1}\mathbb{E}[\log p(\mu_k); m_k,s^2_k]\\
+&\quad +\sum^n_{i=1}\left(\mathbb{E}[\log p(c_i);\bm{\phi}_i]+\mathbb{E}[\log p(x_i|c_i,\bm{\mu});\bm{\phi}_i,\textbf{m},\textbf{s}^2]\right)\\
 &\quad -\sum^K_{k=1}\mathbb{E}[\log q(\mu_k;m_k,s^2_k)]-\sum^n_{i=1}\mathbb{E}[\log q(c_i;\bm{\phi}_i)]
 \end{align*}
-From equation (8), we derive the optimal categorical factor by only considering terms from the true distribution $p(.)$ dependent on $c_i$:
+From equation 3.4.7, we derive the optimal categorical factor by only considering terms from the true distribution $p(.)$ dependent on $c_i$:
 \begin{equation}q^*(c_i;\bm{\phi}_i)\propto \exp\left(\log p(c_i)+\mathbb{E}[\log p(x_i|c_i,\bm{\mu});\textbf{m},\textbf{s}^2]\right).\end{equation}
 Now since $c_i$ is an indicator vector,
 \[p(x_i|c_i,\bm{\mu})=\prod^K_{k=1}p(x_i|\mu_k)^{c_{ik}}.\]
-We can now evaluate the second term of equation (10):
+We can now evaluate the second term of equation 3.5.2:
 \begin{align*}
 \mathbb{E}\left([\log p(x_i|c_i,\bm{\mu});\textbf{m},\textbf{s}^2]\right)&=\sum_{k=1}^K c_{ik}\mathbb{E}[\log p(x_i|\mu_k);m_k,s^2_k]\\
 &=\sum_{k=1}^K c_{ik}\mathbb{E}[-(x_i-\mu_k)^2/2;m_k,s^2_k]+\text{const}\\
@@ -784,7 +791,8 @@ In each line, terms constant with respect to $c_{ik}$ have been taken out of the
 \[q^*(c_i;\bm{\phi}_i)\propto \exp \left(\log p(c_i)+\sum_{k=1}^Kc_{ik}\left(\mathbb{E}[\mu_k;m_k,s^2_k]x_i-\mathbb{E}[\mu^2_k;m_k,s^2_k]/2\right)\right).\]
 By proportionality, we then have the variational update
 \[\phi_{ik}\propto \exp\left(\mathbb{E}[\mu_k;m_k,s^2_k]x_i-\mathbb{E}[\mu^2_k;m_k,s^2_k]/2\right).\]
-Now we find the variational density of the $k$th mixture component, again using equation (8) with the ELBO and ignoring terms independent of $p(.)$ and $\mu_k$:
+\newpage
+Now we find the variational density of the $k$th mixture component, again using equation 3.4.7 with the ELBO and ignoring terms independent of $p(.)$ and $\mu_k$:
 \[q(\mu_k;m_k,s^2_k)\propto \exp \left(\log p(\mu_k)+\sum^n_{i=1}\mathbb{E}[\log p(x_i|c_i,\bm{\mu});\phi_i, \textbf{m}_{-k},\textbf{s}^2_{-k}]\right).\]
 The log of this density is
 \begin{align*}
@@ -824,10 +832,11 @@ Return $q(\textbf{m},\textbf{s}^2,\bm{\phi})$\;
 \end{algorithm}
 \newpage
 \section{Amortized Inference}
-One disadvantage of mean field variational inference is that for each data point, a specific set of variational parameters needs to be optimized. This can be computationally expensive for large datasets. Amortized inference resolves this issue by using a constant, single set of parameters for all data points, using the data point itself as an additional input to the variational distribution. Our variational distribution is therefore conditioned on the observation, taking the form
+One disadvantage of mean field variational inference is that a specific set of variational parameters needs to be derived and optimized for each data point. This can be computationally expensive for large datasets. Amortized inference resolves this issue by using a single, constant set of parameters for all data points, adding the data point itself as an input to the variational distribution. Our variational distribution therefore conditions on the observation, taking the form
 \[q_\phi(z|x).\]
+
 Clearly, a very complex variational distribution is required to model such a structure, so it often takes the form of a neural network with $x$ as an input. This method is often used in deep learning due to the significant amount of data required to train such a network.\\
-Yo im copying this next bit from ch 3 ye boi.\\
+
 Denoting our dataset as $q^*(x)$, we want to optimize $\phi$ across the observations from our dataset, so our objective now is to choose parameters $\phi$ such that the expected KL divergence with respect to $q^*(x)$ is minimized:
 \begin{align*}
 \phi &=\argmin_\phi \mathbb{E}_{q^*(x)}KL(q_\phi(z|x)||p_\theta (z|x))\\
@@ -835,9 +844,9 @@ Denoting our dataset as $q^*(x)$, we want to optimize $\phi$ across the observat
 &=\argmin_\phi\mathbb{E}_{q^*(x)q_\phi (z|x)}\left[\log q_\phi(z|x)-\log \frac{p(x|z)p(z)}{p(x)}\right]\\
 &=\argmin_\phi\left(\mathbb{E}_{q^*(x)q_\phi (z|x)}\left[\log q_\phi(z|x)-\log p(x|z)-\log p(z)\right]+\log p(x)\right)
 \end{align*} 
-Again, we cannot evaluate this expression as $\log p(x)$ is intractable, so we rearrange the terms to form what is called the ELBO (Evidence Lower Bound), which we want to maximise to minimise the KL divergence.
+Again, we cannot evaluate this expression as $\log p(x)$ is intractable, so we rearrange the terms to form the evidence lower bound, which we want to maximise to minimise the KL divergence.
 \begin{align*}
-ELBO&=\mathbb{E}_{q^*(x)}[\log p(x)-KL(q_\phi(z|x)||p_\theta(z|x))]\\
+ELBO(q)&=\mathbb{E}_{q^*(x)}[\log p(x)-KL(q_\phi(z|x)||p_\theta(z|x))]\\
 &=-\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log q_\phi(z|x)-\log p(x|z)-\log p(z)\right]\\
 &=\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log p(x|z)+\log p(z)-\log q_\phi(z|x)\right]\\
 &=\mathbb{E}_{q^*(x)}\left[\E_{q_\phi(z|x)}[\log p(x|z)]-KL(q_\phi(z|x)||p(z))\right]
@@ -846,14 +855,16 @@ We take the negative to form the minimization optimization problem:
 \[\min_\phi \mathbb{E}_{q^*(x)}\left[-\E_{q_\phi(z|x)}[\log p(x|z)]+KL(q_\phi(z|x)||p(z))\right]\]
 In deep learning, the likelihood term is often represented as a neural network parametrized by $\theta$: $p_\theta(x|z)$. This network is optimized alongside the variational distribution, in a formation known as the \textbf{variational autoencoder}.
 \section{Example: Variational Autoencoder}
-A variational autoencoder is a model consisting of two simultaneously trained neural networks: an encoder $q_\phi(z|x)$ that "compresses" a data point $x$ into a latent representation $z$, and a decoder $p_\theta(x|z)$ that "reconstructs" the data point from the latent variable. Typically, the prior $p(z)$ is simply a standard multivariate normal distribution $\N(0,I)$. We now reiterate our optimization problem, including the optimization of the decoder parameters $\theta$:
+A variational autoencoder is a model consisting of two simultaneously trained neural networks: an encoder $q_\phi(z|x)$ that ``compresses" a data point $x$ into a lower dimensional latent representation $z$, and a decoder $p_\theta(x|z)$ that ``reconstructs" the data point from the latent variable. Typically, the prior $p(z)$ is simply a standard multivariate normal distribution $\mathcal{N}(0,I)$. We now reiterate our optimization problem, including the optimization of the decoder parameters $\theta$:
 \[\min_{\phi,\theta} \mathbb{E}_{q^*(x)}\left[-\E_{q_\phi(z|x)}[\log p_\theta(x|z)]+KL(q_\phi(z|x)||p(z))\right].\]
 The first term is the negative likelihood, which is analogous to the reconstruction error which we want to minimize. The KL divergence between the variational posterior and the true prior distribution acts as a regularizer term, encouraging the output of the posterior to be similar to a standard normal distribution. Without it, the encoder would learn to segregate distinct data types in separate regions of the Euclidean plane, which runs contrary to the properties of a probability distribution.\\
+
 At our current formulation, we have the problem that a neural network is deterministic, so for any given data point $x$, the encoder will always output the same $z$, which also contradicts the properties of a distribution. The solution is to have the encoder output a mean vector $\mu$ and variance vector $\sigma^2$, each with dimensions equal to that of latent variable $z$. We have now defined $z$ as an output from a multivariate normal distribution with means and variances as specified by the encoder output:
-\[z\sim \N(\mu,\sigma^2).\]
+\[q_\phi(z|x)\sim \mathcal{N}(\mu,\sigma^2).\]
 In practice, to reduce computational time, this is achieved by sampling random standard normal noise $\epsilon$, multiplying it by the variance and adding the result to the mean:
-\[\epsilon\sim \N(0,I),\]
-\[z=\mu+\epsilon\cdot\sigma^2.\]
+\[\epsilon\sim \mathcal{N}(0,I),\qquad z=\mu+\epsilon\cdot\sigma^2.\]
+The expression in our optimization problem is tractable. It is often possible to parametrise an explicit form of the likelihood from the neural network output: for example, if $q^*(x)$ is a data set of grey-scale images, then a Bernoulli distribution can be used to represent the pixel values, with parameters given by the sigmoid output of the likelihood network. Since we have the explicit form of the multivariate normal $q_\phi(z|x)$ and $p(z)$ densities, the KL divergence term can be calculated through the equation:
+\[\]
 INSERT VAE DIAGRAM HERE
 \section{References}
 To be organised properly and moved to the end later:\\

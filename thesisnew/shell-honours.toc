@@ -13,8 +13,8 @@
 \contentsline {section}{\numberline {3.1}Context}{16}
 \contentsline {section}{\numberline {3.2}Introduction to Variational Inference}{17}
 \contentsline {section}{\numberline {3.3}Derivation of the ELBO}{17}
-\contentsline {section}{\numberline {3.4}Mean-Field Variational Family (need to fix notations)}{18}
-\contentsline {section}{\numberline {3.5}Example: Bayesian mixture of Gaussians}{21}
+\contentsline {section}{\numberline {3.4}Mean-Field Variational Family}{19}
+\contentsline {section}{\numberline {3.5}Example: Bayesian mixture of Gaussians}{22}
 \contentsline {section}{\numberline {3.6}Amortized Inference}{27}
 \contentsline {section}{\numberline {3.7}Example: Variational Autoencoder}{28}
 \contentsline {section}{\numberline {3.8}References}{29}
