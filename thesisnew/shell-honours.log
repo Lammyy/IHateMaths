@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  18 SEP 2018 20:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  18 SEP 2018 23:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1386,8 +1386,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 867--894
 
  []
 
-[27] [28]
-Underfull \hbox (badness 10000) in paragraph at lines 915--917
+[27]
+Underfull \hbox (badness 10000) in paragraph at lines 910--912
+
+ []
+
+[28]
+Underfull \hbox (badness 10000) in paragraph at lines 917--919
 
  []
 
@@ -1413,73 +1418,104 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
- [30]
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+
+Underfull \hbox (badness 10000) in paragraph at lines 951--970
+
+ []
+
+[30]
+
+LaTeX Warning: Citation `ali' on page 31 undefined on input line 975.
+
+
+LaTeX Warning: Citation `tran' on page 31 undefined on input line 975.
+
+[31]
+Overfull \hbox (3.43126pt too wide) in paragraph at lines 980--982
+\OT1/cmr/m/n/12 Recall that $\OML/cmm/m/it/12 p\OT1/cmr/m/n/12 (\OML/cmm/m/it/1
+2 x\OT1/cmr/m/n/12 )$ is typ-i-cally un-avail-able, so we are un-able to eval-u
+-ate $\OML/cmm/m/it/12 KL\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 q[]\OT1/cmr/m/n/12 (
+\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 )\OMS/cmsy/m/n/12 jj\OML/cmm/m/it/12 p\OT1/cm
+r/m/n/12 (\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 ))$
+ []
+
+[32]
 Chapter 4.
 
-Overfull \hbox (4.55055pt too wide) in paragraph at lines 950--951
-\OT1/cmr/m/n/12 The pos-te-rior dis-tri-bu-tion can-not be com-puted ef-fi-cien
-tly if $[][] \OML/cmm/m/it/12 p\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 x; z\OT1/cmr/m
-/n/12 )\OML/cmm/m/it/12 dz$ \OT1/cmr/m/n/12 is in-tractable,
- []
+LaTeX Warning: Citation `huszar' on page 33 undefined on input line 992.
 
-[31
+[33
 
-] [32] [33] [34] [35]
-Underfull \hbox (badness 10000) in paragraph at lines 1017--1020
+] [34]
+Underfull \hbox (badness 10000) in paragraph at lines 1011--1014
 
  []
 
 
-Overfull \hbox (41.0507pt too wide) in paragraph at lines 1027--1029
+Overfull \hbox (41.0507pt too wide) in paragraph at lines 1021--1023
 \OT1/cmr/m/n/12 We can ex-press the ex-pected log ra-tio es-ti-ma-tor $\U/msb/m
 /n/12 E[]\OT1/cmr/m/n/12 [[] [](\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 )] \OMS/cmsy/
 m/n/12 ' \U/msb/m/n/12 E[]\OT1/cmr/m/n/12 [[] []]$
  []
 
-[36] [37] [38] [39] [40] [41] [42] [43]
-Underfull \hbox (badness 10000) in paragraph at lines 1150--1154
+[35] [36] [37] [38] [39] [40] [41] [42]
+Underfull \hbox (badness 10000) in paragraph at lines 1144--1148
 
  []
 
-[44] [45]
-Underfull \hbox (badness 10000) in paragraph at lines 1172--1175
+[43] [44]
+Underfull \hbox (badness 10000) in paragraph at lines 1166--1169
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1177--1181
+Underfull \hbox (badness 10000) in paragraph at lines 1171--1175
 
  []
 
-[46] [47] [48] [49] [50] [51] [52]
-Overfull \hbox (100.92079pt too wide) in paragraph at lines 1317--1317
+[45] [46] [47] [48] [49] [50] [51]
+Overfull \hbox (100.92079pt too wide) in paragraph at lines 1311--1311
 [] 
  []
 
-[53] [54]
+[52] [53]
 Chapter 5.
 
-Overfull \hbox (112.14108pt too wide) in paragraph at lines 1348--1348
+Overfull \hbox (112.14108pt too wide) in paragraph at lines 1342--1342
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1348--1354
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1348
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1348--1354
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1348
 
  []
 
 
-Overfull \hbox (1.34903pt too wide) in paragraph at lines 1348--1354
+Overfull \hbox (1.34903pt too wide) in paragraph at lines 1342--1348
 \OT1/cmr/m/n/12 As $\OML/cmm/m/it/12 x$ \OT1/cmr/m/n/12 in-creases, the pos-te-
 ri-ors be-come in-creas-ingly mul-ti-modal and un-usu-ally shaped.
  []
 
-[55
+[54
 
 ]
 Missing character: There is no ; in font nullfont!
@@ -1489,83 +1525,83 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (19.75879pt too wide) in paragraph at lines 1442--1442
+Overfull \hbox (19.75879pt too wide) in paragraph at lines 1436--1436
  [][][][]\OT1/cmr/m/n/12 Sigmoid($\U/BOONDOX-cal/m/n/12 D$\OT1/cmr/m/n/12 )/ 
  []
 
 
-Overfull \hbox (3.4864pt too wide) in paragraph at lines 1442--1442
+Overfull \hbox (3.4864pt too wide) in paragraph at lines 1436--1436
  \OT1/cmr/m/n/12 ReLU($\U/BOONDOX-cal/m/n/12 R$\OT1/cmr/m/n/12 ) 
  []
 
 
-LaTeX Warning: Float too large for page by 81.18785pt on input line 1558.
+LaTeX Warning: Float too large for page by 81.18785pt on input line 1552.
 
 
-LaTeX Warning: Float too large for page by 40.08952pt on input line 1600.
+LaTeX Warning: Float too large for page by 40.08952pt on input line 1594.
 
 
-Overfull \hbox (314.1494pt too wide) in paragraph at lines 1355--1601
+Overfull \hbox (314.1494pt too wide) in paragraph at lines 1349--1595
 \OT1/cmr/m/n/12 the neu-ral net-work is as de-picted in Fig-ure idk: [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1355--1601
+Underfull \hbox (badness 10000) in paragraph at lines 1349--1595
 
  []
 
 
-Overfull \hbox (121.22025pt too wide) in paragraph at lines 1355--1601
+Overfull \hbox (121.22025pt too wide) in paragraph at lines 1349--1595
 [] 
  []
 
-[56] [57] [58] [59] [60] [61]
-Overfull \hbox (5.18578pt too wide) in paragraph at lines 1603--1606
+[55] [56] [57] [58] [59] [60]
+Overfull \hbox (5.18578pt too wide) in paragraph at lines 1597--1600
 \OT1/cmr/m/n/12 Clearly, the prior-contrastive al-go-rithms con-verged much fas
 ter their joint-contrastive
  []
 
-[62] [63]
+[61] [62]
 Chapter 6.
 
-Overfull \hbox (12.39137pt too wide) in paragraph at lines 1618--1620
+Overfull \hbox (12.39137pt too wide) in paragraph at lines 1612--1614
 \OT1/cmr/m/n/12 The op-ti-miza-tion prob-lem for the ELBO in both prior-contras
 tive and joint-contrastive
  []
 
-[64
+[63
 
-] [65] [66] [67]
-Overfull \hbox (6.26077pt too wide) in paragraph at lines 1694--1696
+] [64] [65] [66]
+Overfull \hbox (6.26077pt too wide) in paragraph at lines 1688--1690
 \OT1/cmr/m/n/12 Recall that both di-ver-gences at-tain the same global min-i-mu
 m, which is a parametriza-
  []
 
-[68]
-Overfull \hbox (13.66823pt too wide) in paragraph at lines 1708--1708
+[67]
+Overfull \hbox (13.66823pt too wide) in paragraph at lines 1702--1702
 [] 
  []
 
-[69] [70] [71]
+[68] [69] [70]
 Chapter 7.
-[72
+[71
 
-] [73] [74]
+] [72] [73]
 Chapter 8.
-[75
+[74
 
-] [76] [77]
+] [75] [76]
 Chapter 9.
-[78
+[77
 
 ]
 Chapter 10.
-[79
+[78
 
-] (./shell-honours.bbl) [80
+] (./shell-honours.bbl [79
 
 
-]
+]) [80]
 Appendix A.
 [81
 
@@ -1573,13 +1609,16 @@ Appendix A.
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
- 27746 strings out of 492990
- 695739 string characters out of 6136334
- 959249 words of memory out of 5000000
- 30727 multiletter control sequences out of 15000+600000
- 23729 words of font info for 93 fonts, out of 8000000 for 9000
+ 27753 strings out of 492990
+ 695789 string characters out of 6136334
+ 960249 words of memory out of 5000000
+ 30733 multiletter control sequences out of 15000+600000
+ 23886 words of font info for 94 fonts, out of 8000000 for 9000
  1143 hyphenation exceptions out of 8191
  62i,22n,96p,1692b,2134s stack positions out of 5000i,500n,10000p,200000b,80000s
 <c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/tex
@@ -1609,7 +1648,7 @@ bols/msbm10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanum
 mjmb0.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb2.
 pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/boondox/zxxbw8a.pfb><c:/texl
 ive/2017/texmf-dist/fonts/type1/public/boondox/zxxrw8a.pfb>
-Output written on shell-honours.pdf (94 pages, 1249008 bytes).
+Output written on shell-honours.pdf (94 pages, 1248676 bytes).
 PDF statistics:
  434 PDF objects out of 1000 (max. 8388607)
  302 compressed objects within 4 object streams

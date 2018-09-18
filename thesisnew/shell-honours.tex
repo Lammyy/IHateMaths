@@ -892,7 +892,7 @@ Figures 3.1 and 3.2 highlight the difference between mean-field and amortized va
 \end{figure}\\
 Clearly, a very complex variational distribution is required to model such a structure, so it often takes the form of a neural network with $x$ as an input. This method is often used in deep learning due to the significant amount of data required to train such a network.\\
 
-Denoting our dataset as $q^*(x)$, we want to optimize $\phi$ across the observations from our dataset, so our objective now is to choose parameters $\phi$ such that the expected KL divergence with respect to $q^*(x)$ is minimized:
+Now recall that $p(x)$ represents the marginal likelihood, or `true' distribution of the data. This is typically never available, we often instead have a sample dataset representing it. Denoting the dataset as $q^*(x)$, we want to optimize $\phi$ across the observations from our dataset, so our objective now is to choose parameters $\phi$ such that the expected KL divergence with respect to $q^*(x)$ is minimized:
 \begin{align*}
 \phi &=\argmin_\phi \mathbb{E}_{q^*(x)}KL(q_\phi(z|x)||p_\theta (z|x))\\
 &= \argmin_\phi \mathbb{E}_{q^*(x)q_\phi (z|x)}\left[\log q_\phi(z|x)-\log p_\theta(z|x)\right]\\
@@ -906,14 +906,16 @@ ELBO(q)&=\mathbb{E}_{q^*(x)}[\log p(x)-KL(q_\phi(z|x)||p_\theta(z|x))]\\
 &=\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log p(x|z)+\log p(z)-\log q_\phi(z|x)\right]\\
 &=\mathbb{E}_{q^*(x)}\left[\E_{q_\phi(z|x)}[\log p(x|z)]-KL(q_\phi(z|x)||p(z))\right]
 \end{align*}
-We take the negative to form the minimization problem:
-\[\min_\phi \mathbb{E}_{q^*(x)}\left[-\E_{q_\phi(z|x)}[\log p(x|z)]+KL(q_\phi(z|x)||p(z))\right]\]
+We take the negative to form the minimization problem of the negative evidence lower bound $NELBO(q)$:
+\[\min_\phi NELBO(q)=\mathbb{E}_{q^*(x)}\left[-\E_{q_\phi(z|x)}[\log p(x|z)]+KL(q_\phi(z|x)||p(z))\right].\]
+Since $\phi$ represents the parameters of a neural network, it is inefficient to find the specific weight values during back-propagation: we are more interested in training the network to optimality, which occurs when we minimize the objective function. Hence, it is more appropriate to write the optimization problem with $\min$ than with $\argmin$.\\
+
 In deep learning, the likelihood term is often represented as a neural network parametrized by $\theta$: $p_\theta(x|z)$. This network is optimized alongside the variational distribution, in a formation known as the variational autoencoder.
 \newpage
 \section{Example: Variational Autoencoder}
-A variational autoencoder is a model consisting of two simultaneously trained neural networks: an encoder $q_\phi(z|x)$ that ``compresses" a data point $x$ into a lower dimensional latent representation $z$, and a decoder $p_\theta(x|z)$ that ``reconstructs" the data point from the latent variable\cite{kingma}. Typically, the prior $p(z)$ is simply a standard k-dimensional multivariate normal distribution $\mathcal{N}(0,I_{k\times k})$. We now reiterate our optimization problem, including the optimization of the decoder parameters $\theta$:
+A variational autoencoder (Figure 3.3) is a model consisting of two simultaneously trained neural networks: an encoder $q_\phi(z|x)$ that ``compresses" a data point $x$ into a lower dimensional latent representation $z$, and a decoder $p_\theta(x|z)$ that ``reconstructs" the data point from the latent variable\cite{kingma}. It has two main purposes: representation learning of data and data generation. Typically, the prior $p(z)$ is simply a standard k-dimensional multivariate normal distribution $\mathcal{N}(0,I_{k\times k})$. We now reiterate our optimization problem, this time including the optimization of the decoder parameters $\theta$:
 \[\min_{\phi,\theta} \mathbb{E}_{q^*(x)}\left[-\E_{q_\phi(z|x)}[\log p_\theta(x|z)]+KL(q_\phi(z|x)||p(z))\right].\]
-The first term is the negative likelihood, which is analogous to the reconstruction error which we want to minimize. The KL divergence between the variational posterior and the true prior distribution acts as a regularizer term, encouraging the output of the posterior to be similar to a standard normal distribution. Without it, the encoder would learn to segregate distinct data types in separate regions of the Euclidean plane, which runs contrary to the properties of a probability distribution.\\
+The first term is the negative likelihood, which is analogous to the reconstruction error which we want to minimize. The KL divergence between the variational posterior and the true prior distribution acts as a regularizer term, encouraging the output of the posterior to be similar to a standard normal distribution. Without it, the encoder would learn to segregate distinct data types in separate regions of the Euclidean plane, which runs contrary to the properties of a probability distribution. We can therefore generate new data $x$ by sampling $z\sim p(z)$ and feeding it through the decoder.\\
 
 At our current formulation, we have the problem that a neural network is deterministic, so for any given data point $x$, the encoder will always output the same $z$, which also contradicts the properties of a distribution. The solution is to have the encoder output a mean vector $\bm{\mu}=(\mu_1,\mu_2,\cdots,\mu_k)^\intercal$ and variance vector $\bm{\sigma}^2=(\sigma^2_1,\sigma^2_2,\cdots, \sigma^2_k)^\intercal$, each with dimensions equal to that of latent variable $z$. We have now defined $z$ as an output from a multivariate normal distribution with means and variances as specified by the encoder output:
 \[q_\phi(z|x)\sim \mathcal{N}(\bm{\mu},\bm{\sigma}^2I_{k\times k}).\]
@@ -922,7 +924,6 @@ In practice, to reduce computational time, this is achieved by sampling random s
 \newpage
 The expression in our optimization problem is tractable. It is often possible to parametrise an explicit form of the likelihood from the neural network output. For example, if $q^*(x)$ is a data set of grey-scale images, then a Bernoulli distribution can be used to represent the pixel values, with parameters given by the sigmoid output of the likelihood network. Since we have the explicit form of the multivariate normal $q_\phi(z|x)$ and $p(z)$ densities, the KL divergence term can be calculated through the equation:
 \[KL(q(z|x)||p(z))=\frac12 \sum_{i=1}^k\left(\sigma^2_i+\mu^2_i-\log(\sigma^2_i)-1\right).\]
-However, if either density is implicit, then density ratio estimation methods must be applied to calculate $KL(q(z|x)||p(z))$.\\
 \begin{figure}[h]
   \centering
   \tikz{ %
@@ -944,58 +945,51 @@ However, if either density is implicit, then density ratio estimation methods mu
   }
    \caption{Variational Autoencoder}
 \end{figure}
-\chapter{Our Problem}
-\section{Objective Derivation}
-\subsection{Implicit Prior}
-The posterior distribution cannot be computed efficiently if $\int_z p(x,z)dz$ is intractable, which is often the case with large datasets or high dimensional data. Furthermore, the prior $p(z)$ or the likelihood $p(x|z)$ may be implicit. In the framework of variational inference, we approximate the posterior distribution $p_\theta (z|x)$ with a variational distribution parametrized by $\phi$: $q_\phi (z)$. We aim to minimize the KL divergence between these distributions, defined as 
-\[KL(Q||P)=\int_{-\infty}^\infty Q(x)\log \frac{Q(x)}{P(x)}dx=\mathbb{E}_{Q(x)}\left[\log\frac{Q(x)}{P(x)}\right].\]
-The parameters $\phi$ of our approximate distribution $q_\phi (z)$ are therefore chosen such that the KL divergence is minimised. Since the true posterior distribution $p_\theta(z|x)$ is dependent on $x$, it differs with each observation $x_n$ that we take. This would mean we would have to define a variational distribution for each observation. Thus, we amortize our distribution, conditioning it on $x$ and letting its parameters $\phi$ be constant for each observation:(or better to say condition on x and take expectation w.r.t. $q^*(x)$?)
-\[q_\phi(z|x).\]
-We therefore want to optimize $\phi$ across the observations from our dataset, so our objective now is to choose parameters $\phi$ such that the expected KL divergence with respect to $q^*(x)$ is minimized:
+\section{Problems with Implicit Distributions}
+The above sections assume that the true prior $p(z)$, likelihood $p(x|z)$ and variational posterior $q_\phi(z|x)$ have an explicit form. However, there are two main scenarios in which at least one of these densities are implicit, that is, their parametrization is unknown but we are able to generate samples from their distributions. This poses problems with optimization as the objective function becomes difficult to compute. 
+\subsection{Implicit Prior and/or Variational Posterior}
+In the first scenario, at least one of the true prior or variational posterior densities is implicit, but the likelihood is known. An implicit prior is rare but may occur in posterior inference. The implicit variational posterior occurs more often (in both posterior inference and data generation), detailed in Adversarial Variational Bayes by Mescheder. Typically in amortized inference and variational autoencoders, the variational posterior sample $\bm{z}$ is sampled from a multivariate normal distribution with mean and variance defined by the variational network. The problem with this representation is the lack of dependencies between the latent variables and the inability to model multi-modal or flexible densities. In his paper, Mescheder adds random noise $\epsilon\sim \pi(\epsilon)$ as additional inputs to the variational network, training the network to directly output $\bm{z}$. This added noise allows the probabilistic nature of a probability density to be represented by a deterministic neural network. We therefore denote the generator of posterior samples as $\mathcal{G}(\epsilon;x)$. A diagram illustrating this is shown in Figure 3.4 below.\\
+\begin{figure}[h]
+  \centering
+  \tikz{ %
+    \node[latent] (x) {$\bm{x}$} ; %
+    \node[det, right=of x] (q) {$\mathcal{G}(\epsilon;x)$} ; %
+    \node [latent, above=of q] (eps) {$\epsilon$} ;
+    \node [latent, right=of q] (z) {$\bm{z}$} ;
+    \node [det, right=of z] (p) {$p_\theta(x|z)$} ;
+    \node [latent, right=of p] (pout) {$\bm{x}$} ;
+    \edge {x} {q} ; %
+    \edge {q} {z}
+    \edge {eps} {q} ;
+    \edge {z} {p} ;
+    \edge {p} {pout} ;
+  }
+   \caption{Adversarial Variational Bayes}
+\end{figure}\\
+Due to the complicated nature of the neural network, it is extremely difficult to discern the explicit form of $q_\phi(z|x)$ in this representation, but we are able to easily generate samples by feeding data and noise through the network, hence its implicit nature.\\
+
+Now again recall our optimization problem:
+\[\min_{\phi,\theta} \mathbb{E}_{q^*(x)}\left[-\E_{q_\phi(z|x)}[\log p_\theta(x|z)]+KL(q_\phi(z|x)||p(z))\right].\]
+When either the prior or variational posterior is implicit, this expression is impossible to evaluate as we are unable to calculate $KL(q_\phi(z|x)||p(z))$. We therefore have to use density ratio estimation techniques (Chapter 4) to approximate $\frac{q_\phi(z|x)}{p(z)}$, using only samples from the two densities.
+\subsection{Implicit Likelihood}
+If the likelihood distribution is implicit, then the optimization problem is intractable even with density ratio estimation. This can occur in posterior inference or in some data generation algorithms\cite{ali}. Consequently, we rephrase the problem, instead considering a density ratio between the two joint distributions\cite{tran}. We begin by restating the original objective of minimizing the KL divergence between the true and variational posterior distributions, but this time we apply Bayes' theorem to formulate the joint densities:
 \begin{align*}
-\phi &=\argmin_\phi \mathbb{E}_{q^*(x)}KL(q_\phi(z|x)||p_\theta (z|x))\\
-&= \argmin_\phi \mathbb{E}_{q^*(x)q_\phi (z|x)}\left[\log q_\phi(z|x)-\log p_\theta(z|x)\right]\\
-&=\argmin_\phi\mathbb{E}_{q^*(x)q_\phi (z|x)}\left[\log q_\phi(z|x)-\log \frac{p(x|z)p(z)}{p(x)}\right]\\
-&=\argmin_\phi\left(\mathbb{E}_{q^*(x)q_\phi (z|x)}\left[\log q_\phi(z|x)-\log p(x|z)-\log p(z)\right]+\log p(x)\right)
+\min_\phi \mathbb{E}_{q^*(x)}KL(q_\phi(z|x)||p_\theta (z|x))&=\min_\phi\mathbb{E}_{q^*(x)q(z|x)}\log \frac{q(z|x)p(x)}{p(x|z)p(z)}\\
+&=\min_\phi\mathbb{E}_{q^*(x)q(z|x)}\log \frac{q(z|x)q^*(x)}{p(x|z)p(z)}+\mathbb{E}_{q^*(x)}\log \frac{p(x)}{q^*(x)}\\
+&= \min_\phi\mathbb{E}_{q^*(x)q(z|x)}\log \frac{q(z,x)}{p(z,x)}-KL(q^*(x)||p(x)).
 \end{align*}
-Again, we cannot evaluate this expression as $\log p(x)$ is intractable, so we rearrange the terms to form what is called the ELBO (Evidence Lower Bound), which we want to maximise to minimise the KL divergence.
+Recall that $p(x)$ is typically unavailable, so we are unable to evaluate $KL(q^*(x)||p(x))$ even with density ratio estimation techniques. We therefore add it to both sides of the equation, leading to the following expression for the negative evidence lower bound:
 \begin{align*}
-ELBO&=\mathbb{E}_{q^*(x)}[\log p(x)-KL(q_\phi(z|x)||p_\theta(z|x))]\\
-&=-\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log q_\phi(z|x)-\log p(x|z)-\log p(z)\right]\\
-&=\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log p(x|z)+\log p(z)-\log q_\phi(z|x)\right]
-\end{align*}
-If the prior distribution is implicit (but the likelihood $\log p(x|z)$ isn't), then we can still evaluate and optimize this expression by considering the density ratio between $p(z)$ and $q_\phi (z|x)$:
-\[ELBO = \mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log p(x|z)\right]+\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{p(z)}{q_\phi(z|x)}\right].\]
-%The $\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log p(x|z)\right]$ term can be evaluated and optimised by applying the reparameterization trick (Kingma 2014; Rezende 2014; Tiao 2018), which involves taking random input noise $\epsilon\sim \pi(\epsilon)$ and observed variable $x\sim q^*(x)$, and passing it through the neural network representing the variational distribution $q_\phi(z|x)$, defined as the function $\mathcal{G}_\phi(\epsilon;x)$. We therefore have the following expression for the expected log-likelihood:
-Now we specify our variational distribution $q_\phi(z|x)$ to be a neural network $\mathcal{G}$ parametrized by $\phi$ that inputs observed variable $x\sim q^*(x)$ and outputs $z\sim q_\phi(z|x)$.
-The problem with this approach is that neural networks are deterministic and do not capture the probabilistic nature of a distribution. The traditional method of solving this issue is to apply the "reparametrization trick" (Kingma 2014), in which the neural network is instead trained to output the mean $\bm{\mu}$ and variance $\bm{\sigma^2}$ vectors of the posterior distribution. These are used to transform a noise variable $\epsilon \sim \pi(\epsilon)$ (typically $\pi(\epsilon) = \mathcal{N}(0,I_{n\times n})$), overall depicting the posterior as a multivariate normal distribution with 0 covariance:
-\[\bm{z}=\bm{\mu}+\bm{\sigma^2}\times \bm{\epsilon},\]
-\[q_\phi(z|x)\sim \mathcal{N}(\bm{\mu},\bm{\sigma}^2I_{n\times n}).\]
-In this paper, we instead add noise variables $\epsilon \sim \pi(\epsilon)$ as inputs to the neural network, along with $x$. (Mescheder 2017) This allows for greater flexibility in our model at the cost of having to do backpropogation over the sampling process and loss of information about our variational posterior parameters $\phi$, as it is now an implicit 'black-box'. We therefore denote the generator of the variational posterior samples as $\mathcal{G}_\phi(\epsilon;x)$. \textbf{(should insert two comparing dags to highlight difference in methods)} \\
-The ELBO therefore becomes
-\[ELBO = \mathbb{E}_{q^*(x)\pi(\epsilon)}[\log p_\theta (x|\mathcal{G}_\phi(\epsilon;x)]+\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{p_\theta(z)}{q_\phi(z|x)}\right].\]
-Our objective is to maximize the ELBO, equivalent to minimizing its negative:
-\[\min_\phi NELBO = -\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log p_\theta(x|z)\right]+\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{q_\phi(z|x)}{p_\theta(z)}\right].\]
-As previously stated, since the prior distribution is implicit, we use a ratio estimator $\hat{r}_\alpha(x)$ for the true density ratio $r^*(x)=\frac{q_\phi(z|x)}{p_\theta(z)}$. The goal of the density ratio estimation procedure (section ...) is to formulate and optimize an estimator for this density ratio based on samples from the distributions.
-\newpage
-\subsection{Implicit Likelihood (\& Prior)}
-Clearly, if our likelihood distribution is implicit, then this expression cannot be evaluated. Instead, we must rephrase the problem, considering a density ratio between two joint distributions  (Tran, 2017). We begin by restating the original objective of choosing parameters $\phi$ to minimize the KL divergence between two distributions:
-\begin{align*}
-\phi &=\argmin_\phi \mathbb{E}_{q^*(x)}KL(q_\phi(z|x)||p_\theta (z|x))\\
-&=\argmin_\phi\mathbb{E}_{q^*(x)q(z|x)}\log \frac{q(z|x)p(x)}{p(x|z)p(z)}+\mathbb{E}_{q^*(x)}\log q^*(x)-\mathbb{E}_{q^*(x)}\log q^*(x)\\
-&=\argmin_\phi\mathbb{E}_{q^*(x)q(z|x)}\log \frac{q(z|x)q^*(x)}{p(x|z)p(z)}+\mathbb{E}_{q^*(x)}\log \frac{p(x)}{q^*(x)}\\
-&= \argmin_\phi\mathbb{E}_{q^*(x)q(z|x)}\log \frac{q(z,x)}{p(z,x)}-KL(q^*(x)||p(x))
-\end{align*}
-We therefore have the expression for the 'evidence lower bound' (not actually an evidence lower bound but we keep the name for consistency:
-\begin{align*}
-ELBO &= KL(q^*(x)||p(x))+\mathbb{E}_{q^*(x)}KL(q_\phi(z|x)||p_\theta(z|x))\\
+NELBO(q) &= KL(q^*(x)||p(x))+\mathbb{E}_{q^*(x)}KL(q_\phi(z|x)||p_\theta(z|x))\\
 &=\mathbb{E}_{q^*(x)q_\phi(z|x)}\log \frac{q(z,x)}{p(x,z)}.
 \end{align*}
-Our objective now is to minimize this ELBO with respect to our variational parameters $\phi$
-\[\min_\phi \mathbb{E}_{q^*(x)q_\phi(z|x)}\log \frac{q(z,x)}{p(z,x)}\]
-
-There are two main methods of estimating and optimizing the density ratio and subsequently, the ELBO: Class Probability Estimation and Divergence Minimisation. The goal of this thesis is to implement and compare these two methods (and hopefully ratio matching) over a variety of models (Hierarchical Lotka-Volterra, Image MNIST etc.) and conditions (implicit prior or likelihood), evaluating their rates of convergence, bias and mean squared error to determine which method is best in which conditions.
-\newpage
+Our objective now is to minimize this NELBO with respect to our variational parameters $\phi$, which can be approximated with density ratio estimation techniques:
+\[\min_\phi \mathbb{E}_{q^*(x)q_\phi(z|x)}\log \frac{q(z,x)}{p(z,x)}.\]
+Note that we are now minimizing the reverse KL divergence between the two joint densities $KL(q(z,x)||p(z,x))$. Also note that the likelihood parameters no longer appear in the objective function, hence this expression on its own is only sufficient for posterior inference. In data generation, we would additionally have to maximize the forward KL divergence with respect to the likelihood parameters:
+\[\min_\theta \mathbb{E}_{p(z)p(x|z)}\log \frac{p(z,x)}{q(z,x)}.\]
+The objective problem no longer has an explicit likelihood term, so it can be used with an implicit likelihood. In fact, since density ratio estimation only requires samples, both the prior and variational posterior densities can also be implicit, hence the ``Adversarial Variational Bayes" representation of the variational network can be used.
+\chapter{Density Ratio Estimation}
+In this chapter, we derive the two methods of density ratio estimation: class probability estimation and divergence minimisation. We then apply them to both the implicit prior/posterior and implicit likelihood objective functions to formulate two bi-level optimization problems. In this thesis, we use Huszar's terminology, referring to the former objective as ``prior-contrastive" and the latter as ``joint-contrastive"\cite{huszar}.
 \section{Class Probability Estimation}
 \subsection{Derivation}
 Firstly, consider the problem of estimating the density ratio between two arbitrary distributions $q(x)$ and $p(x)$: $\frac{q(x)}{p(x)}$. We take $m$ samples from $p(x)$: $X_p=\{x_1^{(p)},\dots,x_m^{(p)}\}$

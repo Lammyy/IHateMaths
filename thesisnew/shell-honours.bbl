@@ -16,6 +16,12 @@ Bing Cheng and D.~M. Titterington.
 \newblock Neural networks: A review from a statistical perspective.
 \newblock {\em Statist. Sci.}, 9(1):2--30, 02 1994.
 
+\bibitem{ali}
+V.~{Dumoulin}, I.~{Belghazi}, B.~{Poole}, O.~{Mastropietro}, A.~{Lamb},
+  M.~{Arjovsky}, and A.~{Courville}.
+\newblock {Adversarially Learned Inference}.
+\newblock {\em ArXiv e-prints}, June 2016.
+
 \bibitem{backprop}
 David E.~Rumelhart, Geoffrey E.~Hinton, and Ronald J.~Williams.
 \newblock Learning representations by back propagating errors.
@@ -45,6 +51,11 @@ Kurt Hornik.
 \newblock Approximation capabilities of multilayer feedforward networks.
 \newblock {\em Neural Networks}, 4(2):251 -- 257, 1991.
 
+\bibitem{huszar}
+F.~{Husz{\'a}r}.
+\newblock {Variational Inference using Implicit Distributions}.
+\newblock {\em ArXiv e-prints}, February 2017.
+
 \bibitem{kingma}
 D.~P {Kingma} and M.~{Welling}.
 \newblock {Auto-Encoding Variational Bayes}.
@@ -59,6 +70,17 @@ Diederik~P. Kingma and Jimmy Ba.
 Sebastian Ruder.
 \newblock An overview of gradient descent optimization algorithms.
 \newblock {\em CoRR}, abs/1609.04747, 2016.
+
+\bibitem{tran}
+D.~{Tran}, R.~{Ranganath}, and D.~M. {Blei}.
+\newblock {Hierarchical Implicit Models and Likelihood-Free Variational
+  Inference}.
+\newblock {\em ArXiv e-prints}, February 2017.
+
+\bibitem{ADVVI}
+Cheng Zhang, Judith B{\"u}tepage, Hedvig Kjellstr{\"o}m, and Stephan Mandt.
+\newblock Advances in variational inference.
+\newblock {\em CoRR}, abs/1711.05597, 2017.
 
 \bibitem{neuroplast}
 Karl Zilles.
