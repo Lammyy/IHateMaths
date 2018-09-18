@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  18 SEP 2018 17:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  18 SEP 2018 20:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1103,26 +1103,26 @@ Package: cite 2015/02/27  v 5.5
  (./shell-honours.aux)
 \openout1 = `shell-honours.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 175.
-LaTeX Font Info:    ... okay on input line 175.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 175.
-LaTeX Font Info:    ... okay on input line 175.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 175.
-LaTeX Font Info:    ... okay on input line 175.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 175.
-LaTeX Font Info:    ... okay on input line 175.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 175.
-LaTeX Font Info:    ... okay on input line 175.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 175.
-LaTeX Font Info:    ... okay on input line 175.
-LaTeX Font Info:    Checking defaults for LUC/nanummj/m/n on input line 175.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 176.
+LaTeX Font Info:    ... okay on input line 176.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 176.
+LaTeX Font Info:    ... okay on input line 176.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 176.
+LaTeX Font Info:    ... okay on input line 176.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 176.
+LaTeX Font Info:    ... okay on input line 176.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 176.
+LaTeX Font Info:    ... okay on input line 176.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 176.
+LaTeX Font Info:    ... okay on input line 176.
+LaTeX Font Info:    Checking defaults for LUC/nanummj/m/n on input line 176.
 LaTeX Font Info:    Try loading font information for LUC+nanummj on input line 
-175.
+176.
 
 (c:/texlive/2017/texmf-dist/tex/latex/nanumtype1/lucnanummj.fd
 File: lucnanummj.fd 2013/02/12 v0.1 Nanum Myeongjo font definitions
 )
-LaTeX Font Info:    ... okay on input line 175.
+LaTeX Font Info:    ... okay on input line 176.
 
 (c:/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -1198,30 +1198,30 @@ ABD: EveryShipout initializing macros
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable t
 ick labels; missing features). Consider writing \pgfplotsset{compat=1.15} into 
 your preamble.
- on input line 175.
+ on input line 176.
 
 <unsw-crest.jpg, id=4, 147.6717pt x 154.176pt>
 File: unsw-crest.jpg Graphic file (type jpg)
 <use unsw-crest.jpg>
-Package pdftex.def Info: unsw-crest.jpg  used on input line 177. on input line 
-177.
+Package pdftex.def Info: unsw-crest.jpg  used on input line 178. on input line 
+178.
 Package pdftex.def Info: Requested size: 142.26378pt x 148.54362pt on input lin
-e 177.
+e 178.
 [1
 
 {c:/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./unsw-crest.jp
 g>] [0
 
 ]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 192.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 193.
 
  (c:/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 192.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 193.
 
-Underfull \hbox (badness 10000) in paragraph at lines 203--205
+Underfull \hbox (badness 10000) in paragraph at lines 204--206
 
  []
 
@@ -1230,24 +1230,24 @@ Underfull \hbox (badness 10000) in paragraph at lines 203--205
 ] [2] [2
 
 ]
-LaTeX Font Info:    Try loading font information for U+msa on input line 237.
+LaTeX Font Info:    Try loading font information for U+msa on input line 238.
  (c:/texlive/2017/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 237.
+LaTeX Font Info:    Try loading font information for U+msb on input line 238.
 
 (c:/texlive/2017/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+lasy on input line 237.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 238.
 
 (c:/texlive/2017/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <8> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 237.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 238.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <6> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 237.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 238.
  [3] [3]
 (./shell-honours.toc [4
 
@@ -1265,12 +1265,12 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (0.97499pt too wide) in paragraph at lines 314--314
+Overfull \hbox (0.97499pt too wide) in paragraph at lines 315--315
  [][][][]\OT1/cmr/m/n/12 Weighted 
  []
 
 
-Overfull \hbox (6.52354pt too wide) in paragraph at lines 315--315
+Overfull \hbox (6.52354pt too wide) in paragraph at lines 316--316
  [][][][]\OT1/cmr/m/n/12 Activation 
  []
 
@@ -1285,12 +1285,12 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (0.97499pt too wide) in paragraph at lines 462--462
+Overfull \hbox (0.97499pt too wide) in paragraph at lines 463--463
  [][][][]\OT1/cmr/m/n/12 Weighted 
  []
 
 
-Overfull \hbox (6.52354pt too wide) in paragraph at lines 463--463
+Overfull \hbox (6.52354pt too wide) in paragraph at lines 464--464
  [][][][]\OT1/cmr/m/n/12 Activation 
  []
 
@@ -1298,7 +1298,7 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 [7] [8] [9]
-Underfull \hbox (badness 10000) in paragraph at lines 555--558
+Underfull \hbox (badness 10000) in paragraph at lines 556--559
 
  []
 
@@ -1306,39 +1306,39 @@ Underfull \hbox (badness 10000) in paragraph at lines 555--558
 <gradientdescent.jpg, id=95, 145.0234pt x 90.39793pt>
 File: gradientdescent.jpg Graphic file (type jpg)
 <use gradientdescent.jpg>
-Package pdftex.def Info: gradientdescent.jpg  used on input line 566. on input 
-line 566.
+Package pdftex.def Info: gradientdescent.jpg  used on input line 567. on input 
+line 567.
 Package pdftex.def Info: Requested size: 290.04608pt x 180.79541pt on input lin
-e 566.
+e 567.
 
-Underfull \hbox (badness 10000) in paragraph at lines 562--570
+Underfull \hbox (badness 10000) in paragraph at lines 563--571
 
  []
 
 [11 <./gradientdescent.jpg>] [12] [13] [14] [15]
 Chapter 3.
 LaTeX Font Info:    Try loading font information for U+BOONDOX-cal on input lin
-e 643.
+e 644.
 (c:/texlive/2017/texmf-dist/tex/latex/boondox/uboondox-cal.fd
 File: uboondox-cal.fd 2011/04/26 Fontinst v1.933 font definitions for U/BOONDOX
 -cal.
 )
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/b/n' will be
-(Font)              scaled to size 12.0pt on input line 643.
+(Font)              scaled to size 12.0pt on input line 644.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/b/n' will be
-(Font)              scaled to size 8.0pt on input line 643.
+(Font)              scaled to size 8.0pt on input line 644.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/b/n' will be
-(Font)              scaled to size 6.0pt on input line 643.
+(Font)              scaled to size 6.0pt on input line 644.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 12.0pt on input line 648.
+(Font)              scaled to size 12.0pt on input line 649.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 8.0pt on input line 648.
+(Font)              scaled to size 8.0pt on input line 649.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 6.0pt on input line 648.
+(Font)              scaled to size 6.0pt on input line 649.
  [16
 
 ] [17]
-Overfull \hbox (28.74841pt too wide) in paragraph at lines 688--689
+Overfull \hbox (28.74841pt too wide) in paragraph at lines 689--690
 []\OT1/cmr/m/n/12 We use the re-verse KL di-ver-gence in-stead of the for-ward 
 KL di-ver-gence $\OML/cmm/m/it/12 KL\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 p\OT1/cmr
 /m/n/12 (\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 )\OMS/cmsy/m/n/12 jj\OML/cmm/m/it/12
@@ -1346,27 +1346,30 @@ KL di-ver-gence $\OML/cmm/m/it/12 KL\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 p\OT1/cmr
  []
 
 [18] [19] [20] [21]
-Underfull \hbox (badness 10000) in paragraph at lines 759--778
+Underfull \hbox (badness 10000) in paragraph at lines 761--780
 
  []
 
 [22] [23] [24] [25] [26]
+
+LaTeX Warning: Citation `ADVVI' on page 27 undefined on input line 866.
+
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 870.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 872.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <5> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 870.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 872.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 10.0pt on input line 870.
+(Font)              scaled to size 10.0pt on input line 872.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 7.0pt on input line 870.
+(Font)              scaled to size 7.0pt on input line 872.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 5.0pt on input line 870.
+(Font)              scaled to size 5.0pt on input line 872.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/b/n' will be
-(Font)              scaled to size 10.0pt on input line 870.
+(Font)              scaled to size 10.0pt on input line 872.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/b/n' will be
-(Font)              scaled to size 7.0pt on input line 870.
+(Font)              scaled to size 7.0pt on input line 872.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/b/n' will be
-(Font)              scaled to size 5.0pt on input line 870.
+(Font)              scaled to size 5.0pt on input line 872.
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -1379,42 +1382,41 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Underfull \hbox (badness 10000) in paragraph at lines 865--892
+Underfull \hbox (badness 10000) in paragraph at lines 867--894
 
  []
 
 [27] [28]
-Underfull \hbox (badness 10000) in paragraph at lines 913--915
+Underfull \hbox (badness 10000) in paragraph at lines 915--917
 
  []
 
 [29]
-Overfull \hbox (7.73158pt too wide) in paragraph at lines 926--933
-\OT1/cmr/m/n/12 http://bjlkeng.github.io/posts/variational-bayes-and-the-mean-f
-ield-approximation/ 
- []
-
-
-Overfull \hbox (15.43428pt too wide) in paragraph at lines 926--933
-\OT1/cmr/m/n/12 https://www.cs.cmu.edu/ epxing/Class/10708-17/notes-17/10708-sc
-ribe-lecture13.pdf 
- []
-
-
-Overfull \hbox (10.65657pt too wide) in paragraph at lines 926--933
-\OT1/cmr/m/n/12 http://dept.stat.lsa.umich.edu/ xuanlong/Papers/Nguyen-Wainwrig
-ht-Jordan-10.pdf 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 926--933
-
- []
-
-[30]
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+ [30]
 Chapter 4.
 
-Overfull \hbox (4.55055pt too wide) in paragraph at lines 937--938
+Overfull \hbox (4.55055pt too wide) in paragraph at lines 950--951
 \OT1/cmr/m/n/12 The pos-te-rior dis-tri-bu-tion can-not be com-puted ef-fi-cien
 tly if $[][] \OML/cmm/m/it/12 p\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 x; z\OT1/cmr/m
 /n/12 )\OML/cmm/m/it/12 dz$ \OT1/cmr/m/n/12 is in-tractable,
@@ -1423,56 +1425,56 @@ tly if $[][] \OML/cmm/m/it/12 p\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 x; z\OT1/cmr/m
 [31
 
 ] [32] [33] [34] [35]
-Underfull \hbox (badness 10000) in paragraph at lines 1004--1007
+Underfull \hbox (badness 10000) in paragraph at lines 1017--1020
 
  []
 
 
-Overfull \hbox (41.0507pt too wide) in paragraph at lines 1014--1016
+Overfull \hbox (41.0507pt too wide) in paragraph at lines 1027--1029
 \OT1/cmr/m/n/12 We can ex-press the ex-pected log ra-tio es-ti-ma-tor $\U/msb/m
 /n/12 E[]\OT1/cmr/m/n/12 [[] [](\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 )] \OMS/cmsy/
 m/n/12 ' \U/msb/m/n/12 E[]\OT1/cmr/m/n/12 [[] []]$
  []
 
 [36] [37] [38] [39] [40] [41] [42] [43]
-Underfull \hbox (badness 10000) in paragraph at lines 1137--1141
+Underfull \hbox (badness 10000) in paragraph at lines 1150--1154
 
  []
 
 [44] [45]
-Underfull \hbox (badness 10000) in paragraph at lines 1159--1162
+Underfull \hbox (badness 10000) in paragraph at lines 1172--1175
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1164--1168
+Underfull \hbox (badness 10000) in paragraph at lines 1177--1181
 
  []
 
 [46] [47] [48] [49] [50] [51] [52]
-Overfull \hbox (100.92079pt too wide) in paragraph at lines 1304--1304
+Overfull \hbox (100.92079pt too wide) in paragraph at lines 1317--1317
 [] 
  []
 
 [53] [54]
 Chapter 5.
 
-Overfull \hbox (112.14108pt too wide) in paragraph at lines 1335--1335
+Overfull \hbox (112.14108pt too wide) in paragraph at lines 1348--1348
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1335--1341
+Underfull \hbox (badness 10000) in paragraph at lines 1348--1354
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1335--1341
+Underfull \hbox (badness 10000) in paragraph at lines 1348--1354
 
  []
 
 
-Overfull \hbox (1.34903pt too wide) in paragraph at lines 1335--1341
+Overfull \hbox (1.34903pt too wide) in paragraph at lines 1348--1354
 \OT1/cmr/m/n/12 As $\OML/cmm/m/it/12 x$ \OT1/cmr/m/n/12 in-creases, the pos-te-
 ri-ors be-come in-creas-ingly mul-ti-modal and un-usu-ally shaped.
  []
@@ -1487,38 +1489,38 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (19.75879pt too wide) in paragraph at lines 1429--1429
+Overfull \hbox (19.75879pt too wide) in paragraph at lines 1442--1442
  [][][][]\OT1/cmr/m/n/12 Sigmoid($\U/BOONDOX-cal/m/n/12 D$\OT1/cmr/m/n/12 )/ 
  []
 
 
-Overfull \hbox (3.4864pt too wide) in paragraph at lines 1429--1429
+Overfull \hbox (3.4864pt too wide) in paragraph at lines 1442--1442
  \OT1/cmr/m/n/12 ReLU($\U/BOONDOX-cal/m/n/12 R$\OT1/cmr/m/n/12 ) 
  []
 
 
-LaTeX Warning: Float too large for page by 81.18785pt on input line 1545.
+LaTeX Warning: Float too large for page by 81.18785pt on input line 1558.
 
 
-LaTeX Warning: Float too large for page by 40.08952pt on input line 1587.
+LaTeX Warning: Float too large for page by 40.08952pt on input line 1600.
 
 
-Overfull \hbox (314.1494pt too wide) in paragraph at lines 1342--1588
+Overfull \hbox (314.1494pt too wide) in paragraph at lines 1355--1601
 \OT1/cmr/m/n/12 the neu-ral net-work is as de-picted in Fig-ure idk: [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1342--1588
+Underfull \hbox (badness 10000) in paragraph at lines 1355--1601
 
  []
 
 
-Overfull \hbox (121.22025pt too wide) in paragraph at lines 1342--1588
+Overfull \hbox (121.22025pt too wide) in paragraph at lines 1355--1601
 [] 
  []
 
 [56] [57] [58] [59] [60] [61]
-Overfull \hbox (5.18578pt too wide) in paragraph at lines 1590--1593
+Overfull \hbox (5.18578pt too wide) in paragraph at lines 1603--1606
 \OT1/cmr/m/n/12 Clearly, the prior-contrastive al-go-rithms con-verged much fas
 ter their joint-contrastive
  []
@@ -1526,7 +1528,7 @@ ter their joint-contrastive
 [62] [63]
 Chapter 6.
 
-Overfull \hbox (12.39137pt too wide) in paragraph at lines 1605--1607
+Overfull \hbox (12.39137pt too wide) in paragraph at lines 1618--1620
 \OT1/cmr/m/n/12 The op-ti-miza-tion prob-lem for the ELBO in both prior-contras
 tive and joint-contrastive
  []
@@ -1534,13 +1536,13 @@ tive and joint-contrastive
 [64
 
 ] [65] [66] [67]
-Overfull \hbox (6.26077pt too wide) in paragraph at lines 1681--1683
+Overfull \hbox (6.26077pt too wide) in paragraph at lines 1694--1696
 \OT1/cmr/m/n/12 Recall that both di-ver-gences at-tain the same global min-i-mu
 m, which is a parametriza-
  []
 
 [68]
-Overfull \hbox (13.66823pt too wide) in paragraph at lines 1695--1695
+Overfull \hbox (13.66823pt too wide) in paragraph at lines 1708--1708
 [] 
  []
 
@@ -1567,46 +1569,50 @@ Chapter 10.
 Appendix A.
 [81
 
-] [82] (./shell-honours.aux) ) 
+] [82] (./shell-honours.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 27693 strings out of 492990
- 694867 string characters out of 6136334
- 960249 words of memory out of 5000000
- 30674 multiletter control sequences out of 15000+600000
+ 27746 strings out of 492990
+ 695739 string characters out of 6136334
+ 959249 words of memory out of 5000000
+ 30727 multiletter control sequences out of 15000+600000
  23729 words of font info for 93 fonts, out of 8000000 for 9000
  1143 hyphenation exceptions out of 8191
  62i,22n,96p,1692b,2134s stack positions out of 5000i,500n,10000p,200000b,80000s
-<c:/texlive/2017/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmbx12.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmbx6.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb
-><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/tex
-live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2017
-/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2017/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2017/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2017/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmmi7.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmmi8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pf
-b><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><c
-:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/
-2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2017/texmf
--dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2017/texmf-dist/font
-s/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2017/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmr8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmsy10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
-6.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/
-texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2
-017/texmf-dist/fonts/type1/public/amsfonts/latxfont/lasy10.pfb><c:/texlive/2017
-/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb><c:/texlive/2017/tex
-mf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2017/texmf-d
-ist/fonts/type1/public/nanumtype1/nanummjmb0.pfb><c:/texlive/2017/texmf-dist/fo
-nts/type1/public/nanumtype1/nanummjmb2.pfb><c:/texlive/2017/texmf-dist/fonts/ty
-pe1/public/boondox/zxxbw8a.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/b
-oondox/zxxrw8a.pfb>
-Output written on shell-honours.pdf (94 pages, 1239286 bytes).
+<c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/tex
+live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx6.pfb><c:/texlive/2017/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2017/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/2017/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/publ
+ic/amsfonts/cmextra/cmex8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmmi10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmmi12.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pf
+b><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texl
+ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2017/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/texlive/2017/texmf-dis
+t/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><c:/texlive/2017/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmr12.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmr17.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr6.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:
+/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/20
+17/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2017/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2017/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmti12.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfo
+nts/latxfont/lasy10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts
+/symbols/msam10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/sym
+bols/msbm10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanum
+mjmb0.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb2.
+pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/boondox/zxxbw8a.pfb><c:/texl
+ive/2017/texmf-dist/fonts/type1/public/boondox/zxxrw8a.pfb>
+Output written on shell-honours.pdf (94 pages, 1249008 bytes).
 PDF statistics:
- 429 PDF objects out of 1000 (max. 8388607)
- 299 compressed objects within 3 object streams
+ 434 PDF objects out of 1000 (max. 8388607)
+ 302 compressed objects within 4 object streams
  0 named destinations out of 1000 (max. 500000)
  23 words of extra memory for PDF output out of 10000 (max. 10000000)
 

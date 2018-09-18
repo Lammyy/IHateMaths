@@ -27,6 +27,7 @@
 \usetikzlibrary{bayesnet}
 \usepackage{boondox-cal}
 \usepackage{cite}
+\allowdisplaybreaks[1]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %  The following are some simple LaTeX macros to give some
@@ -685,7 +686,7 @@ KL(q(x)||p(x))&=\int_{-\infty}^\infty q(x)\log \frac{q(x)}{p(x)}dx\\
 \end{proof}
 In the third line we use $\log x \leq x-1 \quad \forall x>0$ with equality if and only if $x=1$, therefore $KL(q(x)||p(x))=0$ if and only if $q(x)=p(x)$. The last line is due to $p(x)$ and $q(x)$ being probability densities.
 \end{lemma}
-We use the reverse KL divergence instead of the forward KL divergence $KL(p(x)||q(x))$ because we are unable to sample from our true posterior $p(z|x)$, and because it leads to an expectation maximization algorithm as opposed to an expectation propagation algorithm.
+We use the reverse KL divergence instead of the forward KL divergence $KL(p(x)||q(x))$ as we are unable to sample from our true posterior $p(z|x)$, and because it leads to an expectation maximization algorithm as opposed to an expectation propagation algorithm.
 \section{Derivation of the ELBO}
 Using the reverse KL divergence, we can rewrite equation 3.2.1 as:
 \begin{align*}
@@ -733,7 +734,7 @@ ELBO(q)&= \int_\mathbcal{z}\left[\prod^M_{i=1}q_i(z_i)\right]\left(\log p(\textb
 &\quad -\int_{\mathcal{z}_{-j}}\left[\prod_{i\neq j}q_i(z_i)\right]\sum_{i\neq j}q_i(z_i)d{\textbf{z}_{-j}}
 \\&= \int_\mathcal{z_j}q_j(z_j)\left(\mathbb{E}_{\mathcal{z}_{-j}}[\log p(\textbf{x},\textbf{z})]-\log q_j(z_j)\right)dz_j+\text{const}.
 \end{align}
-The term in line 3.5.2 is a constant as it does not depend on $q_j(z_j)$. Now our Lagrangian equation with the constraint that $q_i(z_i)$ are probability density functions is:
+The term in line 3.5.2 is a constant with respect to $q_j(z_j)$. We want to maximize $ELBO(q)$, so we formulate the Lagrangian equation with the constraint that $q_i(z_i)$ are probability density functions:
 \begin{equation*}
 ELBO(q)-\sum^M_{i=1}\lambda_i\int_\mathcal{z_i}q_i(z_i)dz_i=0
 \end{equation*}
@@ -743,15 +744,16 @@ or using our expression for $ELBO(q)$ in line 3.5.3,
 \end{equation} 
 We then take the functional derivative of Equation 3.5.4 with respect to $q_j(z_j)$:
 \begin{align}
-\frac{\partial ELBO(q)}{\partial q_j(z_j)}&= \frac{\partial}{\partial q_j(z_j)}\left[q_j(z_j)\left(\mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]-\log q_j(z_j)\right)-\lambda_jq_j(z_j)\right]\nonumber
-\\&= \mathbb{E}_{\textbf{z}_{-j}}[\log P(\textbf{X},\textbf{Z})]-\log q_j(z_j)-1-\lambda_j.
+\frac{\partial ELBO(q)}{\partial q_j(z_j)}&= \frac{\partial}{\partial q_j(z_j)}\left[q_j(z_j)\left(\mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]-\log q_j(z_j)\right)-\lambda_jq_j(z_j)\right]\nonumber
+\\&= \mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]-\log q_j(z_j)-1-\lambda_j.
 \end{align}
-Equating expression 3.5.5 to 0 and letting $1+\lambda_j$ be a constant (as it is independent of $z$), we have:
+Equating expression 3.5.5 to 0 and observing that $1+\lambda_j$ is constant with respect to $z$, we have:
 \begin{align}
 \log q_j^*(z_j)&= \mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]-\text{const} \nonumber\\
-q_j^*(z_j)&=\frac{e^{\mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]}}{\exp{\text{const}}}\nonumber\\
+q_j^*(z_j)&=\frac{e^{\mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]}}{\exp{(\text{const})}}\nonumber\\
 &= \frac{e^{\mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]}}{\int e^{\mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]}dz_j}.
 \end{align}
+\newpage
 The normalization constant on the denominator of 3.5.6 is derived by observing $q^*_j(z_j)$ as a density. Finally, we derive a simpler expression of $q^*_j(z_j)$ by observing that terms independent of $z_j$ can be treated as a constant:
 \begin{align}
 q^*_j(z_j)&\propto \exp\left(\mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]\right)\nonumber\\
@@ -761,17 +763,17 @@ This expression can be used in an expectation-maximization algorithm, in which t
 \\
 \begin{algorithm}[H]
 \caption{Coordinate Ascent Variational Inference (CAVI)}
-\KwData{Dataset $\textbf{x}$ and Model p($\textbf{x},\textbf{z}$)}
-\KwResult{Approximate density $q(\textbf{z})=\prod^M_{i=1}q_i(z_i)$}
+\KwData{Dataset $\textbf{x}$ and Bayesian Model p($\textbf{x},\textbf{z}$)}
+\KwResult{Variational density $q(\textbf{z})=\prod^M_{i=1}q_i(z_i)$}
 \BlankLine
 \Begin{
 Initialize random variational factors $q_j(z_j)$\;
 \While{ELBO(q) has not converged}{
 
 	\For{$j=1$ \KwTo $m$}{
-	Set $q_j(z_j)\propto \exp(\mathbb{E}[\log p(z_j|\textbf{z}_{-j},\textbf{x})])$\;
+	Set $q_j(z_j)\propto \exp(\mathbb{E}_{\textbf{z}_{-j}}[\log p(z_j|\textbf{z}_{-j},\textbf{x})])$\;
 	}
-	Calculate $ELBO(q)=\mathbb{E}[\log p(\textbf{z},\textbf{x})]-\mathbb{E}[\log q(\textbf{z})]$\;
+	Calculate $ELBO(q)=\mathbb{E}_{q(\textbf{z})}[\log p(\textbf{z},\textbf{x})]-\mathbb{E}_{q(\textbf{z})}[\log q(\textbf{z})]$\;
 }
 Return $q(\textbf{z})$\;
 }
@@ -861,7 +863,7 @@ Return $q(\textbf{m},\textbf{s}^2,\bm{\phi})$\;
 \end{algorithm}
 \newpage
 \section{Amortized Inference}
-One disadvantage of mean field variational inference is that a specific set of variational parameters needs to be derived and optimized for each data point. This can be computationally expensive for large datasets. Amortized inference resolves this issue by using a single, constant set of parameters for all data points, adding the data point itself as an input to the variational distribution. Our variational distribution therefore conditions on the observation, taking the form
+One disadvantage of mean field variational inference is that a specific set of variational parameters needs to be derived and optimized for each data point. This can be computationally expensive for large datasets. Amortized inference resolves this issue by using a single, constant set of parameters for all data points, adding the data point itself as an input to the variational distribution \cite{ADVVI}. Our variational distribution therefore conditions on the observation, taking the form
 \[q_\phi(z|x).\]
 Figures 3.1 and 3.2 highlight the difference between mean-field and amortized variational inference. In the figures there are $N$ data points, and for each data point, $\bm{z}_i$ is $M$-dimensional. Therefore for mean-field variational inference, there are $M\times N$ sets of $\phi$ parameters, whilst in amortized inference there is only one set of $\phi$ parameters, as we use $M\times N$ data points as inputs.
 \begin{figure}[h]
@@ -918,19 +920,30 @@ At our current formulation, we have the problem that a neural network is determi
 In practice, to reduce computational time, this is achieved by sampling random standard normal noise $\epsilon$, multiplying it by the variance and adding the result to the mean:
 \[\epsilon\sim \mathcal{N}(0,I_{k\times k}),\qquad z=\mu+\epsilon\cdot\sigma^2.\]
 \newpage
-The expression in our optimization problem is tractable. It is often possible to parametrise an explicit form of the likelihood from the neural network output: for example, if $q^*(x)$ is a data set of grey-scale images, then a Bernoulli distribution can be used to represent the pixel values, with parameters given by the sigmoid output of the likelihood network. Since we have the explicit form of the multivariate normal $q_\phi(z|x)$ and $p(z)$ densities, the KL divergence term can be calculated through the equation:
+The expression in our optimization problem is tractable. It is often possible to parametrise an explicit form of the likelihood from the neural network output. For example, if $q^*(x)$ is a data set of grey-scale images, then a Bernoulli distribution can be used to represent the pixel values, with parameters given by the sigmoid output of the likelihood network. Since we have the explicit form of the multivariate normal $q_\phi(z|x)$ and $p(z)$ densities, the KL divergence term can be calculated through the equation:
 \[KL(q(z|x)||p(z))=\frac12 \sum_{i=1}^k\left(\sigma^2_i+\mu^2_i-\log(\sigma^2_i)-1\right).\]
 However, if either density is implicit, then density ratio estimation methods must be applied to calculate $KL(q(z|x)||p(z))$.\\
-INSERT VAE DIAGRAM HERE
-\section{References}
-To be organised properly and moved to the end later:\\
-$https://en.wikipedia.org/wiki/Variational_Bayesian_methods$ \\
-http://bjlkeng.github.io/posts/variational-bayes-and-the-mean-field-approximation/ \\
-https://arxiv.org/pdf/1601.00670.pdf \\
-Pattern recognition and machine learning by Bishop (2006) pages 461-dunno \\
-https://www.cs.cmu.edu/~epxing/Class/10708-17/notes-17/10708-scribe-lecture13.pdf \\
-http://dept.stat.lsa.umich.edu/~xuanlong/Papers/Nguyen-Wainwright-Jordan-10.pdf\\
-
+\begin{figure}[h]
+  \centering
+  \tikz{ %
+    \node[latent] (x) {$\bm{x}$} ; %
+    \node[det, right=of x] (q) {$q_\phi(z|x)$} ; %
+    \node[latent, right=of q] (qout) {$\bm{\mu}, \bm{\sigma}^2$} ;
+    \node [det, right=of qout] (para1) {$+,*$} ;
+    \node [latent, above=of para1] (eps) {$\epsilon$} ;
+    \node [latent, right=of para1] (z) {$\bm{z}$} ;
+    \node [det, right=of z] (p) {$p_\theta(x|z)$} ;
+    \node [latent, right=of p] (pout) {$\bm{x}$} ;
+    \edge {x} {q} ; %
+    \edge {q} {qout} ;
+    \edge {qout} {para1} ;
+    \edge {eps} {para1} ;
+    \edge {para1} {z} ;
+    \edge {z} {p} ;
+    \edge {p} {pout} ;
+  }
+   \caption{Variational Autoencoder}
+\end{figure}
 \chapter{Our Problem}
 \section{Objective Derivation}
 \subsection{Implicit Prior}

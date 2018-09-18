@@ -13,12 +13,11 @@
 \contentsline {section}{\numberline {3.1}Context}{16}
 \contentsline {section}{\numberline {3.2}Introduction to Variational Inference}{17}
 \contentsline {section}{\numberline {3.3}The Reverse KL Divergence}{17}
-\contentsline {section}{\numberline {3.4}Derivation of the ELBO}{19}
+\contentsline {section}{\numberline {3.4}Derivation of the ELBO}{18}
 \contentsline {section}{\numberline {3.5}Mean-Field Variational Family}{20}
 \contentsline {section}{\numberline {3.6}Example: Bayesian mixture of Gaussians}{23}
 \contentsline {section}{\numberline {3.7}Amortized Inference}{27}
 \contentsline {section}{\numberline {3.8}Example: Variational Autoencoder}{29}
-\contentsline {section}{\numberline {3.9}References}{30}
 \contentsline {chapter}{\numberline {Chapter 4}Our Problem}{31}
 \contentsline {section}{\numberline {4.1}Objective Derivation}{31}
 \contentsline {subsection}{\numberline {4.1.1}Implicit Prior}{31}
