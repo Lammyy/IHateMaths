@@ -948,7 +948,7 @@ The expression in our optimization problem is tractable. It is often possible to
 \section{Problems with Implicit Distributions}
 The above sections assume that the true prior $p(z)$, likelihood $p(x|z)$ and variational posterior $q_\phi(z|x)$ have an explicit form. However, there are two main scenarios in which at least one of these densities are implicit, that is, their parametrization is unknown but we are able to generate samples from their distributions. This poses problems with optimization as the objective function becomes difficult to compute. 
 \subsection{Implicit Prior and/or Variational Posterior}
-In the first scenario, at least one of the true prior or variational posterior densities is implicit, but the likelihood is known. An implicit prior is rare but may occur in posterior inference. The implicit variational posterior occurs more often (in both posterior inference and data generation), detailed in Adversarial Variational Bayes by Mescheder. Typically in amortized inference and variational autoencoders, the variational posterior sample $\bm{z}$ is sampled from a multivariate normal distribution with mean and variance defined by the variational network. The problem with this representation is the lack of dependencies between the latent variables and the inability to model multi-modal or flexible densities. In his paper, Mescheder adds random noise $\epsilon\sim \pi(\epsilon)$ as additional inputs to the variational network, training the network to directly output $\bm{z}$. This added noise allows the probabilistic nature of a probability density to be represented by a deterministic neural network. We therefore denote the generator of posterior samples as $\mathcal{G}(\epsilon;x)$. A diagram illustrating this is shown in Figure 3.4 below.\\
+In the first scenario, at least one of the true prior or variational posterior densities is implicit, but the likelihood is known. An implicit prior is rare but may occur in posterior inference. The implicit variational posterior occurs more often (in both posterior inference and data generation), detailed in Adversarial Variational Bayes by Mescheder. Typically in amortized inference and variational autoencoders, the variational posterior sample $\bm{z}$ is sampled from a multivariate normal distribution with mean and variance defined by the variational network. The problem with this representation is the lack of dependencies between the latent variables and the inability to model multi-modal or flexible densities. In his paper, Mescheder adds random noise $\epsilon\sim \pi(\epsilon)$ as additional inputs to the variational network, training the network to directly output $\bm{z}$. $\pi(\epsilon)$ is a typical noise distribution, such as $\mathcal(0,I_{p\times p})$ where $p$ is the desired number of noise inputs. This added noise allows the probabilistic nature of a probability density to be represented by a deterministic neural network. We therefore denote the generator of posterior samples as $\mathcal{G}(\epsilon;x)$. A diagram illustrating this is shown in Figure 3.4 below.\\
 \begin{figure}[h]
   \centering
   \tikz{ %
@@ -1006,30 +1006,36 @@ which is the ratio of the probability that an arbitrary sample $x$ was taken fro
 \[D(x)=P(y=1|x),\]
 then our density ratio can be expressed in terms of this discriminator function:
 \[\frac{q(x)}{p(x)}=\frac{D(x)}{1-D(x)}.\]
-\newpage
-\subsection{Implicit Prior}
-In class probability estimation, we use a discriminator function $D_\phi(z)$ denoted by a neural network that calculates the probability that a given sample $z$ is from the variational posterior distribution $q_\phi(z|x)$ as opposed to the true prior distribution $p^*(x)$. The ratio estimator can be expressed in terms of the probability that a sample from the posterior distribution correctly classified by the discriminator. Optimization involves optimizing the discriminator by minimizing the discriminative loss (a Bernoulli loss dependent on the discriminators classification accuracy), then minimizing the evidence lower bound, and cycling between these two steps until convergence.\\
-\\
+The discriminator function typically takes the form of a neural network with parameters $\alpha$ trained with Bernoulli loss:
+\[\min_\alpha -\E_{q(x)}[\log D_\alpha(x)]-\E_{p(x)}[\log(1-D_\alpha(x)].\]
+\subsection{Prior-Contrastive}
 We now turn to our problem of minimizing the negative ELBO:
-\[\min_\phi -\mathbb{E}_{q^*(x)\pi(\epsilon)}[\log p_\theta (x|\mathcal{G}_\phi(\epsilon;x)]+\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{q_\phi(z|x)}{p_\theta(z)}\right],\]
+\begin{align*}
+\min_{q} NELBO(q)&=\min_{\phi}\mathbb{E}_{q^*(x)}\left[-\E_{q_\phi(z|x)}[\log p(x|z)]+KL(q_\phi(z|x)||p(z))\right]\\
+&=\min_\phi -\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log p(x|z)]+\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{q_\phi(z|x)}{p(z)}\right],
+% &=\min_\phi -\mathbb{E}_{q^*(x)\pi(\epsilon)}[\log p(x|\mathcal{G}_\phi(\epsilon;x)]+\mathbb{E}_{q^*(x)\pi(\epsilon)}\left[\log \frac{q_\phi(\mathcal{G}_\phi(\epsilon;x)|x)}{p(\mathcal{G}_\phi(\epsilon;x))}\right],
+\end{align*}
 which requires us to find the density ratio between $q_\phi(z|x)$ and $p_\theta(z)$.\\
 Again, if we label samples from $q_\phi(z|x)$ with $y=1$ and samples from $p(z)$ with $y=0$, we have the density ratio expression:
-\[\frac{q_\phi(z|x)}{p(z)}=\frac{P(y=1|z)}{P(y=0|z)}\]
-We now define a discriminator function in the form of a neural network with parameters $\alpha$ that calculates the probability that an arbitrary sample $z$ belongs to the variational posterior $q_\phi(z|x)$. Since the posterior changes depending on the observation $x$, we also amortize the discriminator by taking an additional input from the dataset $x$, as opposed to training multiple discriminators for each observation $x_n$ :
+\[\frac{q_\phi(z|x)}{p(z)}=\frac{P(y=1|z)}{P(y=0|z)}.\]
+We now define a discriminator function that calculates the probability that an arbitrary sample $z$ belongs to the variational posterior $q_\phi(z|x)$. Since the posterior changes depending on the observation $x$, we also amortize the discriminator by taking an additional input from the dataset $x$, as opposed to training multiple discriminators for each observation $x_i$ :
 \[D_\alpha(z,x)=P(y=1|z).\]
 As a binary classifier, this function can be trained by inputting an equal number of samples from both distributions and minimizing its Bernoulli loss:
-\[\min_\alpha \mathbb{E}_{q^*(x)q_\phi(z|x)}[-\log D_\alpha(z,x)]+\mathbb{E}_{p_\theta(z)q^*(x)}[-\log (1-D_\alpha(z,x))].\]
-We can express the expected log ratio estimator $\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log \hat{r}(x)]\simeq \mathbb{E}_{q^*(x)q_\phi(z|x)} [\log \frac{q_\phi(z|x)}{p_\theta(z)}]$ in terms of the probability that a posterior sample is correctly classified by the discriminator:
+\[\min_\alpha -\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log D_\alpha(z,x)]-\mathbb{E}_{q^*(x)p_\theta(z)}[\log (1-D_\alpha(z,x))].\]
+We can express the expected log ratio estimator 
+\[\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log \hat{r}(x)]\simeq \mathbb{E}_{q^*(x)q_\phi(z|x)} \left[\log \frac{q_\phi(z|x)}{p_\theta(z)}\right]\] 
+in terms of the probability that a posterior sample is correctly classified by the discriminator:
 \begin{align*}
 \mathbb{E}_{q^*(x)q_\phi(z|x)}[\log \hat{r}(x)]&=\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{P(y=1|z)}{P(y=0|z)}\right]\\
 &= \mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{D_\alpha(z,x)}{1-D_\alpha(z,x)}\right]
 \end{align*}
 Our optimization objective of minimizing negative ELBO can now be written as:
-\[\min_\phi -\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log p_\theta (x|z)]+\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{D_\alpha(z,x)}{1-D_\alpha(z,x)}\right].\]
+\[\min_\phi -\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log p(x|z)]+\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{D_\alpha(z,x)}{1-D_\alpha(z,x)}\right].\]
 In practice, the algorithm cycles between optimizing the discriminator until convergence (with the generator parameters fixed) and taking optimization steps of the negative evidence lower bound (with the discriminator parameters fixed).\\
 Since our variational posterior distribution is in the form of a generative neural network function, our optimization objectives take the expressions:
-\[\min_\alpha \mathbb{E}_{q^*(x)\pi(\epsilon)}[-\log D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)]+\mathbb{E}_{p_\theta(z)q^*(x)}[-\log (1-D_\alpha(z,x))]\]
-\[\min_\phi -\mathbb{E}_{q^*(x)\pi (\epsilon)}[\log p_\theta (x|\mathcal{G}_\phi(\epsilon;x))]+\mathbb{E}_{q^*(x)\pi(\epsilon)}\left[\log \frac{D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)}{1-D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)}\right]\]
+\[\min_\alpha -\mathbb{E}_{q^*(x)\pi(\epsilon)}[\log D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)-\mathbb{E}_{p_\theta(z)q^*(x)}[\log (1-D_\alpha(z,x))]\]
+\[\min_\phi -\mathbb{E}_{q^*(x)\pi (\epsilon)}[\log p(x|\mathcal{G}_\phi(\epsilon;x))]+\mathbb{E}_{q^*(x)\pi(\epsilon)}\left[\log \frac{D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)}{1-D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)}\right].\]
+Recall that if we apply this algorithm to a data generation problem, ie. the likelihood function also needs to be optimized, then in the posterior optimization function, we would additionally parametrize the likelihood with $\theta$ and optimize the same function with respect to those parameters. Pseudocode for this algorithm is shown in Algorithm 4 on the next page.
 \newpage
 \begin{algorithm}
 \SetKw{update}{update}
@@ -1047,7 +1053,7 @@ Since our variational posterior distribution is in the form of a generative neur
 		}
 
 		\update{$\alpha$ by optimization step on}{
-			$\min_\alpha \mathbb{E}_{q^*(x)\pi(\epsilon)}[-\log D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)]+\mathbb{E}_{p_\theta(z)q^*(x)}[-\log (1-D_\alpha(z,x))]$\;
+			$\min_\alpha -\mathbb{E}_{q^*(x)\pi(\epsilon)}[\log D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)]-\mathbb{E}_{p_\theta(z)q^*(x)}[\log (1-D_\alpha(z,x))]$\;
 		}	
 	}
 	Sample $\{x^{(i)}\}^B_{i=1}\sim q^*(x)$\;

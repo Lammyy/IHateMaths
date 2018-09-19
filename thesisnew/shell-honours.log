@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  18 SEP 2018 23:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  19 SEP 2018 12:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1351,9 +1351,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 761--780
  []
 
 [22] [23] [24] [25] [26]
-
-LaTeX Warning: Citation `ADVVI' on page 27 undefined on input line 866.
-
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
 (Font)              Font shape `U/lasy/m/n' tried instead on input line 872.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <5> not available
@@ -1437,14 +1434,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 951--970
 
  []
 
-[30]
-
-LaTeX Warning: Citation `ali' on page 31 undefined on input line 975.
-
-
-LaTeX Warning: Citation `tran' on page 31 undefined on input line 975.
-
-[31]
+[30] [31]
 Overfull \hbox (3.43126pt too wide) in paragraph at lines 980--982
 \OT1/cmr/m/n/12 Recall that $\OML/cmm/m/it/12 p\OT1/cmr/m/n/12 (\OML/cmm/m/it/1
 2 x\OT1/cmr/m/n/12 )$ is typ-i-cally un-avail-able, so we are un-able to eval-u
@@ -1455,67 +1445,52 @@ r/m/n/12 (\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 ))$
 
 [32]
 Chapter 4.
-
-LaTeX Warning: Citation `huszar' on page 33 undefined on input line 992.
-
 [33
 
-] [34]
-Underfull \hbox (badness 10000) in paragraph at lines 1011--1014
+] [34] [35] [36] [37] [38] [39] [40] [41]
+Underfull \hbox (badness 10000) in paragraph at lines 1150--1154
+
+ []
+
+[42] [43]
+Underfull \hbox (badness 10000) in paragraph at lines 1172--1175
 
  []
 
 
-Overfull \hbox (41.0507pt too wide) in paragraph at lines 1021--1023
-\OT1/cmr/m/n/12 We can ex-press the ex-pected log ra-tio es-ti-ma-tor $\U/msb/m
-/n/12 E[]\OT1/cmr/m/n/12 [[] [](\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 )] \OMS/cmsy/
-m/n/12 ' \U/msb/m/n/12 E[]\OT1/cmr/m/n/12 [[] []]$
- []
-
-[35] [36] [37] [38] [39] [40] [41] [42]
-Underfull \hbox (badness 10000) in paragraph at lines 1144--1148
+Underfull \hbox (badness 10000) in paragraph at lines 1177--1181
 
  []
 
-[43] [44]
-Underfull \hbox (badness 10000) in paragraph at lines 1166--1169
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1171--1175
-
- []
-
-[45] [46] [47] [48] [49] [50] [51]
-Overfull \hbox (100.92079pt too wide) in paragraph at lines 1311--1311
+[44] [45] [46] [47] [48] [49] [50]
+Overfull \hbox (100.92079pt too wide) in paragraph at lines 1317--1317
 [] 
  []
 
-[52] [53]
+[51] [52]
 Chapter 5.
 
-Overfull \hbox (112.14108pt too wide) in paragraph at lines 1342--1342
+Overfull \hbox (112.14108pt too wide) in paragraph at lines 1348--1348
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1342--1348
+Underfull \hbox (badness 10000) in paragraph at lines 1348--1354
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1342--1348
+Underfull \hbox (badness 10000) in paragraph at lines 1348--1354
 
  []
 
 
-Overfull \hbox (1.34903pt too wide) in paragraph at lines 1342--1348
+Overfull \hbox (1.34903pt too wide) in paragraph at lines 1348--1354
 \OT1/cmr/m/n/12 As $\OML/cmm/m/it/12 x$ \OT1/cmr/m/n/12 in-creases, the pos-te-
 ri-ors be-come in-creas-ingly mul-ti-modal and un-usu-ally shaped.
  []
 
-[54
+[53
 
 ]
 Missing character: There is no ; in font nullfont!
@@ -1525,133 +1500,127 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (19.75879pt too wide) in paragraph at lines 1436--1436
+Overfull \hbox (19.75879pt too wide) in paragraph at lines 1442--1442
  [][][][]\OT1/cmr/m/n/12 Sigmoid($\U/BOONDOX-cal/m/n/12 D$\OT1/cmr/m/n/12 )/ 
  []
 
 
-Overfull \hbox (3.4864pt too wide) in paragraph at lines 1436--1436
+Overfull \hbox (3.4864pt too wide) in paragraph at lines 1442--1442
  \OT1/cmr/m/n/12 ReLU($\U/BOONDOX-cal/m/n/12 R$\OT1/cmr/m/n/12 ) 
  []
 
 
-LaTeX Warning: Float too large for page by 81.18785pt on input line 1552.
+LaTeX Warning: Float too large for page by 81.18785pt on input line 1558.
 
 
-LaTeX Warning: Float too large for page by 40.08952pt on input line 1594.
+LaTeX Warning: Float too large for page by 40.08952pt on input line 1600.
 
 
-Overfull \hbox (314.1494pt too wide) in paragraph at lines 1349--1595
+Overfull \hbox (314.1494pt too wide) in paragraph at lines 1355--1601
 \OT1/cmr/m/n/12 the neu-ral net-work is as de-picted in Fig-ure idk: [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1349--1595
+Underfull \hbox (badness 10000) in paragraph at lines 1355--1601
 
  []
 
 
-Overfull \hbox (121.22025pt too wide) in paragraph at lines 1349--1595
+Overfull \hbox (121.22025pt too wide) in paragraph at lines 1355--1601
 [] 
  []
 
-[55] [56] [57] [58] [59] [60]
-Overfull \hbox (5.18578pt too wide) in paragraph at lines 1597--1600
+[54] [55] [56] [57] [58] [59]
+Overfull \hbox (5.18578pt too wide) in paragraph at lines 1603--1606
 \OT1/cmr/m/n/12 Clearly, the prior-contrastive al-go-rithms con-verged much fas
 ter their joint-contrastive
  []
 
-[61] [62]
+[60] [61]
 Chapter 6.
 
-Overfull \hbox (12.39137pt too wide) in paragraph at lines 1612--1614
+Overfull \hbox (12.39137pt too wide) in paragraph at lines 1618--1620
 \OT1/cmr/m/n/12 The op-ti-miza-tion prob-lem for the ELBO in both prior-contras
 tive and joint-contrastive
  []
 
-[63
+[62
 
-] [64] [65] [66]
-Overfull \hbox (6.26077pt too wide) in paragraph at lines 1688--1690
+] [63] [64] [65]
+Overfull \hbox (6.26077pt too wide) in paragraph at lines 1694--1696
 \OT1/cmr/m/n/12 Recall that both di-ver-gences at-tain the same global min-i-mu
 m, which is a parametriza-
  []
 
-[67]
-Overfull \hbox (13.66823pt too wide) in paragraph at lines 1702--1702
+[66]
+Overfull \hbox (13.66823pt too wide) in paragraph at lines 1708--1708
 [] 
  []
 
-[68] [69] [70]
+[67] [68] [69]
 Chapter 7.
-[71
+[70
 
-] [72] [73]
+] [71] [72]
 Chapter 8.
-[74
+[73
 
-] [75] [76]
+] [74] [75]
 Chapter 9.
-[77
+[76
 
 ]
 Chapter 10.
-[78
+[77
 
-] (./shell-honours.bbl [79
+] (./shell-honours.bbl [78
 
 
-]) [80]
+]) [79]
 Appendix A.
-[81
+[80
 
-] [82] (./shell-honours.aux)
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+] [81] (./shell-honours.aux) ) 
 Here is how much of TeX's memory you used:
  27753 strings out of 492990
  695789 string characters out of 6136334
- 960249 words of memory out of 5000000
+ 960265 words of memory out of 5000000
  30733 multiletter control sequences out of 15000+600000
  23886 words of font info for 94 fonts, out of 8000000 for 9000
  1143 hyphenation exceptions out of 8191
  62i,22n,96p,1692b,2134s stack positions out of 5000i,500n,10000p,200000b,80000s
-<c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/tex
-live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx6.pfb><c:/texlive/2017/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2017/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/2017/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/publ
-ic/amsfonts/cmextra/cmex8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmmi10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmmi12.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pf
-b><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texl
-ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2017/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/texlive/2017/texmf-dis
-t/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><c:/texlive/2017/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmr12.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmr17.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mr6.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:
-/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/20
-17/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2017/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2017/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmti12.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfo
-nts/latxfont/lasy10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts
-/symbols/msam10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/sym
-bols/msbm10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanum
-mjmb0.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb2.
-pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/boondox/zxxbw8a.pfb><c:/texl
-ive/2017/texmf-dist/fonts/type1/public/boondox/zxxrw8a.pfb>
-Output written on shell-honours.pdf (94 pages, 1248676 bytes).
+<c:/texlive/2017/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmbx12.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmbx6.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb
+><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/tex
+live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2017
+/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2017/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2017/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2017/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmmi7.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmmi8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pf
+b><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><c
+:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/
+2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2017/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2017/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2017/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmr7.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
+.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/t
+exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/201
+7/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2017/texmf-d
+ist/fonts/type1/public/amsfonts/latxfont/lasy10.pfb><c:/texlive/2017/texmf-dist
+/fonts/type1/public/amsfonts/symbols/msam10.pfb><c:/texlive/2017/texmf-dist/fon
+ts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2017/texmf-dist/fonts/t
+ype1/public/nanumtype1/nanummjmb0.pfb><c:/texlive/2017/texmf-dist/fonts/type1/p
+ublic/nanumtype1/nanummjmb2.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/
+boondox/zxxbw8a.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/boondox/zxxr
+w8a.pfb>
+Output written on shell-honours.pdf (93 pages, 1247953 bytes).
 PDF statistics:
- 434 PDF objects out of 1000 (max. 8388607)
- 302 compressed objects within 4 object streams
+ 430 PDF objects out of 1000 (max. 8388607)
+ 300 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
  23 words of extra memory for PDF output out of 10000 (max. 10000000)
 
