@@ -24,39 +24,37 @@
 \contentsline {chapter}{\numberline {Chapter 4}Density Ratio Estimation}{33}
 \contentsline {section}{\numberline {4.1}Class Probability Estimation}{33}
 \contentsline {subsection}{\numberline {4.1.1}Derivation}{33}
-\contentsline {subsection}{\numberline {4.1.2}Prior-Contrastive}{34}
-\contentsline {subsection}{\numberline {4.1.3}Implicit Likelihood (\& Prior)}{37}
-\contentsline {subsection}{\numberline {4.1.4}Optimal functions}{40}
-\contentsline {section}{\numberline {4.2}Divergence Minimisation}{42}
-\contentsline {subsection}{\numberline {4.2.1}Derivation}{42}
-\contentsline {subsection}{\numberline {4.2.2}Implicit Prior}{44}
-\contentsline {subsection}{\numberline {4.2.3}Implicit Likelihood (\& Prior)}{47}
-\contentsline {subsection}{\numberline {4.2.4}Optimal functions}{50}
-\contentsline {subsection}{\numberline {4.2.5}Alternative Derivation of Class Probability Estimation}{51}
-\contentsline {chapter}{\numberline {Chapter 5}Initial Experiment - Inference, "Sprinkler" Example}{53}
-\contentsline {section}{\numberline {5.1}Problem Context}{53}
-\contentsline {section}{\numberline {5.2}Program Structure}{54}
-\contentsline {section}{\numberline {5.3}Results}{60}
-\contentsline {chapter}{\numberline {Chapter 6}Theory Crafting}{62}
-\contentsline {section}{\numberline {6.1}Introduction}{62}
-\contentsline {section}{\numberline {6.2}Recap because its confusing}{63}
-\contentsline {section}{\numberline {6.3}First and Second Derivatives of all 6 possible algorithms}{64}
-\contentsline {section}{\numberline {6.4}Difference between divergences}{66}
-\contentsline {section}{\numberline {6.5}Difference between estimators}{66}
-\contentsline {chapter}{\numberline {Chapter 7}Inference Experiments - "Sprinkler"}{70}
-\contentsline {section}{\numberline {7.1}Determining optimal activation function}{70}
-\contentsline {subsection}{\numberline {7.1.1}Experiment Outline}{70}
-\contentsline {subsection}{\numberline {7.1.2}Results}{70}
-\contentsline {section}{\numberline {7.2}Comparing Estimator Accuracies}{71}
-\contentsline {subsection}{\numberline {7.2.1}Experiment Outline}{71}
-\contentsline {subsection}{\numberline {7.2.2}Results}{71}
-\contentsline {section}{\numberline {7.3}Comparing Accuracies of Undertrained Estimators}{72}
-\contentsline {subsection}{\numberline {7.3.1}Experiment Outline}{72}
-\contentsline {subsection}{\numberline {7.3.2}Results}{72}
-\contentsline {chapter}{\numberline {Chapter 8}Data Generation - (MNIST image generation)}{73}
-\contentsline {section}{\numberline {8.1}Problem Context}{73}
-\contentsline {section}{\numberline {8.2}Program Structure}{73}
-\contentsline {section}{\numberline {8.3}Results}{74}
-\contentsline {chapter}{\numberline {Chapter 9}Related Work and Discussion}{76}
-\contentsline {chapter}{\numberline {Chapter 10}Conclusion}{77}
-\contentsline {chapter}{\numberline {Appendix A}Kernel Density Estimation}{80}
+\contentsline {subsection}{\numberline {4.1.2}Prior-Contrastive Algorithm}{35}
+\contentsline {subsection}{\numberline {4.1.3}Joint-Contrastive Algorithm}{38}
+\contentsline {section}{\numberline {4.2}Divergence Minimisation}{40}
+\contentsline {subsection}{\numberline {4.2.1}Derivation}{40}
+\contentsline {subsection}{\numberline {4.2.2}Prior-Contrastive Algorithm}{42}
+\contentsline {subsection}{\numberline {4.2.3}Joint-Contrastive Algorithm}{44}
+\contentsline {subsection}{\numberline {4.2.4}Alternative Derivation of Class Probability Estimation}{46}
+\contentsline {chapter}{\numberline {Chapter 5}Initial Experiment - Inference, "Sprinkler" Example}{48}
+\contentsline {section}{\numberline {5.1}Problem Context}{48}
+\contentsline {section}{\numberline {5.2}Program Structure}{49}
+\contentsline {section}{\numberline {5.3}Results}{55}
+\contentsline {chapter}{\numberline {Chapter 6}Theory Crafting}{57}
+\contentsline {section}{\numberline {6.1}Introduction}{57}
+\contentsline {section}{\numberline {6.2}Recap because its confusing}{58}
+\contentsline {section}{\numberline {6.3}First and Second Derivatives of all 6 possible algorithms}{59}
+\contentsline {section}{\numberline {6.4}Difference between divergences}{61}
+\contentsline {section}{\numberline {6.5}Difference between estimators}{61}
+\contentsline {chapter}{\numberline {Chapter 7}Inference Experiments - "Sprinkler"}{65}
+\contentsline {section}{\numberline {7.1}Determining optimal activation function}{65}
+\contentsline {subsection}{\numberline {7.1.1}Experiment Outline}{65}
+\contentsline {subsection}{\numberline {7.1.2}Results}{65}
+\contentsline {section}{\numberline {7.2}Comparing Estimator Accuracies}{66}
+\contentsline {subsection}{\numberline {7.2.1}Experiment Outline}{66}
+\contentsline {subsection}{\numberline {7.2.2}Results}{66}
+\contentsline {section}{\numberline {7.3}Comparing Accuracies of Undertrained Estimators}{67}
+\contentsline {subsection}{\numberline {7.3.1}Experiment Outline}{67}
+\contentsline {subsection}{\numberline {7.3.2}Results}{67}
+\contentsline {chapter}{\numberline {Chapter 8}Data Generation - (MNIST image generation)}{68}
+\contentsline {section}{\numberline {8.1}Problem Context}{68}
+\contentsline {section}{\numberline {8.2}Program Structure}{68}
+\contentsline {section}{\numberline {8.3}Results}{69}
+\contentsline {chapter}{\numberline {Chapter 9}Related Work and Discussion}{71}
+\contentsline {chapter}{\numberline {Chapter 10}Conclusion}{72}
+\contentsline {chapter}{\numberline {Appendix A}Kernel Density Estimation}{75}
