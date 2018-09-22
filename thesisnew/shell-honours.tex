@@ -248,9 +248,9 @@ Originally, neural networks were an attempt to create an algorithm that mimics t
 
 One key feature of the brain structure is the capability for the neurons to adapt to suit different purposes\cite{neuroplast}. Neuroscientists have conducted experiments on animals where they rewired the optic nerve from the eye to the auditory cortex. They found that the auditory cortex eventually adapted to process the visual signals, and the animals were able to perform tasks requiring sight. This experiment can be repeated for almost any input sensor and the neurons will adjust accordingly to process the signals in a useful manner. They deduced that each neuron has a similar structure regardless of its location in the brain, in which electrical signal inputs are transformed in some way and outputted to other neurons. Overall, the network of neurons was able to process an arbitrary input signal to suit a given purpose\cite{neuroplast}. These are the core principles behind neural networks.
 
-Let $f^*$ be some function in the space of $\R$. The primary goal of a neural network is to approximate $f^*$ using a mapping with parameters $\bm{\Theta}$ from input $\textbf{x}$ to output $\textbf{y}$: $\textbf{y}=\textbf{f}_{\bm{\Theta}}(\textbf{x})$. In fact, the universal approximation theorem states that neural networks can approximate any function\cite{universal, cybenko}. For example, a typical regression problem of estimating housing prices would have the network inputting the values of certain predictors such as size (continuous) and type of building (categorical), and outputting the price. Another example is the classification problem of recognising handwritten digits (0-9) in a black and white image \cite{mnist}. There would be many inputs corresponding to the value of each pixel, and the network would have 10 outputs corresponding to the probability of each digit, and the digit with the highest probability would be selected.
+Let $f^*$ be some function in the space of $\R$. The primary goal of a neural network is to approximate $f^*$ using a mapping with parameters $\bm{\Theta}$ from input $\bm{x}$ to output $\bm{y}$: $\bm{y}=\bm{f}_{\bm{\Theta}}(\bm{x})$. In fact, the universal approximation theorem states that neural networks can approximate any function\cite{universal, cybenko}. For example, a typical regression problem of estimating housing prices would have the network inputting the values of certain predictors such as size (continuous) and type of building (categorical), and outputting the price. Another example is the classification problem of recognising handwritten digits (0-9) in a black and white image \cite{mnist}. There would be many inputs corresponding to the value of each pixel, and the network would have 10 outputs corresponding to the probability of each digit, and the digit with the highest probability would be selected.
 \section{Individual Node Structure}
-Before discussing the overall structure of the neural network, we describe the structure of an individual node. A typical node takes in inputs from either the external input, or the outputs from other nodes, in addition to a bias node, which is the equivalent of the intercept term in a regression problem. Using the example of a node function $h_{\bm{\theta}}(\textbf{x})$ with 3 inputs (see Figure 2.1 below), we label these inputs as $\textbf{x}=[x_0\quad x_1\quad x_2\quad x_3]^\intercal$, with $x_0=1$ corresponding to the bias node. These values are multiplied by weights $\bm{\theta}=[\theta_0\quad\theta_1\quad\theta_2\quad\theta_3]$, and then passed through an activation function $g(\bm{x})$\cite{neuralstat}. The objective of the activation function is to normalise the network output to a given range, such as $(0,1)$ or $\R$. A list of common activation functions is given on the next page.\\
+Before discussing the overall structure of the neural network, we describe the structure of an individual node. A typical node takes in inputs from either the external input, or the outputs from other nodes, in addition to a bias node, which is the equivalent of the intercept term in a regression problem. Using the example of a node function $h_{\bm{\theta}}(\bm{x})$ with 3 inputs (see Figure 2.1 below), we label these inputs as $\bm{x}=[x_0\quad x_1\quad x_2\quad x_3]^\intercal$, with $x_0=1$ corresponding to the bias node. These values are multiplied by weights $\bm{\theta}=[\theta_0\quad\theta_1\quad\theta_2\quad\theta_3]$, and then passed through an activation function $g(\bm{x})$\cite{neuralstat}. The objective of the activation function is to normalise the network output to a given range, such as $(0,1)$ or $\R$. A list of common activation functions is given on the next page.\\
 \begin{figure}[h]
 \begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
     \tikzstyle{every pin edge}=[<-,shorten <=1pt]
@@ -295,10 +295,10 @@ Before discussing the overall structure of the neural network, we describe the s
 \newpage
 Some common activation functions are\cite{DeepLearning}:
 \begin{itemize}
-\item The rectified linear unit or ReLU activation function output is bound in $[0,\infty)$. It has the formula $g(x)=\max\{0,x\}$ corresponding to node function $h_{\bm{\theta}}(\textbf{x})=\max\{0,\bm{\theta}^\top\textbf{x}\}$.
-\item The sigmoid or logistic activation function outputs are restricted to $(0,1)$, with the formula $g(x)=(1+\exp(-x))^{-1}$ corresponding to node function  $h_{\bm{\theta}}(\textbf{x})=(1+\exp(-\bm{\theta}^\top\textbf{x}))^{-1}$.
-\item The hyperbolic tangent function output ranges between $(-1,1)$, denoted as $g(x)=\tanh(x)$ corresponding to $h_{\bm{\theta}}(\textbf{x})=\tanh(\bm{\theta}^\top\textbf{x})$.
-\item The linear activation function is used to describe nodes with no activation function, as its formula is $g(x)=x$, corresponding to $h_{\bm{\theta}}(\textbf{x})=\bm{\theta}^\top\textbf{x}$. It therefore ranges in $\R$.
+\item The rectified linear unit or ReLU activation function output is bound in $[0,\infty)$. It has the formula $g(x)=\max\{0,x\}$ corresponding to node function $h_{\bm{\theta}}(\bm{x})=\max\{0,\bm{\theta}^\top\bm{x}\}$.
+\item The sigmoid or logistic activation function outputs are restricted to $(0,1)$, with the formula $g(x)=(1+\exp(-x))^{-1}$ corresponding to node function  $h_{\bm{\theta}}(\bm{x})=(1+\exp(-\bm{\theta}^\top\bm{x}))^{-1}$.
+\item The hyperbolic tangent function output ranges between $(-1,1)$, denoted as $g(x)=\tanh(x)$ corresponding to $h_{\bm{\theta}}(\bm{x})=\tanh(\bm{\theta}^\top\bm{x})$.
+\item The linear activation function is used to describe nodes with no activation function, as its formula is $g(x)=x$, corresponding to $h_{\bm{\theta}}(\bm{x})=\bm{\theta}^\top\bm{x}$. It therefore ranges in $\R$.
 \end{itemize}
 Their plots are shown in Figure 2.2 below.\\
 \begin{figure}[h]
@@ -509,7 +509,7 @@ Rectified linear units are the default choice for the hidden layers for their ma
 Since the input layer has no activation function, it can be described as having a linear activation function.\\
 For the output layer, the activation function with the most reasonable output range is used. This depends on what the network is being used for. For example, in classification, the network assigns a probability to each case, so a sigmoid activation function would be most reasonable, as it ranges between 0 and 1. On the other hand, a rectified linear unit would be used for regression of a non-negative quantity such as price or time.
 \section{Weight Initialization}
-Proper initialization of the weights is ideal to improve convergence, as if the weights are too low, then the nodal outputs will continually decrease through the layers and become very small, requiring many iterations of training to fix. Similarly, if the weights are too high, then the result output of the network will be extremely large. In this section we discuss Xavier Initialization \cite{xavier}, which aims to keep the signal variance constant throughout the network. To derive the initialization algorithm, first consider in the bias-per-node representation a single node with $n$ inputs, and let $z$ denote the weighted sum of the inputs $\bm{\theta}^\top\textbf{x}$ before it is passed through the activation function. This is written as
+Proper initialization of the weights is ideal to improve convergence, as if the weights are too low, then the nodal outputs will continually decrease through the layers and become very small, requiring many iterations of training to fix. Similarly, if the weights are too high, then the result output of the network will be extremely large. In this section we discuss Xavier Initialization \cite{xavier}, which aims to keep the signal variance constant throughout the network. To derive the initialization algorithm, first consider in the bias-per-node representation a single node with $n$ inputs, and let $z$ denote the weighted sum of the inputs $\bm{\theta}^\top\bm{x}$ before it is passed through the activation function. This is written as
 \[z=\sum_{i=1}^n b_i+\sum^n_{i=1}\theta_ix_i.\]
 $\sum_{i=1}^n b_i$ is a constant term, so $\Var(\sum_{i=1}^n b_i)=0$. Now under the assumption that the inputs and weights have 0 mean, we find the variance of the other terms:
 \begin{align*}
@@ -614,20 +614,26 @@ Having derived the partial derivatives of the loss function with respect to the 
 \chapter{Variational Inference}
 In this chapter, we explain variational inference, a method that uses a different, `variational' distribution to approximate posterior distributions in the context of Bayesian statistics. The name comes from the use of variational calculus to derive certain expressions. We first describe the Bayesian framework and problems associated with computational intractability. We then explain, with examples, two types of variational inference: mean-field variational inference and amortized inference. Finally, the chapter is concluded with a description of issues that arise when one or more of the prior or likelihood distributions are implicit, that is, their parametrisation is unknown but it is possible to sample from them.
 \section{Context}
-A fundamental problem in Bayesian statistics is to evaluate, or estimate posterior densities to perform analysis on unknown parameters \cite{gelman}. Consider the set of latent and known variables $z_1,\dots,z_M$ and $x_1,\dots,x_N$, respectively, with joint density $p(\textbf{z},\textbf{x})$. The posterior density $p(\textbf{z}|\textbf{x})$ is the distribution of the latent parameters $z_1,\dots,z_M$ conditioned on the known variables $\textbf{x}$. Applying Bayes' theorem, it can be written as:
+A fundamental problem in Bayesian statistics is to evaluate, or estimate posterior densities to perform analysis on unknown parameters \cite{gelman}. Consider the set of latent and known variables $z_1,\dots,z_M$ and $x_1,\dots,x_N$, respectively, with joint density $p(\bm{z},\bm{x})$. The posterior density $p(\bm{z}|\bm{x})$ is the distribution of the latent parameters $z_1,\dots,z_M$ conditioned on the known variables $\bm{x}$. Applying Bayes' theorem, it can be written as:
 \begin{equation*}
-p(\textbf{z}|\textbf{x})=\frac{p(\textbf{z},\textbf{x})}{p(\textbf{x})}= \frac{p(\textbf{z})p(\textbf{x}|\textbf{z})}{\int_\mathbcal{z}p(\textbf{z},\textbf{x})d\textbf{z}}
+p(\bm{z}|\bm{x})=\frac{p(\bm{z},\bm{x})}{p(\bm{x})}= \frac{p(\bm{z})p(\bm{x}|\bm{z})}{\int_\mathbcal{z}p(\bm{z},\bm{x})d\bm{z}}
 \end{equation*}
 where
 \begin{itemize}
-\item $p(\textbf{z})$ is the prior distribution: the initial distribution of $\textbf{z}$ before the data $\textbf{x}$ is observed. This can be initialised to represent our initial beliefs, or it can be parametrised randomly,
-\item $p(\textbf{x}|\textbf{z})$ is the likelihood: the distribution of data $\textbf{x}$ conditioned on the parameters $\textbf{z}$,
-\item $p(\textbf{x})=\int_\mathcal{z}p(\textbf{z},\textbf{x})d\textbf{z}$ is the marginal likelihood, or the evidence: the density of the data averaged across all possible parameter values.
+\item $p(\bm{z})$ is the prior distribution: the initial distribution of $\bm{z}$ before the data $\bm{x}$ is observed. This can be initialised to represent our initial beliefs, or it can be parametrised randomly,
+\item $p(\bm{x}|\bm{z})$ is the likelihood: the distribution of data $\bm{x}$ conditioned on the parameters $\bm{z}$,
+\item $p(\bm{x})=\int_\mathcal{z}p(\bm{z},\bm{x})d\bm{z}$ is the marginal likelihood, or the evidence: the density of the data averaged across all possible parameter values.
 \end{itemize}
-If the evidence integral $p(\textbf{x})=\int_\mathbcal{z}p(\textbf{z},\textbf{x})d\textbf{z}$ is computationally intractable, then we are unable to evaluate the posterior density. Traditional MCMC (Markov Chain Monte Carlo) methods overcome this obstacle by sampling from a Markov chain that converges to the stationary distribution $p(\textbf{z},\textbf{x})$. However, these methods tend to have slow convergence for large datasets or complex models. When faced with these issues or when desiring a faster computation, one may instead apply variational inference, an alternative approach to density estimation. Variational inference methods can be much faster than MCMC, but they are known to underestimate the true posterior variance\cite{blei}, leading to a trade-off between speed of convergence and mean squared error.
+If the evidence integral $p(\bm{x})=\int_\mathbcal{z}p(\bm{z},\bm{x})d\bm{z}$ is computationally intractable, then we are unable to evaluate the posterior density. Traditional MCMC (Markov Chain Monte Carlo) methods overcome this obstacle by sampling from a Markov chain that converges to the stationary distribution $p(\bm{z},\bm{x})$. However, these methods tend to have slow convergence for large datasets or complex models. When faced with these issues or when desiring a faster computation, one may instead apply variational inference, an alternative approach to density estimation. Variational inference methods can be much faster than MCMC, but they are known to underestimate the true posterior variance\cite{blei}, leading to a trade-off between speed of convergence and mean squared error.
 
 \section{The KL Divergence}
-We now present the KL (Kullback-Leibler) divergence, a type of f-divergence that is commonly used in variational inference. It is a measure of how much two probability distributions differ\cite{KL}.
+We first define the f-divergence: a measure of how much two probability distributions differ.
+\begin{definition}
+The f-divergence of continuous probability distribution $Q$ from $P$ is
+\[D_f(P||Q)=\mathbb{E}_{p(u)}\left[f\left(\frac{q(u)}{p(u)}\right)\right],\]
+where $f$ is a convex function such that $f(1)=0$.
+\end{definition}
+When $f(u)=-\log u$, we have the KL (Kullback-Leibler) divergence\cite{KL}, a type of f-divergence that is commonly used in variational inference\cite{blei}.
 \begin{definition}
 The KL divergence is the expected logarithmic difference between two distributions $P$ and $Q$ with respect to $P$:
 \begin{equation*}
@@ -640,7 +646,20 @@ The KL divergence is not symmetric:
 KL(p(x)||q(x))\neq KL(q(x)||p(x)).
 \end{equation*}
 \end{remark}
-In variational inference, $KL(p(x)||q(x))$ is known as the forward KL divergence, whilst $KL(q(x)||p(x))$ is the reverse KL divergence. The expectation is taken with respect to different distributions.
+In variational inference, $KL(p(x)||q(x))$ is known as the forward KL divergence, whilst $KL(q(x)||p(x))$ is the reverse KL divergence.
+\begin{lemma}
+The reverse KL divergence is formulated when $f(u)=u\log u$ in an f-divergence.
+\begin{proof}
+\begin{align*}
+D_{RKL}(P||Q)&=\mathbb{E}_p\left[\frac{q(u)}{p(u)}\log \left(\frac{q(u)}{p(u)}\right)\right]\\
+&=\int p(u)\frac{q(u)}{p(u)}\log\left(\frac{q(u)}{p(u)}\right)du\\
+&= \int q(u)\log\left(\frac{q(u)}{p(u)}\right)du\\
+&= \mathbb{E}_q\left[\log \left(\frac{q(u)}{p(u)}\right)\right]\\
+&=KL[q(u)||p(u)].
+\end{align*}
+\end{proof}
+\end{lemma}
+Note that the forward and reverse KL divergences mainly differ in the distribution that is used to take the expectation.
 \begin{lemma}
 The KL divergence is non-negative, and it is equal to zero if and only if $p(x)=q(x)$ for almost all $x$:
 \begin{equation*}
@@ -659,63 +678,63 @@ KL(p(x)||q(x))&=\int_{-\infty}^\infty p(x)\log \left(\frac{p(x)}{q(x)}\right)dx\
 \end{proof}
 \end{lemma}
 \section{Introduction to Variational Inference}
-Variational inference approximates the true posterior distribution $p(\textbf{z}|\textbf{x})$ with a different distribution $q(\textbf{z})$, taken from a tractable family of approximate distributions $\mathcal{Q}$, and then minimizes the f-divergence between the two distributions in an optimization problem:
+Variational inference approximates the true posterior distribution $p(\bm{z}|\bm{x})$ with a different distribution $q(\bm{z})$, taken from a tractable family of approximate distributions $\mathcal{Q}$, and then minimizes the f-divergence between the two distributions in an optimization problem:
 \begin{equation}
-q^*(\textbf{z})=\argmin_{q(\textbf{z})\in \mathcal{Q}}D_f(q(\textbf{z})||p(\textbf{z}|\textbf{x}))
+q^*(\bm{z})=\argmin_{q(\bm{z})\in \mathcal{Q}}D_f(q(\bm{z})||p(\bm{z}|\bm{x}))
 \end{equation} where $D_f$ denotes an f-divergence\cite{blei}. This produces an analytic approximation to the posterior density. The most common f-divergence used in variational inference is the reverse KL divergence, used instead of the forward KL divergence as we are unable to sample from our true posterior $p(z|x)$, and because it leads to an expectation maximization algorithm as opposed to an expectation propagation algorithm. Equation 3.3.1 can therefore be written as:
 \begin{equation}
-q^*(\textbf{z})=\argmin_{q(\textbf{z})\in \mathcal{Q}}KL(q(\textbf{z})||p(\textbf{z}|\textbf{x})).
+q^*(\bm{z})=\argmin_{q(\bm{z})\in \mathcal{Q}}KL(q(\bm{z})||p(\bm{z}|\bm{x})).
 \end{equation}
-From lemma 3.2.3, it is evident that $KL(q(\textbf{z})||p(\textbf{z}|\textbf{x}))$ attains a minimal value of $0$ when $q(\textbf{z})=p(\textbf{z}|\textbf{x})$.\\
-There is an issue with solving equation 3.3.2 directly: we cannot evaluate the reverse KL divergence as $p(\textbf{z}|\textbf{x})$ is unknown, a result of $p(\textbf{x})$ being intractable. Instead, we rearrange the terms of equation 3.3.2 to formulate a tractable expression that can be optimized.
-
+From lemma 3.2.5, it is evident that $KL(q(\bm{z})||p(\bm{z}|\bm{x}))$ attains a minimal value of $0$ when $q(\bm{z})=p(\bm{z}|\bm{x})$.\\
+There is an issue with solving equation 3.3.2 directly: we cannot evaluate the reverse KL divergence as $p(\bm{z}|\bm{x})$ is unknown, a result of $p(\bm{x})$ being intractable. Instead, we rearrange the terms of equation 3.3.2 to formulate a tractable expression that can be optimized.
+\newpage
 \section{Derivation of the ELBO}
 In this section, we formulate the evidence lower bound (ELBO) of our posterior inference problem. Maximisation of this term is equivalent to solving equation 3.3.2. We begin by applying Bayes' law to the problem and expanding the terms:
 \begin{align*}
-q^*(\textbf{z})&=\argmin_{q(\textbf{z})\in \mathcal{Q}}KL(q(\textbf{z})||p(\textbf{z}|\textbf{x}))\\
-&= \argmin_{q(\textbf{z})\in \mathcal{Q}} \mathbb{E}_{q(\textbf{z})}[\log q(\textbf{z})-\log p(\textbf{z}|\textbf{x})]\\
-&= \argmin_{q(\textbf{z})\in \mathcal{Q}} \mathbb{E}_{q(\textbf{z})}\left[\log q(\textbf{z})-\log\frac{p(\textbf{x}|\textbf{z})p(\textbf{z})}{p(\textbf{x})}\right]\\
-&= \argmin_{q(\textbf{z})\in \mathcal{Q}} \left(\mathbb{E}_{q(\textbf{z})}[\log q(\textbf{z})-\log p(\textbf{x}|\textbf{z})-\log p(\textbf{z})]+\log p(\textbf{x})\right).
+q^*(\bm{z})&=\argmin_{q(\bm{z})\in \mathcal{Q}}KL(q(\bm{z})||p(\bm{z}|\bm{x}))\\
+&= \argmin_{q(\bm{z})\in \mathcal{Q}} \mathbb{E}_{q(\bm{z})}[\log q(\bm{z})-\log p(\bm{z}|\bm{x})]\\
+&= \argmin_{q(\bm{z})\in \mathcal{Q}} \mathbb{E}_{q(\bm{z})}\left[\log q(\bm{z})-\log\frac{p(\bm{x}|\bm{z})p(\bm{z})}{p(\bm{x})}\right]\\
+&= \argmin_{q(\bm{z})\in \mathcal{Q}} \left(\mathbb{E}_{q(\bm{z})}[\log q(\bm{z})-\log p(\bm{x}|\bm{z})-\log p(\bm{z})]+\log p(\bm{x})\right).
 \end{align*}
-Note in the last line $\mathbb{E}_{q(\textbf{z})}[p(\textbf{x})]=p(\textbf{x})$ as it is not dependent on $q(\textbf{z})$. Since our issues with equation 3.3.2 result from the intractability of $p(\textbf{x})$, we rearrange the KL divergence expression as follows:
+Note in the last line $\mathbb{E}_{q(\bm{z})}[p(\bm{x})]=p(\bm{x})$ as it is not dependent on $q(\bm{z})$. Since our issues with equation 3.3.2 result from the intractability of $p(\bm{x})$, we rearrange the KL divergence expression as follows:
 \begin{align}
-KL(q(\textbf{z})||p(\textbf{z}|\textbf{x}))&=\mathbb{E}_{q(\textbf{z})}[\log q(\textbf{z})-\log p(\textbf{x}|\textbf{z})-\log p(\textbf{z})]+\log p(\textbf{x}) \nonumber \\
-\log p(\textbf{x})-KL(q(\textbf{z})||p(\textbf{z}|\textbf{x}))&=-\mathbb{E}_{q(\textbf{z})}[\log q(\textbf{z})-\log p(\textbf{x}|\textbf{z})-\log p(\textbf{z})]\nonumber \\
-&=\mathbb{E}_{q(\textbf{z})}[\log p(\textbf{x}|\textbf{z})]-\mathbb{E}_{q(\textbf{z})}[\log q(\textbf{z})-\log p(\textbf{z})]\nonumber \\
-&=\mathbb{E}_{q(\textbf{z})}[\log p(\textbf{x}|\textbf{z})]-KL(q(\textbf{z})||p(\textbf{z})).
+KL(q(\bm{z})||p(\bm{z}|\bm{x}))&=\mathbb{E}_{q(\bm{z})}[\log q(\bm{z})-\log p(\bm{x}|\bm{z})-\log p(\bm{z})]+\log p(\bm{x}) \nonumber \\
+\log p(\bm{x})-KL(q(\bm{z})||p(\bm{z}|\bm{x}))&=-\mathbb{E}_{q(\bm{z})}[\log q(\bm{z})-\log p(\bm{x}|\bm{z})-\log p(\bm{z})]\nonumber \\
+&=\mathbb{E}_{q(\bm{z})}[\log p(\bm{x}|\bm{z})]-\mathbb{E}_{q(\bm{z})}[\log q(\bm{z})-\log p(\bm{z})]\nonumber \\
+&=\mathbb{E}_{q(\bm{z})}[\log p(\bm{x}|\bm{z})]-KL(q(\bm{z})||p(\bm{z})).
 \end{align}
-We refer to $\log p(\textbf{x})-KL(q(\textbf{z})||p(\textbf{z}|\textbf{x}))$ as $ELBO(q)$, as it is equal to the marginal probability of the data subtracted by a constant `error term'. Now our problem of minimizing the KL divergence between $q(\textbf{z})$ and $p(\textbf{z}|\textbf{x})$ is equivalent to maximizing $ELBO(q)$, which is equal to the tractable expression on line 3.4.1. We can therefore rewrite our optimization problem as:
+We refer to $\log p(\bm{x})-KL(q(\bm{z})||p(\bm{z}|\bm{x}))$ as $ELBO(q)$, as it is equal to the marginal probability of the data subtracted by a constant `error term'. Now our problem of minimizing the KL divergence between $q(\bm{z})$ and $p(\bm{z}|\bm{x})$ is equivalent to maximizing $ELBO(q)$, which is equal to the tractable expression on line 3.4.1. We can therefore rewrite our optimization problem as:
 \begin{align*}
-q^*(\textbf{z})&=\argmin_{q(\textbf{z})\in \mathcal{Q}}KL(q(\textbf{z})||p(\textbf{z}|\textbf{x}))\\
-&= \argmax_{q(\textbf{z})\in \mathcal{Q}} ELBO(q)\\
-&= \argmax_{q(\textbf{z})\in \mathcal{Q}} \left(\mathbb{E}_{q(\textbf{z})}[\log p(\textbf{x}|\textbf{z})]-KL(q(\textbf{z})||p(\textbf{z}))\right).
+q^*(\bm{z})&=\argmin_{q(\bm{z})\in \mathcal{Q}}KL(q(\bm{z})||p(\bm{z}|\textbf{x}))\\
+&= \argmax_{q(\bm{z})\in \mathcal{Q}} ELBO(q)\\
+&= \argmax_{q(\bm{z})\in \mathcal{Q}} \left(\mathbb{E}_{q(\bm{z})}[\log p(\bm{x}|\bm{z})]-KL(q(\bm{z})||p(\bm{z}))\right).
 \end{align*}
-Note that this expression attains a maximum at the marginal likelihood of the dataset $\log p(\textbf{x})$, hence we may use the ELBO to construct a model selection criterion.
+Note that this expression attains a maximum at the marginal likelihood of the dataset $\log p(\bm{x})$, hence we may use the ELBO to construct a model selection criterion.
 \newpage
 \section{Mean-Field Variational Family}
-The family of variational distributions $\mathcal{Q}$ is typically a `mean-field variational family', in which the distribution $q(\textbf{z})$ factorizes over the latent variables $\{z_i\}^M_{i=1}$, each with an individual set of parameters $\{\phi_i\}^M_{i=1}$:
+The family of variational distributions $\mathcal{Q}$ is typically a `mean-field variational family', in which the distribution $q(\bm{z})$ factorizes over the latent variables $\{z_i\}^M_{i=1}$, each with an individual set of parameters $\{\phi_i\}^M_{i=1}$:
 \begin{equation}
-q(\textbf{z})=\prod^M_{i=1}q_{\phi_i}(z_i).
+q(\bm{z})=\prod^M_{i=1}q_{\phi_i}(z_i).
 \end{equation}
 The individual factors $q_{\phi_i}(z_i)$ can take any form, but they are assumed to be independent, which simplifies derivations but is less accurate when the true latent variables exhibit dependence. Fixing the forms of the individual factors, we want to choose the parameters $\phi_i$ so that $ELBO(q)$ is maximized. To derive an expression for the optimal factor $q_i^*(z_i)$, we substitute equation 3.5.1 into the $ELBO$, factor out a specific $q_j(z_j)$ and equate the functional derivative of the resulting Lagrangian equation with 0. \\
 Firstly, we express $ELBO(q)$ in an integral form as follows:
 \begin{align*}
-ELBO(q)&= \mathbb{E}_{q(z)}[\log p(\textbf{x}|\textbf{z})]-KL(q(\textbf{z})||p(\textbf{z}))\\
-&= \mathbb{E}_{q(x)}[\log p(\textbf{x}|\textbf{z})+\log p(\textbf{z})-\log q(\textbf{z})]\\
-&= \mathbb{E}_{q(z)}[\log p(\textbf{x}, \textbf{z})-\log q(\textbf{z})]\\
-&= \int_{\mathbcal{z}}q(\textbf{z})(\log p(\textbf{x},\textbf{z})-\log q(\textbf{z}))d\textbf{z}.
+ELBO(q)&= \mathbb{E}_{q(z)}[\log p(\bm{x}|\bm{z})]-KL(q(\bm{z})||p(\bm{z}))\\
+&= \mathbb{E}_{q(x)}[\log p(\bm{x}|\bm{z})+\log p(\bm{z})-\log q(\bm{z})]\\
+&= \mathbb{E}_{q(z)}[\log p(\bm{x}, \bm{z})-\log q(\bm{z})]\\
+&= \int_{\mathbcal{z}}q(\bm{z})(\log p(\bm{x},\bm{z})-\log q(\bm{z}))d\bm{z}.
 \end{align*}
-Substituting $q(\textbf{z})=\prod^M_{i=1}q_i(z_i)$ and factoring out $q_j(z_j)$ yields:
+Substituting $q(\bm{z})=\prod^M_{i=1}q_i(z_i)$ and factoring out $q_j(z_j)$ yields:
 \begin{align}
-ELBO(q)&= \int_\mathbcal{z}\left[\prod^M_{i=1}q_i(z_i)\right]\left(\log p(\textbf{x},\textbf{z})-\sum_{i=1}^M\log q_i(z_i)\right)d\textbf{z}\nonumber\\
-&= \int_\mathcal{z_j}q_j(z_j)\left(\int_\mathcal{z_{-j}}\log p(\textbf{x},\textbf{z})\prod_{i\neq j}q_i(z_i)d\textbf{z}_{-j} \right) dz_j\nonumber\\
-&\quad -\int_{\mathcal{z_j}}q_j(z_j)\left(\int_{\mathcal{z}_{-j}}\left[\prod_{i\neq j}q_i(z_i)\right]\sum_{i=1}^M q_i(z_i)d\textbf{z}_{-j}\right)dz_j\nonumber\\
-&= \int_{\mathcal{z_j}}q_j(z_j)\mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]dz_j\nonumber\\
+ELBO(q)&= \int_\mathbcal{z}\left[\prod^M_{i=1}q_i(z_i)\right]\left(\log p(\bm{x},\bm{z})-\sum_{i=1}^M\log q_i(z_i)\right)d\bm{z}\nonumber\\
+&= \int_\mathcal{z_j}q_j(z_j)\left(\int_\mathcal{z_{-j}}\log p(\bm{x},\bm{z})\prod_{i\neq j}q_i(z_i)d\bm{z}_{-j} \right) dz_j\nonumber\\
+&\quad -\int_{\mathcal{z_j}}q_j(z_j)\left(\int_{\mathcal{z}_{-j}}\left[\prod_{i\neq j}q_i(z_i)\right]\sum_{i=1}^M q_i(z_i)d\bm{z}_{-j}\right)dz_j\nonumber\\
+&= \int_{\mathcal{z_j}}q_j(z_j)\mathbb{E}_{\bm{z}_{-j}}[\log p(\bm{x},\bm{z})]dz_j\nonumber\\
 &\quad -\int_{\mathcal{z_j}}q_j(z_j)\log q_j(z_j)\left(\int_{\mathcal{z}_{-j}}\prod_{i\neq j}q_i(z_i)dz_{-j}\right) dz_j\nonumber\\
-&\quad -\int_{\mathcal{z_j}}q_j(z_j)\left(\int_{\mathcal{z}_{-j}}\left[\prod_{i\neq j}q_i(z_i)\right]\sum_{i\neq j}q_i(z_i)d{\textbf{z}_{-j}}\right)dz_j\nonumber\\
-&= \int_\mathcal{z_j}q_j(z_j)\mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]dz_j-\int_\mathcal{z_j}q_j(z_j)\log q_j(z_j)dz_j\nonumber\\
-&\quad -\int_{\mathcal{z}_{-j}}\left[\prod_{i\neq j}q_i(z_i)\right]\sum_{i\neq j}q_i(z_i)d{\textbf{z}_{-j}}
-\\&= \int_\mathcal{z_j}q_j(z_j)\left(\mathbb{E}_{\mathcal{z}_{-j}}[\log p(\textbf{x},\textbf{z})]-\log q_j(z_j)\right)dz_j+\text{const}.
+&\quad -\int_{\mathcal{z_j}}q_j(z_j)\left(\int_{\mathcal{z}_{-j}}\left[\prod_{i\neq j}q_i(z_i)\right]\sum_{i\neq j}q_i(z_i)d{\bm{z}_{-j}}\right)dz_j\nonumber\\
+&= \int_\mathcal{z_j}q_j(z_j)\mathbb{E}_{\bm{z}_{-j}}[\log p(\bm{x},\bm{z})]dz_j-\int_\mathcal{z_j}q_j(z_j)\log q_j(z_j)dz_j\nonumber\\
+&\quad -\int_{\mathcal{z}_{-j}}\left[\prod_{i\neq j}q_i(z_i)\right]\sum_{i\neq j}q_i(z_i)d{\bm{z}_{-j}}
+\\&= \int_\mathcal{z_j}q_j(z_j)\left(\mathbb{E}_{\mathcal{z}_{-j}}[\log p(\bm{x},\bm{z})]-\log q_j(z_j)\right)dz_j+\text{const}.
 \end{align}
 The term in line 3.5.2 is a constant with respect to $q_j(z_j)$. We want to maximize $ELBO(q)$, so we formulate the Lagrangian equation with the constraint that $q_i(z_i)$ are probability density functions:
 \begin{equation*}
@@ -723,42 +742,42 @@ ELBO(q)-\sum^M_{i=1}\lambda_i\int_\mathcal{z_i}q_i(z_i)dz_i=0
 \end{equation*}
 or using our expression for $ELBO(q)$ in line 3.5.3,
 \begin{equation}
-\int_\mathcal{z_j}q_j(z_j)\left(\mathbb{E}_{\mathcal{z}_{-j}}[\log p(\textbf{x},\textbf{z})]-\log q_j(z_j)\right)dz_j-\sum^M_{i=1}\lambda_i\int_\mathcal{z_i}q_i(z_i)dz_i+\text{const}=0.
+\int_\mathcal{z_j}q_j(z_j)\left(\mathbb{E}_{\mathcal{z}_{-j}}[\log p(\bm{x},\bm{z})]-\log q_j(z_j)\right)dz_j-\sum^M_{i=1}\lambda_i\int_\mathcal{z_i}q_i(z_i)dz_i+\text{const}=0.
 \end{equation} 
 We then take the functional derivative of Equation 3.5.4 with respect to $q_j(z_j)$:
 \begin{align}
-\frac{\partial ELBO(q)}{\partial q_j(z_j)}&= \frac{\partial}{\partial q_j(z_j)}\left[q_j(z_j)\left(\mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]-\log q_j(z_j)\right)-\lambda_jq_j(z_j)\right]\nonumber
-\\&= \mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]-\log q_j(z_j)-1-\lambda_j.
+\frac{\partial ELBO(q)}{\partial q_j(z_j)}&= \frac{\partial}{\partial q_j(z_j)}\left[q_j(z_j)\left(\mathbb{E}_{\bm{z}_{-j}}[\log p(\bm{x},\bm{z})]-\log q_j(z_j)\right)-\lambda_jq_j(z_j)\right]\nonumber
+\\&= \mathbb{E}_{\bm{z}_{-j}}[\log p(\bm{x},\bm{z})]-\log q_j(z_j)-1-\lambda_j.
 \end{align}
 Equating expression 3.5.5 to 0 and observing that $1+\lambda_j$ is constant with respect to $z$, we have:
 \begin{align}
-\log q_j^*(z_j)&= \mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]-\text{const} \nonumber\\
-q_j^*(z_j)&=\frac{e^{\mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]}}{\exp{(\text{const})}}\nonumber\\
-&= \frac{e^{\mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]}}{\int e^{\mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]}dz_j}.
+\log q_j^*(z_j)&= \mathbb{E}_{\bm{z}_{-j}}[\log p(\bm{x},\bm{z})]-\text{const} \nonumber\\
+q_j^*(z_j)&=\frac{e^{\mathbb{E}_{\bm{z}_{-j}}[\log p(\bm{x},\bm{z})]}}{\exp{(\text{const})}}\nonumber\\
+&= \frac{e^{\mathbb{E}_{\bm{z}_{-j}}[\log p(\bm{x},\bm{z})]}}{\int e^{\mathbb{E}_{\bm{z}_{-j}}[\log p(\bm{x},\bm{z})]}dz_j}.
 \end{align}
 \newpage
 The normalization constant on the denominator of 3.5.6 is derived by observing $q^*_j(z_j)$ as a density. Finally, we derive a simpler expression of $q^*_j(z_j)$ by observing that terms independent of $z_j$ can be treated as a constant:
 \begin{align}
-q^*_j(z_j)&\propto \exp\left(\mathbb{E}_{\textbf{z}_{-j}}[\log p(\textbf{x},\textbf{z})]\right)\nonumber\\
-&\propto \exp\left(\mathbb{E}_{\textbf{z}_{-j}}[\log p(z_j|\textbf{z}_{-j},\textbf{x})]\right).
+q^*_j(z_j)&\propto \exp\left(\mathbb{E}_{\bm{z}_{-j}}[\log p(\bm{x},\bm{z})]\right)\nonumber\\
+&\propto \exp\left(\mathbb{E}_{\bm{z}_{-j}}[\log p(z_j|\bm{z}_{-j},\bm{x})]\right).
 \end{align}
 This expression can be used in an expectation-maximization algorithm, in which the $q^*_j(z_j)$ is evaluated and iterated from $j=1\dots M$. This particular algorithm is called coordinate ascent variational inference (CAVI) (Algorithm 2):\\
 \\
 \begin{algorithm}[H]
 \caption{Coordinate Ascent Variational Inference (CAVI)}
-\KwData{Dataset $\textbf{x}$ and Bayesian Model p($\textbf{x},\textbf{z}$)}
-\KwResult{Variational density $q(\textbf{z})=\prod^M_{i=1}q_i(z_i)$}
+\KwData{Dataset $\bm{x}$ and Bayesian Model p($\bm{x},\bm{z}$)}
+\KwResult{Variational density $q(\bm{z})=\prod^M_{i=1}q_i(z_i)$}
 \BlankLine
 \Begin{
 Initialize random variational factors $q_j(z_j)$\;
 \While{ELBO(q) has not converged}{
 
 	\For{$j=1$ \KwTo $m$}{
-	Set $q_j(z_j)\propto \exp(\mathbb{E}_{\textbf{z}_{-j}}[\log p(z_j|\textbf{z}_{-j},\textbf{x})])$\;
+	Set $q_j(z_j)\propto \exp(\mathbb{E}_{\bm{z}_{-j}}[\log p(z_j|\bm{z}_{-j},\bm{x})])$\;
 	}
-	Calculate $ELBO(q)=\mathbb{E}_{q(\textbf{z})}[\log p(\textbf{z},\textbf{x})]-\mathbb{E}_{q(\textbf{z})}[\log q(\textbf{z})]$\;
+	Calculate $ELBO(q)=\mathbb{E}_{q(\bm{z})}[\log p(\bm{z},\bm{x})]-\mathbb{E}_{q(\bm{z})}[\log q(\bm{z})]$\;
 }
-Return $q(\textbf{z})$\;
+Return $q(\bm{z})$\;
 }
 \end{algorithm}
 \newpage
@@ -771,13 +790,13 @@ c_i&\sim \text{Categorical}\left(\frac{1}{K},\dots,\frac{1}{K}\right), &&i=1,\do
 x_i|c_i,\bm{\mu}&\sim N(c^\top_i\bm{\mu},1), &&i=1,\dots,n.
 \end{align*}
 This is a Bayesian mixture of univariate Gaussian random variables with unit variance. In this model, we draw $K$ $\mu_k$ variables from a prior Gaussian distribution $N(0,\sigma^2)$ ($\sigma^2$ is a hyperparameter), forming the vector $\bm{\mu}=(\mu_1,\dots,\mu_K)^\top$. We then generate an indicator vector $c_i$ of length $K$ from a prior categorical distribution. This vector has zeros for every element except for one element, where it is a $1$. Each element has equal probability $1/K$ of being the element that contains the $1$. The transpose of this $c_i$ is then multiplied by $\bm{\mu}$, essentially choosing one of the $\bm{\mu}$ elements at random. We then draw $x_i$ from the resulting $N(c^\top_i\bm{\mu},1)$.\\
-Here, our latent variables are $\textbf{z}=\{\textbf{c},\bm{\mu}\}$. Assuming $n$ samples, our joint density is
+Here, our latent variables are $\bm{z}=\{\bm{c},\bm{\mu}\}$. Assuming $n$ samples, our joint density is
 \begin{equation}
-p(\bm{\mu},\textbf{c},\textbf{x})=p(\bm{\mu})\prod^n_{i=1}p(c_i)p(x_i|c_i, \bm{\mu}).\end{equation}
+p(\bm{\mu},\bm{c},\bm{x})=p(\bm{\mu})\prod^n_{i=1}p(c_i)p(x_i|c_i, \bm{\mu}).\end{equation}
 From this, we derive the marginal likelihood
-\[p(\textbf{x})=\int p(\bm{\mu})\prod^n_{i=1}\sum_{c_i}p(c_i)p(x_i|c_i,\bm{\mu})d\bm{\mu}.\]
-This integral is intractable, as the time complexity of evaluating it is $\mathcal{O}(K^n)$, which is exponential in $K$. To evaluate the posterior distribution over the latent variables $p(\bm{\mu},\textbf{c}|\textbf{x})$, we would have to apply variational inference, approximating it with a variational distribution $q(\bm{\mu},\textbf{c})$. We will assume this distribution follows the mean-field variational family:
-\[q(\bm{\mu},\textbf{c})=\prod^K_{k=1}q(\mu_k;m_k,s^2_k)\prod^n_{i=1}q(c_i;\bm{\phi_i}).\]
+\[p(\bm{x})=\int p(\bm{\mu})\prod^n_{i=1}\sum_{c_i}p(c_i)p(x_i|c_i,\bm{\mu})d\bm{\mu}.\]
+This integral is intractable, as the time complexity of evaluating it is $\mathcal{O}(K^n)$, which is exponential in $K$. To evaluate the posterior distribution over the latent variables $p(\bm{\mu},\bm{c}|\bm{x})$, we would have to apply variational inference, approximating it with a variational distribution $q(\bm{\mu},\bm{c})$. We will assume this distribution follows the mean-field variational family:
+\[q(\bm{\mu},\bm{c})=\prod^K_{k=1}q(\mu_k;m_k,s^2_k)\prod^n_{i=1}q(c_i;\bm{\phi_i}).\]
 In this distribution, we have $K$ Gaussian factors with mean $\mu_k$ and variance $s^2_k$, and $n$ categorical factors with index probabilities defined by the vector $\bm{\phi_i}$, such that
 \begin{align*}
 \mu_k&\sim N(m_k,s^2_k), &&k=1,\dots,K,\\
@@ -785,21 +804,21 @@ x_i&\sim \text{Categorical}(\bm{\phi_i}), &&i=1,\dots,n.
 \end{align*}
 Using this and equation 3.6.1, we can derive the evidence lower bound as a function of the variational parameters:
 \begin{align*}
-ELBO(\textbf{m},\textbf{s}^2,\bm{\phi})&=\mathbb{E}[\log p(\textbf{z},\textbf{x})]-\mathbb{E}[\log q(\textbf{z})]\\
+ELBO(\bm{m},\bm{s}^2,\bm{\phi})&=\mathbb{E}[\log p(\textbf{z},\bm{x})]-\mathbb{E}[\log q(\bm{z})]\\
 &=\mathbb{E}[\log p(\bm{\mu,c},\textbf{x})]-\mathbb{E}[\log q(\bm{\mu,c})]\\
 &=\sum^K_{i=1}\mathbb{E}[\log p(\mu_k); m_k,s^2_k]\\
-&\quad +\sum^n_{i=1}\left(\mathbb{E}[\log p(c_i);\bm{\phi}_i]+\mathbb{E}[\log p(x_i|c_i,\bm{\mu});\bm{\phi}_i,\textbf{m},\textbf{s}^2]\right)\\
+&\quad +\sum^n_{i=1}\left(\mathbb{E}[\log p(c_i);\bm{\phi}_i]+\mathbb{E}[\log p(x_i|c_i,\bm{\mu});\bm{\phi}_i,\bm{m},\bm{s}^2]\right)\\
 &\quad -\sum^K_{k=1}\mathbb{E}[\log q(\mu_k;m_k,s^2_k)]-\sum^n_{i=1}\mathbb{E}[\log q(c_i;\bm{\phi}_i)].
 \end{align*}
 From equation 3.5.7, we derive the optimal categorical factor by only considering terms from the true distribution $p(.)$ dependent on $c_i$:
 \begin{equation}
-q^*(c_i;\bm{\phi}_i)\propto \exp\left(\log p(c_i)+\mathbb{E}[\log p(x_i|c_i,\bm{\mu});\textbf{m},\textbf{s}^2]\right).
+q^*(c_i;\bm{\phi}_i)\propto \exp\left(\log p(c_i)+\mathbb{E}[\log p(x_i|c_i,\bm{\mu});\bm{m},\bm{s}^2]\right).
 \end{equation}
 Now since $c_i$ is an indicator vector,
 \[p(x_i|c_i,\bm{\mu})=\prod^K_{k=1}p(x_i|\mu_k)^{c_{ik}}.\]
 We can now evaluate the second term of equation 3.6.2:
 \begin{align*}
-\mathbb{E}\left([\log p(x_i|c_i,\bm{\mu});\textbf{m},\textbf{s}^2]\right)&=\sum_{k=1}^K c_{ik}\mathbb{E}[\log p(x_i|\mu_k);m_k,s^2_k]\\
+\mathbb{E}\left([\log p(x_i|c_i,\bm{\mu});\bm{m},\bm{s}^2]\right)&=\sum_{k=1}^K c_{ik}\mathbb{E}[\log p(x_i|\mu_k);m_k,s^2_k]\\
 &=\sum_{k=1}^K c_{ik}\mathbb{E}[-(x_i-\mu_k)^2/2;m_k,s^2_k]+\text{const}\\
 &=\sum_{k=1}^Kc_{ik}\left(\mathbb{E}[\mu_k;m_k,s^2_k]x_i-\mathbb{E}[\mu^2_k;m_k,s^2_k]/2\right)+\text{const}.
 \end{align*}
@@ -808,10 +827,10 @@ In each line, terms constant with respect to $c_{ik}$ have been taken out of the
 By proportionality, we then have the variational update
 \[\phi_{ik}\propto \exp\left(\mathbb{E}[\mu_k;m_k,s^2_k]x_i-\mathbb{E}[\mu^2_k;m_k,s^2_k]/2\right).\]
 Now we find the variational density of the $k$th mixture component, again using equation 3.5.7 with the ELBO and ignoring terms independent of $p(.)$ and $\mu_k$:
-\[q(\mu_k;m_k,s^2_k)\propto \exp \left(\log p(\mu_k)+\sum^n_{i=1}\mathbb{E}[\log p(x_i|c_i,\bm{\mu});\phi_i, \textbf{m}_{-k},\textbf{s}^2_{-k}]\right).\]
+\[q(\mu_k;m_k,s^2_k)\propto \exp \left(\log p(\mu_k)+\sum^n_{i=1}\mathbb{E}[\log p(x_i|c_i,\bm{\mu});\phi_i, \bm{m}_{-k},\bm{s}^2_{-k}]\right).\]
 The log of this density is
 \begin{align*}
-\log q(\mu_k)&=\log p(\mu_k)+\sum_i^n \mathbb{E}[\log p(x_i|c_i,\bm{\mu});\phi_i,\textbf{m}_{-k},\textbf{s}^2_{-k}]+\text{const}\\
+\log q(\mu_k)&=\log p(\mu_k)+\sum_i^n \mathbb{E}[\log p(x_i|c_i,\bm{\mu});\phi_i,\bm{m}_{-k},\bm{s}^2_{-k}]+\text{const}\\
 &= \log p(\mu_k)+\sum_{i=1}^n\mathbb{E}[c_{ik}\log p(x_i|\mu_k);\phi_i]+\text{const}\\
 &= -\frac{\mu^2_k}{2\sigma^2}+\sum^n_{i=1}\mathbb{E}[c_{ik};\phi_i]\log p(x_i|\mu_k)+\text{const}\\
 &= -\frac{\mu^2_k}{2\sigma^2}+\sum^n_{i=1}\phi_{ik}\frac{-(x_i-\mu_k)^2}{2}+\text{const}\\
@@ -826,11 +845,11 @@ It can be seen that $q(\mu_k)$ is a Gaussian distribution, so our variational up
 We can now formulate the CAVI algorithm (Algorithm 3), which simply iterates the cluster assignment probabilities $\phi_{ik}$ and the variational density parameters $m_k$ and $s^2_k$ until the ELBO converges.
 \begin{algorithm}
 \caption{CAVI Algorithm for Bayesian mixture of Gaussians}
-\KwData{Data $\textbf{x}$, Number of Gaussian components $K$, Hyperparameter value $\sigma^2$}
+\KwData{Data $\bm{x}$, Number of Gaussian components $K$, Hyperparameter value $\sigma^2$}
 \KwResult{Optimal variational factors $q(\mu_k;m_k,s^2_k)$ and $q(c_i;\bm{\phi_i)}$}
 \BlankLine
 \Begin{
-Randomly initialize parameters $\textbf{m}, \textbf{s}^2$ and $\bm{\phi}$\;
+Randomly initialize parameters $\bm{m}, \bm{s}^2$ and $\bm{\phi}$\;
 \While{ELBO has not converged}{
 	\For{$i=1$ \KwTo $n$}{
 		Set $\phi_{ik}\propto\exp\left(\mathbb{E}[\mu_k;m_k,s^2_k]x_i-\mathbb{E}			[\mu^2_k;m_k,s^2_k]/2\right)$\;
@@ -839,9 +858,9 @@ Randomly initialize parameters $\textbf{m}, \textbf{s}^2$ and $\bm{\phi}$\;
 		Set $m_k=\frac{\sum_i\phi_{ik}x_i}{1/ \sigma^2+\sum_i\phi_{ik}}$\;
 		Set $s^2_k=\frac{1}{1/ \sigma^2+\sum_i \phi_{ik}}$\;
 	}
-	Compute $ELBO(\textbf{m},\textbf{s}^2,\bm{\phi})$\;
+	Compute $ELBO(\bm{m},\bm{s}^2,\bm{\phi})$\;
 }
-Return $q(\textbf{m},\textbf{s}^2,\bm{\phi})$\;
+Return $q(\bm{m},\bm{s}^2,\bm{\phi})$\;
 }
 \end{algorithm}
 \newpage
@@ -976,7 +995,7 @@ Also note that the likelihood parameters no longer appear in the objective funct
 In data generation, we would additionally have to maximize the forward KL divergence with respect to the likelihood parameters \cite{tiao}:
 \[\min_\theta \mathbb{E}_{p(z)p(x|z)}\log \frac{p(z,x)}{q(z,x)}.\]
 \chapter{Density Ratio Estimation}
-In this chapter, we derive two common methods of density ratio estimationused with implicit models: class probability estimation and divergence minimisation, applying them to both the implicit prior/posterior and implicit likelihood objective functions to formulate bi-level optimization problems. In this thesis, we use Huszar's terminology, referring to the former objective as ``prior-contrastive" and the latter as ``joint-contrastive"\cite{huszar}.
+In this chapter, we derive two common methods of density ratio estimation used with implicit models\cite{sugiyama, mohamed}: class probability estimation and divergence minimisation, applying them to both the implicit prior/posterior and implicit likelihood objective functions to formulate bi-level optimization problems. In this thesis, we use Huszar's terminology, referring to the former objective as ``prior-contrastive" and the latter as ``joint-contrastive"\cite{huszar}.
 \section{Class Probability Estimation}
 \subsection{Derivation}
 Firstly, consider the problem of estimating the density ratio between two arbitrary distributions $q(u)$ and $p(u)$: $\frac{q(u)}{p(u)}$. We take $m$ samples from $p(u)$: $U_p=\{u_1^{(p)},\dots,u_m^{(p)}\}$
@@ -991,17 +1010,17 @@ Often in practice, $m=n$, so the density ratio simplifies to:
 \[\frac{q(u)}{p(u)}=\frac{P(y=1|u)}{P(y=0|u)}\]
 which is the ratio of the probability that an arbitrary sample $u$ was taken from the distribution $q(u)$ to the probability that is was taken from $p(u)$. If we define a discriminator function $D(u)\simeq P(y=1|u)$ that estimates these probabilities, then our density ratio can be expressed in terms of this discriminator function:
 \[\frac{q(u)}{p(u)}\simeq \frac{D(u)}{1-D(u)}.\]
-The discriminator function typically takes the form of a neural network with parameters $\alpha$ trained with Bernoulli loss:
-\[\min_\alpha L_D=-\E_{q(u)}[\log D_\alpha(u)]-\E_{p(u)}[\log(1-D_\alpha(u)].\]
+The discriminator function typically takes the form of a neural network with parameters $\alpha$ trained with Bernoulli loss\cite{sugiyama}:
+\[\min_\alpha L_D=-\E_{q(u)}[\log D_\alpha(u)]-\E_{p(u)}[\log(1-D_\alpha(u))].\]
 \begin{lemma}
-The discriminator reaches optimality at $D^*_\alpha(u)=\frac{q(u)}{q(u)+p(u)}$, minimizing its Bernoulli loss.
+The discriminator reaches optimality at $D^*_\alpha(u)=\frac{q(u)}{q(u)+p(u)}$, minimizing its Bernoulli loss\cite{gan}.
 \begin{proof}
 First we write the discriminator loss function in integral form:
-\[\min_\alpha L_D=-\int q(u)\log D_\alpha(u)du-\int p(u)\log(1-D_\alpha(u)du.\]
+\[\min_\alpha L_D=-\int q(u)\log D_\alpha(u)du-\int p(u)\log(1-D_\alpha(u))du.\]
 Now we take the functional derivative of the expression and equate it to $0$:
 \[\frac{\partial L_D}{\partial D_\alpha(u)}=0\]
 \[-\frac{q(u)}{D_\alpha(u)}+\frac{p(u)}{1-D_\alpha(u)}=0\]
-\[p(u)D_\alpha(u)-q(u)(1-D_\alpha(u))=0\]
+%\[p(u)D_\alpha(u)-q(u)(1-D_\alpha(u))=0\]
 \[D_\alpha(u)(q(u)+p(u))=q(u)\]
 \[D_\alpha(u)=\frac{q(u)}{q(u)+p(u)}.\]
 Observing that $q(u)$ and $p(u)$ are densities, this expression is a minimum as
@@ -1015,8 +1034,9 @@ Observing that $q(u)$ and $p(u)$ are densities, this expression is a minimum as
 $D^*_\alpha(u)$ is bound in $(0,1)$, so a sigmoid activation function is ideal for its output layer.
 \end{corollary}
 \begin{remark}
-When $q(u)=p(u)$, $D^*_\alpha(u)=\frac{1}{2}$ and $L_D=\log 4$.
+When $q(u)=p(u)$, $D^*_\alpha(u)=\frac{1}{2}$ and $L_{D^*}=\log 4$.
 \end{remark}
+The optimal discriminative loss can be used to check posterior convergence.
 \subsection{Prior-Contrastive Algorithm}
 We now turn to our problem in line (3.7.1) of minimizing the negative ELBO:
 \begin{align}
@@ -1046,7 +1066,7 @@ In practice, the algorithm cycles between optimizing the discriminator until con
 Since our variational posterior distribution is in the form of a generative neural network function, our optimization objectives 4.1.2 and 4.1.3 take the expressions:
 \[\min_\alpha -\mathbb{E}_{q^*(x)\pi(\epsilon)}[\log D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)-\mathbb{E}_{p_\theta(z)q^*(x)}[\log (1-D_\alpha(z,x))]\]
 \[\min_\phi -\mathbb{E}_{q^*(x)\pi (\epsilon)}[\log p(x|\mathcal{G}_\phi(\epsilon;x))]+\mathbb{E}_{q^*(x)\pi(\epsilon)}\left[\log \frac{D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)}{1-D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)}\right].\]
-Recall that if we apply this algorithm to a data generation problem, ie. the likelihood function also needs to be optimized, then in the posterior optimization function, we would additionally parametrize the likelihood with $\theta$ and optimize the same function with respect to those parameters. 
+Recall that if we apply this algorithm to a data generation problem, ie. the likelihood function also needs to be optimized, then in the posterior optimization function, we would additionally parametrize the likelihood with $\theta$ and optimize the same function with respect to those parameters. Also note that from equation (3.4.1) that the NELBO attains an optimal value equal to $-p(x)$, which is unknown. It is therefore inadequate to assess convergence using the value of the NELBO, we would additionally check that the discriminative loss is equal to $\log 4$, using remark 4.1.3.\\
 Pseudocode for this algorithm is shown in Algorithm 4 on the next page.
 \newpage
 \begin{algorithm}
@@ -1077,7 +1097,7 @@ Pseudocode for this algorithm is shown in Algorithm 4 on the next page.
 \end{algorithm}
 \newpage
 \subsection{Joint-Contrastive Algorithm}
-We now restate from line 3.9.1 our optimization objective when the likelihood distribution is implicit:
+We now restate from line (3.9.1) our optimization objective when the likelihood distribution is implicit:
 \[\min_\phi \mathbb{E}_{q^*(x)q_\phi(z|x)}\log \frac{q(z,x)}{p(z,x)},\]
 or
 \[\min_\phi \mathbb{E}_{q^*(x)q_\phi(z|x)}\log \frac{q_\phi(z|x)q^*(x)}{p(x|z)p(z)}.\]
@@ -1129,31 +1149,19 @@ Using Remark 4.1.3, it can be seen that when $q(z,x)=p(z,x)$, the optimal genera
 \newpage
 \section{Divergence Minimisation}
 \subsection{Derivation}
-\begin{definition}
-The f-divergence of continuous probability density $q(u)$ from $p(u)$ is
-\[D_f(p||q)=\mathbb{E}_p\left[f\left(\frac{q(u)}{p(u)}\right)\right],\]
-where $f$ is a convex function such that $f(1)=0$.
-\end{definition}
-A lower bound for the f-divergence in terms of a direct ratio estimator $r(u)\simeq \frac{q(u)}{p(u)}$ can be found using the following theorem (Nguyen et al. 2010).
+Recall from Definition 3.2.1 that an f-divergence is defined by a convex function $f$ such that $f(1)=0$. A lower bound for the f-divergence in terms of a direct ratio estimator $r(u)\simeq \frac{q(u)}{p(u)}$ can be found using the following theorem \cite{nguyen}.
 \begin{theorem}
 If $f$ is a convex function with derivative $f'$ and convex conjugate $f^*$, and $\mathcal{R}$ is a class of functions with codomains equal to the domain of $f'$, then we have the lower bound for the f-divergence between distributions $p(u)$ and $q(u)$:
 \[D_f [p(u)||q(u)]\geq \sup_{r\in \mathcal{R}} \{\mathbb{E}_{q(u)}[f'(r(u))]-\mathbb{E}_{p(u)}[f^*(f'(r(u)))]\},\]
 with equality when $r(u)=q(u)/p(u)$.
 \end{theorem}
-For the reverse KL divergence, $f(u)=u\log u$, so we have
-\begin{align*}
-D_{KL}(p||q)&=\mathbb{E}_p\left[\frac{q(u)}{p(u)}\log \left(\frac{q(u)}{p(u)}\right)\right]\\
-&=\int p(u)\frac{q(u)}{p(u)}\log\left(\frac{q(u)}{p(u)}\right)du\\
-&= \int q(u)\log\left(\frac{q(u)}{p(u)}\right)du\\
-&= \mathbb{E}_q\left[\log \left(\frac{q(u)}{p(u)}\right)\right]\\
-&=KL[q(u)||p(u)].
-\end{align*}
+We omit the proof of this theorem as it is beyond the scope of this thesis. Details of the proof can be found in Estimating divergence functionals and the likelihood ratio by convex risk minimization by XuanLong Nguyen.\\
 The derivative and convex conjugate of $f(u)=u\log u$ are
 \[f'(u)=1+\log u, \qquad f^*(u)=\exp(u-1),\]
 so the convex conjugate of the derivative is simply $f^*(f'(u))=u$.\\
-Using Theorem 4.2.2, we derive the following lower bound for the KL divergence:
+Using Theorem 4.2.1, we derive the following lower bound for the reverse KL divergence:
 \begin{align}
-KL[q(u)||p(u)]&=D_{KL}(p||q)\nonumber\\
+KL[q(u)||p(u)]&=D_{RKL}(P||Q)\nonumber\\
 &\geq \sup_{r\in \mathcal{R}}\{\mathbb{E}_{q(u)}[1+\log r(u)]-\mathbb{E}_{p(u)}[r(u)]\}.
 \end{align}
 Fixing the variational density $q(u)$, $KL(q(u)||p(u))$ is constant, so recalling that the bound reaches equality when $r(u)=q(u)/p(u)$, we can represent the direct ratio estimator as a neural network parametrised by $\alpha$ and minimize the negative of expression (4.2.1) with respect to $\alpha$:
@@ -1183,11 +1191,12 @@ $r_\alpha^*(u)$ is bound in $(0,\infty)$.
 \begin{remark}
 When $q(u)=p(u)$, $r^*_\alpha(u)=1$ and $L_r=1$.
 \end{remark}
+Like Remark 4.1.3, we can use the optimal discriminative loss to check posterior convergence.
 \newpage
 \subsection{Prior-Contrastive Algorithm}
 We begin by restating the optimization objective from line (4.1.1):
 \[\min_\phi -\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log p(x|z)]+\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{q_\phi(z|x)}{p(z)}\right].\]
-Applying Theorem 4.2.2, we have the lower bound for tne reverse KL divergence:
+Applying Theorem 4.2.1, we have the lower bound for the reverse KL divergence:
 \[KL[q_\phi(z|x)||p(z)]\geq \sup_{\hat{r}\in \mathcal{R}}\{\mathbb{E}_{q_\phi(z|x)}[1+\log r(z)]-\mathbb{E}_{p(z)}[r(z)]\}.\]
 Now we let our direct ratio estimator be a neural network parametrized by $\alpha$, and since $q_\phi(z|x)$ is dependent on the input $x\sim q^*(x)$, we add $x$ as an input and amortize the KL divergence across $q^*(x)$:
 \[\mathbb{E}_{q^*(x)}KL[q_\phi(z|x)||p(z)]\geq \sup_\alpha \{\mathbb{E}_{q^*(x)q_\phi(z|x)}[1+\log r_\alpha(z,x)]-\mathbb{E}_{q^*(x)p(z)}[r_\alpha (z,x)]\}.\]
@@ -1234,7 +1243,7 @@ Similar to class probability estimation, the algorithm involves cycling between 
 \subsection{Joint-Contrastive Algorithm}
 First, we restate the problem from line (3.9.1) of minimizing the reverse KL divergence between the joint distributions:
 \[\min_\phi \mathbb{E}_{q^*(x)q_\phi(z|x)}\log \frac{q(z,x)}{p(z,x)}.\]
-Applying Theorem 4.2.2, a lower bound for our KL divergence is
+Applying Theorem 4.2.1, a lower bound for our KL divergence is
 \[KL[q(z,x)||p(z,x)]\geq \sup_{r\in \mathcal{R}}\{\mathbb{E}_{q(z,x)}[1+\log r(z,x)]-\mathbb{E}_{p(z,x)}[r(z,x)]\}.\]
 Note here we do not have to amortize our ratio estimator as the joint probability distribution already includes the dataset. Again we set our ratio estimator to take the form of a neural network parametrized by $\alpha$:
 \[r_\alpha(z,x)\simeq \frac{q(z,x)}{p(z,x)}\]
@@ -1283,7 +1292,7 @@ Again the algorithm involves cycling between multiple steps of optimizing the ra
 \end{algorithm}
 \newpage
 \subsection{Alternative Derivation of Class Probability Estimation}
-If we apply Theorem 4.2.2 with the function $f(u)=u\log u-(u+1)\log (u+1)$, the resulting bi-level optimization problem is equivalent to that of class probability estimation. First, we derive an expression for the respective divergence, which we denote as $D_{CPE}$:
+If we apply Theorem 4.2.1 with the function $f(u)=u\log u-(u+1)\log (u+1)$, the resulting bi-level optimization problem is equivalent to that of class probability estimation\cite{tiao}. First, we derive an expression for the respective divergence, which we denote as $D_{CPE}$:
 \begin{align*}
 D_{CPE}(p||q)&= \E_p\left[\frac{q(u)}{p(u)}\log \left(\frac{q(u)}{p(u)}\right)-\left(\frac{q(u)}{p(u)}+1 \right)\log\left(\frac{q(u)}{p(u)}+1\right)\right]\\
 &= \int q(u)\log\left(\frac{q(u)}{p(u)}\right)-(q(u)+p(u))\log\left(\frac{q(u)+p(u)}{p(u)}\right)du\\
@@ -1296,14 +1305,14 @@ D_{CPE}(p||q)&= \E_p\left[\frac{q(u)}{p(u)}\log \left(\frac{q(u)}{p(u)}\right)-\
 &\text{ where }m(u)=\frac{q(u)+p(u)}{2}\\
 &= \E_p \left[\log \frac{p(u)}{m(u)}-\log 2\right]+\E_q\left[\log\frac{q(u)}{m(u)}-\log 2\right]\\
 &= KL(p(u)||m(u))+KL(q(u)||m(u))-\log 4\\
-&= 2JS[p(u)||q(u)]-\log 4
+&= 2JS[p(u)||q(u)]-\log 4.
 \end{align*}
 Recall one of the conditions of $f$ to form an f-divergence is that $f(1)=0$, but in this case, $f(1)=-\log 4$, hence the constant term added to our Jensen-Shannon divergence.\\
 The derivative and convex conjugate of $f(u)=u\log u-(u+1)\log (u+1)$ are
 \[f'(u)=\log \frac{u}{u+1}\qquad f^*(u)=-\log (1-\exp u)\]
 so the convex conjugate of the derivative is
 \[f^*(f'(u))=\log (u+1).\]
-Using Theorem 4.2.2, we derive the following lower bound for the Jensen-Shannon divergence:
+Using Theorem 4.2.1, we derive the following lower bound for the Jensen-Shannon divergence:
 \begin{align*}
 2JS[p(u)||q(u)]-\log 4&=D_{CPE}(p||q)\\
 &\geq \sup_{r\in \mathcal{R}}\{\mathbb{E}_{q(u)}\left[\log \frac{r(u)}{r(u)+1}\right]-\mathbb{E}_{p(u)}[\log(r(u)+1)]\}\\
@@ -1319,27 +1328,34 @@ D^*(u)&=\frac{\frac{q(u)}{p(u)}}{\frac{q(u)}{p(u)}+1}\\
 which is the optimal discriminator of class probability estimation. Thus, the density ratio in terms of this discriminator function is 
 \[\frac{q(u)}{p(u)}\simeq \frac{D(u)}{1-D(u)},\]
 and therefore our previous formulation of class probability estimation by minimizing the Bernoulli loss of a discriminator function is the same as maximizing the lower bound of the ``CPE" divergence between the two distributions.
-\chapter{Initial Experiment - Inference, "Sprinkler" Example}
+\chapter{Initial Experiment - Inference, ``Sprinkler" Example}
+In this chapter we conduct our first experiment comparing class probability estimation and divergence minimisation in both prior-contrastive and joint-contrastive formulations.
 \section{Problem Context}
-For the first experiment, we use the simple "Continuous Sprinkler" model as described in (Huszar 2017). The latent variables $z_1$ and $z_2$ represent the sprinkler and the rain respectively, and the observation $x$ represents the wetness of the grass.
-\[p(z_1,z_2)\sim \N (0,\sigma^2 I_{2\times 2})\]
-\[p(x|\bm{z})\sim EXP(3+\max(0,z_1)^3+\max(0,z_2)^3)\]
-Since the joint-contrastive algorithms assume both the prior and likelihood distributions are implicit, therefore only requiring samples from them, their likelihood functions are not required. The prior-contrastive algorithm requires the likelihood function of the likelihood distribution:
-\[p(x|z)=-\log (3+\max (0,z_1)^3+\max(0,z_2)^3)-\frac{x}{3+\max (0,z_1)^3+\max(0,z_2)^3}\]
+We use the simple ``Continuous Sprinkler" model as described in Variational Inference using Implicit Distributions\cite{huszar}. This experiment involves the hypothetical scenario of grass wetness as a result of two independent sources: rainfall and a sprinkler. The problem exhibits ``explaining away" \cite{explain}, a pattern of reasoning in which the confirmation of one cause of an effect reduces the need to discuss alternative causes. In this example, despite the two possible causes of the wet grass being independent, when we condition on the observation of wet grass, the causes become dependent, as either cause being significant could lead to wet grass.\\ 
+The latent variables $z_1$ and $z_2$ represent the sprinkler and the rain respectively, and the observation $x$ represents the wetness of the grass.
+\[p(z_1,z_2)\sim \mathcal{N} (0,\sigma^2 I_{2\times 2})\]
+\[p(x|\bm{z})\sim EXP(3+\max(0,z_1)^3+\max(0,z_2)^3).\]
+The prior-contrastive algorithm requires the likelihood function of the likelihood distribution:
+\[p(x|\bm{z})=-\log (3+\max (0,z_1)^3+\max(0,z_2)^3)-\frac{x}{3+\max (0,z_1)^3+\max(0,z_2)^3}.\]
+The likelihood function is not required for the joint-contrastive algorithms as it is assumed to be implicit.\\
 The unnormalised true posterior is derived as shown below. The lack of normalisation does not affect the variational distribution as the true posterior is assumed to be unknown, and the algorithm only uses samples from the prior and likelihood.\\
 \textbf{Posterior Calculation:}
 \begin{align*}
 p(z_1,z_2|x)&= \exp(\log p(z_1,z_2)+\log p(x|z_1,z_2))\\
-&\propto\exp\left(\frac12\bm{z}^T(\sigma^{-2}I_{2\times 2})\bm{z}-\log (3+\max(0,z_1)^3+\max(0,z_2)^3)-\frac{x}{3+\max(0,z_1)^3+\max(0,z_2)^3}\right)\\
-&\propto \exp\left(\frac{1}{2\sigma^2}(z_1^2+z_2^2)-\log (3+\max(0,z_1)^3+\max(0,z_2)^3)-\frac{x}{3+\max(0,z_1)^3+\max(0,z_2)^3}\right)
+&\propto\exp\left(\frac12\bm{z}^T(\sigma^{-2}I_{2\times 2})\bm{z}-\log (3+\max(0,z_1)^3+\max(0,z_2)^3)\right.\\
+&\quad\left.-\frac{x}{3+\max(0,z_1)^3+\max(0,z_2)^3}\right)\\
+&\propto \exp\left(\frac{1}{2\sigma^2}(z_1^2+z_2^2)-\log (3+\max(0,z_1)^3+\max(0,z_2)^3)\right.\\
+&\left.\quad-\frac{x}{3+\max(0,z_1)^3+\max(0,z_2)^3}\right).
 \end{align*}
-This problem exhibits "explaining away" (Explaining "Explaining away" Wellman 1993), a pattern of reasoning in which the confirmation of one cause of an effect reduces the need to discuss alternative causes. In this example, despite the two possible causes of the wet grass being independent, when we condition on the observation of wet grass, the causes become dependent, as either cause being significant could lead to wet grass.\\
-\\
-In the experiment, we let $\sigma^2=2$, and consider observations $x=0,5,8,12,50$. To plot the true (unnormalised) posterior $p(z|x)$, we simply use a range of equally spaced points from $(z_1,z_2)=[(-5,-5),\dots, (5,5)]$ to form the log prior values and log likelihood values for each observation value, and graph the exponential of the sum of these values. The expressions are as derived above. The plots are as shown in Figure (\textbf{need to insert figure}). The plots are not affected by the lack of normalisation, as $p(x)$ is constant for each x-value, and the purpose of the plots is to show the shape and relative density of the posterior distribution.\\
-\\
-As $x$ increases, the posteriors become increasingly multimodal and unusually shaped. Clearly, a flexible model for the posterior distribution is required, as a typical multivariate Gaussian model is too simple here.
+In the experiment, we let $\sigma^2=2$, and consider observations $x=0,5,8,12,50$. To plot the true (unnormalised) posterior $p(\bm{z}|x)$, we simply use a range of equally spaced points from $(z_1,z_2)=[(-5,-5),\dots, (5,5)]$ to form the log prior values and log likelihood values for each observation value, and graph the exponential of the sum of these values. The expressions are as derived above. The plots are as shown in Figure 5.1. They are not affected by the lack of normalisation, as $p(x)$ is constant for each x-value, and the purpose of the plots is to show the shape and relative density of the posterior distribution.\\
+\begin{figure}[h]
+\includegraphics[scale=0.39]{sprinklertrue.png}
+\caption{True Posterior Plots for Sprinkler Experiment}
+\end{figure}\\
+As $x$ increases, the posteriors become increasingly multimodal and unusually shaped. Clearly a flexible model for the posterior distribution is required, as a typical multivariate Gaussian model would fail to capture these features.
 \section{Program Structure}
-As described in section (), our generator $\mathcal{G}_\phi(x,\epsilon)$ is a neural network that takes in noise $\epsilon\sim \pi(\epsilon)$ along with the data sample $x\sim q^*(x)$ to create a sample from the variational posterior distribution $z\sim q_\phi(z,x)$. In this experiment, we have 3 noise inputs $\epsilon_1,\epsilon_2,\epsilon_3$ along with 1 data input $x$, and 2 posterior outputs $z_1, z_2$. The structure of the neural network is as depicted in Figure idk:
+Recall that our generator $\mathcal{G}_\phi(x,\epsilon)$ is a neural network that takes in noise $\epsilon\sim \pi(\epsilon)$ along with data sample $x\sim q^*(x)$ to create an output from the variational posterior distribution $z\sim q_\phi(z,x)$. In this experiment, the generator has 3 noise inputs $\epsilon_1,\epsilon_2,\epsilon_3$ along with 1 data input $x$, and 2 posterior outputs $z_1, z_2$. The structure of the neural network is as depicted in Figure 5.2:\\
+\begin{figure}[h]
 \begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
     \tikzstyle{every pin edge}=[<-,shorten <=1pt]
     \tikzstyle{neuron}=[circle,fill=black!25,minimum size=25pt,inner sep=0pt]
@@ -1352,8 +1368,8 @@ As described in section (), our generator $\mathcal{G}_\phi(x,\epsilon)$ is a ne
     % Draw the input layer nodes
     %\foreach \name / \y in {1,...,3}
     % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
-    \node[input neuron, pin=left:Input $x$] (I-1) at (0,-1) {$1$};
-	\node[input neuron, pin=left:Input $\bm{\epsilon}$] (I-2) at (0,-3) {$3$};
+    \node[input neuron, pin=left:$x$] (I-1) at (0,-1) {$1$};
+	\node[input neuron, pin=left:$\bm{\epsilon}$] (I-2) at (0,-3) {$3$};
 
     \path[yshift=0cm] node[hidden neuron] (H-11) at (2.0cm,-1) {$40$};
 	\path[yshift=0cm] node[hidden neuron] (H-12) at (4.0cm,-1) {$80$};
@@ -1361,7 +1377,7 @@ As described in section (), our generator $\mathcal{G}_\phi(x,\epsilon)$ is a ne
     \path[yshift=0cm] node[hidden neuron] (H-3) at (6.0cm,-2) {$160$};
     \path[yshift=0cm] node[hidden neuron] (H-31) at (8.0cm,-2) {$40$};
     \path[yshift=0cm] node[hidden neuron] (H-32) at (10.0cm,-2) {$80$};
-	\path[yshift=0cm] node[output neuron,pin={[pin edge={->}]right:Output $\bm{z}$}] (O) at (12.0cm, -2) {$2$};
+	\path[yshift=0cm] node[output neuron,pin={[pin edge={->}]right:$\bm{z}$}] (O) at (12.0cm, -2) {$2$};
     \path (I-1) edge (H-11);
     \path (H-11) edge (H-12);
 	\path (I-2) edge (H-2);
@@ -1380,10 +1396,15 @@ As described in section (), our generator $\mathcal{G}_\phi(x,\epsilon)$ is a ne
     \node[annot,above of=H-31, node distance=1cm] {ReLU};
     \node[annot,above of=H-32, node distance=1cm] {ReLU};
     \node[annot,above of=O, node distance=1cm] {Linear};
-\end{tikzpicture}\\
+\end{tikzpicture}
+\caption{Generator Network Structure for Sprinkler Experiment}
+\end{figure}\\
 The number inside the node indicates how many nodes the layer has, and the text above the node describes the activation function in the layer. Recall that the input layer does not have an activation function (Linear), and Rectified Linear Units (ReLU) are used for most of the hidden layers due to their many advantages. In the Concat. layer, the two input vectors are concatenated and there is no activation function placed on the layer. Since arbitrary probability distribution samples can take any real number, we do not use an activation function for the output layer.\\
-\\
-The structure of the estimator (discriminator $\mathcal{D}_\alpha(z,x)$ or ratio estimator $\mathcal{R}_\alpha(z,x)$) is similar to that of the the generator, with an additional hidden layer associated with the $z$ input and a different activation function for the output layer, corresponding to the estimator's identity. Note that in terms of code, the only differences between class probability estimation and divergence minimisation are the activation function of the estimator's output layer and the loss functions being minimised. A sigmoid output layer is used for a discriminator, whilst a rectified linear output is used for a ratio estimator. The estimator structure is shown in Figure below:\\
+
+The structure of the estimator (discriminator $D_\alpha(z,x)$ or ratio estimator $r_\alpha(z,x)$) is similar to that of the the generator, with an additional hidden layer associated with the $z$ input and a different activation function for the output layer, corresponding to the estimator's identity. Note that in terms of code, the only differences between class probability estimation and divergence minimisation are the activation function of the estimator's output layer and the loss functions being minimised. A sigmoid output layer is used for a discriminator, whilst a rectified linear output is used for a ratio estimator. The estimator structure is shown in Figure 5.3 on the next page:
+\newpage
+\begin{figure}[h]
+
 \begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
     \tikzstyle{every pin edge}=[<-,shorten <=1pt]
     \tikzstyle{neuron}=[circle,fill=black!25,minimum size=25pt,inner sep=0pt]
@@ -1396,17 +1417,17 @@ The structure of the estimator (discriminator $\mathcal{D}_\alpha(z,x)$ or ratio
     % Draw the input layer nodes
     %\foreach \name / \y in {1,...,3}
     % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
-    \node[input neuron, pin=left:Input $x$] (I-1) at (0,-1) {$1$};
-	\node[input neuron, pin=left:Input $\bm{z}$] (I-2) at (0,-3) {$2$};
+    \node[input neuron, pin=left:$x$] (I-1) at (0,-1) {$1$};
+	\node[input neuron, pin=left:$\bm{z}$] (I-2) at (0,-3) {$2$};
 
-    \path[yshift=0cm] node[hidden neuron] (H-11) at (2.0cm,-1) {$40$};
-	\path[yshift=0cm] node[hidden neuron] (H-12) at (4.0cm,-1) {$80$};
-	\path[yshift=0cm] node[hidden neuron] (H-21) at (2.0cm,-3) {$40$};
-    \path[yshift=0cm] node[hidden neuron] (H-22) at (4.0cm,-3) {$80$};
-    \path[yshift=0cm] node[hidden neuron] (H-3) at (6.0cm,-2) {$160$};
-    \path[yshift=0cm] node[hidden neuron] (H-31) at (8.0cm,-2) {$40$};
-    \path[yshift=0cm] node[hidden neuron] (H-32) at (10.0cm,-2) {$80$};
-	\path[yshift=0cm] node[output neuron,pin={[pin edge={->}]right:Output $\genfrac{}{}{0pt}{}{\hat{\frac{q(z,x)}{q(z,x)+p(z,x)}}}{\hat{\frac{q(z,x)}{p(z,x)}}}$}] (O) at (12.0cm, -2) {$2$};
+    \path[yshift=0cm] node[hidden neuron] (H-11) at (1.7cm,-1) {$40$};
+	\path[yshift=0cm] node[hidden neuron] (H-12) at (3.4cm,-1) {$80$};
+	\path[yshift=0cm] node[hidden neuron] (H-21) at (1.7cm,-3) {$40$};
+    \path[yshift=0cm] node[hidden neuron] (H-22) at (3.4cm,-3) {$80$};
+    \path[yshift=0cm] node[hidden neuron] (H-3) at (5.1cm,-2) {$160$};
+    \path[yshift=0cm] node[hidden neuron] (H-31) at (6.8cm,-2) {$40$};
+    \path[yshift=0cm] node[hidden neuron] (H-32) at (8.5cm,-2) {$80$};
+	\path[yshift=0cm] node[output neuron,pin={[pin edge={->}]right:$\genfrac{}{}{0pt}{}{\hat{\frac{q(z,x)}{q(z,x)+p(z,x)}}\left.\right/}{\hat{\frac{q(z,x)}{p(z,x)}}}$}] (O) at (10.2cm, -2) {$2$};
     \path (I-1) edge (H-11);
     \path (H-11) edge (H-12);
 	\path (I-2) edge (H-21);
@@ -1426,33 +1447,39 @@ The structure of the estimator (discriminator $\mathcal{D}_\alpha(z,x)$ or ratio
     \node[annot,above of=H-3, node distance=1cm] {Concat.};
     \node[annot,above of=H-31, node distance=1cm] {ReLU};
     \node[annot,above of=H-32, node distance=1cm] {ReLU};
-    \node[annot,above of=O, node distance=1cm] {Sigmoid($\mathcal{D}$)/ ReLU($\mathcal{R}$)};
-\end{tikzpicture}\\
-The network weights are initialized with Xavier initialization, and trained using the Adam optimizer with learning rate $0.0001$ for the prior-contrastive setting and $0.00001$ for joint-contrastive. Preliminary runs show that these are the highest learning rates at which both algorithms converge consistently; any higher learning rates lead to the program constantly entering a "failure" state (discussed in next section). The network is only trained on the data values $x=0,5,8,12,50$; in each training iteration, 200 samples are taken for each x-value, corresponding to a batch size of 1000. This relatively large batch size makes training more consistent, as performing back-propagation along a stochastic neural network can lead to random and erratic training. To prevent problems associated with taking $\log 0$, we add a small constant $c=10^{-18}$ to the log function's input. The estimator is pre-trained for 5000 iterations to ensure that optimization of the variational network begins with an optimal estimator; an inaccurate ratio estimation leads to incorrect optimization of the posterior network. The variance of the results is also reduced as the initial weights and biases of the estimator will be approximately the same for a fixed initialization of the generator. Afterwards, the generator is optimized for 10000 iterations in the implicit prior formulation, and 40000 iterations when we have an implicit likelihood. The algorithm alternates between 100 training steps of the estimator and 1 training step of the generator. This process for class probability estimation and divergence minimisation is shown in Algorithm and Algorithm below:
+    \node[annot,above of=O, node distance=1cm] {Sigmoid($D$)/ ReLU($r$)};
+\end{tikzpicture}
+\caption{Estimator Network Structure for Sprinkler Experiment}
+\end{figure}
+The network weights are initialized with Xavier initialization, and trained using the Adam optimizer with learning rate $0.0001$ for the prior-contrastive setting and $0.00001$ for joint-contrastive. Preliminary tests show that these are the highest learning rates at which both families of algorithms converge consistently; any higher learning rates lead to the program constantly entering a "failure" state, which will be discussed in section 5.3.\\
+
+The network is only trained on the data values $x=0,5,8,12,50$. In each training iteration, 200 samples are taken for each x-value, corresponding to a batch size of 1000. This relatively large batch size makes training more consistent, as performing back-propagation along a stochastic neural network can lead to random and erratic training.\\
+
+To prevent problems associated with taking $\log 0$ in the loss functions, we add a small constant $c=10^{-18}$ to the log function's input. The estimator is pre-trained for 5000 iterations to ensure that optimization of the variational network begins with an optimal estimator; an inaccurate ratio estimation leads to incorrect optimization of the posterior network. The variance of the results is consequently reduced as the initial weights and biases of the estimator will be approximately the same for a fixed initialization of the generator. Afterwards, the generator is optimized for 10000 iterations when we have an implicit prior, and 40000 iterations in the joint-contrastive formulation. The algorithm alternates between 100 training steps of the estimator and 1 training step of the generator. The processes for class probability estimation and divergence minimisation, based off the algorithms derived in chapter 4, are shown in Algorithms 8-11 on the following pages:
 \begin{algorithm}
 \SetKw{update}{update}
 \caption{Sprinkler Prior-Contrastive Class Probability Estimation}
-\KwData{Dataset $q^*(x)=\{0,5,8,12,20\}$, true (implicit) prior $p(z)\sim \mathcal{N}(0,2I_{2\times 2})$, true (implicit) likelihood $p(x|z)\sim EXP(3+\max(0,z_1)^3+\max(0,z_2)^3)$, noise distribution $\pi(\epsilon)\sim \mathcal{N}(0,I_{3\times 3})$}
+\KwData{Dataset $q^*(x)=\{0,5,8,12,20\}$,\\ (Implicit) Prior $p(z)\sim \mathcal{N}(0,2I_{2\times 2})$,\\ Likelihood $p(x|z)\sim EXP(3+\max(0,z_1)^3+\max(0,z_2)^3)$,\\ Noise distribution $\pi(\epsilon)\sim \mathcal{N}(0,I_{3\times 3})$}
 \KwResult{Optimized posterior generator $\mathcal{G}_\phi(\epsilon;x)$}
 \BlankLine
-\For{$j=1$ \KwTo $5001$}{
+\For{$j=1$ \KwTo $5000$}{
 	Sample $\{\epsilon^{(i,j)}\}^{1000}_{i=1}\sim \pi(\epsilon)$\;
 		Sample $\{0,5,8,12,50\}^{200}_{i=1}=\{x^{(i,j)}\}^{1000}_{i=1}\sim q^*(x)$\;
 		Sample $\{z^{(i,j)}_p\}^{1000}_{i=1}\sim p(z)$\;
 		\ForEach{$\epsilon^{(i,j)},x^{(i,j)}$}{
-			Sample $\{z^{(i,j)}_q\}^{1000}_{i=1}=\mathcal{G}(\epsilon^{(i,j)};x^{(i,j}_q)$\;
+			Sample $z^{(i,j)}_q=\mathcal{G}(\epsilon^{(i,j)};x^{(i,j}_q)$\;
 		}
 		\update{$\alpha$ by optimization step on}{
 			$\min_\alpha -\frac{1}{1000}\sum_{i=1}^{1000}\{\log [D_\alpha(\mathcal{G}_\phi(\epsilon^{(i,j)};x^{(i,j)}), x^{(i,j)})]+\log [1-D_\alpha(z_p^{(i,j)},x^{(i,j)})]\}$\;
 		}
 }
-\For{$j=1$ \KwTo $10001$}{
+\For{$j=1$ \KwTo $10000$}{
 	\For{$k=1$ \KwTo $100$}{	
 		Sample $\{\epsilon^{(i,k)}\}^{1000}_{i=1}\sim \pi(\epsilon)$\;
 		Sample $\{0,5,8,12,50\}^{200}_{i=1}=\{x^{(i,k)}\}^{1000}_{i=1}\sim q^*(x)$\;
 		Sample $\{z^{(i,k)}_p\}^{1000}_{i=1}\sim p(z)$\;
 		\ForEach{$\epsilon^{(i,k)},x^{(i,k)}$}{
-			Sample $\{z^{(i,k)}_q\}^{1000}_{i=1}=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
+			Sample $z^{(i,k)}_q=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
 		}
 		\update{$\alpha$ by optimization step on}{
 			$\min_\alpha -\frac{1}{1000}\sum_{i=1}^{1000}\{\log [D_\alpha(\mathcal{G}_\phi(\epsilon^{(i,k)};x^{(i,k)}), x^{(i,k)})]+\log [1-D_\alpha(z_p^{(i,k)},x^{(i,k)})]\}$\;
@@ -1468,27 +1495,27 @@ The network weights are initialized with Xavier initialization, and trained usin
 \begin{algorithm}
 \SetKw{update}{update}
 \caption{Sprinkler Prior-Contrastive KL Divergence Minimisation}
-\KwData{Dataset $q^*(x)=\{0,5,8,12,20\}$, true (implicit) prior $p(z)\sim \mathcal{N}(0,2I_{2\times 2})$, true (implicit) likelihood $p(x|z)\sim EXP(3+\max(0,z_1)^3+\max(0,z_2)^3)$, noise distribution $\pi(\epsilon)\sim \mathcal{N}(0,I_{3\times 3})$}
+\KwData{Dataset $q^*(x)=\{0,5,8,12,20\}$,\\ (Implicit) Prior $p(z)\sim \mathcal{N}(0,2I_{2\times 2})$,\\ Likelihood $p(x|z)\sim EXP(3+\max(0,z_1)^3+\max(0,z_2)^3)$,\\ Noise distribution $\pi(\epsilon)\sim \mathcal{N}(0,I_{3\times 3})$}
 \KwResult{Optimized posterior generator $\mathcal{G}_\phi(\epsilon;x)$}
 \BlankLine
-\For{$j=1$ \KwTo $5001$}{
-	Sample $\{\epsilon^{(i,j)}\}^{2000}_{i=1}\sim \pi(\epsilon)$\;
-		Sample $\{0,5,8,12,50\}^{400}_{i=1}=\{x^{(i,j)}\}^{2000}_{i=1}\sim q^*(x)$\;
-		Sample $\{z^{(i,j)}_p\}^{2000}_{i=1}\sim p(z)$\;
+\For{$j=1$ \KwTo $5000$}{
+	Sample $\{\epsilon^{(i,j)}\}^{1000}_{i=1}\sim \pi(\epsilon)$\;
+		Sample $\{0,5,8,12,50\}^{200}_{i=1}=\{x^{(i,j)}\}^{1000}_{i=1}\sim q^*(x)$\;
+		Sample $\{z^{(i,j)}_p\}^{1000}_{i=1}\sim p(z)$\;
 		\ForEach{$\epsilon^{(i,j)},x^{(i,j)}$}{
-			Sample $\{z^{(i,j)}_q\}^{2000}_{i=1}=\mathcal{G}(\epsilon^{(i,j)};x^{(i,j})$\;
+			Sample $z^{(i,j)}_q=\mathcal{G}(\epsilon^{(i,j)};x^{(i,j})$\;
 		}
 		\update{$\alpha$ by optimization step on}{
-			$\min_\alpha -\frac{1}{2000}\sum_{i=1}^{2000}\{\log [r_\alpha(\mathcal{G}_\phi(\epsilon^{(i,j)};x^{(i,j)}), x^{(i,j)})]+r_\alpha(z_p^{(i,j)},x^{(i,j)})\}$\;
+			$\min_\alpha -\frac{1}{1000}\sum_{i=1}^{1000}\{\log [r_\alpha(\mathcal{G}_\phi(\epsilon^{(i,j)};x^{(i,j)}), x^{(i,j)})]+r_\alpha(z_p^{(i,j)},x^{(i,j)})\}$\;
 		}
 }
-\For{$j=1$ \KwTo $10001$}{
+\For{$j=1$ \KwTo $10000$}{
 	\For{$k=1$ \KwTo $100$}{	
 		Sample $\{\epsilon^{(i,k)}\}^{1000}_{i=1}\sim \pi(\epsilon)$\;
 		Sample $\{0,5,8,12,50\}^{200}_{i=1}=\{x^{(i,k)}\}^{1000}_{i=1}\sim q^*(x)$\;
 		Sample $\{z^{(i,k)}_p\}^{1000}_{i=1}\sim p(z)$\;
 		\ForEach{$\epsilon^{(i,k)},x^{(i,k)}$}{
-			Sample $\{z^{(i,k)}_q\}^{1000}_{i=1}=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
+			Sample $z^{(i,k)}_q=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
 		}
 		\update{$\alpha$ by optimization step on}{
 			$\min_\alpha -\frac{1}{1000}\sum_{i=1}^{1000}\{\log [r_\alpha(\mathcal{G}_\phi(\epsilon^{(i,k)};x^{(i,k)}), x^{(i,k)})]+r_\alpha(z_p^{(i,k)},x^{(i,k)})\}$\;
@@ -1504,33 +1531,33 @@ The network weights are initialized with Xavier initialization, and trained usin
 \begin{algorithm}
 \SetKw{update}{update}
 \caption{Sprinkler Joint-Contrastive Class Probability Estimation}
-\KwData{Dataset $q^*(x)=\{0,5,8,12,20\}$, true (implicit) prior $p(z)\sim \mathcal{N}(0,2I_{2\times 2})$, true (implicit) likelihood $p(x|z)\sim EXP(3+\max(0,z_1)^3+\max(0,z_2)^3)$, noise distribution $\pi(\epsilon)\sim \mathcal{N}(0,I_{3\times 3})$}
+\KwData{Dataset $q^*(x)=\{0,5,8,12,20\}$,\\ (Implicit) Prior $p(z)\sim \mathcal{N}(0,2I_{2\times 2})$,\\ (Implicit) Likelihood $p(x|z)\sim EXP(3+\max(0,z_1)^3+\max(0,z_2)^3)$,\\ Noise distribution $\pi(\epsilon)\sim \mathcal{N}(0,I_{3\times 3})$}
 \KwResult{Optimized posterior generator $\mathcal{G}_\phi(\epsilon;x)$}
 \BlankLine
-\For{$j=1$ \KwTo $5001$}{
+\For{$j=1$ \KwTo $5000$}{
 	Sample $\{\epsilon^{(i,j)}\}^{1000}_{i=1}\sim \pi(\epsilon)$\;
 		Sample $\{0,5,8,12,50\}^{200}_{i=1}=\{x^{(i,j)}_q\}^{1000}_{i=1}\sim q^*(x)$\;
 		Sample $\{z^{(i,j)}_p\}^{1000}_{i=1}\sim p(z)$\;
 		\ForEach{$\epsilon^{(i,j)},x^{(i,j)}$}{
-			Sample $\{z^{(i,j)}_q\}^{1000}_{i=1}=\mathcal{G}(\epsilon^{(i,j)};x^{(i,j}_q)$\;
+			Sample $z^{(i,j)}_q=\mathcal{G}(\epsilon^{(i,j)};x^{(i,j}_q)$\;
 		}
 		\ForEach{$z^{(i,j)}_p$}{
-			Sample $\{x^{(i,j)}_p\}^{1000}_{i=1}\sim p(x|z)$\;
+			Sample $x^{(i,j)}_p\sim p(x|z)$\;
 		}
 		\update{$\alpha$ by optimization step on}{
 			$\min_\alpha -\frac{1}{1000}\sum_{i=1}^{1000}\{\log [D_\alpha(\mathcal{G}_\phi(\epsilon^{(i,j)};x_q^{(i,j)}), x_q^{(i,j)})]+\log [1-D_\alpha(z_p^{(i,j)},x_p^{(i,j)})]\}$\;
 		}
 }
-\For{$j=1$ \KwTo $40001$}{
+\For{$j=1$ \KwTo $40000$}{
 	\For{$k=1$ \KwTo $100$}{	
 		Sample $\{\epsilon^{(i,k)}\}^{1000}_{i=1}\sim \pi(\epsilon)$\;
 		Sample $\{0,5,8,12,50\}^{200}_{i=1}=\{x^{(i,k)}_q\}^{1000}_{i=1}\sim q^*(x)$\;
 		Sample $\{z^{(i,k)}_p\}^{1000}_{i=1}\sim p(z)$\;
 		\ForEach{$\epsilon^{(i,k)},x^{(i,k)}$}{
-			Sample $\{z^{(i,k)}_q\}^{1000}_{i=1}=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
+			Sample $z^{(i,k)}_q=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
 		}
 		\ForEach{$z^{(i,k)}_p$}{
-			Sample $\{x^{(i,k)}_p\}^{1000}_{i=1}\sim p(x|z)$\;
+			Sample $x^{(i,k)}_p\sim p(x|z)$\;
 		}
 		\update{$\alpha$ by optimization step on}{
 			$\min_\alpha -\frac{1}{1000}\sum_{i=1}^{1000}\{\log [D_\alpha(\mathcal{G}_\phi(\epsilon^{(i,k)};x_q^{(i,k)}), x_q^{(i,k)})]+\log [1-D_\alpha(z_p^{(i,k)},x_p^{(i,k)})]\}$\;
@@ -1546,18 +1573,18 @@ The network weights are initialized with Xavier initialization, and trained usin
 \begin{algorithm}
 \SetKw{update}{update}
 \caption{Sprinkler Joint-Contrastive KL Divergence Minimisation}
-\KwData{Dataset $q^*(x)=\{0,5,8,12,20\}$, true (implicit) prior $p(z)\sim \mathcal{N}(0,2I_{2\times 2})$, true (implicit) likelihood $p(x|z)\sim EXP(3+\max(0,z_1)^3+\max(0,z_2)^3)$, noise distribution $\pi(\epsilon)\sim \mathcal{N}(0,I_{3\times 3})$}
+\KwData{Dataset $q^*(x)=\{0,5,8,12,20\}$,\\ (Implicit) Prior $p(z)\sim \mathcal{N}(0,2I_{2\times 2})$,\\ (Implicit) Likelihood $p(x|z)\sim EXP(3+\max(0,z_1)^3+\max(0,z_2)^3)$,\\ Noise distribution $\pi(\epsilon)\sim \mathcal{N}(0,I_{3\times 3})$}
 \KwResult{Optimized posterior generator $\mathcal{G}_\phi(\epsilon;x)$}
 \BlankLine
-\For{$j=1$ \KwTo $5001$}{
+\For{$j=1$ \KwTo $5000$}{
 	Sample $\{\epsilon^{(i,j)}\}^{1000}_{i=1}\sim \pi(\epsilon)$\;
 		Sample $\{0,5,8,12,50\}^{200}_{i=1}=\{x^{(i,j)}_q\}^{1000}_{i=1}\sim q^*(x)$\;
 		Sample $\{z^{(i,j)}_p\}^{1000}_{i=1}\sim p(z)$\;
 		\ForEach{$\epsilon^{(i,j)},x^{(i,j)}$}{
-			Sample $\{z^{(i,j)}_q\}^{1000}_{i=1}=\mathcal{G}(\epsilon^{(i,j)};x^{(i,j}_q)$\;
+			Sample $z^{(i,j)}_q=\mathcal{G}(\epsilon^{(i,j)};x^{(i,j}_q)$\;
 		}
 		\ForEach{$z^{(i,j)}_p$}{
-			Sample $\{x^{(i,j)}_p\}^{1000}_{i=1}\sim p(x|z)$\;
+			Sample $x^{(i,j)}_p\sim p(x|z)$\;
 		}
 		\update{$\alpha$ by optimization step on}{
 			$\min_\alpha -\frac{1}{1000}\sum_{i=1}^{1000}\{\log [r_\alpha(\mathcal{G}_\phi(\epsilon^{(i,j)};x_q^{(i,j)}), x_q^{(i,j)})]+r_\alpha(z_p^{(i,j)},x_p^{(i,j)})\}$\;
@@ -1569,10 +1596,10 @@ The network weights are initialized with Xavier initialization, and trained usin
 		Sample $\{0,5,8,12,50\}^{200}_{i=1}=\{x^{(i,k)}_q\}^{1000}_{i=1}\sim q^*(x)$\;
 		Sample $\{z^{(i,k)}_p\}^{1000}_{i=1}\sim p(z)$\;
 		\ForEach{$\epsilon^{(i,k)},x^{(i,k)}$}{
-			Sample $\{z^{(i,k)}_q\}^{1000}_{i=1}=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
+			Sample $z^{(i,k)}_q=\mathcal{G}(\epsilon^{(i,k)};x^{(i,k)}_q)$\;
 		}
 		\ForEach{$z^{(i,k)}_p$}{
-			Sample $\{x^{(i,k)}_p\}^{1000}_{i=1}\sim p(x|z)$\;
+			Sample $x^{(i,k)}_p\sim p(x|z)$\;
 		}
 		\update{$\alpha$ by optimization step on}{
 			$\min_\alpha -\frac{1}{1000}\sum_{i=1}^{1000}\{\log [r_\alpha(\mathcal{G}_\phi(\epsilon^{(i,k)};x_q^{(i,k)}), x_q^{(i,k)})]+r_\alpha(z_p^{(i,k)},x_p^{(i,k)})\}$\;
@@ -1759,9 +1786,6 @@ Leave this as a brainstorm list for now
 \end{itemize}
 \chapter{Conclusion}
 This thesis is hot trash.
-
-
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

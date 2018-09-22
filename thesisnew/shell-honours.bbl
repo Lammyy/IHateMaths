@@ -1,0 +1,151 @@
+\begin{thebibliography}{}
+
+\bibitem[Blei et~al., 2017]{blei}
+Blei, D.~M., Kucukelbir, A., and McAuliffe, J.~D. (2017).
+\newblock Variational inference: A review for statisticians.
+\newblock {\em Journal of the American Statistical Association},
+  112(518):859--877.
+
+\bibitem[Boyd and Vandenberghe, 2004]{optim}
+Boyd, S. and Vandenberghe, L. (2004).
+\newblock {\em Convex Optimization}.
+\newblock Cambridge University Press.
+
+\bibitem[Cheng and Titterington, 1994]{neuralstat}
+Cheng, B. and Titterington, D.~M. (1994).
+\newblock Neural networks: A review from a statistical perspective.
+\newblock {\em Statist. Sci.}, 9(1):2--30.
+
+\bibitem[Cybenko, 1989]{cybenko}
+Cybenko, G. (1989).
+\newblock Approximation by superpositions of a sigmoidal function.
+\newblock {\em Mathematics of Control, Signals and Systems}, 2(4):303--314.
+
+\bibitem[{Dumoulin} et~al., 2016]{ali}
+{Dumoulin}, V., {Belghazi}, I., {Poole}, B., {Mastropietro}, O., {Lamb}, A.,
+  {Arjovsky}, M., and {Courville}, A. (2016).
+\newblock {Adversarially Learned Inference}.
+\newblock {\em ArXiv e-prints}.
+
+\bibitem[E.~Rumelhart et~al., 1986]{backprop}
+E.~Rumelhart, D., E.~Hinton, G., and J.~Williams, R. (1986).
+\newblock Learning representations by back propagating errors.
+\newblock 323:533--536.
+
+\bibitem[Floudas, 2005]{floudas}
+Floudas, C.~A. (2005).
+\newblock {\em Deterministic Global Optimization: Theory, Methods and
+  (NONCONVEX OPTIMIZATION AND ITS APPLICATIONS Volume 37) (Nonconvex
+  Optimization and Its Applications)}.
+\newblock Springer-Verlag, Berlin, Heidelberg.
+
+\bibitem[Gelman et~al., 2004]{gelman}
+Gelman, A., Carlin, J.~B., Stern, H.~S., and Rubin, D.~B. (2004).
+\newblock {\em Bayesian Data Analysis}.
+\newblock Chapman and Hall/CRC, 2nd ed. edition.
+
+\bibitem[Glorot and Bengio, 2010]{xavier}
+Glorot, X. and Bengio, Y. (2010).
+\newblock Understanding the difficulty of training deep feedforward neural
+  networks.
+\newblock In {\em Proceedings of the thirteenth international conference on
+  artificial intelligence and statistics}, pages 249--256.
+
+\bibitem[Goodfellow et~al., 2016]{DeepLearning}
+Goodfellow, I., Bengio, Y., and Courville, A. (2016).
+\newblock {\em Deep Learning}.
+\newblock MIT Press.
+
+\bibitem[Goodfellow et~al., 2014]{gan}
+Goodfellow, I., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D., Ozair,
+  S., Courville, A., and Bengio, Y. (2014).
+\newblock {Generative Adversarial Networks}.
+\newblock 3.
+
+\bibitem[Hornik, 1991]{universal}
+Hornik, K. (1991).
+\newblock Approximation capabilities of multilayer feedforward networks.
+\newblock {\em Neural Networks}, 4(2):251 -- 257.
+
+\bibitem[{Husz{\'a}r}, 2017]{huszar}
+{Husz{\'a}r}, F. (2017).
+\newblock {Variational Inference using Implicit Distributions}.
+\newblock {\em ArXiv e-prints}.
+
+\bibitem[Kingma and Ba, 2014]{adam}
+Kingma, D.~P. and Ba, J. (2014).
+\newblock Adam: {A} method for stochastic optimization.
+\newblock {\em CoRR}, abs/1412.6980.
+
+\bibitem[{Kingma} and {Welling}, 2013]{kingma}
+{Kingma}, D.~P. and {Welling}, M. (2013).
+\newblock {Auto-Encoding Variational Bayes}.
+\newblock {\em ArXiv e-prints}.
+
+\bibitem[Kullback, 1959]{KL}
+Kullback, S. (1959).
+\newblock {\em Information Theory and Statistics}.
+\newblock Wiley, New York.
+
+\bibitem[Mescheder et~al., 2017]{mescheder}
+Mescheder, L.~M., Nowozin, S., and Geiger, A. (2017).
+\newblock {Adversarial Variational Bayes: Unifying Variational Autoencoders and
+  Generative Adversarial Networks}.
+\newblock {\em CoRR}, abs/1701.04722.
+
+\bibitem[{Mohamed} and {Lakshminarayanan}, 2016]{mohamed}
+{Mohamed}, S. and {Lakshminarayanan}, B. (2016).
+\newblock {Learning in Implicit Generative Models}.
+\newblock {\em ArXiv e-prints}.
+
+\bibitem[Nguyen et~al., 2010]{nguyen}
+Nguyen, X., Wainwright, M.~J., and Jordan, M.~I. (2010).
+\newblock {Estimating Divergence Functionals and the Likelihood Ratio by Convex
+  Risk Minimization}.
+\newblock {\em IEEE Trans. Inf. Theor.}, 56(11):5847--5861.
+
+\bibitem[P.~Wellman and Henrion, 1993]{explain}
+P.~Wellman, M. and Henrion, M. (1993).
+\newblock Explaining `explaining away'.
+\newblock 15:287--292.
+
+\bibitem[Ruder, 2016]{optimneural}
+Ruder, S. (2016).
+\newblock An overview of gradient descent optimization algorithms.
+\newblock {\em CoRR}, abs/1609.04747.
+
+\bibitem[Simard et~al., 2003]{mnist}
+Simard, P.~Y., Steinkraus, D., and Platt, J.~C. (2003).
+\newblock Best practices for convolutional neural networks applied to visual
+  document analysis.
+\newblock In {\em ICDAR}.
+
+\bibitem[Sugiyama et~al., 2012]{sugiyama}
+Sugiyama, M., Suzuki, T., and Kanamori, T. (2012).
+\newblock {\em {Density Ratio Estimation in Machine Learning}}.
+\newblock Cambridge University Press.
+
+\bibitem[Tiao et~al., 2018]{tiao}
+Tiao, L.~C., Bonilla, E.~V., and Ramos, F. (2018).
+\newblock {Cycle-Consistent Adversarial Learning as Approximate Bayesian
+  Inference}.
+\newblock {\em ArXiv e-prints}.
+
+\bibitem[{Tran} et~al., 2017]{tran}
+{Tran}, D., {Ranganath}, R., and {Blei}, D.~M. (2017).
+\newblock {Hierarchical Implicit Models and Likelihood-Free Variational
+  Inference}.
+\newblock {\em ArXiv e-prints}.
+
+\bibitem[Zhang et~al., 2017]{ADVVI}
+Zhang, C., B{\"u}tepage, J., Kjellstr{\"o}m, H., and Mandt, S. (2017).
+\newblock Advances in variational inference.
+\newblock {\em CoRR}, abs/1711.05597.
+
+\bibitem[Zilles, 1992]{neuroplast}
+Zilles, K. (1992).
+\newblock Neuronal plasticity as an adaptive property of the central nervous
+  system.
+\newblock {\em Annals of Anatomy - Anatomischer Anzeiger}, 174(5):383 -- 391.
+
+\end{thebibliography}
