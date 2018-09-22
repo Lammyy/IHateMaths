@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  20 SEP 2018 22:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  22 SEP 2018 18:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1103,26 +1103,26 @@ Package: cite 2015/02/27  v 5.5
  (./shell-honours.aux)
 \openout1 = `shell-honours.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 176.
-LaTeX Font Info:    ... okay on input line 176.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 176.
-LaTeX Font Info:    ... okay on input line 176.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 176.
-LaTeX Font Info:    ... okay on input line 176.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 176.
-LaTeX Font Info:    ... okay on input line 176.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 176.
-LaTeX Font Info:    ... okay on input line 176.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 176.
-LaTeX Font Info:    ... okay on input line 176.
-LaTeX Font Info:    Checking defaults for LUC/nanummj/m/n on input line 176.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 151.
+LaTeX Font Info:    ... okay on input line 151.
+LaTeX Font Info:    Checking defaults for LUC/nanummj/m/n on input line 151.
 LaTeX Font Info:    Try loading font information for LUC+nanummj on input line 
-176.
+151.
 
 (c:/texlive/2017/texmf-dist/tex/latex/nanumtype1/lucnanummj.fd
 File: lucnanummj.fd 2013/02/12 v0.1 Nanum Myeongjo font definitions
 )
-LaTeX Font Info:    ... okay on input line 176.
+LaTeX Font Info:    ... okay on input line 151.
 
 (c:/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -1198,30 +1198,30 @@ ABD: EveryShipout initializing macros
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable t
 ick labels; missing features). Consider writing \pgfplotsset{compat=1.15} into 
 your preamble.
- on input line 176.
+ on input line 151.
 
 <unsw-crest.jpg, id=4, 147.6717pt x 154.176pt>
 File: unsw-crest.jpg Graphic file (type jpg)
 <use unsw-crest.jpg>
-Package pdftex.def Info: unsw-crest.jpg  used on input line 178. on input line 
-178.
+Package pdftex.def Info: unsw-crest.jpg  used on input line 153. on input line 
+153.
 Package pdftex.def Info: Requested size: 142.26378pt x 148.54362pt on input lin
-e 178.
+e 153.
 [1
 
 {c:/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./unsw-crest.jp
 g>] [0
 
 ]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 193.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 168.
 
  (c:/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 193.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 168.
 
-Underfull \hbox (badness 10000) in paragraph at lines 204--206
+Underfull \hbox (badness 10000) in paragraph at lines 179--181
 
  []
 
@@ -1230,24 +1230,24 @@ Underfull \hbox (badness 10000) in paragraph at lines 204--206
 ] [2] [2
 
 ]
-LaTeX Font Info:    Try loading font information for U+msa on input line 238.
+LaTeX Font Info:    Try loading font information for U+msa on input line 213.
  (c:/texlive/2017/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 238.
+LaTeX Font Info:    Try loading font information for U+msb on input line 213.
 
 (c:/texlive/2017/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+lasy on input line 238.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 213.
 
 (c:/texlive/2017/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <8> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 238.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 213.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <6> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 238.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 213.
  [3] [3]
 (./shell-honours.toc [4
 
@@ -1261,112 +1261,197 @@ LaTeX Font Info:    Font shape `U/lasy/b/n' in size <6> not available
 Chapter 1.
 [1]
 Chapter 2.
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (0.97499pt too wide) in paragraph at lines 315--315
- [][][][]\OT1/cmr/m/n/12 Weighted 
- []
+LaTeX Warning: Citation `DeepLearning' on page 2 undefined on input line 247.
 
 
-Overfull \hbox (6.52354pt too wide) in paragraph at lines 316--316
- [][][][]\OT1/cmr/m/n/12 Activation 
- []
+LaTeX Warning: Citation `neuroplast' on page 2 undefined on input line 249.
+
+
+LaTeX Warning: Citation `neuroplast' on page 2 undefined on input line 249.
+
+
+LaTeX Warning: Citation `universal' on page 2 undefined on input line 251.
+
+
+LaTeX Warning: Citation `cybenko' on page 2 undefined on input line 251.
+
+
+LaTeX Warning: Citation `mnist' on page 2 undefined on input line 251.
 
 [2
 
-] [3] [4]
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
- [5] [6]
+]
+
+LaTeX Warning: Citation `neuralstat' on page 3 undefined on input line 253.
+
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (0.97499pt too wide) in paragraph at lines 463--463
+Overfull \hbox (0.97499pt too wide) in paragraph at lines 290--290
  [][][][]\OT1/cmr/m/n/12 Weighted 
  []
 
 
-Overfull \hbox (6.52354pt too wide) in paragraph at lines 464--464
+Overfull \hbox (6.52354pt too wide) in paragraph at lines 291--291
+ [][][][]\OT1/cmr/m/n/12 Activation 
+ []
+
+[3]
+
+LaTeX Warning: Citation `DeepLearning' on page 4 undefined on input line 296.
+
+[4]
+
+LaTeX Warning: Citation `neuralstat' on page 5 undefined on input line 334.
+
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+[5] [6]
+
+LaTeX Warning: Citation `DeepLearning' on page 7 undefined on input line 401.
+
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+
+Overfull \hbox (0.97499pt too wide) in paragraph at lines 438--438
+ [][][][]\OT1/cmr/m/n/12 Weighted 
+ []
+
+
+Overfull \hbox (6.52354pt too wide) in paragraph at lines 439--439
  [][][][]\OT1/cmr/m/n/12 Activation 
  []
 
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-[7] [8] [9]
-Underfull \hbox (badness 10000) in paragraph at lines 556--559
+[7]
+
+LaTeX Warning: Citation `DeepLearning' on page 8 undefined on input line 503.
+
+[8]
+
+LaTeX Warning: Citation `xavier' on page 9 undefined on input line 512.
+
+[9]
+
+LaTeX Warning: Citation `DeepLearning' on page 10 undefined on input line 532.
+
+
+LaTeX Warning: Citation `optimneural' on page 10 undefined on input line 533.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 531--534
 
  []
 
 [10]
+
+LaTeX Warning: Citation `optim' on page 11 undefined on input line 537.
+
 <gradientdescent.jpg, id=95, 145.0234pt x 90.39793pt>
 File: gradientdescent.jpg Graphic file (type jpg)
 <use gradientdescent.jpg>
-Package pdftex.def Info: gradientdescent.jpg  used on input line 567. on input 
-line 567.
+Package pdftex.def Info: gradientdescent.jpg  used on input line 542. on input 
+line 542.
 Package pdftex.def Info: Requested size: 290.04608pt x 180.79541pt on input lin
-e 567.
+e 542.
 
-Underfull \hbox (badness 10000) in paragraph at lines 563--571
+Underfull \hbox (badness 10000) in paragraph at lines 538--546
 
  []
 
-[11 <./gradientdescent.jpg>] [12] [13] [14] [15]
+[11 <./gradientdescent.jpg>]
+
+LaTeX Warning: Citation `floudas' on page 12 undefined on input line 570.
+
+
+LaTeX Warning: Citation `optimneural' on page 12 undefined on input line 571.
+
+
+LaTeX Warning: Citation `optimneural' on page 12 undefined on input line 572.
+
+
+LaTeX Warning: Citation `adam' on page 12 undefined on input line 573.
+
+[12]
+
+LaTeX Warning: Citation `backprop' on page 13 undefined on input line 576.
+
+[13]
+
+LaTeX Warning: Citation `DeepLearning' on page 14 undefined on input line 587.
+
+[14] [15]
 Chapter 3.
+
+LaTeX Warning: Citation `gelman' on page 16 undefined on input line 617.
+
 LaTeX Font Info:    Try loading font information for U+BOONDOX-cal on input lin
-e 644.
+e 619.
 (c:/texlive/2017/texmf-dist/tex/latex/boondox/uboondox-cal.fd
 File: uboondox-cal.fd 2011/04/26 Fontinst v1.933 font definitions for U/BOONDOX
 -cal.
 )
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/b/n' will be
-(Font)              scaled to size 12.0pt on input line 644.
+(Font)              scaled to size 12.0pt on input line 619.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/b/n' will be
-(Font)              scaled to size 8.0pt on input line 644.
+(Font)              scaled to size 8.0pt on input line 619.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/b/n' will be
-(Font)              scaled to size 6.0pt on input line 644.
+(Font)              scaled to size 6.0pt on input line 619.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 12.0pt on input line 649.
+(Font)              scaled to size 12.0pt on input line 625.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 8.0pt on input line 649.
+(Font)              scaled to size 8.0pt on input line 625.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 6.0pt on input line 649.
- [16
+(Font)              scaled to size 6.0pt on input line 625.
 
-] [17]
-Overfull \hbox (28.74841pt too wide) in paragraph at lines 689--690
-[]\OT1/cmr/m/n/12 We use the re-verse KL di-ver-gence in-stead of the for-ward 
-KL di-ver-gence $\OML/cmm/m/it/12 KL\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 p\OT1/cmr
-/m/n/12 (\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 )\OMS/cmsy/m/n/12 jj\OML/cmm/m/it/12
- q\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 ))$
- []
+
+LaTeX Warning: Citation `blei' on page 16 undefined on input line 627.
+
+[16
+
+]
+
+LaTeX Warning: Citation `KL' on page 17 undefined on input line 630.
+
+[17]
+
+LaTeX Warning: Citation `blei' on page 18 undefined on input line 665.
 
 [18] [19] [20] [21]
-Underfull \hbox (badness 10000) in paragraph at lines 761--780
+Underfull \hbox (badness 10000) in paragraph at lines 744--763
 
  []
 
-[22] [23] [24] [25] [26]
+[22]
+
+LaTeX Warning: Citation `blei' on page 23 undefined on input line 766.
+
+[23] [24] [25] [26]
+
+LaTeX Warning: Citation `ADVVI' on page 27 undefined on input line 849.
+
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 872.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 855.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <5> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 872.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 855.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 10.0pt on input line 872.
+(Font)              scaled to size 10.0pt on input line 855.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 7.0pt on input line 872.
+(Font)              scaled to size 7.0pt on input line 855.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 5.0pt on input line 872.
+(Font)              scaled to size 5.0pt on input line 855.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/b/n' will be
-(Font)              scaled to size 10.0pt on input line 872.
+(Font)              scaled to size 10.0pt on input line 855.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/b/n' will be
-(Font)              scaled to size 7.0pt on input line 872.
+(Font)              scaled to size 7.0pt on input line 855.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/b/n' will be
-(Font)              scaled to size 5.0pt on input line 872.
+(Font)              scaled to size 5.0pt on input line 855.
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -1379,17 +1464,21 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Underfull \hbox (badness 10000) in paragraph at lines 867--894
+Underfull \hbox (badness 10000) in paragraph at lines 850--877
 
  []
 
 [27]
-Underfull \hbox (badness 10000) in paragraph at lines 912--914
+Underfull \hbox (badness 10000) in paragraph at lines 895--897
 
  []
 
 [28]
-Underfull \hbox (badness 10000) in paragraph at lines 919--921
+
+LaTeX Warning: Citation `kingma' on page 29 undefined on input line 901.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 902--904
 
  []
 
@@ -1415,27 +1504,33 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
 
-Underfull \hbox (badness 10000) in paragraph at lines 953--972
 
- []
+LaTeX Warning: Citation `mescheder' on page 30 undefined on input line 936.
 
-[30] [31]
-Overfull \hbox (3.43126pt too wide) in paragraph at lines 982--984
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+[30]
+
+LaTeX Warning: Citation `ali' on page 31 undefined on input line 959.
+
+
+LaTeX Warning: Citation `tran' on page 31 undefined on input line 959.
+
+[31]
+Overfull \hbox (3.43126pt too wide) in paragraph at lines 964--966
 \OT1/cmr/m/n/12 Recall that $\OML/cmm/m/it/12 p\OT1/cmr/m/n/12 (\OML/cmm/m/it/1
 2 x\OT1/cmr/m/n/12 )$ is typ-i-cally un-avail-able, so we are un-able to eval-u
 -ate $\OML/cmm/m/it/12 KL\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 q[]\OT1/cmr/m/n/12 (
@@ -1443,12 +1538,18 @@ Overfull \hbox (3.43126pt too wide) in paragraph at lines 982--984
 r/m/n/12 (\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 ))$
  []
 
+
+LaTeX Warning: Citation `tiao' on page 32 undefined on input line 976.
+
 [32]
 Chapter 4.
+
+LaTeX Warning: Citation `huszar' on page 33 undefined on input line 979.
+
 [33
 
 ] [34] [35] [36] [37]
-Overfull \hbox (8.63321pt too wide) in paragraph at lines 1113--1115
+Overfull \hbox (8.63321pt too wide) in paragraph at lines 1095--1097
 \OT1/cmr/m/n/12 Using the pos-te-rior gen-er-a-tor parametriza-tion $\U/BOONDOX
 -cal/m/n/12 G[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 ^^O\OT1/cmr/m/n/12 ; \OML/cmm/
 m/it/12 x\OT1/cmr/m/n/12 )$, op-ti-miza-tion ob-jec-tives (4.1.4)
@@ -1457,22 +1558,22 @@ m/it/12 x\OT1/cmr/m/n/12 )$, op-ti-miza-tion ob-jec-tives (4.1.4)
 [38] [39] [40] [41] [42] [43] [44] [45] [46] [47]
 Chapter 5.
 
-Overfull \hbox (112.14108pt too wide) in paragraph at lines 1353--1353
+Overfull \hbox (112.14108pt too wide) in paragraph at lines 1335--1335
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1353--1359
+Underfull \hbox (badness 10000) in paragraph at lines 1335--1341
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1353--1359
+Underfull \hbox (badness 10000) in paragraph at lines 1335--1341
 
  []
 
 
-Overfull \hbox (1.34903pt too wide) in paragraph at lines 1353--1359
+Overfull \hbox (1.34903pt too wide) in paragraph at lines 1335--1341
 \OT1/cmr/m/n/12 As $\OML/cmm/m/it/12 x$ \OT1/cmr/m/n/12 in-creases, the pos-te-
 ri-ors be-come in-creas-ingly mul-ti-modal and un-usu-ally shaped.
  []
@@ -1487,38 +1588,38 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (19.75879pt too wide) in paragraph at lines 1447--1447
+Overfull \hbox (19.75879pt too wide) in paragraph at lines 1429--1429
  [][][][]\OT1/cmr/m/n/12 Sigmoid($\U/BOONDOX-cal/m/n/12 D$\OT1/cmr/m/n/12 )/ 
  []
 
 
-Overfull \hbox (3.4864pt too wide) in paragraph at lines 1447--1447
+Overfull \hbox (3.4864pt too wide) in paragraph at lines 1429--1429
  \OT1/cmr/m/n/12 ReLU($\U/BOONDOX-cal/m/n/12 R$\OT1/cmr/m/n/12 ) 
  []
 
 
-LaTeX Warning: Float too large for page by 81.18785pt on input line 1563.
+LaTeX Warning: Float too large for page by 81.18785pt on input line 1545.
 
 
-LaTeX Warning: Float too large for page by 40.08952pt on input line 1605.
+LaTeX Warning: Float too large for page by 40.08952pt on input line 1587.
 
 
-Overfull \hbox (314.1494pt too wide) in paragraph at lines 1360--1606
+Overfull \hbox (314.1494pt too wide) in paragraph at lines 1342--1588
 \OT1/cmr/m/n/12 the neu-ral net-work is as de-picted in Fig-ure idk: [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1360--1606
+Underfull \hbox (badness 10000) in paragraph at lines 1342--1588
 
  []
 
 
-Overfull \hbox (121.22025pt too wide) in paragraph at lines 1360--1606
+Overfull \hbox (121.22025pt too wide) in paragraph at lines 1342--1588
 [] 
  []
 
 [49] [50] [51] [52] [53] [54]
-Overfull \hbox (5.18578pt too wide) in paragraph at lines 1608--1611
+Overfull \hbox (5.18578pt too wide) in paragraph at lines 1590--1593
 \OT1/cmr/m/n/12 Clearly, the prior-contrastive al-go-rithms con-verged much fas
 ter their joint-contrastive
  []
@@ -1526,7 +1627,7 @@ ter their joint-contrastive
 [55] [56]
 Chapter 6.
 
-Overfull \hbox (12.39137pt too wide) in paragraph at lines 1623--1625
+Overfull \hbox (12.39137pt too wide) in paragraph at lines 1605--1607
 \OT1/cmr/m/n/12 The op-ti-miza-tion prob-lem for the ELBO in both prior-contras
 tive and joint-contrastive
  []
@@ -1534,13 +1635,13 @@ tive and joint-contrastive
 [57
 
 ] [58] [59] [60]
-Overfull \hbox (6.26077pt too wide) in paragraph at lines 1699--1701
+Overfull \hbox (6.26077pt too wide) in paragraph at lines 1681--1683
 \OT1/cmr/m/n/12 Recall that both di-ver-gences at-tain the same global min-i-mu
 m, which is a parametriza-
  []
 
 [61]
-Overfull \hbox (13.66823pt too wide) in paragraph at lines 1713--1713
+Overfull \hbox (13.66823pt too wide) in paragraph at lines 1695--1695
 [] 
  []
 
@@ -1560,54 +1661,55 @@ Chapter 9.
 Chapter 10.
 [72
 
-] (./shell-honours.bbl [73
-
-
-]) [74]
+] (./shell-honours.bbl)
 Appendix A.
-[75
+[73
 
-] [76] (./shell-honours.aux) ) 
+
+] [74] (./shell-honours.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 27755 strings out of 492990
- 695841 string characters out of 6136334
- 960265 words of memory out of 5000000
- 30735 multiletter control sequences out of 15000+600000
+ 27740 strings out of 492990
+ 695800 string characters out of 6136334
+ 959979 words of memory out of 5000000
+ 30720 multiletter control sequences out of 15000+600000
  23886 words of font info for 94 fonts, out of 8000000 for 9000
  1143 hyphenation exceptions out of 8191
  62i,22n,96p,1692b,2134s stack positions out of 5000i,500n,10000p,200000b,80000s
-<c:/texlive/2017/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmbx12.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmbx6.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb
-><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/tex
-live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2017
-/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2017/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2017/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2017/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmmi7.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmmi8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pf
-b><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><c
-:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/
-2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2017/texmf
--dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2017/texmf-dist/font
-s/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2017/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmr7.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmr8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
-.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/t
-exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/201
-7/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2017/texmf-d
-ist/fonts/type1/public/amsfonts/latxfont/lasy10.pfb><c:/texlive/2017/texmf-dist
-/fonts/type1/public/amsfonts/symbols/msam10.pfb><c:/texlive/2017/texmf-dist/fon
-ts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2017/texmf-dist/fonts/t
-ype1/public/nanumtype1/nanummjmb0.pfb><c:/texlive/2017/texmf-dist/fonts/type1/p
-ublic/nanumtype1/nanummjmb2.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/
-boondox/zxxbw8a.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/boondox/zxxr
-w8a.pfb>
-Output written on shell-honours.pdf (88 pages, 1243440 bytes).
+<c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/tex
+live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx6.pfb><c:/texlive/2017/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2017/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/2017/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/publ
+ic/amsfonts/cmextra/cmex8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmmi10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmmi12.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pf
+b><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texl
+ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2017/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/texlive/2017/texmf-dis
+t/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><c:/texlive/2017/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmr12.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmr17.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr6.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:
+/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/20
+17/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2017/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2017/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmti12.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfo
+nts/latxfont/lasy10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts
+/symbols/msam10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/sym
+bols/msbm10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanum
+mjmb0.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb2.
+pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/boondox/zxxbw8a.pfb><c:/texl
+ive/2017/texmf-dist/fonts/type1/public/boondox/zxxrw8a.pfb>
+Output written on shell-honours.pdf (86 pages, 1240003 bytes).
 PDF statistics:
- 414 PDF objects out of 1000 (max. 8388607)
- 289 compressed objects within 3 object streams
+ 408 PDF objects out of 1000 (max. 8388607)
+ 285 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
  23 words of extra memory for PDF output out of 10000 (max. 10000000)
 
