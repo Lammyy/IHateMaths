@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  24 SEP 2018 18:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  26 SEP 2018 20:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1312,103 +1312,120 @@ Chapter 2.
 [2
 
 ]
+
+LaTeX Warning: Citation `haykin' on page 3 undefined on input line 257.
+
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (0.97499pt too wide) in paragraph at lines 292--292
+Overfull \hbox (0.97499pt too wide) in paragraph at lines 294--294
  [][][][]\OT1/cmr/m/n/12 Weighted 
  []
 
 
-Overfull \hbox (6.52354pt too wide) in paragraph at lines 293--293
+Overfull \hbox (6.52354pt too wide) in paragraph at lines 295--295
  [][][][]\OT1/cmr/m/n/12 Activation 
  []
 
-[3] [4]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[3]
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[4]
+
+LaTeX Warning: Citation `snyman' on page 5 undefined on input line 340.
+
+
+LaTeX Warning: Citation `wu' on page 5 undefined on input line 341.
+
+[5]
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
- [5] [6]
+ [6] [7]
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (0.97499pt too wide) in paragraph at lines 440--440
+Overfull \hbox (0.97499pt too wide) in paragraph at lines 449--449
  [][][][]\OT1/cmr/m/n/12 Weighted 
  []
 
 
-Overfull \hbox (6.52354pt too wide) in paragraph at lines 441--441
+Overfull \hbox (6.52354pt too wide) in paragraph at lines 450--450
  [][][][]\OT1/cmr/m/n/12 Activation 
  []
 
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-[7] [8] [9]
-Underfull \hbox (badness 10000) in paragraph at lines 533--536
+[8] [9] [10]
+Underfull \hbox (badness 10000) in paragraph at lines 542--545
 
  []
 
-[10]
-<gradientdescent.jpg, id=95, 145.0234pt x 90.39793pt>
+[11]
+<gradientdescent.jpg, id=100, 145.0234pt x 90.39793pt>
 File: gradientdescent.jpg Graphic file (type jpg)
 <use gradientdescent.jpg>
-Package pdftex.def Info: gradientdescent.jpg  used on input line 544. on input 
-line 544.
+Package pdftex.def Info: gradientdescent.jpg  used on input line 553. on input 
+line 553.
 Package pdftex.def Info: Requested size: 290.04608pt x 180.79541pt on input lin
-e 544.
+e 553.
 
-Underfull \hbox (badness 10000) in paragraph at lines 540--548
+Underfull \hbox (badness 10000) in paragraph at lines 549--557
 
  []
 
-[11 <./gradientdescent.jpg>] [12] [13] [14] [15]
+[12 <./gradientdescent.jpg>] [13] [14] [15] [16]
 Chapter 3.
 LaTeX Font Info:    Try loading font information for U+BOONDOX-cal on input lin
-e 621.
+e 630.
 (c:/texlive/2017/texmf-dist/tex/latex/boondox/uboondox-cal.fd
 File: uboondox-cal.fd 2011/04/26 Fontinst v1.933 font definitions for U/BOONDOX
 -cal.
 )
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/b/n' will be
-(Font)              scaled to size 12.0pt on input line 621.
+(Font)              scaled to size 12.0pt on input line 630.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/b/n' will be
-(Font)              scaled to size 8.0pt on input line 621.
+(Font)              scaled to size 8.0pt on input line 630.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/b/n' will be
-(Font)              scaled to size 6.0pt on input line 621.
+(Font)              scaled to size 6.0pt on input line 630.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 12.0pt on input line 627.
+(Font)              scaled to size 12.0pt on input line 636.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 8.0pt on input line 627.
+(Font)              scaled to size 8.0pt on input line 636.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 6.0pt on input line 627.
- [16
+(Font)              scaled to size 6.0pt on input line 636.
+ [17
 
-] [17]
-[18] [19] [20] [21] [22]
-Underfull \hbox (badness 10000) in paragraph at lines 765--784
+] [18]
+[19] [20] [21] [22] [23]
+Underfull \hbox (badness 10000) in paragraph at lines 776--795
 
  []
 
-[23] [24] [25] [26] [27]
+[24] [25] [26] [27] [28]
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 876.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 887.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <5> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 876.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 887.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 10.0pt on input line 876.
+(Font)              scaled to size 10.0pt on input line 887.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 7.0pt on input line 876.
+(Font)              scaled to size 7.0pt on input line 887.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 5.0pt on input line 876.
+(Font)              scaled to size 5.0pt on input line 887.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/b/n' will be
-(Font)              scaled to size 10.0pt on input line 876.
+(Font)              scaled to size 10.0pt on input line 887.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/b/n' will be
-(Font)              scaled to size 7.0pt on input line 876.
+(Font)              scaled to size 7.0pt on input line 887.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/b/n' will be
-(Font)              scaled to size 5.0pt on input line 876.
+(Font)              scaled to size 5.0pt on input line 887.
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -1421,21 +1438,25 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Underfull \hbox (badness 10000) in paragraph at lines 871--898
-
- []
-
-[28]
-Underfull \hbox (badness 10000) in paragraph at lines 916--918
+Underfull \hbox (badness 10000) in paragraph at lines 882--909
 
  []
 
 [29]
-Underfull \hbox (badness 10000) in paragraph at lines 923--925
+Underfull \hbox (badness 10000) in paragraph at lines 927--929
 
  []
 
 [30]
+Underfull \hbox (badness 10000) in paragraph at lines 934--936
+
+ []
+
+[31]
+Underfull \hbox (badness 10000) in paragraph at lines 942--943
+
+ []
+
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -1457,6 +1478,7 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
+[32]
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -1471,8 +1493,8 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
- [31] [32]
-Overfull \hbox (3.43126pt too wide) in paragraph at lines 985--987
+ [33]
+Overfull \hbox (3.43126pt too wide) in paragraph at lines 1000--1002
 \OT1/cmr/m/n/12 Recall that $\OML/cmm/m/it/12 p\OT1/cmr/m/n/12 (\OML/cmm/m/it/1
 2 x\OT1/cmr/m/n/12 )$ is typ-i-cally un-avail-able, so we are un-able to eval-u
 -ate $\OML/cmm/m/it/12 KL\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 q[]\OT1/cmr/m/n/12 (
@@ -1480,41 +1502,41 @@ Overfull \hbox (3.43126pt too wide) in paragraph at lines 985--987
 r/m/n/12 (\OML/cmm/m/it/12 x\OT1/cmr/m/n/12 ))$
  []
 
-[33]
+[34] [35]
 Chapter 4.
-[34
+[36
 
-] [35] [36] [37] [38]
-Overfull \hbox (8.63321pt too wide) in paragraph at lines 1117--1119
+] [37] [38] [39] [40]
+Overfull \hbox (8.63321pt too wide) in paragraph at lines 1135--1137
 \OT1/cmr/m/n/12 Using the pos-te-rior gen-er-a-tor parametriza-tion $\U/BOONDOX
 -cal/m/n/12 G[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 ^^O\OT1/cmr/m/n/12 ; \OML/cmm/
 m/it/12 x\OT1/cmr/m/n/12 )$, op-ti-miza-tion ob-jec-tives (4.1.4)
  []
 
-[39] [40] [41] [42] [43] [44] [45] [46] [47] [48]
+[41] [42] [43] [44] [45] [46] [47] [48] [49] [50]
 Chapter 5.
-[49
+[51
 
 ]
-<sprinklertrue.png, id=232, 1089.31969pt x 218.31563pt>
+<sprinklertrue.png, id=239, 1089.31969pt x 218.31563pt>
 File: sprinklertrue.png Graphic file (type png)
 <use sprinklertrue.png>
-Package pdftex.def Info: sprinklertrue.png  used on input line 1354. on input l
-ine 1354.
+Package pdftex.def Info: sprinklertrue.png  used on input line 1372. on input l
+ine 1372.
 Package pdftex.def Info: Requested size: 423.94588pt x 84.96286pt on input line
- 1354.
+ 1372.
 
-Overfull \hbox (1.34903pt too wide) in paragraph at lines 1351--1358
+Overfull \hbox (1.34903pt too wide) in paragraph at lines 1369--1376
 \OT1/cmr/m/n/12 As $\OML/cmm/m/it/12 x$ \OT1/cmr/m/n/12 in-creases, the pos-te-
 ri-ors be-come in-creas-ingly mul-ti-modal and un-usu-ally shaped.
  []
 
-[50 <./sprinklertrue.png>]
+[52 <./sprinklertrue.png>]
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (3.79568pt too wide) in paragraph at lines 1402--1403
+Overfull \hbox (3.79568pt too wide) in paragraph at lines 1420--1421
 [][] 
  []
 
@@ -1522,193 +1544,191 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (19.22093pt too wide) in paragraph at lines 1451--1451
+Overfull \hbox (19.22093pt too wide) in paragraph at lines 1469--1469
  [][][][]\OT1/cmr/m/n/12 Sigmoid($\OML/cmm/m/it/12 D$\OT1/cmr/m/n/12 )/ 
  []
 
 
-Overfull \hbox (1.36995pt too wide) in paragraph at lines 1452--1453
+Overfull \hbox (1.36995pt too wide) in paragraph at lines 1470--1471
 [][] 
  []
 
-[51]
-Underfull \hbox (badness 10000) in paragraph at lines 1456--1458
+[53]
+Underfull \hbox (badness 10000) in paragraph at lines 1474--1476
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1459--1460
+Underfull \hbox (badness 10000) in paragraph at lines 1477--1478
 
  []
 
 
-LaTeX Warning: Float too large for page by 81.18785pt on input line 1575.
+LaTeX Warning: Float too large for page by 81.18785pt on input line 1593.
 
 
-LaTeX Warning: Float too large for page by 40.08952pt on input line 1617.
+LaTeX Warning: Float too large for page by 40.08952pt on input line 1635.
 
-[52] [53] [54] [55] [56]
-<13288.png, id=257, 1180.41pt x 230.36063pt>
+[54] [55] [56] [57] [58]
+<13288.png, id=264, 1180.41pt x 230.36063pt>
 File: 13288.png Graphic file (type png)
 <use 13288.png>
-Package pdftex.def Info: 13288.png  used on input line 1639. on input line 1639
+Package pdftex.def Info: 13288.png  used on input line 1657. on input line 1657
 .
 Package pdftex.def Info: Requested size: 423.94588pt x 82.73291pt on input line
- 1639.
-<13963.png, id=258, 1178.15157pt x 233.37187pt>
+ 1657.
+<13963.png, id=265, 1178.15157pt x 233.37187pt>
 File: 13963.png Graphic file (type png)
 <use 13963.png>
-Package pdftex.def Info: 13963.png  used on input line 1643. on input line 1643
+Package pdftex.def Info: 13963.png  used on input line 1661. on input line 1661
 .
 Package pdftex.def Info: Requested size: 423.94588pt x 83.97462pt on input line
- 1643.
+ 1661.
 File: sprinklertrue.png Graphic file (type png)
 <use sprinklertrue.png>
-Package pdftex.def Info: sprinklertrue.png  used on input line 1647. on input l
-ine 1647.
+Package pdftex.def Info: sprinklertrue.png  used on input line 1665. on input l
+ine 1665.
 Package pdftex.def Info: Requested size: 423.94588pt x 84.96286pt on input line
- 1647.
- [57 <./13288.png> <./13963.png>]
-<truklmins/PCKLvsPCADV.png, id=264, 413.29407pt x 323.70938pt>
+ 1665.
+ [59 <./13288.png> <./13963.png>]
+<truklmins/PCKLvsPCADV.png, id=271, 413.29407pt x 323.70938pt>
 File: truklmins/PCKLvsPCADV.png Graphic file (type png)
 <use truklmins/PCKLvsPCADV.png>
-Package pdftex.def Info: truklmins/PCKLvsPCADV.png  used on input line 1655. on
- input line 1655.
+Package pdftex.def Info: truklmins/PCKLvsPCADV.png  used on input line 1673. on
+ input line 1673.
 Package pdftex.def Info: Requested size: 207.7358pt x 162.7088pt on input line 
-1655.
-<truklmins/JCKLvsJCADV.png, id=265, 417.81094pt x 324.46219pt>
+1673.
+<truklmins/JCKLvsJCADV.png, id=272, 417.81094pt x 324.46219pt>
 File: truklmins/JCKLvsJCADV.png Graphic file (type png)
 <use truklmins/JCKLvsJCADV.png>
-Package pdftex.def Info: truklmins/JCKLvsJCADV.png  used on input line 1659. on
- input line 1659.
+Package pdftex.def Info: truklmins/JCKLvsJCADV.png  used on input line 1677. on
+ input line 1677.
 Package pdftex.def Info: Requested size: 207.7358pt x 161.32468pt on input line
- 1659.
-<estimator_losses/PCKLvsPCADV.png, id=266, 427.5975pt x 321.45094pt>
+ 1677.
+<estimator_losses/PCKLvsPCADV.png, id=273, 427.5975pt x 321.45094pt>
 File: estimator_losses/PCKLvsPCADV.png Graphic file (type png)
 <use estimator_losses/PCKLvsPCADV.png>
 Package pdftex.def Info: estimator_losses/PCKLvsPCADV.png  used on input line 1
-666. on input line 1666.
+684. on input line 1684.
 Package pdftex.def Info: Requested size: 207.7358pt x 156.16838pt on input line
- 1666.
-<estimator_losses/JCKLvsJCADV.png, id=267, 424.58624pt x 319.1925pt>
+ 1684.
+<estimator_losses/JCKLvsJCADV.png, id=274, 424.58624pt x 319.1925pt>
 File: estimator_losses/JCKLvsJCADV.png Graphic file (type png)
 <use estimator_losses/JCKLvsJCADV.png>
 Package pdftex.def Info: estimator_losses/JCKLvsJCADV.png  used on input line 1
-670. on input line 1670.
+688. on input line 1688.
 Package pdftex.def Info: Requested size: 207.7358pt x 156.1719pt on input line 
-1670.
-<nelbos/PCKLvsPCADV.png, id=268, 420.06938pt x 319.1925pt>
+1688.
+<nelbos/PCKLvsPCADV.png, id=275, 420.06938pt x 319.1925pt>
 File: nelbos/PCKLvsPCADV.png Graphic file (type png)
 <use nelbos/PCKLvsPCADV.png>
-Package pdftex.def Info: nelbos/PCKLvsPCADV.png  used on input line 1688. on in
-put line 1688.
+Package pdftex.def Info: nelbos/PCKLvsPCADV.png  used on input line 1706. on in
+put line 1706.
 Package pdftex.def Info: Requested size: 207.7358pt x 157.84735pt on input line
- 1688.
-<nelbos/JCKLvsJCADV.png, id=269, 424.58624pt x 317.68687pt>
+ 1706.
+<nelbos/JCKLvsJCADV.png, id=276, 424.58624pt x 317.68687pt>
 File: nelbos/JCKLvsJCADV.png Graphic file (type png)
 <use nelbos/JCKLvsJCADV.png>
-Package pdftex.def Info: nelbos/JCKLvsJCADV.png  used on input line 1692. on in
-put line 1692.
+Package pdftex.def Info: nelbos/JCKLvsJCADV.png  used on input line 1710. on in
+put line 1710.
 Package pdftex.def Info: Requested size: 207.7358pt x 155.43524pt on input line
- 1692.
- [58 <./truklmins/PCKLvsPCADV.png> <./truklmins/JCKLvsJCADV.png> <./estimator_l
+ 1710.
+ [60 <./truklmins/PCKLvsPCADV.png> <./truklmins/JCKLvsJCADV.png> <./estimator_l
 osses/PCKLvsPCADV.png> <./estimator_losses/JCKLvsJCADV.png> <./nelbos/PCKLvsPCA
 DV.png> <./nelbos/JCKLvsJCADV.png>]
-Overfull \hbox (22.8106pt too wide) in paragraph at lines 1698--1699
-[]\OT1/cmr/m/n/12 Clearly, the prior-contrastive al-go-rithms con-verged much f
-aster their joint-contrastive
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1698--1699
+Underfull \hbox (badness 10000) in paragraph at lines 1716--1717
 
  []
 
-[59]
+[61]
 Chapter 6.
 
-Overfull \hbox (12.39137pt too wide) in paragraph at lines 1713--1715
+Overfull \hbox (12.39137pt too wide) in paragraph at lines 1731--1733
 \OT1/cmr/m/n/12 The op-ti-miza-tion prob-lem for the ELBO in both prior-contras
 tive and joint-contrastive
  []
 
-[60
+[62
 
-] [61] [62] [63]
-Overfull \hbox (6.26077pt too wide) in paragraph at lines 1789--1791
+] [63] [64] [65]
+Overfull \hbox (6.26077pt too wide) in paragraph at lines 1807--1809
 \OT1/cmr/m/n/12 Recall that both di-ver-gences at-tain the same global min-i-mu
 m, which is a parametriza-
  []
 
-[64]
-Overfull \hbox (13.66823pt too wide) in paragraph at lines 1803--1803
+[66]
+Overfull \hbox (13.66823pt too wide) in paragraph at lines 1821--1821
 [] 
  []
 
-[65] [66] [67]
+[67] [68] [69]
 Chapter 7.
-[68
+[70
 
-] [69] [70]
+] [71] [72]
 Chapter 8.
-[71
+[73
 
-] [72] [73]
+] [74] [75]
 Chapter 9.
-[74
+[76
 
 ]
 Chapter 10.
-[75
+[77
 
-] (./shell-honours.bbl [76
+] (./shell-honours.bbl [78
 
 
-] [77]) [78]
+] [79]) [80]
 Appendix A.
-[79
+[81
 
-] [80] (./shell-honours.aux) ) 
+] [82] (./shell-honours.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 28917 strings out of 492990
- 717216 string characters out of 6136334
- 954459 words of memory out of 5000000
- 31880 multiletter control sequences out of 15000+600000
- 23886 words of font info for 94 fonts, out of 8000000 for 9000
+ 28931 strings out of 492990
+ 717425 string characters out of 6136334
+ 963122 words of memory out of 5000000
+ 31894 multiletter control sequences out of 15000+600000
+ 26267 words of font info for 104 fonts, out of 8000000 for 9000
  1143 hyphenation exceptions out of 8191
- 62i,22n,96p,1466b,2147s stack positions out of 5000i,500n,10000p,200000b,80000s
-<c:/texlive/2017/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmbx12.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmbx8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.p
-fb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/te
-xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive
-/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2017/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2017/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2017/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmmi8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmmib10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmm
-ib6.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.
-pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/te
-xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2017
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2017/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2017/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmr8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmsy10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb
-><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texli
-ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2017/t
-exmf-dist/fonts/type1/public/amsfonts/latxfont/lasy10.pfb><c:/texlive/2017/texm
-f-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb><c:/texlive/2017/texmf-di
-st/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2017/texmf-dist/f
-onts/type1/public/nanumtype1/nanummjmb0.pfb><c:/texlive/2017/texmf-dist/fonts/t
-ype1/public/nanumtype1/nanummjmb2.pfb><c:/texlive/2017/texmf-dist/fonts/type1/p
-ublic/boondox/zxxbw8a.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/boondo
-x/zxxrw8a.pfb>
-Output written on shell-honours.pdf (92 pages, 1717599 bytes).
+ 62i,22n,96p,1503b,2147s stack positions out of 5000i,500n,10000p,200000b,80000s
+<c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb><c:/te
+xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/201
+7/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2017/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/texlive/2017/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/pu
+blic/amsfonts/cmextra/cmex8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmmi10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmmi12.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.
+pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/te
+xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2017
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/texlive/2017/texmf-d
+ist/fonts/type1/public/amsfonts/cmextra/cmmib6.pfb><c:/texlive/2017/texmf-dist/
+fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><c:/texlive/2017/texmf-dist/font
+s/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmr12.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmr17.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
+6.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/t
+exlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2017
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2017/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2017/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmti12.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfont
+s/latxfont/lasy10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/s
+ymbols/msam10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbo
+ls/msbm10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanummj
+mb0.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb2.pf
+b><c:/texlive/2017/texmf-dist/fonts/type1/public/boondox/zxxbw8a.pfb><c:/texliv
+e/2017/texmf-dist/fonts/type1/public/boondox/zxxrw8a.pfb>
+Output written on shell-honours.pdf (94 pages, 1731807 bytes).
 PDF statistics:
- 446 PDF objects out of 1000 (max. 8388607)
- 299 compressed objects within 3 object streams
+ 457 PDF objects out of 1000 (max. 8388607)
+ 306 compressed objects within 4 object streams
  0 named destinations out of 1000 (max. 500000)
  68 words of extra memory for PDF output out of 10000 (max. 10000000)
 

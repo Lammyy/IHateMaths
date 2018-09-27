@@ -243,20 +243,22 @@ This problem is analogous to a typical Bayesian inference problem, in which $z$ 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Neural Networks}
-In this chapter we give a general overview of a common model used in deep learning: neural networks. We first explain the motivation and intuition behind the model, then we describe the structure of an individual node. We then expand to the overall neural network structure, explaining two common representations in literature and programming. After describing the network initialisation method, we conclude the chapter by demonstrating how neural networks are trained with gradient descent and how back-propagation is used to find the partial derivatives for gradient descent.
+\chapter{Background on Neural Networks}
+In this chapter we give a general overview of a common model used in deep learning: neural networks. We first explain the motivation and intuition behind the model, then we describe the structure of an individual node. We then expand to the overall neural network structure, explaining two common representations in literature and programming. After describing the network initialisation method, we conclude the chapter by demonstrating gradient descent training of neural networks and how back-propagation is used to find the required partial derivatives.
 \section{Motivation}
-Originally, neural networks were an attempt to create an algorithm that mimics the human brain's method of solving problems. The first machines using a neural network structure were created in the 1950s, and they were used widely from the 1980s onwards, as computers became sufficiently powerful\cite{DeepLearning}.
+Originally, neural networks were an attempt to create an algorithm that mimics the human brain's method of solving problems. The first machines using a neural network structure were created in the 1950s, and they were used widely from the 1980s onwards, as computers became sufficiently powerful for network training \cite{DeepLearning}.
 
-One key feature of the brain structure is the capability for the neurons to adapt to suit different purposes\cite{neuroplast}. Neuroscientists have conducted experiments on animals where they rewired the optic nerve from the eye to the auditory cortex. They found that the auditory cortex eventually adapted to process the visual signals, and the animals were able to perform tasks requiring sight. This experiment can be repeated for almost any input sensor and the neurons will adjust accordingly to process the signals in a useful manner. They deduced that each neuron has a similar structure regardless of its location in the brain, in which electrical signal inputs are transformed in some way and outputted to other neurons. Overall, the network of neurons was able to process an arbitrary input signal to suit a given purpose\cite{neuroplast}. These are the core principles behind neural networks.
+One key feature of the brain structure is the capability of the neurons to adapt to suit different purposes\cite{neuroplast}. Neuroscientists have conducted experiments on animals where they rewired the optic nerve from the eye to the auditory cortex. They found that the auditory cortex eventually adapted to process the visual signals, and the animals were able to perform tasks requiring sight. This experiment can be repeated for almost any input sensor and the neurons will adjust accordingly to process the signals in a useful manner. They deduced that each neuron has a similar structure regardless of its location in the brain, in which electrical signal inputs are transformed in some way and outputted to other neurons. Overall, the network of neurons was able to process an arbitrary input signal to suit a given purpose\cite{neuroplast}. These are the core principles behind neural network models.
 
-Let $f^*$ be some function in the space of $\R$. The primary goal of a neural network is to approximate $f^*$ using a mapping with parameters $\bm{\Theta}$ from input $\bm{x}$ to output $\bm{y}$: $\bm{y}=\bm{f}_{\bm{\Theta}}(\bm{x})$. In fact, the universal approximation theorem states that neural networks can approximate any function\cite{universal, cybenko}. For example, a typical regression problem of estimating housing prices would have the network inputting the values of certain predictors such as size (continuous) and type of building (categorical), and outputting the price. Another example is the classification problem of recognising handwritten digits (0-9) in a black and white image \cite{mnist}. There would be many inputs corresponding to the value of each pixel, and the network would have 10 outputs corresponding to the probability of each digit, and the digit with the highest probability would be selected.
+Let $f^*$ be some function in the space of $\R$. The primary goal of a neural network is to approximate $f^*$ using a mapping with parameters $\bm{\Theta}$ from input $\bm{x}$ to output $\bm{y}$: $\bm{y}=\bm{f}_{\bm{\Theta}}(\bm{x})$\cite{DeepLearning}. In fact, the universal approximation theorem states that neural networks can approximate any function in a finite-dimensional space with any desired non-zero amount of error, provided they are complex enough\cite{universal, cybenko}. For example, a typical regression problem of estimating housing prices would have the network inputting the values of certain predictors such as size (continuous) and type of building (categorical), and outputting the expected price. Another example is the classification problem of recognising handwritten digits (0-9) in a black and white image \cite{mnist}. There would be many inputs corresponding to the value of each pixel, and the network would have 10 outputs corresponding to the probability of each digit, and the digit with the highest probability is then selected.
 \section{Individual Node Structure}
-Before discussing the overall structure of the neural network, we describe the structure of an individual node. A typical node takes in inputs from either the external input, or the outputs from other nodes, in addition to a bias node, which is the equivalent of the intercept term in a regression problem. Using the example of a node function $h_{\bm{\theta}}(\bm{x})$ with 3 inputs (see Figure 2.1 below), we label these inputs as $\bm{x}=[x_0\quad x_1\quad x_2\quad x_3]^\intercal$, with $x_0=1$ corresponding to the bias node. These values are multiplied by weights $\bm{\theta}=[\theta_0\quad\theta_1\quad\theta_2\quad\theta_3]$, and then passed through an activation function $g(\bm{x})$\cite{neuralstat}. The objective of the activation function is to normalise the network output to a given range, such as $(0,1)$ or $\R$. A list of common activation functions is given on the next page.\\
-\begin{figure}[h]
+Before discussing the overall structure of the neural network, we describe the structure of an individual node. A typical node takes in inputs from either the external input, or the outputs from other nodes, in addition to a bias node, which has the same purpose as the intercept term in a regression problem. The nodal inputs $\bm{x}$ are multiplied by weights $\bm{\theta}$ and then passed through an activation function $g(\bm{x})$. The individual node function is therefore \[h_{\bm{\theta}}(\bm{x})=g\left(\sum\limits^n_{i=0}\theta_ix_i\right)\] where n is the number of inputs excluding the bias node, which always has constant value $x_0=1$\cite{neuralstat}. An example of this is given in Figure 2.1 on the next page. 
+
+The objective of the activation function is to map the network output, possibly non-linearly, to a given range, such as $(0,1)$ or $\R$. This mapping restricts the output range and determines how much input signal is needed before the output becomes asymptotically large \cite{haykin}. A list of common activation functions is given on the next page.
+\begin{figure}[h!]
 \begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
     \tikzstyle{every pin edge}=[<-,shorten <=1pt]
-    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=50pt,inner sep=0pt]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=45pt,inner sep=0pt]
     \tikzstyle{input neuron}=[neuron, fill=green!50];
     \tikzstyle{output neuron}=[neuron, fill=red!50];
     \tikzstyle{hidden neuron}=[neuron, fill=blue!50];
@@ -268,7 +270,7 @@ Before discussing the overall structure of the neural network, we describe the s
         \node[input neuron, pin=left:Bias $x_0$] (I-0) at (0,-0) {$\theta_0 x_0$};
 	\foreach \name / \y in {1,...,3}
     % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
-        \node[input neuron, pin=left:Input $x_{\y}$] (I-\name) at (0,-2*\y) {$\theta_{\y}x_\y$};
+        \node[input neuron, pin=left:Input $x_{\y}$] (I-\name) at (0,-1.7*\y) {$\theta_{\y}x_\y$};
     % Draw the hidden layer nodes
     %\foreach \name / \y in {1,...,5}
      %   \path[yshift=0.5cm]
@@ -289,10 +291,11 @@ Before discussing the overall structure of the neural network, we describe the s
 
     % Annotate the layers
 %    \node[annot,above of=H-1, node distance=1cm] (hl) {Hidden layer};
-    \node[annot,above of=I-0, node distance=1.5cm](il) {Weighted Inputs};
+    \node[annot,above of=I-0, node distance=1.3cm](il) {Weighted Inputs};
     \node[annot,right of=il, node distance=4cm] {Activation Function};
 \end{tikzpicture}
-\caption{Individual Node Structure}
+\caption{\small Example structure of an individual node function with 3 inputs, labelled as $\bm{x}=[x_0\quad x_1\quad x_2\quad x_3]^\top$, with $x_0$ corresponding to the bias node. The weights are denoted as $\bm{\theta}=[\theta_0\quad \theta_1\quad \theta_2\quad \theta_3]$.}
+
 \end{figure}
 \newpage
 Some common activation functions are\cite{DeepLearning}:
@@ -300,9 +303,9 @@ Some common activation functions are\cite{DeepLearning}:
 \item The rectified linear unit or ReLU activation function output is bound in $[0,\infty)$. It has the formula $g(x)=\max\{0,x\}$ corresponding to node function $h_{\bm{\theta}}(\bm{x})=\max\{0,\bm{\theta}^\top\bm{x}\}$.
 \item The sigmoid or logistic activation function outputs are restricted to $(0,1)$, with the formula $g(x)=(1+\exp(-x))^{-1}$ corresponding to node function  $h_{\bm{\theta}}(\bm{x})=(1+\exp(-\bm{\theta}^\top\bm{x}))^{-1}$.
 \item The hyperbolic tangent function output ranges between $(-1,1)$, denoted as $g(x)=\tanh(x)$ corresponding to $h_{\bm{\theta}}(\bm{x})=\tanh(\bm{\theta}^\top\bm{x})$.
-\item The linear activation function is used to describe nodes with no activation function, as its formula is $g(x)=x$, corresponding to $h_{\bm{\theta}}(\bm{x})=\bm{\theta}^\top\bm{x}$. It therefore ranges in $\R$.
+\item The linear activation function is used to describe nodes with no activation function, as it's formula is $g(x)=x$, corresponding to $h_{\bm{\theta}}(\bm{x})=\bm{\theta}^\top\bm{x}$.
 \end{itemize}
-Their plots are shown in Figure 2.2 below.\\
+Their plots are shown in Figure 2.2 on the next page.\\
 \begin{figure}[h]
 \resizebox{\textwidth}{!}{
 \begin{tikzpicture}
@@ -331,9 +334,15 @@ Their plots are shown in Figure 2.2 below.\\
 \caption{Activation Function Plots}
 \end{figure}
 \newpage
-The choice of activation function is mostly dependent on the desired range of the node's output. For example, if the node's output is the estimate of a probability (ranging in $(0,1)$), then the sigmoid function would be used. Before discussing this further, we first describe the overall neural network structure, as the choice of activation function is dependent on the node's relative location on the network.
+The choice of activation function is dependent on several factors:
+\begin{itemize}
+\item Desired node output range,
+\item Continuous differentiability is ideal for gradient-based optimisation methods\cite{snyman},
+\item Monotonic activation functions ensure that the error is convex \cite{wu},
+\item In cases where the output range is restricted, the amount of input signal required for the activation function output to be asymptotically close to its limit.
+\end{itemize} For example, if the node's output is the estimate of a probability (ranging in $(0,1)$), then the sigmoid function would be used\cite{cybenko}. In addition to its ideal output range, the sigmoid function is continuously differentiable ($g'(x)=g(x)(1-g(x))$) and requires significant input to output a value asymptotically close to $0$ or $1$. This allows the probability to be estimated with greater precision than with an activation function that approaches $0$ or $1$ very quickly. Note from Figure 2.2 that the tanh activation function approaches its limits much faster than the sigmoid function, so even if tanh was bound in $(0,1)$, it would be a less suitable choice. Before discussing this further, we first describe the overall neural network structure, as the choice of activation function is dependent on the node's relative location on the network.
 \section{Neural Network Structure}
-A typical neural network is made up of layers of interconnected nodes\cite{neuralstat}. The first layer, called the input layer, does not have an activation function or weights, rather it simply acts as an input interface for the network. The outputs from the nodes can only be sent to other nodes in succeeding layers, with the exception of the final output layer; its result is simply the output of the network. The layers of nodes between the input and output layer are the hidden layers, as their weights and outputs are not useful to the user. Hidden layers can have an arbitrary number of nodes, whilst the nodes in the input and output layers are restricted to the number of inputs and outputs the program has. Figure 2.3 below illustrates a simple neural network function $f_{\bm{\Theta}}(\bm{x})$ with 3 external inputs, 1 hidden layer with 3 nodes, 1 bias node per non-output layer and 1 output node. This example, along with the notations is described in Example 2.3.1 on the next page.
+A typical neural network is made up of layers of interconnected nodes\cite{neuralstat}. The first layer, called the input layer, does not have an activation function or weights, rather it simply acts as an input interface for the network. The outputs from the nodes can only be sent to other nodes in succeeding layers, with the exception of the final output layer; it's result is simply the output of the network. The layers of nodes between the input and output layer are called the ``hidden" layers, as their outputs are generally not interpreted by the user. Hidden layers can have an arbitrary number of nodes, whilst the nodes in the input and output layers are restricted to the number of inputs and outputs the program has. Example 2.3.1 on the next page explains the arithmetic operations within a neural network, and is illustrated in Figure 2.3.
 \begin{figure}[h]
 \begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
     \tikzstyle{every pin edge}=[<-,shorten <=1pt]
@@ -375,7 +384,7 @@ A typical neural network is made up of layers of interconnected nodes\cite{neura
     \node[annot,left of=hl] {Input layer};
     \node[annot,right of=hl] {Output layer};
 \end{tikzpicture}
-\caption{Neural Network Structure}
+\caption{\small Example Neural Network Structure with 3 external inputs, 1 hidden layer with 3 nodes, 1 bias node per non-output layer and 1 output node.}
 \end{figure}
 \newpage
 \begin{example}
@@ -626,7 +635,9 @@ where
 \item $p(\bm{x}|\bm{z})$ is the likelihood: the distribution of data $\bm{x}$ conditioned on the parameters $\bm{z}$,
 \item $p(\bm{x})=\int_\mathcal{z}p(\bm{z},\bm{x})d\bm{z}$ is the marginal likelihood, or the evidence: the density of the data averaged across all possible parameter values.
 \end{itemize}
-If the evidence integral $p(\bm{x})=\int_\mathbcal{z}p(\bm{z},\bm{x})d\bm{z}$ is computationally intractable, then we are unable to evaluate the posterior density. Traditional MCMC (Markov Chain Monte Carlo) methods overcome this obstacle by sampling from a Markov chain that converges to the stationary distribution $p(\bm{z},\bm{x})$. However, these methods tend to have slow convergence for large datasets or complex models. When faced with these issues or when desiring a faster computation, one may instead apply variational inference, an alternative approach to density estimation. Variational inference methods can be much faster than MCMC, but they are known to underestimate the true posterior variance\cite{blei}, leading to a trade-off between speed of convergence and mean squared error.
+In simple cases, the posterior can typically be calculated algebraically by using the proportionality $p(\bm{z}|\bm{x})\propto p(\bm{z})p(\bm{x|z})$ and normalising over the constant $p(\bm{x})$. As the model becomes more complex, the calculations required can be extremely difficult, so
+% the evidence integral $p(\bm{x})=\int_\mathbcal{z}p(\bm{z},\bm{x})d\bm{z}$ is computationally intractable, then we are unable to evaluate the posterior density. 
+traditional MCMC (Markov Chain Monte Carlo) methods overcome this obstacle by sampling from a Markov chain that converges to the stationary distribution $p(\bm{z},\bm{x})$. However, these methods tend to have slow convergence for large datasets or high dimensional data. When faced with these issues or when desiring a faster computation, one may instead apply variational inference, an alternative approach to density estimation. Variational inference methods can be much faster than MCMC, but they are known to underestimate the true posterior variance\cite{blei}, leading to a trade-off between speed of convergence and mean squared error.
 
 \section{The KL Divergence}
 We first define the f-divergence: a measure of how much two probability distributions differ.
@@ -928,7 +939,9 @@ At our current formulation, we have the problem that a neural network is determi
 In practice, to reduce computational time, this is achieved by sampling random standard normal noise $\epsilon$, multiplying it by the variance and adding the result to the mean:
 \[\epsilon\sim \mathcal{N}(0,I_{k\times k}),\qquad z=\mu+\epsilon\cdot\sigma^2.\]
 \newpage
-The expression in our optimization problem is tractable. It is often possible to parametrise an explicit form of the likelihood from the neural network output. For example, if $q^*(x)$ is a data set of grey-scale images, then a Bernoulli distribution can be used to represent the pixel values, with parameters given by the sigmoid output of the likelihood network. Since we have the explicit form of the multivariate normal $q_\phi(z|x)$ and $p(z)$ densities, the KL divergence term can be calculated through the equation:
+The expression in our optimization problem is tractable. It is often possible to parametrise an explicit form of the likelihood $p_\theta(x|z)$ from the neural network output. For example, if $q^*(x)$ is a data set of grey-scale images, then a Bernoulli distribution can be used to represent the pixel values, with parameters given by the sigmoid output of the network. For the purpose of data generation, rather than sampling $x$ from the same Bernoulli distribution, the value of $x$ is the immediate network output. The lack of random variance in this output runs contradictory to the probabilistic nature of a likelihood function, but leads to a reduction in image blurriness and reconstruction error, that is, $\|\bm{x}-\tilde{\bm{x}}\|^2_2$ where $\bm{x}$ is the autoencoder input and $\tilde{\bm{x}}$ is the autoencoder output as depicted in Figure 3.3. There are no subsequent issues in our optimisation problem as we still use the likelihood function of the Bernoulli distribution.\\
+
+Since we have the explicit form of the multivariate normal $q_\phi(z|x)$ and $p(z)$ densities, the KL divergence term can be calculated through the equation:
 \[KL(q(z|x)||p(z))=\frac12 \sum_{i=1}^k\left(\sigma^2_i+\mu^2_i-\log(\sigma^2_i)-1\right).\]
 \begin{figure}[h]
   \centering
@@ -940,7 +953,7 @@ The expression in our optimization problem is tractable. It is often possible to
     \node [latent, above=of para1] (eps) {$\epsilon$} ;
     \node [latent, right=of para1] (z) {$\bm{z}$} ;
     \node [det, right=of z] (p) {$p_\theta(x|z)$} ;
-    \node [latent, right=of p] (pout) {$\bm{x}$} ;
+    \node [latent, right=of p] (pout) {$\tilde{\bm{x}}$} ;
     \edge {x} {q} ; %
     \edge {q} {qout} ;
     \edge {qout} {para1} ;
@@ -951,10 +964,11 @@ The expression in our optimization problem is tractable. It is often possible to
   }
    \caption{Variational Autoencoder}
 \end{figure}
+\newpage
 \section{Problems with Implicit Distributions}
 The above sections assume that the true prior $p(z)$, likelihood $p(x|z)$ and variational posterior $q_\phi(z|x)$ have an explicit form. However, there are two main scenarios in which at least one of these densities are implicit, that is, their parametrization is unknown but we are able to generate samples from their distributions. This poses problems with optimization as the objective function becomes difficult to compute. 
 \subsection{Implicit Prior and/or Variational Posterior}
-In the first scenario, at least one of the true prior or variational posterior densities is implicit, but the likelihood is known. An implicit prior is rare but may occur in posterior inference. The implicit variational posterior occurs more often (in both posterior inference and data generation), detailed in Adversarial Variational Bayes by Mescheder\cite{mescheder}. Typically in amortized inference and variational autoencoders, the variational posterior sample $\bm{z}$ is sampled from a multivariate normal distribution with mean and variance defined by the variational network. The problem with this representation is the lack of dependencies between the latent variables and the inability to model multi-modal or flexible densities. In his paper, Mescheder adds random noise $\epsilon\sim \pi(\epsilon)$ as additional inputs to the variational network, training the network to directly output $\bm{z}$. $\pi(\epsilon)$ is a typical noise distribution, such as $\mathcal(0,I_{p\times p})$ where $p$ is the desired number of noise inputs. This added noise allows the probabilistic nature of a probability density to be represented by a deterministic neural network. We therefore denote the generator of posterior samples as $\mathcal{G}(\epsilon;x)$. A diagram illustrating this is shown in Figure 3.4 below.\\
+In the first scenario, at least one of the true prior or variational posterior densities is implicit, but the likelihood is known. An implicit prior is rare but may occur in posterior inference. The implicit variational posterior occurs more often (in both posterior inference and data generation), detailed in Adversarial Variational Bayes by Mescheder\cite{mescheder}. Typically in amortized inference and variational autoencoders, the variational posterior sample $\bm{z}$ is sampled from a multivariate normal distribution with mean and variance defined by the variational network. The problem with this representation is the lack of dependencies between the latent variables and the inability to model multi-modal or flexible densities. In his paper, Mescheder adds random noise $\epsilon\sim \pi(\epsilon)$ as additional inputs to the variational network, training the network to directly output $\bm{z}$. $\pi(\epsilon)$ is a typical noise distribution, such as $\mathcal(0,I_{p\times p})$ where $p$ is the desired number of noise inputs. This added noise allows the probabilistic nature of a probability density to be represented by a deterministic neural network. However, note that the neural network does not output the probability density $q_\phi(z|x)$, rather it outputs distribution sample $z\sim q_\phi(z|x)$. We therefore denote the generator of posterior samples as $\mathcal{G}(\epsilon;x)$. A diagram illustrating this is shown in Figure 3.4 below.\\
 \begin{figure}[h]
   \centering
   \tikz{ %
@@ -971,8 +985,9 @@ In the first scenario, at least one of the true prior or variational posterior d
     \edge {p} {pout} ;
   }
    \caption{Adversarial Variational Bayes}
-\end{figure}\\
-Due to the complicated nature of the neural network, it is extremely difficult to discern the explicit form of $q_\phi(z|x)$ in this representation, but we are able to easily generate samples by feeding data and noise through the network, hence its implicit nature.\\
+\end{figure}
+\newpage
+Due to the complex nature of the neural network, it is extremely difficult to discern the explicit form of $q_\phi(z|x)$ in this representation, but we are able to easily generate samples by feeding data and noise through the network, hence its implicit nature.\\
 Now again recall our optimization problem from line 3.7.1:
 \[\min_{\phi,\theta} \mathbb{E}_{q^*(x)}\left[-\E_{q_\phi(z|x)}[\log p_\theta(x|z)]+KL(q_\phi(z|x)||p(z))\right].\]
 When either the prior or variational posterior is implicit, this expression is impossible to evaluate as we are unable to calculate $KL(q_\phi(z|x)||p(z))$. We therefore resort to density ratio estimation techniques (Chapter 4) to approximate $\frac{q_\phi(z|x)}{p(z)}$, using only samples from the two densities.
@@ -995,7 +1010,10 @@ Our objective now is to minimize this NELBO with respect to our variational para
 Note that we are now minimizing the reverse KL divergence between the two joint densities $KL(q(z,x)||p(z,x))$, so the NELBO attains its minimum when $q(z,x)=p(z,x)$. The optimal posterior is therefore $q_\phi(z|x)=\frac{p(x)p(z|x)}{q^*(x)}$, dependent on the density ratio between the true data distribution $p(x)$ and our dataset $q^*(x)$.\\
 Also note that the likelihood parameters no longer appear in the objective function, hence this expression on its own is only sufficient for posterior inference. The objective problem no longer has an explicit likelihood term, so it can be used with an implicit likelihood. In fact, since density ratio estimation only requires samples, both the prior and variational posterior densities can also be implicit, hence the ``Adversarial Variational Bayes" representation of the variational network can be used.\\
 In data generation, we would additionally have to maximize the forward KL divergence with respect to the likelihood parameters \cite{tiao}:
-\[\min_\theta \mathbb{E}_{p(z)p(x|z)}\log \frac{p(z,x)}{q(z,x)}.\]
+\begin{equation}
+\min_\theta \mathbb{E}_{p(z)p(x|z)}\log \frac{p(z,x)}{q(z,x)}.
+\end{equation}
+In this scenario, separate density ratio estimators would be used for equations (3.9.1) and (3.9.2), as we have taken the expectation of the density ratios with respect to different distributions.
 \chapter{Density Ratio Estimation}
 In this chapter, we derive two common methods of density ratio estimation used with implicit models\cite{sugiyama, mohamed}: class probability estimation and divergence minimisation, applying them to both the implicit prior/posterior and implicit likelihood objective functions to formulate bi-level optimization problems. In this thesis, we use Huszar's terminology, referring to the former objective as ``prior-contrastive" and the latter as ``joint-contrastive"\cite{huszar}.
 \section{Class Probability Estimation}
@@ -1695,7 +1713,7 @@ JC Class Probability Estimation & 1.3925 & 0.0669\\
 \caption{NELBOs}
 \end{figure}
 \newpage
-Clearly, the prior-contrastive algorithms converged much faster their joint-contrastive equivalent, as expected since knowledge of the likelihood improves posterior optimization. Overall, for both families of algorithms, we found that class probability estimation performed consistently better than KL divergence minimisation. The means and standard deviations of the results can be found in Table, and it can be seen that the KL minimisation approach had higher average KL divergence and standard deviation, implying that the method is slower and more inconsistent. The estimator loss, estimated NELBO and `true' KL Divergence over the iterations can be found in Figures. The inconsistency of KL minimisation can be seen in the wild fluctuations early in the estimator loss and NELBO graphs, implying that the NELBO is being estimated inaccurately. This corresponds to the instances in the true KL Divergence graphs where the posterior output worsens over certain periods. Each iteration took approximately the same amount of time to compute (0.32 seconds on me PC), as the bulk of the training time is spent training the neural networks, which have similar structures.\\
+As one would expect, the prior-contrastive algorithms converged much faster their joint-contrastive equivalent, as expected since knowledge of the likelihood improves posterior optimization. Overall, for both families of algorithms, we found that class probability estimation performed consistently better than KL divergence minimisation. The means and standard deviations of the results can be found in Table, and it can be seen that the KL minimisation approach had higher average KL divergence and standard deviation, implying that the method is slower and more inconsistent. The estimator loss, estimated NELBO and `true' KL Divergence over the iterations can be found in Figures. The inconsistency of KL minimisation can be seen in the wild fluctuations early in the estimator loss and NELBO graphs, implying that the NELBO is being estimated inaccurately. This corresponds to the instances in the true KL Divergence graphs where the posterior output worsens over certain periods. Each iteration took approximately the same amount of time to compute (0.32 seconds on me PC), as the bulk of the training time is spent training the neural networks, which have similar structures.\\
 
 Furthermore, in approximately half of the simulations, the ratio loss of the KL divergence minimisation algorithm would start at a relatively high number (42.3 as opposed to 3.5), and it would be stuck there for the entire runtime of the program; the thousands of iterations spent minimizing the ratio loss did not decrease it. At higher training rates, the KL minimization algorithm would sometimes enter this "failure" stage during the main optimization stage. The high ratio loss signifies a very inaccurate ratio estimator, leading to a completely inaccurate variational posterior (i have a fig to isnert here). Thus, the program was programmed to restart every time the ratio loss initialized at a high number, until a reasonable value was initialized. 
 \newpage

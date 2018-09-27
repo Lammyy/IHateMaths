@@ -1,0 +1,12 @@
+\beamer@sectionintoc {1}{Background Info}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Neural Networks}{3}{0}{1}
+\beamer@subsectionintoc {1}{2}{(Amortized) Variational Inference}{8}{0}{1}
+\beamer@subsectionintoc {1}{3}{Density Ratio Estimation}{16}{0}{1}
+\beamer@sectionintoc {2}{Early Experimentation}{22}{0}{2}
+\beamer@subsectionintoc {2}{1}{Initial Inference Experiment}{22}{0}{2}
+\beamer@subsectionintoc {2}{2}{Inference Experiment - Activation Function}{32}{0}{2}
+\beamer@sectionintoc {3}{Theory Break}{37}{0}{3}
+\beamer@sectionintoc {4}{Experiments}{39}{0}{4}
+\beamer@subsectionintoc {4}{1}{Inference Experiment}{39}{0}{4}
+\beamer@sectionintoc {5}{Further Estimator Loss Function Analysis}{46}{0}{5}
+\beamer@sectionintoc {6}{Generation Experiment}{49}{0}{6}
