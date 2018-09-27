@@ -5,46 +5,49 @@ The style file: apalike.bst
 Database file #1: bible.bib
 Warning--empty journal in backprop
 Warning--empty journal in gan
+Warning--empty chapter and pages in kolen
 Warning--empty journal in explain
-You've used 27 entries,
+Warning--empty publisher in snyman
+Warning--empty journal in wu
+You've used 34 entries,
             1935 wiz_defined-function locations,
-            619 strings with 7455 characters,
-and the built_in function-call counts, 9814 in all, are:
-= -- 929
-> -- 429
-< -- 15
-+ -- 144
-- -- 142
-* -- 801
-:= -- 1770
-add.period$ -- 81
-call.type$ -- 27
-change.case$ -- 201
-chr.to.int$ -- 27
-cite$ -- 30
-duplicate$ -- 384
-empty$ -- 671
-format.name$ -- 183
-if$ -- 1889
+            665 strings with 8454 characters,
+and the built_in function-call counts, 12333 in all, are:
+= -- 1169
+> -- 506
+< -- 23
++ -- 167
+- -- 165
+* -- 1000
+:= -- 2203
+add.period$ -- 102
+call.type$ -- 34
+change.case$ -- 243
+chr.to.int$ -- 34
+cite$ -- 40
+duplicate$ -- 497
+empty$ -- 871
+format.name$ -- 215
+if$ -- 2398
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 33
-newline$ -- 138
-num.names$ -- 81
-pop$ -- 196
+missing$ -- 44
+newline$ -- 172
+num.names$ -- 104
+pop$ -- 247
 preamble$ -- 1
-purify$ -- 206
+purify$ -- 251
 quote$ -- 0
-skip$ -- 293
+skip$ -- 374
 stack$ -- 0
-substring$ -- 547
-swap$ -- 33
-text.length$ -- 1
+substring$ -- 711
+swap$ -- 50
+text.length$ -- 3
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 150
-warning$ -- 3
-while$ -- 68
+type$ -- 184
+warning$ -- 6
+while$ -- 88
 width$ -- 0
-write$ -- 340
-(There were 3 warnings)
+write$ -- 430
+(There were 6 warnings)

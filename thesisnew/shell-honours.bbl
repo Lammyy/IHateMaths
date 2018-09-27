@@ -1,5 +1,10 @@
 \begin{thebibliography}{}
 
+\bibitem[Bishop, 1995]{bishop}
+Bishop, C.~M. (1995).
+\newblock {\em Neural Networks for Pattern Recognition}.
+\newblock Oxford University Press, Inc., New York, NY, USA.
+
 \bibitem[Blei et~al., 2017]{blei}
 Blei, D.~M., Kucukelbir, A., and McAuliffe, J.~D. (2017).
 \newblock Variational inference: A review for statisticians.
@@ -51,6 +56,14 @@ Glorot, X. and Bengio, Y. (2010).
 \newblock In {\em Proceedings of the thirteenth international conference on
   artificial intelligence and statistics}, pages 249--256.
 
+\bibitem[Glorot et~al., 2011]{sparse}
+Glorot, X., Bordes, A., and Bengio, Y. (2011).
+\newblock Deep sparse rectifier neural networks.
+\newblock In Gordon, G., Dunson, D., and Dudík, M., editors, {\em Proceedings
+  of the Fourteenth International Conference on Artificial Intelligence and
+  Statistics}, volume~15 of {\em Proceedings of Machine Learning Research},
+  pages 315--323, Fort Lauderdale, FL, USA. PMLR.
+
 \bibitem[Goodfellow et~al., 2016]{DeepLearning}
 Goodfellow, I., Bengio, Y., and Courville, A. (2016).
 \newblock {\em Deep Learning}.
@@ -61,6 +74,17 @@ Goodfellow, I., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D., Ozair,
   S., Courville, A., and Bengio, Y. (2014).
 \newblock {Generative Adversarial Networks}.
 \newblock 3.
+
+\bibitem[Goodman, 1960]{goodman}
+Goodman, L.~A. (1960).
+\newblock On the exact variance of products.
+\newblock {\em Journal of the American Statistical Association},
+  55(292):708--713.
+
+\bibitem[Haykin, 1998]{haykin}
+Haykin, S. (1998).
+\newblock {\em Neural Networks: A Comprehensive Foundation}.
+\newblock Prentice Hall PTR, Upper Saddle River, NJ, USA, 2nd edition.
 
 \bibitem[Hornik, 1991]{universal}
 Hornik, K. (1991).
@@ -81,6 +105,12 @@ Kingma, D.~P. and Ba, J. (2014).
 {Kingma}, D.~P. and {Welling}, M. (2013).
 \newblock {Auto-Encoding Variational Bayes}.
 \newblock {\em ArXiv e-prints}.
+
+\bibitem[Kolen and Kremer, 2001]{kolen}
+Kolen, J.~F. and Kremer, S.~C. (2001).
+\newblock {\em Gradient Flow in Recurrent Nets: The Difficulty of Learning
+  LongTerm Dependencies}.
+\newblock IEEE.
 
 \bibitem[Kullback, 1959]{KL}
 Kullback, S. (1959).
@@ -120,6 +150,10 @@ Simard, P.~Y., Steinkraus, D., and Platt, J.~C. (2003).
   document analysis.
 \newblock In {\em ICDAR}.
 
+\bibitem[Snyman, 2005]{snyman}
+Snyman, J. (2005).
+\newblock {\em Practical Mathematical Optimization}.
+
 \bibitem[Sugiyama et~al., 2012]{sugiyama}
 Sugiyama, M., Suzuki, T., and Kanamori, T. (2012).
 \newblock {\em {Density Ratio Estimation in Machine Learning}}.
@@ -136,6 +170,12 @@ Tiao, L.~C., Bonilla, E.~V., and Ramos, F. (2018).
 \newblock {Hierarchical Implicit Models and Likelihood-Free Variational
   Inference}.
 \newblock {\em ArXiv e-prints}.
+
+\bibitem[Wu, 2009]{wu}
+Wu, H. (2009).
+\newblock Global stability analysis of a general class of discontinuous neural
+  networks with linear growth activation functions.
+\newblock 179:3432--3441.
 
 \bibitem[Zhang et~al., 2017]{ADVVI}
 Zhang, C., B{\"u}tepage, J., Kjellstr{\"o}m, H., and Mandt, S. (2017).
