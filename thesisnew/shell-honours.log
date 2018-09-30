@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  27 SEP 2018 19:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  1 OCT 2018 01:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1409,16 +1409,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 943--945
 
  []
 
-[28]
-Underfull \hbox (badness 10000) in paragraph at lines 950--952
-
- []
-
-[29]
-Underfull \hbox (badness 10000) in paragraph at lines 958--959
-
- []
-
+[28] [29]
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -1440,7 +1431,7 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-[30]
+ [30]
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -1516,149 +1507,199 @@ Overfull \hbox (1.36995pt too wide) in paragraph at lines 1486--1487
  []
 
 [51]
-Underfull \hbox (badness 10000) in paragraph at lines 1490--1492
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 1493--1494
-
- []
+LaTeX Warning: Float too large for page by 81.18785pt on input line 1610.
 
 
-LaTeX Warning: Float too large for page by 81.18785pt on input line 1609.
-
-
-LaTeX Warning: Float too large for page by 40.08952pt on input line 1651.
+LaTeX Warning: Float too large for page by 40.08952pt on input line 1652.
 
 [52] [53] [54] [55] [56]
 <13288.png, id=258, 1180.41pt x 230.36063pt>
 File: 13288.png Graphic file (type png)
 <use 13288.png>
-Package pdftex.def Info: 13288.png  used on input line 1673. on input line 1673
+Package pdftex.def Info: 13288.png  used on input line 1675. on input line 1675
 .
 Package pdftex.def Info: Requested size: 423.94588pt x 82.73291pt on input line
- 1673.
+ 1675.
 <13963.png, id=259, 1178.15157pt x 233.37187pt>
 File: 13963.png Graphic file (type png)
 <use 13963.png>
-Package pdftex.def Info: 13963.png  used on input line 1677. on input line 1677
+Package pdftex.def Info: 13963.png  used on input line 1679. on input line 1679
 .
 Package pdftex.def Info: Requested size: 423.94588pt x 83.97462pt on input line
- 1677.
+ 1679.
 File: sprinklertrue.png Graphic file (type png)
 <use sprinklertrue.png>
-Package pdftex.def Info: sprinklertrue.png  used on input line 1681. on input l
-ine 1681.
+Package pdftex.def Info: sprinklertrue.png  used on input line 1683. on input l
+ine 1683.
 Package pdftex.def Info: Requested size: 423.94588pt x 84.96286pt on input line
- 1681.
+ 1683.
  [57 <./13288.png> <./13963.png>]
 <truklmins/PCKLvsPCADV.png, id=265, 413.29407pt x 323.70938pt>
 File: truklmins/PCKLvsPCADV.png Graphic file (type png)
 <use truklmins/PCKLvsPCADV.png>
-Package pdftex.def Info: truklmins/PCKLvsPCADV.png  used on input line 1689. on
- input line 1689.
+Package pdftex.def Info: truklmins/PCKLvsPCADV.png  used on input line 1691. on
+ input line 1691.
 Package pdftex.def Info: Requested size: 207.7358pt x 162.7088pt on input line 
-1689.
+1691.
 <truklmins/JCKLvsJCADV.png, id=266, 417.81094pt x 324.46219pt>
 File: truklmins/JCKLvsJCADV.png Graphic file (type png)
 <use truklmins/JCKLvsJCADV.png>
-Package pdftex.def Info: truklmins/JCKLvsJCADV.png  used on input line 1693. on
- input line 1693.
+Package pdftex.def Info: truklmins/JCKLvsJCADV.png  used on input line 1695. on
+ input line 1695.
 Package pdftex.def Info: Requested size: 207.7358pt x 161.32468pt on input line
- 1693.
+ 1695.
 <estimator_losses/PCKLvsPCADV.png, id=267, 427.5975pt x 321.45094pt>
 File: estimator_losses/PCKLvsPCADV.png Graphic file (type png)
 <use estimator_losses/PCKLvsPCADV.png>
 Package pdftex.def Info: estimator_losses/PCKLvsPCADV.png  used on input line 1
-700. on input line 1700.
+702. on input line 1702.
 Package pdftex.def Info: Requested size: 207.7358pt x 156.16838pt on input line
- 1700.
+ 1702.
 <estimator_losses/JCKLvsJCADV.png, id=268, 424.58624pt x 319.1925pt>
 File: estimator_losses/JCKLvsJCADV.png Graphic file (type png)
 <use estimator_losses/JCKLvsJCADV.png>
 Package pdftex.def Info: estimator_losses/JCKLvsJCADV.png  used on input line 1
-704. on input line 1704.
+706. on input line 1706.
 Package pdftex.def Info: Requested size: 207.7358pt x 156.1719pt on input line 
-1704.
+1706.
 <nelbos/PCKLvsPCADV.png, id=269, 420.06938pt x 319.1925pt>
 File: nelbos/PCKLvsPCADV.png Graphic file (type png)
 <use nelbos/PCKLvsPCADV.png>
-Package pdftex.def Info: nelbos/PCKLvsPCADV.png  used on input line 1722. on in
-put line 1722.
+Package pdftex.def Info: nelbos/PCKLvsPCADV.png  used on input line 1724. on in
+put line 1724.
 Package pdftex.def Info: Requested size: 207.7358pt x 157.84735pt on input line
- 1722.
+ 1724.
 <nelbos/JCKLvsJCADV.png, id=270, 424.58624pt x 317.68687pt>
 File: nelbos/JCKLvsJCADV.png Graphic file (type png)
 <use nelbos/JCKLvsJCADV.png>
-Package pdftex.def Info: nelbos/JCKLvsJCADV.png  used on input line 1726. on in
-put line 1726.
+Package pdftex.def Info: nelbos/JCKLvsJCADV.png  used on input line 1728. on in
+put line 1728.
 Package pdftex.def Info: Requested size: 207.7358pt x 155.43524pt on input line
- 1726.
+ 1728.
  [58 <./truklmins/PCKLvsPCADV.png> <./truklmins/JCKLvsJCADV.png> <./estimator_l
 osses/PCKLvsPCADV.png> <./estimator_losses/JCKLvsJCADV.png> <./nelbos/PCKLvsPCA
-DV.png> <./nelbos/JCKLvsJCADV.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 1732--1733
-
- []
-
-[59]
+DV.png> <./nelbos/JCKLvsJCADV.png>] [59]
 Chapter 6.
 
-Overfull \hbox (12.39137pt too wide) in paragraph at lines 1747--1749
+LaTeX Warning: Citation `leaky' on page 60 undefined on input line 1745.
+
+[60
+
+]
+
+LaTeX Warning: Citation `nowozin' on page 61 undefined on input line 1754.
+
+[61]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[62]
+<truklmins/PCKLvsPCKLEXP.png, id=293, 462.528pt x 346.896pt>
+File: truklmins/PCKLvsPCKLEXP.png Graphic file (type png)
+<use truklmins/PCKLvsPCKLEXP.png>
+Package pdftex.def Info: truklmins/PCKLvsPCKLEXP.png  used on input line 1782. 
+on input line 1782.
+Package pdftex.def Info: Requested size: 207.7358pt x 155.80533pt on input line
+ 1782.
+<truklmins/JCKLvsJCKLEXP.png, id=294, 462.528pt x 346.896pt>
+File: truklmins/JCKLvsJCKLEXP.png Graphic file (type png)
+<use truklmins/JCKLvsJCKLEXP.png>
+Package pdftex.def Info: truklmins/JCKLvsJCKLEXP.png  used on input line 1786. 
+on input line 1786.
+Package pdftex.def Info: Requested size: 207.7358pt x 155.80533pt on input line
+ 1786.
+<estimator_losses/PCKLvsPCKLEXP.png, id=295, 462.528pt x 346.896pt>
+File: estimator_losses/PCKLvsPCKLEXP.png Graphic file (type png)
+<use estimator_losses/PCKLvsPCKLEXP.png>
+Package pdftex.def Info: estimator_losses/PCKLvsPCKLEXP.png  used on input line
+ 1793. on input line 1793.
+Package pdftex.def Info: Requested size: 207.7358pt x 155.80533pt on input line
+ 1793.
+<estimator_losses/JCKLvsJCKLEXP.png, id=296, 462.528pt x 346.896pt>
+File: estimator_losses/JCKLvsJCKLEXP.png Graphic file (type png)
+<use estimator_losses/JCKLvsJCKLEXP.png>
+Package pdftex.def Info: estimator_losses/JCKLvsJCKLEXP.png  used on input line
+ 1797. on input line 1797.
+Package pdftex.def Info: Requested size: 207.7358pt x 155.80533pt on input line
+ 1797.
+<nelbos/PCKLvsPCKLEXP.png, id=297, 462.528pt x 346.896pt>
+File: nelbos/PCKLvsPCKLEXP.png Graphic file (type png)
+<use nelbos/PCKLvsPCKLEXP.png>
+Package pdftex.def Info: nelbos/PCKLvsPCKLEXP.png  used on input line 1804. on 
+input line 1804.
+Package pdftex.def Info: Requested size: 207.7358pt x 155.80533pt on input line
+ 1804.
+<nelbos/JCKLvsJCKLEXP.png, id=298, 462.528pt x 346.896pt>
+File: nelbos/JCKLvsJCKLEXP.png Graphic file (type png)
+<use nelbos/JCKLvsJCKLEXP.png>
+Package pdftex.def Info: nelbos/JCKLvsJCKLEXP.png  used on input line 1808. on 
+input line 1808.
+Package pdftex.def Info: Requested size: 207.7358pt x 155.80533pt on input line
+ 1808.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[63 <./truklmins/PCKLvsPCKLEXP.png> <./truklmins/JCKLvsJCKLEXP.png> <./estimato
+r_losses/PCKLvsPCKLEXP.png> <./estimator_losses/JCKLvsJCKLEXP.png>] [64 <./nelb
+os/PCKLvsPCKLEXP.png> <./nelbos/JCKLvsJCKLEXP.png>]
+Chapter 7.
+
+Overfull \hbox (12.39137pt too wide) in paragraph at lines 1824--1826
 \OT1/cmr/m/n/12 The op-ti-miza-tion prob-lem for the ELBO in both prior-contras
 tive and joint-contrastive
  []
 
-[60
+[65
 
-] [61] [62] [63]
-Overfull \hbox (6.26077pt too wide) in paragraph at lines 1823--1825
+] [66] [67] [68]
+Overfull \hbox (6.26077pt too wide) in paragraph at lines 1900--1902
 \OT1/cmr/m/n/12 Recall that both di-ver-gences at-tain the same global min-i-mu
 m, which is a parametriza-
  []
 
-[64]
-Overfull \hbox (13.66823pt too wide) in paragraph at lines 1837--1837
+[69]
+Overfull \hbox (13.66823pt too wide) in paragraph at lines 1914--1914
 [] 
  []
 
-[65] [66] [67]
-Chapter 7.
-[68
-
-] [69] [70]
+[70] [71] [72]
 Chapter 8.
-[71
+[73
 
-] [72] [73]
+] [74] [75]
 Chapter 9.
-[74
+[76
 
-]
+] [77] [78]
 Chapter 10.
-[75
-
-] (./shell-honours.bbl [76
-
-
-] [77]) [78]
-Appendix A.
 [79
 
-] [80] (./shell-honours.aux)
+]
+Chapter 11.
+[80
+
+] (./shell-honours.bbl [81
+
+
+] [82]) [83]
+Appendix A.
+[84
+
+] [85] (./shell-honours.aux)
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 28883 strings out of 492990
- 716419 string characters out of 6136334
- 963284 words of memory out of 5000000
- 31847 multiletter control sequences out of 15000+600000
+ 28911 strings out of 492990
+ 717279 string characters out of 6136334
+ 963283 words of memory out of 5000000
+ 31873 multiletter control sequences out of 15000+600000
  26267 words of font info for 104 fonts, out of 8000000 for 9000
  1143 hyphenation exceptions out of 8191
- 62i,22n,96p,1503b,2147s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 62i,22n,96p,1695b,2147s stack positions out of 5000i,500n,10000p,200000b,80000s
 <c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb><c:/te
 xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/201
 7/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2017/texmf-d
@@ -1688,10 +1729,10 @@ am10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10
 c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb2.pfb><c:/tex
 live/2017/texmf-dist/fonts/type1/public/boondox/zxxbw8a.pfb><c:/texlive/2017/te
 xmf-dist/fonts/type1/public/boondox/zxxrw8a.pfb>
-Output written on shell-honours.pdf (92 pages, 1697071 bytes).
+Output written on shell-honours.pdf (97 pages, 1838912 bytes).
 PDF statistics:
- 454 PDF objects out of 1000 (max. 8388607)
- 305 compressed objects within 4 object streams
+ 482 PDF objects out of 1000 (max. 8388607)
+ 316 compressed objects within 4 object streams
  0 named destinations out of 1000 (max. 500000)
- 63 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 93 words of extra memory for PDF output out of 10000 (max. 10000000)
 

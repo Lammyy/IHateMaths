@@ -34,27 +34,31 @@
 \contentsline {section}{\numberline {5.1}Problem Context}{49}
 \contentsline {section}{\numberline {5.2}Program Structure}{51}
 \contentsline {section}{\numberline {5.3}Results}{57}
-\contentsline {chapter}{\numberline {Chapter 6}Theory Crafting}{60}
-\contentsline {section}{\numberline {6.1}Introduction}{60}
-\contentsline {section}{\numberline {6.2}Recap because its confusing}{61}
-\contentsline {section}{\numberline {6.3}First and Second Derivatives of all 6 possible algorithms}{62}
-\contentsline {section}{\numberline {6.4}Difference between divergences}{64}
-\contentsline {section}{\numberline {6.5}Difference between estimators}{64}
-\contentsline {chapter}{\numberline {Chapter 7}Inference Experiments - "Sprinkler"}{68}
-\contentsline {section}{\numberline {7.1}Determining optimal activation function}{68}
-\contentsline {subsection}{\numberline {7.1.1}Experiment Outline}{68}
-\contentsline {subsection}{\numberline {7.1.2}Results}{68}
-\contentsline {section}{\numberline {7.2}Comparing Estimator Accuracies}{69}
-\contentsline {subsection}{\numberline {7.2.1}Experiment Outline}{69}
-\contentsline {subsection}{\numberline {7.2.2}Results}{69}
-\contentsline {section}{\numberline {7.3}Comparing Accuracies of Undertrained Estimators}{70}
-\contentsline {subsection}{\numberline {7.3.1}Experiment Outline}{70}
-\contentsline {subsection}{\numberline {7.3.2}Results}{70}
-\contentsline {chapter}{\numberline {Chapter 8}Data Generation - (MNIST image generation)}{71}
-\contentsline {section}{\numberline {8.1}Problem Context}{71}
-\contentsline {section}{\numberline {8.2}Program Structure}{71}
-\contentsline {section}{\numberline {8.3}Results}{72}
-\contentsline {chapter}{\numberline {Chapter 9}Related Work and Discussion}{74}
-\contentsline {chapter}{\numberline {Chapter 10}Conclusion}{75}
-\contentsline {chapter}{References}{76}
-\contentsline {chapter}{\numberline {Appendix A}Kernel Density Estimation}{79}
+\contentsline {chapter}{\numberline {Chapter 6}Activation Function Experiment}{60}
+\contentsline {section}{\numberline {6.1}Theory}{60}
+\contentsline {section}{\numberline {6.2}Experiment Outline}{62}
+\contentsline {section}{\numberline {6.3}Results}{62}
+\contentsline {chapter}{\numberline {Chapter 7}Algorithm Analysis}{65}
+\contentsline {section}{\numberline {7.1}Introduction}{65}
+\contentsline {section}{\numberline {7.2}Recap because its confusing}{66}
+\contentsline {section}{\numberline {7.3}First and Second Derivatives of all 6 possible algorithms}{67}
+\contentsline {section}{\numberline {7.4}Difference between divergences}{69}
+\contentsline {section}{\numberline {7.5}Difference between estimators}{69}
+\contentsline {chapter}{\numberline {Chapter 8}Inference Experiments - "Sprinkler"}{73}
+\contentsline {section}{\numberline {8.1}Determining optimal activation function}{73}
+\contentsline {subsection}{\numberline {8.1.1}Experiment Outline}{73}
+\contentsline {subsection}{\numberline {8.1.2}Results}{73}
+\contentsline {section}{\numberline {8.2}Comparing Estimator Accuracies}{74}
+\contentsline {subsection}{\numberline {8.2.1}Experiment Outline}{74}
+\contentsline {subsection}{\numberline {8.2.2}Results}{74}
+\contentsline {section}{\numberline {8.3}Comparing Accuracies of Undertrained Estimators}{75}
+\contentsline {subsection}{\numberline {8.3.1}Experiment Outline}{75}
+\contentsline {subsection}{\numberline {8.3.2}Results}{75}
+\contentsline {chapter}{\numberline {Chapter 9}Data Generation - (MNIST image generation)}{76}
+\contentsline {section}{\numberline {9.1}Problem Context}{76}
+\contentsline {section}{\numberline {9.2}Program Structure}{76}
+\contentsline {section}{\numberline {9.3}Results}{77}
+\contentsline {chapter}{\numberline {Chapter 10}Related Work and Discussion}{79}
+\contentsline {chapter}{\numberline {Chapter 11}Conclusion}{80}
+\contentsline {chapter}{References}{81}
+\contentsline {chapter}{\numberline {Appendix A}Kernel Density Estimation}{84}
