@@ -3,51 +3,54 @@ Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: shell-honours.aux
 The style file: apalike.bst
 Database file #1: bible.bib
+Warning--can't use both author and editor fields in bengio
 Warning--empty journal in backprop
 Warning--empty journal in gan
 Warning--empty chapter and pages in kolen
+Warning--empty booktitle in leaky
+Warning--empty journal in nowozin
 Warning--empty journal in explain
 Warning--empty publisher in snyman
 Warning--empty journal in wu
-You've used 34 entries,
+You've used 39 entries,
             1935 wiz_defined-function locations,
-            665 strings with 8454 characters,
-and the built_in function-call counts, 12333 in all, are:
-= -- 1169
-> -- 506
-< -- 23
-+ -- 167
-- -- 165
-* -- 1000
-:= -- 2203
-add.period$ -- 102
-call.type$ -- 34
-change.case$ -- 243
-chr.to.int$ -- 34
-cite$ -- 40
-duplicate$ -- 497
-empty$ -- 871
-format.name$ -- 215
-if$ -- 2398
+            691 strings with 9341 characters,
+and the built_in function-call counts, 14474 in all, are:
+= -- 1383
+> -- 574
+< -- 29
++ -- 189
+- -- 187
+* -- 1154
+:= -- 2544
+add.period$ -- 116
+call.type$ -- 39
+change.case$ -- 278
+chr.to.int$ -- 39
+cite$ -- 48
+duplicate$ -- 603
+empty$ -- 1036
+format.name$ -- 244
+if$ -- 2853
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 44
-newline$ -- 172
-num.names$ -- 104
-pop$ -- 247
+missing$ -- 50
+newline$ -- 195
+num.names$ -- 119
+pop$ -- 295
 preamble$ -- 1
-purify$ -- 251
+purify$ -- 287
 quote$ -- 0
-skip$ -- 374
+skip$ -- 456
 stack$ -- 0
-substring$ -- 711
-swap$ -- 50
-text.length$ -- 3
+substring$ -- 849
+swap$ -- 79
+text.length$ -- 6
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 184
-warning$ -- 6
-while$ -- 88
+type$ -- 212
+warning$ -- 9
+while$ -- 106
 width$ -- 0
-write$ -- 430
-(There were 6 warnings)
+write$ -- 493
+(There were 9 warnings)

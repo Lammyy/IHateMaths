@@ -40,25 +40,35 @@
 \contentsline {section}{\numberline {6.3}Results}{62}
 \contentsline {chapter}{\numberline {Chapter 7}Algorithm Analysis}{65}
 \contentsline {section}{\numberline {7.1}Introduction}{65}
-\contentsline {section}{\numberline {7.2}Recap because its confusing}{66}
-\contentsline {section}{\numberline {7.3}First and Second Derivatives of all 6 possible algorithms}{67}
-\contentsline {section}{\numberline {7.4}Difference between divergences}{69}
-\contentsline {section}{\numberline {7.5}Difference between estimators}{69}
-\contentsline {chapter}{\numberline {Chapter 8}Inference Experiments - "Sprinkler"}{73}
-\contentsline {section}{\numberline {8.1}Determining optimal activation function}{73}
-\contentsline {subsection}{\numberline {8.1.1}Experiment Outline}{73}
-\contentsline {subsection}{\numberline {8.1.2}Results}{73}
-\contentsline {section}{\numberline {8.2}Comparing Estimator Accuracies}{74}
-\contentsline {subsection}{\numberline {8.2.1}Experiment Outline}{74}
-\contentsline {subsection}{\numberline {8.2.2}Results}{74}
-\contentsline {section}{\numberline {8.3}Comparing Accuracies of Undertrained Estimators}{75}
-\contentsline {subsection}{\numberline {8.3.1}Experiment Outline}{75}
-\contentsline {subsection}{\numberline {8.3.2}Results}{75}
-\contentsline {chapter}{\numberline {Chapter 9}Data Generation - (MNIST image generation)}{76}
-\contentsline {section}{\numberline {9.1}Problem Context}{76}
-\contentsline {section}{\numberline {9.2}Program Structure}{76}
-\contentsline {section}{\numberline {9.3}Results}{77}
-\contentsline {chapter}{\numberline {Chapter 10}Related Work and Discussion}{79}
-\contentsline {chapter}{\numberline {Chapter 11}Conclusion}{80}
-\contentsline {chapter}{References}{81}
-\contentsline {chapter}{\numberline {Appendix A}Kernel Density Estimation}{84}
+\contentsline {section}{\numberline {7.2}Algorithm Generalisation}{66}
+\contentsline {subsection}{\numberline {7.2.1}Reverse KL Divergence}{66}
+\contentsline {subsection}{\numberline {7.2.2}GAN Divergence}{66}
+\contentsline {section}{\numberline {7.3}Optimization Algorithms}{67}
+\contentsline {subsection}{\numberline {7.3.1}Prior-Contrastive}{67}
+\contentsline {subsection}{\numberline {7.3.2}Joint-Contrastive}{68}
+\contentsline {chapter}{\numberline {Chapter 8}Comparing Optimal Estimators}{69}
+\contentsline {section}{\numberline {8.1}Theory}{69}
+\contentsline {section}{\numberline {8.2}Experiment Outline}{69}
+\contentsline {section}{\numberline {8.3}Results}{70}
+\contentsline {chapter}{\numberline {Chapter 9}Comparing Undertrained Estimators}{74}
+\contentsline {section}{\numberline {9.1}First and Second Derivatives of all 6 possible algorithms}{74}
+\contentsline {section}{\numberline {9.2}Difference between divergences}{76}
+\contentsline {section}{\numberline {9.3}Difference between estimators}{76}
+\contentsline {chapter}{\numberline {Chapter 10}Inference Experiments - "Sprinkler"}{80}
+\contentsline {section}{\numberline {10.1}Determining optimal activation function}{80}
+\contentsline {subsection}{\numberline {10.1.1}Experiment Outline}{80}
+\contentsline {subsection}{\numberline {10.1.2}Results}{80}
+\contentsline {section}{\numberline {10.2}Comparing Estimator Accuracies}{81}
+\contentsline {subsection}{\numberline {10.2.1}Experiment Outline}{81}
+\contentsline {subsection}{\numberline {10.2.2}Results}{81}
+\contentsline {section}{\numberline {10.3}Comparing Accuracies of Undertrained Estimators}{82}
+\contentsline {subsection}{\numberline {10.3.1}Experiment Outline}{82}
+\contentsline {subsection}{\numberline {10.3.2}Results}{82}
+\contentsline {chapter}{\numberline {Chapter 11}Data Generation - (MNIST image generation)}{83}
+\contentsline {section}{\numberline {11.1}Problem Context}{83}
+\contentsline {section}{\numberline {11.2}Program Structure}{83}
+\contentsline {section}{\numberline {11.3}Results}{84}
+\contentsline {chapter}{\numberline {Chapter 12}Related Work and Discussion}{86}
+\contentsline {chapter}{\numberline {Chapter 13}Conclusion}{87}
+\contentsline {chapter}{References}{88}
+\contentsline {chapter}{\numberline {Appendix A}Kernel Density Estimation}{91}

@@ -1,5 +1,11 @@
 \begin{thebibliography}{}
 
+\bibitem[Bengio, 2012]{bengio}
+Bengio, Y. (2012).
+\newblock {\em Practical Recommendations for Gradient-Based Training of Deep
+  Architectures}, pages 437--478.
+\newblock Springer Berlin Heidelberg, Berlin, Heidelberg.
+
 \bibitem[Bishop, 1995]{bishop}
 Bishop, C.~M. (1995).
 \newblock {\em Neural Networks for Pattern Recognition}.
@@ -43,6 +49,12 @@ Floudas, C.~A. (2005).
   (NONCONVEX OPTIMIZATION AND ITS APPLICATIONS Volume 37) (Nonconvex
   Optimization and Its Applications)}.
 \newblock Springer-Verlag, Berlin, Heidelberg.
+
+\bibitem[Fuglede and Topsoe, 2004]{JS}
+Fuglede, B. and Topsoe, F. (2004).
+\newblock Jensen-shannon divergence and hilbert space embedding.
+\newblock In {\em International Symposium onInformation Theory, 2004. ISIT
+  2004. Proceedings.}, pages 31--.
 
 \bibitem[Gelman et~al., 2004]{gelman}
 Gelman, A., Carlin, J.~B., Stern, H.~S., and Rubin, D.~B. (2004).
@@ -117,6 +129,17 @@ Kullback, S. (1959).
 \newblock {\em Information Theory and Statistics}.
 \newblock Wiley, New York.
 
+\bibitem[Li et~al., 2014]{batch}
+Li, M., Zhang, T., Chen, Y., and Smola, A.~J. (2014).
+\newblock Efficient mini-batch training for stochastic optimization.
+\newblock In {\em Proceedings of the 20th ACM SIGKDD International Conference
+  on Knowledge Discovery and Data Mining}, KDD '14, pages 661--670, New York,
+  NY, USA. ACM.
+
+\bibitem[Maas, 2013]{leaky}
+Maas, A.~L. (2013).
+\newblock Rectifier nonlinearities improve neural network acoustic models.
+
 \bibitem[Mescheder et~al., 2017]{mescheder}
 Mescheder, L.~M., Nowozin, S., and Geiger, A. (2017).
 \newblock {Adversarial Variational Bayes: Unifying Variational Autoencoders and
@@ -133,6 +156,11 @@ Nguyen, X., Wainwright, M.~J., and Jordan, M.~I. (2010).
 \newblock {Estimating Divergence Functionals and the Likelihood Ratio by Convex
   Risk Minimization}.
 \newblock {\em IEEE Trans. Inf. Theor.}, 56(11):5847--5861.
+
+\bibitem[Nowozin et~al., 2016]{nowozin}
+Nowozin, S., Cseke, B., and Tomioka, R. (2016).
+\newblock f-gan: Training generative neural samplers using variational
+  divergence minimization.
 
 \bibitem[P.~Wellman and Henrion, 1993]{explain}
 P.~Wellman, M. and Henrion, M. (1993).
