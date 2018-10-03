@@ -98,12 +98,12 @@
 
 % Delete this, if you do not want the table of contents to pop up at
 % the beginning of each subsection:
-\AtBeginSubsection[]
-{
-  \begin{frame}<beamer>{Outline}
-    \tableofcontents[currentsection,currentsubsection]
-  \end{frame}
-}
+%\AtBeginSection[]
+%{
+%  \begin{frame}<beamer>{Outline}
+%    \tableofcontents[currentsection,currentsubsection]
+%  \end{frame}
+%}
 
 % Let's get started
 \begin{document}
@@ -129,13 +129,15 @@
     Mathematical model based off human brain.
   }
   \item {
-  	Objective is to approximate a function $f^*$ using mapping with parameters $\bm{\Theta}$: $\textbf{f}_\bm{\Theta}(\bm{x})$.  }
+  	Objective is to approximate a function $f^*$ using mapping with parameters $\bm{\Theta}$: $\textbf{f}_{\bm{\Theta}}(\bm{x})$.  
+  }
   \item {
   	Universal Approximation Theorem states a neural network can approximate (almost) any function if it is complex enough.
   }
   \item {
     Consists of layers of nodes:
   }
+  \end{itemize}
   \begin{figure}[h]
   \resizebox{.5\linewidth}{!}{
 \begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
@@ -180,14 +182,14 @@
 \end{tikzpicture}
 }
 \end{figure}
-  \end{itemize}
-  
+
 \end{frame}
 \begin{frame}{Neural Networks}{Individual Node Structure}
 \begin{itemize}
 \item Each node is a generalised linear model of preceding layer output.
-\item Weights $\theta$ are randomly initialised from normal or uniform distribution.
+\item Weights $\theta$ are randomly initialised.
 \item Bias $x_0=1$ has role of intercept term in typical regression.
+\item $g(x)$ is activation function, e.g. ReLU is $g(x)=\max\{0,x\}$ in $[0,\infty)$, Sigmoid is $g(x)=(1+\exp(-x))^{-1}$ in $(0,1)$.
 \begin{figure}[h]
   \resizebox{.4\linewidth}{!}{
 \begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
@@ -233,22 +235,10 @@
 
 \end{itemize}
 \end{frame}
-\begin{frame}{Neural Networks}{Activation Functions}
-\begin{itemize}
-\item Used to map node output to certain space.
-\item Every node except input nodes has an activation function.
-\item We are mostly concerned with activation function of output layer, which maps $\R$ to some space:
-\begin{itemize}
-\item Linear (no) activation function $g(x)=x$ outputs in $\R$.
-\item Rectified Linear Unit (ReLU) activation function $g(x)=\max\{0,x\}$ in $[0,\infty)$.
-\item Sigmoid activation function $g(x)=(1+\exp(-x))^{-1}$ in $(0,1)$.
-\end{itemize}
-\end{itemize}
-\end{frame}
 \begin{frame}{Neural Networks}{Training}
 \begin{itemize}
 \item Weights and biases trained such that (ideally convex) loss function is minimized e.g. Mean Squared Error: $\min_\Theta \frac{1}{2}||\bm{y}-\bm{f}_\Theta(\bm{x})||^2_2$.
-\item Back-propagation finds partial derivatives of loss function with respect to weights by propagating error backwards through network.
+\item Back-propagation finds partial derivatives of loss function with respect to weights.
 \item Gradient descent uses these partial derivatives to optimize network.
 \end{itemize}
 \end{frame}
@@ -301,45 +291,27 @@ p(z|x)=\frac{p(z,x)}{p(x)}= \frac{p(z)p(x|z)}{\int_\mathcal{z}p(z,x)dz}
 \end{frame}
 \begin{frame}{(Amortized) Variational Inference}{Network Training}
 \begin{itemize}
-\item Minimize (reverse) KL Divergence between the two distributions. Since $p(z|x)$ changes with different $x$, take expectation with respect to dataset $q^*(x)$:
-\begin{equation*}
-q^*_\phi(z|x)=\argmin_{q(z|x)\in \mathcal{Q}}\E_{q^*(x)}[KL(q_\phi(z|x)||p(z|x))].
-\end{equation*}
-\item Reverse KL Divergence is the expected logarithmic difference between two distributions P and Q with respect to Q:
-\[KL(q(z|x)||p(z|x))=\mathbb{E}_{q(z|x)}\left[\log \left(\frac{q(z|x)}{p(z|x)}\right)\right]\].
-\end{itemize}
-\end{frame}
-\begin{frame}{(Amortized) Variational Inference}{Network Training}
-\begin{itemize}
-\item We don't know $p(z|x)$ so we apply Bayes' law to $p(z|x)$ and move out intractable $\log p(x)$ term.
-\small
-\begin{align*}
-\E_{q^*(x)}[KL(q_\phi(z|x)||&p(z|x))]\\
-&=\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log q(z)-\log p(x|z)-\log p(z)+\log p(x)]
-\end{align*}
-\begin{align*}
-\E_{q^*(x)}[KL(q_\phi(z|x)||&p(z|x))-\log p(x)]\\
-&=-\mathbb{E}_{q^*(x)q(z)}[\log p(x|z)]+\E_{q^*(x)}KL[q_\phi(z|x)||p(z)]
-\end{align*}
-\normalsize
-\item Denote RHS as $NELBO(q)$, the \textbf{n}egative of the \textbf{e}vidence \textbf{l}ower \textbf{bo}und:
+\item Minimize the \textbf{n}egative of the \textbf{e}vidence \textbf{l}ower \textbf{bo}und $NELBO(q)$:
 \[\min_\phi NELBO(q)=-\mathbb{E}_{q_\phi(z|x)q^*(x)}[\log p(x|z)]+\mathbb{E}_{q^*(x)}[KL(q_\phi(z|x)||p(z))].\]
+\item This is the same as minimizing the reverse KL divergence between the two distributions:
+\[\E_{q^*(x)}[KL(q(z|x)||p(z|x))]=\mathbb{E}_{q^*(x)q(z|x)}\left[\log \left(\frac{q(z|x)}{p(z|x)}\right)\right]\].
+\item Taking expectation with respect to dataset distribution $q^*(x)$ allows model to work for different data points.
 \end{itemize}
 \end{frame}
 \begin{frame}{(Amortized) Variational Inference}{Prior-Contrastive}
-\[\min_\phi -\mathbb{E}_{q_\phi(z|x)q^*(x)}[\log p(x|z)]+\mathbb{E}_{q^*(x)}[KL(q_\phi(z|x)||p(z))].\]
+\[\min_\phi \underbrace{-\mathbb{E}_{q_\phi(z|x)q^*(x)}[\log p(x|z)]}_\text{Likelihood}+\underbrace{\mathbb{E}_{q^*(x)}[KL(q_\phi(z|x)||p(z))]}_\text{Log Density Ratio}.\]
 \begin{itemize}
-\item $q_\phi(z|x)$ is a neural network so extremely difficult to find explicit form, we therefore say that it is \textbf{implicit}.
+\item $q_\phi(z|x)$ is a neural network so extremely difficult to evaluate density function but easy to draw samples, we therefore say that it is \textbf{implicit}.
 \item Use density ratio estimation to evaluate $\frac{q_\phi(z|x)}{p(z)}$ in $KL(q_\phi(z|x)||p(z))$.
-\item The prior $p(z)$ can therefore be implicit.
+\item The prior $p(z)$ can also be implicit.
 \item We call this the ``prior-contrastive" formulation.
 \end{itemize}
 \end{frame}
 \begin{frame}{(Amortized) Variational Inference}{Joint-Contrastive}
 \begin{itemize}
-\item If the likelihood $p(x|z)$ is implicit, then our optimization problem is \[\min_\phi KL(q(z,x)||p(z,x)).\]
+\item If the likelihood $p(x|z)$ is implicit, then our optimization problem is \[\min_\phi KL(q(z,x)||p(z,x))=\E_{q^*(x)q_\phi(z|x)}\log \frac{q^*(x)q_\phi(z|x)}{p(z)p(x|z)}.\]
 \item Use density ratio estimation to evaluate $\frac{q(z,x)}{p(z,x)}$.
-\item For consistency, $NELBO(q)=\min_\phi KL(q(z,x)||p(z,x))$.
+\item For consistency, $NELBO(q)= KL(q(z,x)||p(z,x))$.
 \item We call this the ``joint-contrastive" formulation.
 \end{itemize}
 \end{frame}
@@ -375,7 +347,7 @@ We want to estimate $\frac{q(u)}{p(u)}$.
 \begin{frame}{Density Ratio Estimation}{Class Probability Estimation}
 Prior-Contrastive Application:
 \[\min_\alpha -\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log D_\alpha(z,x)]-\mathbb{E}_{q^*(x)p_\theta(z)}[\log (1-D_\alpha(z,x))]\]
-\[\min_\phi -\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log p(x|z)]+\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{D_\alpha(z,x)}{1-D_\alpha(z,x)}\right]\]
+\[\min_\phi \underbrace{-\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log p(x|z)]}_\text{Likelihood}+\underbrace{\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{D_\alpha(z,x)}{1-D_\alpha(z,x)}\right]}_\text{Log Density Ratio}\]
 Joint-Contrastive Application:
 \[\min_\alpha -\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log D_\alpha(z,x)]-\mathbb{E}_{p(z)p(x|z)}[\log (1-D_\alpha(z,x))]\]
 \[\min_\phi \mathbb{E}_{q^*(x)q_\phi(z|x)}\log\frac{D_\alpha(z,x)}{1-D_\alpha(z,x)}\]
@@ -402,10 +374,22 @@ For the reverse KL divergence, $f(u)=u\log u$ so we have
 \begin{frame}{Density Ratio Estimation}{Divergence Minimisation}
 Prior-Contrastive Application:
 \[\min_\alpha -\E_{q^*(x)q_\phi(z|x)}[\log r_\alpha(z,x)]+\E_{q^*(x)p(z)}[r_\alpha (z,x)]\]
-\[\min_\phi -\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log p(x|z)\right]+E_{q^*(x)q_\phi (z|x)}[\log r_\alpha(z,x)]\]
+\[\min_\phi \underbrace{-\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log p(x|z)\right]}_\text{Likelihood}+\underbrace{E_{q^*(x)q_\phi (z|x)}[\log r_\alpha(z,x)]}_\text{Log Density Ratio}\]
 Joint-Contrastive Application:
 \[\min_\alpha-\E_{q^*(x)q_\phi(z|x)}[\log r_\alpha(z,x)]+\E_{p(z)p(x|z)}[r_\alpha(z,x)]\]
 \[\min_\phi \mathbb{E}_{q^*(x)q_\phi(z|x)}[\log r_\alpha(z,x)]\]
+\end{frame}
+\begin{frame}{Density Ratio Estimation}{Algorithm Generalisation}
+\begin{itemize}
+\item Actually, $f(u)=u\log u-(u+1)\log (u+1)$ and $D(u)=\frac{r(u)}{r(u)+1}$ leads to class probability estimation equations.
+\item The upper bound f-divergence is $2JS(p(u)\|q(u))-\log 4$, we call this the GAN divergence.
+\item To formulate optimisation problems for density ratio estimation, choose either reverse KL or GAN f-divergence upper bound and estimator parametrisation:
+\begin{itemize}
+\item Class Probability Estimator $D_\alpha(u)\simeq \frac{q(u)}{q(u)+p(u)}$
+\item Direct Ratio Estimator $r_\alpha(u)\simeq \frac{q(u)}{p(u)}$
+\item Direct Log Ratio Estimator $T_\alpha(u)\simeq\log \frac{q(u)}{p(u)}$.
+\end{itemize}
+\end{itemize}
 \end{frame}
 \section{Activation Function Experiment}
 \begin{frame}{Activation Function Experiment}{Experiment Outline}
@@ -419,126 +403,15 @@ Joint-Contrastive Application:
 \item Use Gaussian KDE to find `true' KL divergence for $q_\phi(z|x=0,5,8,12,50)$.
 \end{itemize}
 \end{frame}
-%\begin{frame}{Inference Experiment}{Experiment Outline}
-%Class Probability Estimation vs Divergence Minimisation
-%\begin{itemize}
-%\item Learning rate of 0.0001 for prior-contrastive and 0.00001 for joint-contrastive.
-%\item 5000 training steps of estimator for initialisation, then alternation between 100 estimator steps and 1 posterior step for 10000 posterior iterations in prior-contrastive and 40000 posterior iterations in joint-contrastive.
-%\item Sigmoid output activation function for class probability estimation and ReLU output for divergence minimisation.
-%\item Only trained on data values $x=0,5,8,12,50$, with 200 samples of each taken per training batch (training batch size is 1000).
-%\item Both algorithms have identical neural network structure and runtime.
-%\item Small constant of $c=10^{-18}$ added to log function input to prevent $\log 0$.
-%\end{itemize}
-%\end{frame}
-%\begin{frame}{Initial Inference Experiment}{Results}
-%\begin{itemize}
-%\item Estimator loss and estimated NELBO recorded every iteration.
-%\item Gaussian kernel density estimator $\hat{q}_\phi(z|x)$ used to estimate posterior density for $x=0,5,8,12,50$, and average KL divergence between these 5 values was recorded every 100 iterations.
-%\item Experiment repeated 30 times and the 3 arrays of recorded values were averaged.
-%\end{itemize}
-%\begin{table}[h]
-%\scalebox{0.8}{
-%\begin{tabular}{|c|c|c|}
-%\hline
-%Algorithm & Mean KL Divergence & Standard Deviation\\
-%\hline
-%PC Divergence Minimisation & 1.3807 & 0.0391\\
-%\hline
-%PC Class Probability Estimation & 1.3267 & 0.0041\\
-%\hline
-%JC Divergence Minimisation & 1.6954 & 0.4337\\
-%\hline
-%JC Class Probability Estimation & 1.3925 & 0.0669\\
-%\hline
-%\end{tabular}
-%}
-%\end{table}
-%
-%\end{frame}
-%\begin{frame}{Initial Inference Experiment}{Example Posterior Outputs}
-%
-%\begin{figure}[h]
-%\scalebox{0.8}{
-%\begin{subfigure}{\textwidth}
-%\includegraphics[width=\textwidth]{13288.png}
-%\caption{Average KL Divergence of 1.3288}
-%\end{subfigure}
-%}
-%\scalebox{0.8}{
-%\begin{subfigure}{\textwidth}
-%\includegraphics[width=\textwidth]{13963.png}
-%\caption{Average KL Divergence of 1.3963}
-%\end{subfigure}
-%}
-%\scalebox{0.8}{
-%\begin{subfigure}{\textwidth}
-%\includegraphics[width=\textwidth]{sprinklertrue}
-%\caption{True Posterior Plot}
-%\end{subfigure}
-%}
-%\end{figure}
-%\end{frame}
-%\begin{frame}{Initial Inference Experiment}{KL Divergence Plots}
-%\begin{figure}
-%\begin{subfigure}{0.49\textwidth}
-%\includegraphics[width=\linewidth]{truklmins/PCKLvsPCADV.png}
-%\caption{Prior-Contrastive}
-%\end{subfigure}
-%\begin{subfigure}{0.49\textwidth}
-%\includegraphics[width=\linewidth]{truklmins/JCKLvsJCADV.png}
-%\caption{Joint-Contrastive}
-%\end{subfigure}
-%\end{figure}
-%\end{frame}
-%\begin{frame}{Initial Inference Experiment}{Estimator Losses}
-%\begin{figure}
-%\begin{subfigure}{0.49\textwidth}
-%\includegraphics[width=\linewidth]{estimator_losses/PCKLvsPCADV.png}
-%\caption{Prior-Contrastive}
-%\end{subfigure}
-%\begin{subfigure}{0.49\textwidth}
-%\includegraphics[width=\linewidth]{estimator_losses/JCKLvsJCADV.png}
-%\caption{Joint-Contrastive}
-%\end{subfigure}
-%\end{figure}
-%\end{frame}
-%\begin{frame}{Initial Inference Experiment}{NELBOs}
-%\begin{figure}
-%\begin{subfigure}{0.49\textwidth}
-%\includegraphics[width=\linewidth]{nelbos/PCKLvsPCADV.png}
-%\caption{Prior-Contrastive}
-%\end{subfigure}
-%\begin{subfigure}{0.49\textwidth}
-%\includegraphics[width=\linewidth]{nelbos/JCKLvsJCADV.png}
-%\caption{Joint-Contrastive}
-%\end{subfigure}
-%\end{figure}
-%\end{frame}
-\begin{frame}{Activation Function Experiment}{Failures}
+\begin{frame}{Activation Function Experiment}{Experiment Outline}
 \begin{itemize}
-\item Divergence Minimisation regularly experienced `failures'
-\item Estimator loss initialised at $41.4465$ and remained constant over optimisation steps.
-\item Analysis of estimator output showed that it was outputting negative number which was mapped to $0$ by ReLU.
-\item Recall ratio estimator loss of $-\E_q[\log r_\alpha(z,x)+\E_p[r_\alpha(z,x)]$.
-\item We added constant term of $c=10^{-18}$ to log input.
-\item $-\log 10^{-18}=41.4465$
-\item Partial derivative of loss function w.r.t weights is $0$ as changing weight values slightly still results in negative output before ReLU.
-\end{itemize}
-\end{frame}
-\begin{frame}{Activation Function Experiment}{Problems with ReLU}
-\begin{itemize}
-\item `Failures' caused from ReLU outputting in $[0,\infty)$ despite $\frac{q(u)}{p(u)}\in (0,\infty)$.
-\item If $q(u)<p(u)$, $\frac{q(u)}{p(u)}\in (0,1)$, and if $q(u)>p(u)$, $\frac{q(u)}{p(u)}\in (1,\infty)$.
-\item Linearity of ReLU activation results in inconsistent training, as small training steps should be taken if $q(u)<p(u)$, but large training steps required for $q(u)>p(u)$.
-\end{itemize}
-\end{frame}
-\begin{frame}{Activation Function Experiment}{Parameters}
-\begin{itemize}
-\item First contribution of thesis: we propose exponential activation function $g(x)=e^x$ for ratio estimator.
-\item This maps $\R^-$ to $(0,1)$, and $\R^+$ to $(1,\infty)$.
-\item Training is consistent and neural network cannot output $0$.
-\item Compare ReLU vs exp activation function for divergence minimisation.
-\item Low training rate, high iterations to ensure smooth convergence.
+\item Common to use ReLU $g(x)=\max\{0,x\}$ as activation function for output layer of direct ratio estimator $r_\alpha(u)\simeq \frac{q(u)}{p(u)}$.
+\item Experiences `dying ReLU problem'.
+\item Linearity of ReLU activation causes imbalance between ratios in $(0,1)$ and $(1,\infty)$.
+\item We propose exponential activation function $g(x)=e^x$.
+\item Compare them for $r_\alpha(u)$ with reverse KL divergence upper bound.
+\item Low training rate, high iterations.
+\item Use Gaussian kernel density estimator to estimate `true' KL divergence.
 \end{itemize}
 \end{frame}
 \begin{frame}{Activation Function Experiment}{Results}
@@ -548,13 +421,13 @@ Joint-Contrastive Application:
 \hline
 Algorithm & Mean KL Divergence & Standard Deviation\\
 \hline
-PC Divergence Minimisation - ReLU & 1.3807 & 0.0391\\
+Prior Contrastive - ReLU & 1.3807 & 0.0391\\
 \hline
-PC Divergence Minimisation - Exp & 1.3265 & 0.0045\\
+Prior Contrastive - Exp & 1.3265 & 0.0045\\
 \hline
-JC Divergence Minimisation - ReLU & 1.6954 & 0.4337\\
+Joint-Contrastive - ReLU & 1.6954 & 0.4337\\
 \hline
-JC Divergence Minimisation - Exp & 1.3397 & 0.0066\\
+Joint-Contrastive - Exp & 1.3397 & 0.0066\\
 \hline
 \end{tabular}
 }
@@ -585,18 +458,9 @@ JC Divergence Minimisation - Exp & 1.3397 & 0.0066\\
 \caption{Joint-Contrastive}
 \end{subfigure}
 \end{figure}
-\end{frame}
-\begin{frame}{Inference Experiment - Activation Function}{Estimator Losses}
-\begin{figure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{estimator_losses/PCKLvsPCKLEXP.png}
-\caption{Prior-Contrastive}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{estimator_losses/JCKLvsJCKLEXP.png}
-\caption{Joint-Contrastive}
-\end{subfigure}
-\end{figure}
+\begin{itemize}
+\item Exponential output has smoother and faster convergence.
+\end{itemize}
 \end{frame}
 \begin{frame}{Inference Experiment - Activation Function}{NELBOs}
 \begin{figure}
@@ -609,35 +473,13 @@ JC Divergence Minimisation - Exp & 1.3397 & 0.0066\\
 \caption{Joint-Contrastive}
 \end{subfigure}
 \end{figure}
-\end{frame}
-
-\section{Theory Break}
-\begin{frame}{Theory Break}{Alternative Derivation of Class Probability Estimation}
 \begin{itemize}
-\item Recall theorem behind divergence minimisation:
-\[D_f [p(u)||q(u)]\geq \sup_{r\in \mathcal{R}} \{\mathbb{E}_{q(u)}[f'(r(u))]-\mathbb{E}_{p(u)}[f^*(f'(r(u)))]\},\]
-\item If we let $f(u)=u\log u-(u+1)\log (u+1)$ and $D(u)=\frac{r(u)}{r(u)+1}$, we have the lower bound
-\[2JS[p(u)||q(u)]-\log 4\geq \sup_{D}\{\E_{q(u)}[\log D(u)]+\E_{p(u)}[\log(1-D(u))]\}\]
-\item This is the same estimator loss as in class probability estimation:
-\[\min_\alpha -\mathbb{E}_{q(u)}[\log D_\alpha(u)]-\mathbb{E}_{p(u)}[\log(1-D_\alpha(u))]\]
-\item We call $2JS[p(u)||q(u)]-\log 4$ the `GAN' divergence
+\item More stable NELBO estimation by exponential output.
+\item Variance of exponential output in joint-contrastive case increases over time.
 \end{itemize}
 \end{frame}
-\begin{frame}{Theory Break}{Analysis of Optimisation Algorithms}
-\begin{itemize}
-\item $D(u)=\frac{r(u)}{r(u)+1}$ is bijective transformation of estimated density ratio.
-\item Also propose  $T(u)=\log r(u)$.
-\item 2 f-divergences being compared: $KL[q(u)||p(u)]$ and $2JS[p(u)||q(u)]-\log 4$.
-\item 2 problem contexts (PC, JC) \\
-$\times$ 2 f-divergences (Reverse KL, GAN) \\
-$\times$ 3 estimator parametrisations ($D_\alpha(u)\simeq\frac{q(u)}{q(u)+p(u)}, r_\alpha(u)
-\simeq\frac{q(u)}{p(u)}, T_\alpha(u)\simeq\log \frac{q(u)}{p(u)}$)\\
- = 12 experiments.
-\end{itemize}
-\end{frame}
-\section{Experiments}
-\subsection{Inference Experiment}
-\begin{frame}{Inference Experiment}{Comparing Optimal Estimators}
+\section{Optimal Estimator Experiment}
+\begin{frame}{Optimal Estimator Experiment}{Experiment Outline}
 \begin{itemize}
 \item Same inference problem as before.
 \item Aim of this experiment is to verify that choice of estimator does not matter as long as it reaches equality.
@@ -645,24 +487,12 @@ $\times$ 3 estimator parametrisations ($D_\alpha(u)\simeq\frac{q(u)}{q(u)+p(u)},
 \item High posterior iterations.
 \end{itemize}
 \end{frame}
-\begin{frame}{Inference Experiment}{Comparing Optimal Estimators}
+\begin{frame}{Optimal Estimator Experiment}{Results}
 \begin{table}[h]
-\scalebox{0.8}{
+\scalebox{1.0}{
 \begin{tabular}{|c|c|c|}
 \hline
 Algorithm & Mean KL Divergence & Standard Deviation\\
-\hline
-PC Reverse KL - $D_\alpha(z,x)$ & 1.3271 & 0.0041\\
-\hline
-PC Reverse KL - $r_\alpha(z,x)$ & 1.3265 & 0.0045\\
-\hline
-PC Reverse KL - $T_\alpha(z,x)$ & 1.3262 & 0.0041\\
-\hline
-PC CPE - $D_\alpha(z,x)$ & 1.3267 & 0.0041\\
-\hline
-PC GAN - $r_\alpha(z,x)$ & 1.3263 & 0.0035\\
-\hline
-PC GAN - $T_\alpha(z,x)$ & 1.3258 & 0.0039\\
 \hline
 JC Reverse KL - $D_\alpha(z,x)$ & 1.3416 & 0.0068\\
 \hline
@@ -680,22 +510,12 @@ JC GAN - $T_\alpha(z,x)$ & 1.3670 & 0.0387\\
 }
 \end{table}
 \begin{itemize}
-\item PC posteriors fully converged, reverse KL converged faster for JC.
+\item Prior-contrastive posteriors fully converged at $\approx 1.325$.
+\item No significant difference in convergence between estimators in each f-divergence.
+\item Reverse KL converged faster in joint-contrastive context.
 \end{itemize}
 \end{frame}
-\begin{frame}{Inference Experiment}{Prior-Contrastive KL Divergence Plots}
-\begin{figure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{truklmins/PCADVvsPCADVexpvsPCADVgudlog.png}
-\caption{GAN Divergence}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{truklmins/PCKLDvsPCKLexpvsPCKLgudlog.png}
-\caption{Reverse KL Divergence}
-\end{subfigure}
-\end{figure}
-\end{frame}
-\begin{frame}{Inference Experiment}{Joint-Contrastive KL Divergence Plots}
+\begin{frame}{Optimal Estimator Experiment}{Joint-Contrastive KL Divergence Plots}
 \begin{figure}
 \begin{subfigure}{0.49\textwidth}
 \includegraphics[width=\linewidth]{truklmins/JCADVvsJCADVexpvsJCADVgudlog.png}
@@ -706,44 +526,11 @@ JC GAN - $T_\alpha(z,x)$ & 1.3670 & 0.0387\\
 \caption{Reverse KL Divergence}
 \end{subfigure}
 \end{figure}
+\begin{itemize}
+\item Plots almost indistinguishable with exception of class probability estimator outlier in GAN divergence.
+\end{itemize}
 \end{frame}
-\begin{frame}{Inference Experiment}{Prior-Contrastive Estimator Loss Plots}
-\begin{figure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{estimator_losses/PCADVvsPCADVexpvsPCADVgudlog.png}
-\caption{GAN Divergence}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{estimator_losses/PCKLDvsPCKLexpvsPCKLgudlog.png}
-\caption{Reverse KL Divergence}
-\end{subfigure}
-\end{figure}
-\end{frame}
-\begin{frame}{Inference Experiment}{Joint-Contrastive Estimator Loss Plots}
-\begin{figure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{estimator_losses/JCADVvsJCADVexpvsJCADVgudlog.png}
-\caption{GAN Divergence}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{estimator_losses/JCKLDvsJCKLexpvsJCKLgudlog.png}
-\caption{Reverse KL Divergence}
-\end{subfigure}
-\end{figure}
-\end{frame}
-\begin{frame}{Inference Experiment}{Prior-Contrastive NELBO Plots}
-\begin{figure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{nelbos/PCADVvsPCADVexpvsPCADVgudlog.png}
-\caption{GAN Divergence}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{nelbos/PCKLDvsPCKLexpvsPCKLgudlog.png}
-\caption{Reverse KL Divergence}
-\end{subfigure}
-\end{figure}
-\end{frame}
-\begin{frame}{Inference Experiment}{Joint-Contrastive NELBO Plots}
+\begin{frame}{Optimal Estimator Experiment}{Joint-Contrastive NELBO Plots}
 \begin{figure}
 \begin{subfigure}{0.49\textwidth}
 \includegraphics[width=\linewidth]{nelbos/JCADVvsJCADVexpvsJCADVgudlog.png}
@@ -754,18 +541,21 @@ JC GAN - $T_\alpha(z,x)$ & 1.3670 & 0.0387\\
 \caption{Reverse KL Divergence}
 \end{subfigure}
 \end{figure}
-\end{frame}
-\begin{frame}{Inference Experiment}{Comparing Undertrained Estimators}
 \begin{itemize}
-\item Aim of this experiment is to significantly reduce the amount of training the estimator undergoes between each NELBO estimation.
-\item The combination of f-divergence and estimator parametrisation that trains the fastest will have the highest accuracy, corresponding to the highest posterior convergence.
-\item Estimator training rate changed to 0.00004 and posterior training rate increased to 0.0002.
-\item 5000 estimator initialisation steps retained.
-\item Estimator to posterior iteration ratio reduced to 15:1 in prior-contrastive and 20:1 in joint-contrastive.
-\item Total posterior iterations reduced to 2000 in prior-contrastive and 4000 in joint-contrastive.
+\item Again very similar plots.
+\item NELBO estimation smooth but has increasing variance over time.
 \end{itemize}
 \end{frame}
-\begin{frame}{Inference Experiment}{Comparing Undertrained Estimators}
+\section{Undertrained Estimator Experiment}
+\begin{frame}{Undertrained Estimator Experiment}{Experiment Outline}
+\begin{itemize}
+\item Estimators are similar when they are optimal but what if they are not optimal?
+\item Same inference experiment again.
+\item Significantly reduce amount of estimator training between posterior iterations.
+\item Increased posterior training rate.
+\end{itemize}
+\end{frame}
+\begin{frame}{Undertrained Estimator Experiment}{Results}
 \begin{table}[h]
 \scalebox{0.8}{
 \begin{tabular}{|c|c|c|}
@@ -804,64 +594,15 @@ JC GAN - $T_\alpha(z,x)$ & 1.4214 & 0.0518\\
 
 \end{itemize}
 \end{frame}
-\begin{frame}{Inference Experiment}{Comparing Undertrained Estimators}
+\begin{frame}{Undertrained Estimator Experiment}{Comparing Undertrained Estimators}
 \begin{itemize}
 \item For PC, $D_\alpha(z,x)<r_\alpha(z,x)<T_\alpha(z,x)$ in terms of mean KL divergence but not by a significant amount.
-\item Significant in JC. Likely because likelihood term is a factor in PC but JC is entirely based on density ratio.
-\item Standard deviation of class probability estimator consistently better than other two estimator parametrisations.
+\item Same trend but more significant in JC because likelihood term also used for optimization in PC.
 \item f-divergence used is more significant than estimator parametrisation.
 \item Optimal combination is reverse KL divergence with class probability estimator.
 \end{itemize}
 \end{frame}
-\begin{frame}{Inference Experiment}{Prior-Contrastive KL Divergence Plots}
-\begin{figure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{part2truklmins/PCADVvsPCADVexpvsPCADVgudlog.png}
-\caption{GAN Divergence}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{part2truklmins/PCKLDvsPCKLexpvsPCKLgudlog.png}
-\caption{Reverse KL Divergence}
-\end{subfigure}
-\end{figure}
-\end{frame}
-\begin{frame}{Inference Experiment}{Joint-Contrastive KL Divergence Plots}
-\begin{figure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{part2truklmins/JCADVvsJCADVexpvsJCADVgudlog.png}
-\caption{GAN Divergence}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{part2truklmins/JCKLDvsJCKLexpvsJCKLgudlog.png}
-\caption{Reverse KL Divergence}
-\end{subfigure}
-\end{figure}
-\end{frame}
-\begin{frame}{Inference Experiment}{Prior-Contrastive Estimator Loss Plots}
-\begin{figure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{part2estimatorlosses/PCADVvsPCADVexpvsPCADVgudlog.png}
-\caption{GAN Divergence}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{part2estimatorlosses/PCKLDvsPCKLexpvsPCKLgudlog.png}
-\caption{Reverse KL Divergence}
-\end{subfigure}
-\end{figure}
-\end{frame}
-\begin{frame}{Inference Experiment}{Joint-Contrastive Estimator Loss Plots}
-\begin{figure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{part2estimatorlosses/JCADVvsJCADVexpvsJCADVgudlog.png}
-\caption{GAN Divergence}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{part2estimatorlosses/JCKLDvsJCKLexpvsJCKLgudlog.png}
-\caption{Reverse KL Divergence}
-\end{subfigure}
-\end{figure}
-\end{frame}
-\begin{frame}{Inference Experiment}{Prior-Contrastive NELBO Plots}
+\begin{frame}{Undertrained Estimator Experiment}{Prior-Contrastive NELBO Plots}
 \begin{figure}
 \begin{subfigure}{0.49\textwidth}
 \includegraphics[width=\linewidth]{part2nelbos/PCADVvsPCADVexpvsPCADVgudlog.png}
@@ -872,8 +613,12 @@ JC GAN - $T_\alpha(z,x)$ & 1.4214 & 0.0518\\
 \caption{Reverse KL Divergence}
 \end{subfigure}
 \end{figure}
+\begin{itemize}
+\item Reverse KL divergence unstable initially but stabilises later.
+\item Overall reverse KL divergence showed faster convergence.
+\end{itemize}
 \end{frame}
-\begin{frame}{Inference Experiment}{Joint-Contrastive NELBO Plots}
+\begin{frame}{Undertrained Estimator Experiment}{Joint-Contrastive NELBO Plots}
 \begin{figure}
 \begin{subfigure}{0.49\textwidth}
 \includegraphics[width=\linewidth]{part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png}
@@ -883,6 +628,9 @@ JC GAN - $T_\alpha(z,x)$ & 1.4214 & 0.0518\\
 \includegraphics[width=\linewidth]{part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png}
 \caption{Reverse KL Divergence}
 \end{subfigure}
+\begin{itemize}
+\item Unclear why direct ratio estimator has unusual NELBO plot: posterior convergence was not affected.
+\end{itemize}
 \end{figure}
 \end{frame}
 \subsection{Generation Experiment}
@@ -916,58 +664,33 @@ JC GAN - $T_\alpha(z,x)$ & 1.4214 & 0.0518\\
 \begin{frame}{Generation Experiment}{Experiment Outline}
 \begin{itemize}
 \item MNIST dataset - $28\times 28$ grey-scale images of handwritten digits
-\item Not doing joint-contrastive cause unintuitive to `pretend' we don't know likelihood function.
-\item Again use low estimator to posterior training ratio.
+\item Joint-contrastive context not tested here.
+\item Again use undertrained estimator.
 \item Use reconstruction error $\|x-\tilde{x}\|^2$ as metric.
 \item Perform experiment with low dimensional latent space (2 dimensions) and high dimensional latent space (20 dimensions).
+\item Low dimensional case had similar results to previous experiment.
 \end{itemize}
 \end{frame}
-\begin{frame}{Generation Experiment}{Results - low dimensional latent space}
+\begin{frame}{Generation Experiment}{Results - high dimensional latent space}
 \begin{table}[h]
 \scalebox{0.9}{
 \begin{tabular}{|c|c|c|}
 \hline
 Algorithm & Mean Reconstruction Error & Standard Deviation\\
 \hline
-PC Reverse KL - $D_\alpha(z,x)$ & 0.0866 & 0.0015\\
+PC GAN - $D_\alpha(z,x)$ & 0.0444 & 0.0017\\
 \hline
-PC Reverse KL - $r_\alpha(z,x)$ & 0.0871 & 0.0021\\
-\hline
-PC Reverse KL - $T_\alpha(z,x)$ & 0.0873 & 0.0016\\
-\hline
-PC GAN - $D_\alpha(z,x)$ & 0.0867 & 0.0013\\
-\hline
-PC GAN - $r_\alpha(z,x)$ & 0.0872 & 0.0015\\
-\hline
-PC GAN - $T_\alpha(z,x)$ & 0.1068 & 0.0020\\
+PC Reverse KL - $D_\alpha(z,x)$ & 0.0647 & 0.0019\\
 \hline
 \end{tabular}
 }
 \end{table}
 \begin{itemize}
-\item Mostly insignificant but consistent results.
-\item Log ratio estimator for GAN is significantly worse.
-\end{itemize}
-\end{frame}
-\begin{frame}{Generation Experiment}{Reconstruction Errors}
-\begin{figure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{part3reconerrors/PCADVvsPCADVexpvsPCADVgudlog.png}
-\caption{GAN Divergence}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{part3reconerrors/PCKLDvsPCKLexpvsPCKLgudlog.png}
-\caption{Reverse KL Divergence}
-\end{subfigure}
-\end{figure}
-\end{frame}
-\begin{frame}{Generation Experiment}{Results - high dimensional latent space}
-\begin{itemize}
 \item Direct ratio and direct log ratio estimators attempted to store numbers exceeding float64(max).
 \item Exponential of $T_\alpha(z,x)$ taken in loss function.
 \item $D_\alpha(z,x)$ ranges in $(0,1)$.
 \item Value before sigmoid activation function for $D_\alpha(z,x)$ is log density ratio.
-\item Class probability estimator is the best.
+\item This time GAN divergence leads to better convergence than reverse KL.
 \end{itemize}
 \end{frame}
 \begin{frame}{Generation Experiment}{Results - high dimensional latent space}
@@ -980,20 +703,13 @@ PC GAN - $T_\alpha(z,x)$ & 0.1068 & 0.0020\\
 \includegraphics[width=\linewidth]{part4nelbos/PCADVvsPCKLD.png}
 \caption{NELBO}
 \end{subfigure}
+\begin{itemize}
+\item As before, GAN divergence is more stable.
+\item Recall reverse KL divergence is initially unstable but stabilizes later.
+\item In this case it fails to stabilise by the end of the program runtime.
+\end{itemize}
 \end{figure}
-\begin{table}[h]
-\scalebox{0.9}{
-\begin{tabular}{|c|c|c|}
-\hline
-Algorithm & Mean Reconstruction Error & Standard Deviation\\
-\hline
-PC Reverse KL - $D_\alpha(z,x)$ & 0.0444 & 0.0017\\
-\hline
-PC GAN - $D_\alpha(z,x)$ & 0.0647 & 0.0019\\
-\hline
-\end{tabular}
-}
-\end{table}
+
 \end{frame}
 %\begin{frame}{Blocks}
 %\begin{block}{Block Title}
@@ -1009,28 +725,23 @@ PC GAN - $D_\alpha(z,x)$ & 0.0647 & 0.0019\\
 
 % Placing a * after \section means it will not show in the
 % outline or table of contents.
-\section{Further Estimator Loss Function Analysis}
-\begin{frame}{Further Estimator Loss Function Analysis}{Outline}
+\section{Theory}
+\begin{frame}{Theory}{Choice of f-divergence}
 \begin{itemize}
-\item Each estimator loss function is a convex functional that reaches its minimum when estimator is optimal.
-\item Estimator parametrisation affects its output space and gradient of loss function with respect to the estimator.
-\item Choice of f-divergence affects gradient of loss function with respect to estimator.
+\item Observing second functional derivatives, reverse KL divergence is strictly higher than the GAN divergence (for $r_\alpha(u)$).
+\item Nowozin's f-GAN paper also shows empirically that the reverse KL divergence is superior when it is additionally used to optimize the posterior.
+\item Intuitive that the f-divergence used to optimize posterior is the best upper bound for estimator.
 \end{itemize}
 \end{frame}
 \begin{frame}{Further Estimator Loss Function Analysis}{Estimator Parametrisation}
 Need some plots xD
 \begin{itemize}
-\item Higher second derivative corresponds to faster convergence.
-\item Taking second functional derivative of estimator loss function with respect to estimator, we can only make one certain comparison: for the GAN divergence, the class probability estimator has a strictly higher second derivative than the direct ratio estimator.
-\item The density ratio changes every time the posterior is optimised, and the estimator must catch up. It can be shown that the class probability estimator has a strictly lower displacement than the direct ratio estimator, that is, $|D^*_{final}-D^*_{init}|<|r^*_{final}-r^*_{init}|$.
+\item $D_\alpha(u)$ has higher second functional derivative than $r_\alpha(u)$ (for GAN divergence).
+\item The density ratio changes every time the posterior is optimised, and the estimator must catch up.
+\item $D_\alpha(u)$ has a strictly lower displacement than $r_\alpha(u)$, that is, $|D_\alpha^{(n+1)}(u)-D_\alpha^{(n)}(u)|<|r_\alpha^{(n+1)}(u)-r_\alpha^{(n)}(u)|$.
 \end{itemize}
 \end{frame}
-\begin{frame}{Further Estimator Loss Function Analysis}{Choice of f-divergence}
-\begin{itemize}
-\item Again observing the second functional derivatives, we can only observe that in the direct ratio estimator parametrisation, the reverse KL divergence is strictly higher than the GAN divergence.
-\item Nowozin's f-GAN paper also shows empirically that the reverse KL divergence is superior when it is additionally used to optimize the posterior.
-\end{itemize}
-\end{frame}
+
 
 \section*{Summary}
 
