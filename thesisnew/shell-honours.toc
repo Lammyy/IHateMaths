@@ -32,7 +32,7 @@
 \contentsline {subsection}{\numberline {4.2.4}Alternative Derivation of Class Probability Estimation}{48}{subsection.4.2.4}
 \contentsline {chapter}{\numberline {Chapter 5}Initial Experiment - Inference, ``Sprinkler" Example}{50}{chapter.5}
 \contentsline {section}{\numberline {5.1}Problem Context}{50}{section.5.1}
-\contentsline {section}{\numberline {5.2}Program Structure}{52}{section.5.2}
+\contentsline {section}{\numberline {5.2}Program Structure}{51}{section.5.2}
 \contentsline {section}{\numberline {5.3}Results}{56}{section.5.3}
 \contentsline {chapter}{\numberline {Chapter 6}Activation Function Experiment}{59}{chapter.6}
 \contentsline {section}{\numberline {6.1}Theory}{59}{section.6.1}

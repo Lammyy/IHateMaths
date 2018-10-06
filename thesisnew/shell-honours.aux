@@ -140,18 +140,24 @@
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
 \@writefile{toc}{\contentsline {section}{\numberline {5.1}Problem Context}{50}{section.5.1}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces True Posterior Plots for Sprinkler Experiment\relax }}{51}{figure.caption.21}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.2}Program Structure}{52}{section.5.2}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Generator Network Structure for Sprinkler Experiment\relax }}{52}{figure.caption.22}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Estimator Network Structure for Sprinkler Experiment\relax }}{52}{figure.caption.23}}
+\citation{gan}
+\citation{relu1,relu2}
+\citation{gan}
+\citation{relu1,relu2}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces \relax \fontsize  {10.95}{13.6}\selectfont  \abovedisplayskip 11\p@ plus3\p@ minus6\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \def \leftmargin \leftmargini \labelsep .5em\labelwidth \leftmargini \advance \labelwidth -\labelsep \parsep \z@ \topsep 0.4ex plus\p@ \itemsep 0\p@ plus1\p@ {\leftmargin \leftmargini \topsep 9\p@ plus3\p@ minus5\p@ \parsep 4.5\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip This figure depicts the true (unnormalised) posterior plots for the ``Continuous Sprinkler" experiment. As $x$ increases, the posteriors become increasingly multimodal and unusually shaped. Clearly a flexible model for the posterior distribution is required, as a typical multivariate Gaussian model would fail to capture these features.\relax }}{51}{figure.caption.21}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}Program Structure}{51}{section.5.2}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces \relax \fontsize  {10.95}{13.6}\selectfont  \abovedisplayskip 11\p@ plus3\p@ minus6\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \def \leftmargin \leftmargini \labelsep .5em\labelwidth \leftmargini \advance \labelwidth -\labelsep \parsep \z@ \topsep 0.4ex plus\p@ \itemsep 0\p@ plus1\p@ {\leftmargin \leftmargini \topsep 9\p@ plus3\p@ minus5\p@ \parsep 4.5\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip This figure illustrates the structure of the generator network $\mathcal  {G}(x,\bm  {\epsilon })$ used in the ``Continuous Sprinkler" experiment. The number inside the node indicates how many nodes the layer has, and the text above the node describes the activation function. Recall that the input layer does not have an activation function, and Rectified Linear Units (ReLU) are used for most of the hidden layers due to their many advantages. In the Concat. layer, the two input vectors are concatenated and there is no activation function. We do not use an activation function for the output layer as $q_\phi (z|x)\in \mathbb  {R}$.\relax }}{52}{figure.caption.22}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces \relax \fontsize  {10.95}{13.6}\selectfont  \abovedisplayskip 11\p@ plus3\p@ minus6\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \def \leftmargin \leftmargini \labelsep .5em\labelwidth \leftmargini \advance \labelwidth -\labelsep \parsep \z@ \topsep 0.4ex plus\p@ \itemsep 0\p@ plus1\p@ {\leftmargin \leftmargini \topsep 9\p@ plus3\p@ minus5\p@ \parsep 4.5\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip This figure depicts the structure of the estimator network for the ``Continuous Sprinkler Experiment". The notation is the same as in Figure 5.2. When the estimator takes the parametrisation of a discriminator $D_\alpha (z,x)\simeq \frac  {q(z,x)}{q(z,x)+p(z,x)}$, a sigmoid activation function is used for the output layer \citep  {gan}. A ReLU output layer is used when the estimator output is the direct density ratio $r_\alpha (z,x)\simeq \frac  {q(z,x)}{p(z,x)}$ \citep  {relu1, relu2}.\relax }}{52}{figure.caption.23}}
+\citation{DeepLearning}
 \@writefile{loa}{\contentsline {algocf}{\numberline {8}{\ignorespaces Sprinkler Prior-Contrastive Algorithm\relax }}{54}{algocf.8}}
 \@writefile{loa}{\contentsline {algocf}{\numberline {9}{\ignorespaces Sprinkler Joint-Contrastive Algorithm\relax }}{55}{algocf.9}}
 \@writefile{toc}{\contentsline {section}{\numberline {5.3}Results}{56}{section.5.3}}
 \@writefile{lot}{\contentsline {table}{\numberline {5.1}{\ignorespaces \relax }}{56}{table.caption.26}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Example Posterior Outputs\relax }}{56}{figure.caption.27}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces \relax \fontsize  {10.95}{13.6}\selectfont  \abovedisplayskip 11\p@ plus3\p@ minus6\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \def \leftmargin \leftmargini \labelsep .5em\labelwidth \leftmargini \advance \labelwidth -\labelsep \parsep \z@ \topsep 0.4ex plus\p@ \itemsep 0\p@ plus1\p@ {\leftmargin \leftmargini \topsep 9\p@ plus3\p@ minus5\p@ \parsep 4.5\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip Initial tests show that the variational posterior reaches optimality at an average KL divergence of about 1.325: as seen in sub-figure (a), this corresponds to outputs similar to the true posterior in sub-figure (c). The posterior output in sub-figure (b) with a larger average KL divergence of 1.3963 is less flexible and only uni-modal for $x=50$.\relax }}{56}{figure.caption.27}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces Average KL Divergences (KDE Estimate)\relax }}{57}{figure.caption.28}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces Estimator Losses\relax }}{57}{figure.caption.29}}
 \@writefile{lof}{\contentsline {figure}{\numberline {5.7}{\ignorespaces NELBOs\relax }}{57}{figure.caption.30}}
+\citation{sparse}
 \citation{leaky}
 \@writefile{toc}{\contentsline {chapter}{\numberline {Chapter 6}Activation Function Experiment}{59}{chapter.6}}
 \@writefile{lof}{\addvspace {10\p@ }}
@@ -236,40 +242,43 @@
 \bibcite{optim}{{5}{2004}{{Boyd and Vandenberghe}}{{}}}
 \bibcite{neuralstat}{{6}{1994}{{Cheng and Titterington}}{{}}}
 \bibcite{cybenko}{{7}{1989}{{Cybenko}}{{}}}
-\bibcite{ali}{{8}{2016}{{{Dumoulin} et~al.}}{{}}}
-\bibcite{backprop}{{9}{1986}{{E.~Rumelhart et~al.}}{{}}}
-\bibcite{floudas}{{10}{2005}{{Floudas}}{{}}}
-\bibcite{JS}{{11}{2004}{{Fuglede and Topsoe}}{{}}}
-\bibcite{gelman}{{12}{2004}{{Gelman et~al.}}{{}}}
-\bibcite{xavier}{{13}{2010}{{Glorot and Bengio}}{{}}}
+\bibcite{vae}{{8}{2016}{{Doersch}}{{}}}
+\bibcite{ali}{{9}{2016}{{{Dumoulin} et~al.}}{{}}}
+\bibcite{backprop}{{10}{1986}{{E.~Rumelhart et~al.}}{{}}}
+\bibcite{floudas}{{11}{2005}{{Floudas}}{{}}}
+\bibcite{JS}{{12}{2004}{{Fuglede and Topsoe}}{{}}}
+\bibcite{gelman}{{13}{2004}{{Gelman et~al.}}{{}}}
+\bibcite{xavier}{{14}{2010}{{Glorot and Bengio}}{{}}}
 \@writefile{toc}{\contentsline {chapter}{References}{87}{chapter.13}}
-\bibcite{sparse}{{14}{2011}{{Glorot et~al.}}{{}}}
-\bibcite{DeepLearning}{{15}{2016}{{Goodfellow et~al.}}{{}}}
-\bibcite{gan}{{16}{2014}{{Goodfellow et~al.}}{{}}}
-\bibcite{goodman}{{17}{1960}{{Goodman}}{{}}}
-\bibcite{haykin}{{18}{1998}{{Haykin}}{{}}}
-\bibcite{universal}{{19}{1991}{{Hornik}}{{}}}
-\bibcite{huszar}{{20}{2017}{{Husz{\'a}r}}{{}}}
-\bibcite{adam}{{21}{2014}{{Kingma and Ba}}{{}}}
-\bibcite{kingma}{{22}{2013}{{{Kingma} and {Welling}}}{{}}}
-\bibcite{kolen}{{23}{2001}{{Kolen and Kremer}}{{}}}
-\bibcite{KL}{{24}{1959}{{Kullback}}{{}}}
-\bibcite{batch}{{25}{2014}{{Li et~al.}}{{}}}
-\bibcite{leaky}{{26}{2013}{{Maas}}{{}}}
-\bibcite{mescheder}{{27}{2017}{{Mescheder et~al.}}{{}}}
-\bibcite{mohamed}{{28}{2016}{{{Mohamed} and {Lakshminarayanan}}}{{}}}
-\bibcite{nguyen}{{29}{2010}{{Nguyen et~al.}}{{}}}
-\bibcite{nowozin}{{30}{2016}{{Nowozin et~al.}}{{}}}
-\bibcite{explain}{{31}{1993}{{P.~Wellman and Henrion}}{{}}}
-\bibcite{optimneural}{{32}{2016}{{Ruder}}{{}}}
-\bibcite{mnist}{{33}{2003}{{Simard et~al.}}{{}}}
-\bibcite{snyman}{{34}{2005}{{Snyman}}{{}}}
-\bibcite{sugiyama}{{35}{2012}{{Sugiyama et~al.}}{{}}}
-\bibcite{tiao}{{36}{2018}{{Tiao et~al.}}{{}}}
-\bibcite{tran}{{37}{2017}{{{Tran} et~al.}}{{}}}
-\bibcite{wu}{{38}{2009}{{Wu}}{{}}}
-\bibcite{ADVVI}{{39}{2017}{{Zhang et~al.}}{{}}}
-\bibcite{neuroplast}{{40}{1992}{{Zilles}}{{}}}
+\bibcite{sparse}{{15}{2011}{{Glorot et~al.}}{{}}}
+\bibcite{DeepLearning}{{16}{2016}{{Goodfellow et~al.}}{{}}}
+\bibcite{gan}{{17}{2014}{{Goodfellow et~al.}}{{}}}
+\bibcite{goodman}{{18}{1960}{{Goodman}}{{}}}
+\bibcite{haykin}{{19}{1998}{{Haykin}}{{}}}
+\bibcite{universal}{{20}{1991}{{Hornik}}{{}}}
+\bibcite{huszar}{{21}{2017}{{Husz{\'a}r}}{{}}}
+\bibcite{adam}{{22}{2014}{{Kingma and Ba}}{{}}}
+\bibcite{kingma}{{23}{2013}{{{Kingma} and {Welling}}}{{}}}
+\bibcite{kolen}{{24}{2001}{{Kolen and Kremer}}{{}}}
+\bibcite{KL}{{25}{1959}{{Kullback}}{{}}}
+\bibcite{batch}{{26}{2014}{{Li et~al.}}{{}}}
+\bibcite{relu2}{{27}{2017}{{Liu et~al.}}{{}}}
+\bibcite{leaky}{{28}{2013}{{Maas}}{{}}}
+\bibcite{mescheder}{{29}{2017}{{Mescheder et~al.}}{{}}}
+\bibcite{mohamed}{{30}{2016}{{{Mohamed} and {Lakshminarayanan}}}{{}}}
+\bibcite{relu1}{{31}{2015}{{Nam and Sugiyama}}{{}}}
+\bibcite{nguyen}{{32}{2010}{{Nguyen et~al.}}{{}}}
+\bibcite{nowozin}{{33}{2016}{{Nowozin et~al.}}{{}}}
+\bibcite{explain}{{34}{1993}{{P.~Wellman and Henrion}}{{}}}
+\bibcite{optimneural}{{35}{2016}{{Ruder}}{{}}}
+\bibcite{mnist}{{36}{2003}{{Simard et~al.}}{{}}}
+\bibcite{snyman}{{37}{2005}{{Snyman}}{{}}}
+\bibcite{sugiyama}{{38}{2012}{{Sugiyama et~al.}}{{}}}
+\bibcite{tiao}{{39}{2018}{{Tiao et~al.}}{{}}}
+\bibcite{tran}{{40}{2017}{{{Tran} et~al.}}{{}}}
+\bibcite{wu}{{41}{2009}{{Wu}}{{}}}
+\bibcite{ADVVI}{{42}{2017}{{Zhang et~al.}}{{}}}
+\bibcite{neuroplast}{{43}{1992}{{Zilles}}{{}}}
 \@writefile{toc}{\contentsline {chapter}{\numberline {Appendix A}Kernel Density Estimation}{90}{appendix.A}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}

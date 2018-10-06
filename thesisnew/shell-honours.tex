@@ -1429,7 +1429,7 @@ and therefore our previous formulation of class probability estimation by minimi
 \chapter{Initial Experiment - Inference, ``Sprinkler" Example}
 In this chapter we conduct our first experiment comparing class probability estimation and divergence minimisation in both prior-contrastive and joint-contrastive formulations.
 \section{Problem Context}
-We use the simple ``Continuous Sprinkler" model as described in Variational Inference using Implicit Distributions\citep{huszar}. This experiment involves the hypothetical scenario of grass wetness as a result of two independent sources: rainfall and a sprinkler. The problem exhibits ``explaining away" \citep{explain}, a pattern of reasoning in which the confirmation of one cause of an effect reduces the need to discuss alternative causes. In this example, despite the two possible causes of the wet grass being independent, when we condition on the observation of wet grass, the causes become dependent, as either cause being significant could lead to wet grass.\\ 
+We use the simple ``Continuous Sprinkler" experiment as described in ``Variational Inference using Implicit Distributions" by \citet{huszar}. This experiment involves the hypothetical scenario of grass wetness as a result of two independent sources: rainfall and a sprinkler. The problem exhibits ``explaining away" \citep{explain}, a pattern of reasoning in which the confirmation of one cause of an effect reduces the need to discuss alternative causes. In this example, despite the two possible sources of wetness being independent, when we condition on the observation of wet grass, the causes become dependent, as it is correlated with the significance of either water source.\\ 
 The latent variables $z_1$ and $z_2$ represent the sprinkler and the rain respectively, and the observation $x$ represents the wetness of the grass.
 \[p(z_1,z_2)\sim \mathcal{N} (0,\sigma^2 I_{2\times 2})\]
 \[p(x|\bm{z})\sim EXP(3+\max(0,z_1)^3+\max(0,z_2)^3).\]
@@ -1438,22 +1438,22 @@ The prior-contrastive algorithm requires the likelihood function of the likeliho
 The likelihood function is not required for the joint-contrastive algorithms as it is assumed to be implicit.\\
 The unnormalised true posterior is derived as shown below. The lack of normalisation does not affect the variational distribution as the true posterior is assumed to be unknown, and the algorithm only uses samples from the prior and likelihood.\\
 \textbf{Posterior Calculation:}
-\begin{align*}
+\begin{equation}
+\begin{aligned}
 p(z_1,z_2|x)&= \exp(\log p(z_1,z_2)+\log p(x|z_1,z_2))\\
 &\propto\exp\left(\frac12\bm{z}^T(\sigma^{-2}I_{2\times 2})\bm{z}-\log (3+\max(0,z_1)^3+\max(0,z_2)^3)\right.\\
 &\quad\left.-\frac{x}{3+\max(0,z_1)^3+\max(0,z_2)^3}\right)\\
 &\propto \exp\left(\frac{1}{2\sigma^2}(z_1^2+z_2^2)-\log (3+\max(0,z_1)^3+\max(0,z_2)^3)\right.\\
 &\left.\quad-\frac{x}{3+\max(0,z_1)^3+\max(0,z_2)^3}\right).
-\end{align*}
-In the experiment, we let $\sigma^2=2$, and consider observations $x=0,5,8,12,50$. To plot the true (unnormalised) posterior $p(\bm{z}|x)$, we simply use a range of equally spaced points from $(z_1,z_2)=[(-5,-5),\dots, (5,5)]$ to form the log prior values and log likelihood values for each observation value, and graph the exponential of the sum of these values. The expressions are as derived above. The plots are as shown in Figure 5.1. They are not affected by the lack of normalisation, as $p(x)$ is constant for each x-value, and the purpose of the plots is to show the shape and relative density of the posterior distribution.\\
+\end{aligned}
+\end{equation}
+In the experiment, we let $\sigma^2=2$, and consider observations $x=0,5,8,12,50$. To plot the true (unnormalised) posterior $p(\bm{z}|x)$, we use a range of equally spaced points from $(z_1,z_2)=[(-5,-5),\dots, (5,5)]$ to form the log prior values and log likelihood values for each observation value, and graph the exponential of the sum of these values. The expressions are as derived above. The plots are as shown in Figure 5.1 below. We are not concerned with the lack of normalisation as the purpose of the plots is to depict the shape and relative density of the posterior distribution.\\
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{sprinklertrue.png}
-\caption{True Posterior Plots for Sprinkler Experiment}
-\end{figure}\\
-As $x$ increases, the posteriors become increasingly multimodal and unusually shaped. Clearly a flexible model for the posterior distribution is required, as a typical multivariate Gaussian model would fail to capture these features.
-\newpage
+\caption{\small This figure depicts the true (unnormalised) posterior plots for the ``Continuous Sprinkler" experiment. As $x$ increases, the posteriors become increasingly multimodal and unusually shaped. Clearly a flexible model for the posterior distribution is required, as a typical multivariate Gaussian model would fail to capture these features.}
+\end{figure}
 \section{Program Structure}
-Recall that our generator $\mathcal{G}_\phi(x,\epsilon)$ is a neural network that takes in noise $\epsilon\sim \pi(\epsilon)$ along with data sample $x\sim q^*(x)$ to create an output from the variational posterior distribution $z\sim q_\phi(z|x)$. In this experiment, the generator has 3 noise inputs $\epsilon_1,\epsilon_2,\epsilon_3$ along with 1 data input $x$, and 2 posterior outputs $z_1, z_2$. The structure of the neural network is as depicted in Figure 5.2:
+Recall from Section 3.9.1 that our generator $\mathcal{G}_\phi(x,\epsilon)$ is a neural network that takes in noise $\epsilon\sim \pi(\epsilon)$ along with data sample $x\sim q^*(x)$ to output a sample from the variational posterior distribution $z\sim q_\phi(z|x)$. In this experiment, the generator has 3 noise inputs $\bm{\epsilon}=(\epsilon_1,\epsilon_2,\epsilon_3)^\top \sim \mathcal{N}(0,I_{3\times 3})$ along with 1 data input $x$, and 2 posterior outputs $z_1, z_2$. The structure of the neural network is as depicted in Figure 5.2 below:
 \begin{figure}[h!]
 \begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
     \tikzstyle{every pin edge}=[<-,shorten <=1pt]
@@ -1496,10 +1496,9 @@ Recall that our generator $\mathcal{G}_\phi(x,\epsilon)$ is a neural network tha
     \node[annot,above of=H-32, node distance=1cm] {ReLU};
     \node[annot,above of=O, node distance=1cm] {Linear};
 \end{tikzpicture}
-\caption{Generator Network Structure for Sprinkler Experiment}
+\caption{\small This figure illustrates the structure of the generator network $\mathcal{G}(x,\bm{\epsilon})$ used in the ``Continuous Sprinkler" experiment. The number inside the node indicates how many nodes the layer has, and the text above the node describes the activation function. Recall that the input layer does not have an activation function, and Rectified Linear Units (ReLU) are used for most of the hidden layers due to their many advantages. In the Concat. layer, the two input vectors are concatenated and there is no activation function. We do not use an activation function for the output layer as $q_\phi(z|x)\in \R$.}
 \end{figure}\\
-The number inside the node indicates how many nodes the layer has, and the text above the node describes the activation function. Recall that the input layer does not have an activation function, and Rectified Linear Units (ReLU) are used for most of the hidden layers due to their many advantages. In the Concat. layer, the two input vectors are concatenated and there is no activation function. We do not use an activation function for the output layer as $q_\phi(z|x)\in \R$.\\
-The structure of the estimator (discriminator $D_\alpha(z,x)$ or ratio estimator $r_\alpha(z,x)$) is similar to that of the the generator, with an additional hidden layer associated with the $z$ input and a different activation function for the output layer, corresponding to the estimator's identity. Note that the only differences between the two estimators are the activation function of the their output layers and the loss functions being minimised. A sigmoid output layer is used for a discriminator, whilst a ReLU output is used for a ratio estimator. The estimator structure is shown in Figure 5.3 below:
+The structure of the estimator (discriminator $D_\alpha(z,x)$ or ratio estimator $r_\alpha(z,x)$) is similar to that of the the generator, with an additional hidden layer associated with the $z$ input and a different activation function for the output layer, corresponding to the estimator's identity. Note that the only differences between the two estimators are the activation function of the their output layers and the loss functions being minimised. The estimator structure is shown in Figure 5.3 below:
 \begin{figure}[h!]
 
 \begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
@@ -1546,16 +1545,16 @@ The structure of the estimator (discriminator $D_\alpha(z,x)$ or ratio estimator
     \node[annot,above of=H-32, node distance=1cm] {ReLU};
     \node[annot,above of=O, node distance=1cm] {Sigmoid($D$)/ ReLU($r$)};
 \end{tikzpicture}
-\caption{Estimator Network Structure for Sprinkler Experiment}
+\caption{\small This figure depicts the structure of the estimator network for the ``Continuous Sprinkler Experiment". The notation is the same as in Figure 5.2. When the estimator takes the parametrisation of a discriminator $D_\alpha(z,x)\simeq \frac{q(z,x)}{q(z,x)+p(z,x)}$, a sigmoid activation function is used for the output layer \citep{gan}. A ReLU output layer is used when the estimator output is the direct density ratio $r_\alpha(z,x)\simeq \frac{q(z,x)}{p(z,x)}$ \citep{relu1, relu2}.}
 \end{figure}
 \newpage
-The network weights are initialized with Xavier initialization, and trained using the Adam optimizer with learning rate $0.0001$ for the prior-contrastive setting and $0.00001$ for joint-contrastive. Preliminary tests show that these are the highest learning rates at which both families of algorithms converge consistently; any higher learning rates lead to the program constantly entering a ``failure" state, which will be discussed in section 5.3.
+The network weights are initialized with Xavier initialization, and trained using the Adam optimizer with learning rate $0.0001$ for the prior-contrastive setting and $0.00001$ for joint-contrastive. Preliminary tests show that these are the highest learning rates at which both families of algorithms converge consistently; any higher learning rates lead to the direct ratio estimator in divergence minimisation consistently entering a ``failure" state. This scenario is discussed in section 5.3.
 
-The network is only trained on data values $x=0,5,8,12,50$. In each training iteration, 200 samples are taken for each x-value, corresponding to a batch size of 1000. This large batch size makes training more consistent, as the samples are probabilistic in nature. Due to the similar network structure in both algorithms, they have identical runtime.
+The network is only trained on data values $x=0,5,8,12,50$. In each training iteration, 200 samples are taken for each x-value, corresponding to a batch size of 1000. This large batch size makes training more consistent, as the samples are probabilistic in nature. Due to the similar network structure in both algorithms, they have near-identical runtime, as the majority of the training time is spent in back-propagation \citep{DeepLearning}.
 
 To prevent problems with taking $\log 0$ in the loss functions, we add a small constant $c=10^{-18}$ to the log function's input. The estimator is pre-trained for 5000 iterations to ensure that optimization of the variational network begins with an optimal estimator; an inaccurate ratio estimation leads to incorrect optimization of the posterior network. The variance of the results is also reduced as the initial parametrisation of the estimator will be approximately the same for a fixed generator initialization. Afterwards, the generator is optimized for 10000 iterations when we have an implicit prior, and 40000 iterations in the joint-contrastive formulation. The algorithm alternates between 100 training steps of the estimator and 1 training step of the generator. The processes for class probability estimation and divergence minimisation, based off the algorithms derived in chapter 4, are shown in Algorithms 8 and 9 on the following pages.
 
-We evaluate the techniques by comparing the average KL divergence between the true and variational posteriors at the end of the program's runtime: \[\E_{q^*(x)}KL(q(z|x)\|p(z|x)).\] To do so, we estimate the probability density function of the variational posterior output for each of the 5 data points with a Gaussian kernel density estimator $\hat{q}(z|x)$. This density estimation technique is suitable for our low dimensional problem, and the accuracy is independent of the algorithm used. An explanation of kernel density estimation can be found in Appendix A. Each algorithm was run 30 times and the estimator losses and NELBO estimations for each iteration was stored. Every 100 iterations, kernel density estimation was used to estimate the average KL divergence.
+We evaluate the techniques by comparing the average KL divergence between the true and variational posteriors at the end of the program's runtime: \[\E_{q^*(x)}KL(q_\phi(\bm{z}|x)\|p(\bm{z}|x)).\] To do so, we estimate the probability density function of the variational posterior output for each of the 5 data points with a Gaussian kernel density estimator $\hat{q}(\bm{z}|x)$. We also use the unnormalised true posterior as derived in equation (5.1.1). The normalisation constant $p(x)$ is the same regardless of the variational posterior $q_\phi(\bm{z}|x)$ that we compare it with, so its omission has no impact on our comparison of the algorithms. This density estimation technique is suitable for our low dimensional problem, and the accuracy is independent of the algorithm used. An explanation of kernel density estimation can be found in Appendix A. Each algorithm was run 30 times and at the end of each posterior optimisation step, the estimator loss and NELBO estimation was stored. Every 100 iterations, kernel density estimation was used to estimate the true average KL divergence.
 \begin{algorithm}
 \SetKw{update}{update}
 \caption{Sprinkler Prior-Contrastive Algorithm}
@@ -1781,7 +1780,7 @@ We evaluate the techniques by comparing the average KL divergence between the tr
 \newpage
 \section{Results}
 The mean and standard deviation of the estimated average KL divergence %$\E_{q^*(x)}KL(\hat{q}(z|x)\|p(z|x))$
-at the end of the program runtime is tabulated in Table 5.1 below. To visually compare the posterior outputs, Gaussian kernel density estimation was used to plot 1000 variational posterior samples for each data point. Plots corresponding to different average KL divergences, along with the true posterior, are shown in Figure 5.4 below. The program also outputs arrays storing the KL divergences, estimator losses and NELBOs over the generator iterations. We average these over the 30 repetitions, plotting them in Figures 5.5-5.7. The estimator losses were recorded at the end of their training periods, immediately before the posterior optimisation step.
+at the end of the program runtime is tabulated in Table 5.1 below. To visually compare the posterior outputs, Gaussian kernel density estimation was used to plot 1000 variational posterior samples for each data point. This is depicted in Figure 5.4 below. The arrays storing the average KL divergences, estimator losses and NELBOs over the iterations were averaged over the 30 repetitions. Plots of these arrays are shown in Figures 5.5-5.7.
 \begin{table}[h!]
 \begin{tabular}{|c|c|c|}
 \hline
@@ -1811,7 +1810,7 @@ JC Class Probability Estimation & 1.3688 & 0.0415\\
 \includegraphics[width=\textwidth]{sprinklertrue}
 \caption{True Posterior Plot}
 \end{subfigure}
-\caption{Example Posterior Outputs}
+\caption{\small Initial tests show that the variational posterior reaches optimality at an average KL divergence of about 1.325: as seen in sub-figure (a), this corresponds to outputs similar to the true posterior in sub-figure (c). The posterior output in sub-figure (b) with a larger average KL divergence of 1.3963 is less flexible and only uni-modal for $x=50$.}
 \end{figure}
 \newpage
 \begin{figure}[t!]
@@ -1870,7 +1869,7 @@ In this chapter, we fix the `failures' of KL minimisation by suggesting an expon
 \section{Theory}
 The `failures' of the KL minimisation approach involve the estimator loss initialising at $41.4465$ or reaching that value during its runtime, and remaining constant throughout the program runtime. Analysis of the estimator during this occurrence revealed that it was outputting an estimated ratio of $0$. Now recall our estimator loss of
 \[-\E_q[\log r_\alpha(z,x)]+\E_p[r_\alpha(z,x)]\]
-and the constant term $c=10^{-18}$ that we add to the log input. When $r_\alpha(z,x)=0$, the estimator loss is $-\log [10^{-18}]=41.4465$, which verifies that this is the cause of the `failures'. It can be deduced that the network weights are transforming the estimator input into a negative number, which is mapped to $0$ by the ReLU output layer. Since the gradient of the ReLU function is $0$ for negative inputs, back-propagation will record that the partial derivative of the loss function with respect to the weights is $0$, and therefore gradient descent will fail to update the weights. This is known as the `dying ReLU' problem, and in other contexts, it can be fixed using a `leaky ReLU', which has a small slope for negative inputs\citep{leaky}:
+and the constant term $c=10^{-18}$ that we add to the log input. When $r_\alpha(z,x)=0$, the estimator loss is $-\log [10^{-18}]=41.4465$, which verifies that this is the cause of the `failures'. It can be deduced that the network weights are transforming the estimator input into a negative number, which is mapped to $0$ by the ReLU output layer. Since the gradient of the ReLU function is $0$ for negative inputs, back-propagation will record that the partial derivative of the loss function with respect to the weights is $0$, and therefore gradient descent will fail to update the weights. This is known as the `dying ReLU' problem \citep{sparse}, and in other contexts, it can be fixed using a `leaky ReLU', which has a small slope for negative inputs\citep{leaky}:
 \[g(x)=\begin{cases}x & x\geq 0\\ \alpha x & x<0
 \end{cases}\]
 where $\alpha$ is a small number in $(0,1)$ such as 0.01. However, this allows a negative output, which causes problems with the log function in our estimator loss.
@@ -1879,7 +1878,7 @@ Even when the `dying ReLU' problem does not occur, the estimator loss is still u
 
 The sigmoid output of the class probability estimation approach does not experience this problem. Since $D^*(u)=\frac{q(u)}{q(u)+p(u)}$, we have $D(u)\in(0,\frac12)$ when $q(u)<p(u)$ and $D(u)\in(\frac12,1)$ when $q(u)>p(u)$. The sigmoid activation function $g(x)=\frac{1}{1+e^{-x}}$ maps $\R^-$ to $(0,\frac12)$ and $\R^+$ to $(\frac12,1)$, and therefore the two cases have half-space representations.
 
-Following f-GAN: Training Generative Neural Samplers using Variational Divergence Minimization \citep{nowozin}, we propose an exponential output activation function $g(x)=e^x$ for the divergence minimisation approach. This activation function maps $\R^-$ to $(0,1)$ and $\R^+$ to $(1,\infty)$, resulting in an even representation for the two cases. Following the same example as before, changing from an estimated ratio of $2$ to $10$ equates to a neural network output displacement of $|\log 10-\log 2|=\log 5$, which is the network change as changing from $\frac12$ to $\frac{1}{10}$: $|\log \frac12-\log\frac{1}{10}|=\log 5$. The first contribution of this thesis will be to compare the ReLU and exponential activation functions for the estimator network used in divergence minimisation density ratio estimation, and to show experimentally that the exponential activation function is more stable and leads to faster posterior convergence.
+Following ``f-GAN: Training Generative Neural Samplers using Variational Divergence Minimization" by \citet{nowozin}, we propose an exponential output activation function $g(x)=e^x$ for the divergence minimisation approach. This activation function maps $\R^-$ to $(0,1)$ and $\R^+$ to $(1,\infty)$, resulting in an even representation for the two cases. Following the same example as before, changing from an estimated ratio of $2$ to $10$ equates to a neural network output displacement of $|\log 10-\log 2|=\log 5$, which is the network change as changing from $\frac12$ to $\frac{1}{10}$: $|\log \frac12-\log\frac{1}{10}|=\log 5$. The first contribution of this thesis will be to compare the ReLU and exponential activation functions for the estimator network used in divergence minimisation density ratio estimation, and to show experimentally that the exponential activation function is more stable and leads to faster posterior convergence.
 \section{Experiment Outline}
 In this experiment, we compare the activation functions in both prior-contrastive and joint-contrastive contexts, using the exact same experimental set up as described in Chapter 5. The divergence minimisation program is exactly the same, but we now have an additional program that uses an exponential activation function instead of ReLU for the estimator's output layer. To save computational time, we reuse our ReLU results from the previous experiment, only running instances of our new program. Again, we estimate the variational distribution with a Gaussian kernel density estimator to calculate the KL divergence, which we use to evaluate to convergence.
 \section{Results}
@@ -2138,7 +2137,7 @@ The GAN and reverse KL divergence NELBO plots are comparable as they use identic
 \caption{Joint-Contrastive NELBO}
 \end{figure}
 \chapter{Comparing Undertrained Estimators}
-Since all three estimator parametrisations have similar accuracies at optimality, it does not matter which one is chosen in that context. However, when the estimators 
+Since all three estimator parametrisations have similar accuracies at optimality, it does not matter which one is chosen in that context. However, insufficient estimator training iterations can lead to an inaccurate estimation of the $NELBO$, reducing the speed at which the variational posterior converges. In this chapter, we first theoretically compare the rates of estimator convergence between the three parametrisations by analysing the second functional derivatives of the estimator loss functions and the displacement in the optimal estimator output with each posterior optimisation step. We then perform an experiment comparing the performance of undertrained estimators in 
 \section{First and Second Derivatives of all 6 possible algorithms}
 To evaluate the effectiveness of gradient descent optimization in these algorithms, we formulate the first and second derivatives of the objective functions. We first take the "Class probability" parametrization and observe its optimization problem for the CPE divergence:
 \begin{align*}

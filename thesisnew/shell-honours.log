@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  6 OCT 2018 20:13
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  6 OCT 2018 21:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1503,11 +1503,7 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
- [27] [28]
-
-Package natbib Warning: Citation `vae' on page 29 undefined on input line 964.
-
-[29]
+ [27] [28] [29]
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -1642,20 +1638,13 @@ Chapter 5.
 [50
 
 ]
-<sprinklertrue.png, id=909, 1089.31969pt x 218.31563pt>
+<sprinklertrue.png, id=912, 1087.06125pt x 213.04594pt>
 File: sprinklertrue.png Graphic file (type png)
 <use sprinklertrue.png>
-Package pdftex.def Info: sprinklertrue.png  used on input line 1450. on input l
-ine 1450.
-Package pdftex.def Info: Requested size: 423.94588pt x 84.96286pt on input line
- 1450.
-
-Overfull \hbox (1.34903pt too wide) in paragraph at lines 1447--1454
-\OT1/cmr/m/n/12 As $\OML/cmm/m/it/12 x$ \OT1/cmr/m/n/12 in-creases, the pos-te-
-ri-ors be-come in-creas-ingly mul-ti-modal and un-usu-ally shaped.
- []
-
-[51 <./sprinklertrue.png>]
+Package pdftex.def Info: sprinklertrue.png  used on input line 1452. on input l
+ine 1452.
+Package pdftex.def Info: Requested size: 423.94588pt x 83.08757pt on input line
+ 1452.
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -1668,134 +1657,134 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (19.22093pt too wide) in paragraph at lines 1547--1547
+Overfull \hbox (19.22093pt too wide) in paragraph at lines 1546--1546
  [][][][]\OT1/cmr/m/n/12 Sigmoid($\OML/cmm/m/it/12 D$\OT1/cmr/m/n/12 )/ 
  []
 
 
-Overfull \hbox (1.36995pt too wide) in paragraph at lines 1548--1549
+Overfull \hbox (1.36995pt too wide) in paragraph at lines 1547--1548
 [][] 
  []
 
-[52] [53] [54] [55]
-<13288.png, id=942, 1180.41pt x 230.36063pt>
+[51 <./sprinklertrue.png>] [52] [53] [54] [55]
+<13288.png, id=962, 1180.41pt x 228.855pt>
 File: 13288.png Graphic file (type png)
 <use 13288.png>
-Package pdftex.def Info: 13288.png  used on input line 1803. on input line 1803
+Package pdftex.def Info: 13288.png  used on input line 1802. on input line 1802
 .
-Package pdftex.def Info: Requested size: 423.94588pt x 82.73291pt on input line
- 1803.
-<13963.png, id=943, 1178.15157pt x 233.37187pt>
+Package pdftex.def Info: Requested size: 423.94588pt x 82.19217pt on input line
+ 1802.
+<13963.png, id=963, 1178.15157pt x 231.86626pt>
 File: 13963.png Graphic file (type png)
 <use 13963.png>
-Package pdftex.def Info: 13963.png  used on input line 1807. on input line 1807
+Package pdftex.def Info: 13963.png  used on input line 1806. on input line 1806
 .
-Package pdftex.def Info: Requested size: 423.94588pt x 83.97462pt on input line
- 1807.
+Package pdftex.def Info: Requested size: 423.94588pt x 83.43286pt on input line
+ 1806.
 File: sprinklertrue.png Graphic file (type png)
 <use sprinklertrue.png>
-Package pdftex.def Info: sprinklertrue.png  used on input line 1811. on input l
-ine 1811.
-Package pdftex.def Info: Requested size: 423.94588pt x 84.96286pt on input line
- 1811.
+Package pdftex.def Info: sprinklertrue.png  used on input line 1810. on input l
+ine 1810.
+Package pdftex.def Info: Requested size: 423.94588pt x 83.08757pt on input line
+ 1810.
  [56 <./13288.png> <./13963.png>]
-<truklmins/PCKLvsPCADV.png, id=952, 413.29407pt x 323.70938pt>
+<truklmins/PCKLvsPCADV.png, id=972, 413.29407pt x 323.70938pt>
 File: truklmins/PCKLvsPCADV.png Graphic file (type png)
 <use truklmins/PCKLvsPCADV.png>
-Package pdftex.def Info: truklmins/PCKLvsPCADV.png  used on input line 1819. on
- input line 1819.
+Package pdftex.def Info: truklmins/PCKLvsPCADV.png  used on input line 1818. on
+ input line 1818.
 Package pdftex.def Info: Requested size: 207.7358pt x 162.7088pt on input line 
-1819.
-<truklmins/JCKLvsJCADV.png, id=953, 417.81094pt x 324.46219pt>
+1818.
+<truklmins/JCKLvsJCADV.png, id=973, 417.81094pt x 324.46219pt>
 File: truklmins/JCKLvsJCADV.png Graphic file (type png)
 <use truklmins/JCKLvsJCADV.png>
-Package pdftex.def Info: truklmins/JCKLvsJCADV.png  used on input line 1823. on
- input line 1823.
+Package pdftex.def Info: truklmins/JCKLvsJCADV.png  used on input line 1822. on
+ input line 1822.
 Package pdftex.def Info: Requested size: 207.7358pt x 161.32468pt on input line
- 1823.
-<estimator_losses/PCKLvsPCADV.png, id=954, 427.5975pt x 321.45094pt>
+ 1822.
+<estimator_losses/PCKLvsPCADV.png, id=974, 427.5975pt x 321.45094pt>
 File: estimator_losses/PCKLvsPCADV.png Graphic file (type png)
 <use estimator_losses/PCKLvsPCADV.png>
 Package pdftex.def Info: estimator_losses/PCKLvsPCADV.png  used on input line 1
-830. on input line 1830.
+829. on input line 1829.
 Package pdftex.def Info: Requested size: 207.7358pt x 156.16838pt on input line
- 1830.
-<estimator_losses/JCKLvsJCADV.png, id=955, 424.58624pt x 319.1925pt>
+ 1829.
+<estimator_losses/JCKLvsJCADV.png, id=975, 424.58624pt x 319.1925pt>
 File: estimator_losses/JCKLvsJCADV.png Graphic file (type png)
 <use estimator_losses/JCKLvsJCADV.png>
 Package pdftex.def Info: estimator_losses/JCKLvsJCADV.png  used on input line 1
-834. on input line 1834.
+833. on input line 1833.
 Package pdftex.def Info: Requested size: 207.7358pt x 156.1719pt on input line 
-1834.
-<nelbos/PCKLvsPCADV.png, id=956, 420.06938pt x 319.1925pt>
+1833.
+<nelbos/PCKLvsPCADV.png, id=976, 420.06938pt x 319.1925pt>
 File: nelbos/PCKLvsPCADV.png Graphic file (type png)
 <use nelbos/PCKLvsPCADV.png>
-Package pdftex.def Info: nelbos/PCKLvsPCADV.png  used on input line 1852. on in
-put line 1852.
+Package pdftex.def Info: nelbos/PCKLvsPCADV.png  used on input line 1851. on in
+put line 1851.
 Package pdftex.def Info: Requested size: 207.7358pt x 157.84735pt on input line
- 1852.
-<nelbos/JCKLvsJCADV.png, id=957, 424.58624pt x 317.68687pt>
+ 1851.
+<nelbos/JCKLvsJCADV.png, id=977, 424.58624pt x 317.68687pt>
 File: nelbos/JCKLvsJCADV.png Graphic file (type png)
 <use nelbos/JCKLvsJCADV.png>
-Package pdftex.def Info: nelbos/JCKLvsJCADV.png  used on input line 1856. on in
-put line 1856.
+Package pdftex.def Info: nelbos/JCKLvsJCADV.png  used on input line 1855. on in
+put line 1855.
 Package pdftex.def Info: Requested size: 207.7358pt x 155.43524pt on input line
- 1856.
- [57 <./truklmins/PCKLvsPCADV.png> <./truklmins/JCKLvsJCADV.png> <./estimator_l
-osses/PCKLvsPCADV.png> <./estimator_losses/JCKLvsJCADV.png> <./nelbos/PCKLvsPCA
-DV.png> <./nelbos/JCKLvsJCADV.png>] [58]
+ 1855.
+[57 <./truklmins/PCKLvsPCADV.png> <./truklmins/JCKLvsJCADV.png> <./estimator_lo
+sses/PCKLvsPCADV.png> <./estimator_losses/JCKLvsJCADV.png> <./nelbos/PCKLvsPCAD
+V.png> <./nelbos/JCKLvsJCADV.png>] [58]
 Chapter 6.
 [59
 
 ] [60] [61]
-<truklmins/PCKLvsPCKLEXP.png, id=996, 410.2828pt x 314.67563pt>
+<truklmins/PCKLvsPCKLEXP.png, id=1018, 410.2828pt x 314.67563pt>
 File: truklmins/PCKLvsPCKLEXP.png Graphic file (type png)
 <use truklmins/PCKLvsPCKLEXP.png>
-Package pdftex.def Info: truklmins/PCKLvsPCKLEXP.png  used on input line 1909. 
-on input line 1909.
+Package pdftex.def Info: truklmins/PCKLvsPCKLEXP.png  used on input line 1908. 
+on input line 1908.
 Package pdftex.def Info: Requested size: 207.7358pt x 159.32526pt on input line
- 1909.
-<truklmins/JCKLvsJCKLEXP.png, id=997, 409.53pt x 314.67563pt>
+ 1908.
+<truklmins/JCKLvsJCKLEXP.png, id=1019, 409.53pt x 314.67563pt>
 File: truklmins/JCKLvsJCKLEXP.png Graphic file (type png)
 <use truklmins/JCKLvsJCKLEXP.png>
-Package pdftex.def Info: truklmins/JCKLvsJCKLEXP.png  used on input line 1913. 
-on input line 1913.
+Package pdftex.def Info: truklmins/JCKLvsJCKLEXP.png  used on input line 1912. 
+on input line 1912.
 Package pdftex.def Info: Requested size: 207.7358pt x 159.62296pt on input line
- 1913.
-<estimator_losses/PCKLvsPCKLEXP.png, id=998, 423.83344pt x 316.18124pt>
+ 1912.
+<estimator_losses/PCKLvsPCKLEXP.png, id=1020, 423.83344pt x 316.18124pt>
 File: estimator_losses/PCKLvsPCKLEXP.png Graphic file (type png)
 <use estimator_losses/PCKLvsPCKLEXP.png>
 Package pdftex.def Info: estimator_losses/PCKLvsPCKLEXP.png  used on input line
- 1920. on input line 1920.
+ 1919. on input line 1919.
 Package pdftex.def Info: Requested size: 207.7358pt x 154.96875pt on input line
- 1920.
-<estimator_losses/JCKLvsJCKLEXP.png, id=999, 420.06938pt x 313.17pt>
+ 1919.
+<estimator_losses/JCKLvsJCKLEXP.png, id=1021, 420.06938pt x 313.17pt>
 File: estimator_losses/JCKLvsJCKLEXP.png Graphic file (type png)
 <use estimator_losses/JCKLvsJCKLEXP.png>
 Package pdftex.def Info: estimator_losses/JCKLvsJCKLEXP.png  used on input line
- 1924. on input line 1924.
+ 1923. on input line 1923.
 Package pdftex.def Info: Requested size: 207.7358pt x 154.8691pt on input line 
-1924.
-<nelbos/PCKLvsPCKLEXP.png, id=1000, 419.31656pt x 315.42844pt>
+1923.
+<nelbos/PCKLvsPCKLEXP.png, id=1022, 419.31656pt x 315.42844pt>
 File: nelbos/PCKLvsPCKLEXP.png Graphic file (type png)
 <use nelbos/PCKLvsPCKLEXP.png>
-Package pdftex.def Info: nelbos/PCKLvsPCKLEXP.png  used on input line 1931. on 
-input line 1931.
+Package pdftex.def Info: nelbos/PCKLvsPCKLEXP.png  used on input line 1930. on 
+input line 1930.
 Package pdftex.def Info: Requested size: 207.7358pt x 156.26509pt on input line
- 1931.
-<nelbos/JCKLvsJCKLEXP.png, id=1001, 416.30531pt x 314.67563pt>
+ 1930.
+<nelbos/JCKLvsJCKLEXP.png, id=1023, 416.30531pt x 314.67563pt>
 File: nelbos/JCKLvsJCKLEXP.png Graphic file (type png)
 <use nelbos/JCKLvsJCKLEXP.png>
-Package pdftex.def Info: nelbos/JCKLvsJCKLEXP.png  used on input line 1935. on 
-input line 1935.
+Package pdftex.def Info: nelbos/JCKLvsJCKLEXP.png  used on input line 1934. on 
+input line 1934.
 Package pdftex.def Info: Requested size: 207.7358pt x 157.02531pt on input line
- 1935.
+ 1934.
  [62 <./truklmins/PCKLvsPCKLEXP.png> <./truklmins/JCKLvsJCKLEXP.png> <./estimat
 or_losses/PCKLvsPCKLEXP.png> <./estimator_losses/JCKLvsJCKLEXP.png> <./nelbos/P
 CKLvsPCKLEXP.png> <./nelbos/JCKLvsJCKLEXP.png>] [63]
 Chapter 7.
 
-Overfull \hbox (17.05513pt too wide) in paragraph at lines 1945--1947
+Overfull \hbox (17.05513pt too wide) in paragraph at lines 1944--1946
 \OT1/cmr/m/n/12 and class prob-a-bil-ity es-ti-ma-tion fol-lows the GAN di-ver-
 gence $\OML/cmm/m/it/12 D[]\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 p\OMS/cmsy/m/n/12 
 k\OML/cmm/m/it/12 q\OT1/cmr/m/n/12 ) = 2\OML/cmm/m/it/12 D[]\OT1/cmr/m/n/12 (\O
@@ -1806,7 +1795,7 @@ ML/cmm/m/it/12 p\OMS/cmsy/m/n/12 k\OML/cmm/m/it/12 q\OT1/cmr/m/n/12 ) \OMS/cmsy
 [64
 
 ] [65] [66]
-Overfull \hbox (1.10097pt too wide) detected at line 2003
+Overfull \hbox (1.10097pt too wide) detected at line 2002
 [] [] \U/msb/m/n/12 E[] [] \OT1/cmr/m/n/12 + \U/msb/m/n/12 E[] []
  []
 
@@ -1815,98 +1804,98 @@ Chapter 8.
 [68
 
 ] [69] [70]
-<truklmins/PCADVvsPCADVexpvsPCADVgudlog.png, id=1052, 425.33907pt x 315.42844pt
+<truklmins/PCADVvsPCADVexpvsPCADVgudlog.png, id=1074, 425.33907pt x 315.42844pt
 >
 File: truklmins/PCADVvsPCADVexpvsPCADVgudlog.png Graphic file (type png)
 <use truklmins/PCADVvsPCADVexpvsPCADVgudlog.png>
 Package pdftex.def Info: truklmins/PCADVvsPCADVexpvsPCADVgudlog.png  used on in
-put line 2075. on input line 2075.
+put line 2074. on input line 2074.
 Package pdftex.def Info: Requested size: 207.7358pt x 154.05591pt on input line
- 2075.
-<truklmins/PCKLDvsPCKLexpvsPCKLgudlog.png, id=1053, 422.32782pt x 317.68687pt>
+ 2074.
+<truklmins/PCKLDvsPCKLexpvsPCKLgudlog.png, id=1075, 422.32782pt x 317.68687pt>
 File: truklmins/PCKLDvsPCKLexpvsPCKLgudlog.png Graphic file (type png)
 <use truklmins/PCKLDvsPCKLexpvsPCKLgudlog.png>
 Package pdftex.def Info: truklmins/PCKLDvsPCKLexpvsPCKLgudlog.png  used on inpu
-t line 2079. on input line 2079.
+t line 2078. on input line 2078.
 Package pdftex.def Info: Requested size: 207.7358pt x 156.26901pt on input line
- 2079.
-<estimator_losses/PCADVvsPCADVexpvsPCADVgudlog.png, id=1054, 420.82219pt x 313.
+ 2078.
+<estimator_losses/PCADVvsPCADVexpvsPCADVgudlog.png, id=1076, 420.82219pt x 313.
 9228pt>
 File: estimator_losses/PCADVvsPCADVexpvsPCADVgudlog.png Graphic file (type png)
 
 <use estimator_losses/PCADVvsPCADVexpvsPCADVgudlog.png>
 Package pdftex.def Info: estimator_losses/PCADVvsPCADVexpvsPCADVgudlog.png  use
-d on input line 2086. on input line 2086.
+d on input line 2085. on input line 2085.
 Package pdftex.def Info: Requested size: 207.7358pt x 154.96834pt on input line
- 2086.
-<estimator_losses/PCKLDvsPCKLexpvsPCKLgudlog.png, id=1055, 423.83344pt x 316.93
+ 2085.
+<estimator_losses/PCKLDvsPCKLexpvsPCKLgudlog.png, id=1077, 423.83344pt x 316.93
 407pt>
 File: estimator_losses/PCKLDvsPCKLexpvsPCKLgudlog.png Graphic file (type png)
 <use estimator_losses/PCKLDvsPCKLexpvsPCKLgudlog.png>
 Package pdftex.def Info: estimator_losses/PCKLDvsPCKLexpvsPCKLgudlog.png  used 
-on input line 2090. on input line 2090.
+on input line 2089. on input line 2089.
 Package pdftex.def Info: Requested size: 207.7358pt x 155.33774pt on input line
- 2090.
-<nelbos/PCADVvsPCADVexpvsPCADVgudlog.png, id=1056, 424.58624pt x 314.67563pt>
+ 2089.
+<nelbos/PCADVvsPCADVexpvsPCADVgudlog.png, id=1078, 424.58624pt x 314.67563pt>
 File: nelbos/PCADVvsPCADVexpvsPCADVgudlog.png Graphic file (type png)
 <use nelbos/PCADVvsPCADVexpvsPCADVgudlog.png>
 Package pdftex.def Info: nelbos/PCADVvsPCADVexpvsPCADVgudlog.png  used on input
- line 2097. on input line 2097.
+ line 2096. on input line 2096.
 Package pdftex.def Info: Requested size: 207.7358pt x 153.96193pt on input line
- 2097.
-<nelbos/PCKLDvsPCKLexpvsPCKLgudlog.png, id=1057, 414.04688pt x 316.93407pt>
+ 2096.
+<nelbos/PCKLDvsPCKLexpvsPCKLgudlog.png, id=1079, 414.04688pt x 316.93407pt>
 File: nelbos/PCKLDvsPCKLexpvsPCKLgudlog.png Graphic file (type png)
 <use nelbos/PCKLDvsPCKLexpvsPCKLgudlog.png>
 Package pdftex.def Info: nelbos/PCKLDvsPCKLexpvsPCKLgudlog.png  used on input l
-ine 2101. on input line 2101.
+ine 2100. on input line 2100.
 Package pdftex.def Info: Requested size: 207.7358pt x 159.0131pt on input line 
-2101.
-<truklmins/JCADVvsJCADVexpvsJCADVgudlog.png, id=1058, 412.54124pt x 316.18124pt
+2100.
+<truklmins/JCADVvsJCADVexpvsJCADVgudlog.png, id=1080, 412.54124pt x 316.18124pt
 >
 File: truklmins/JCADVvsJCADVexpvsJCADVgudlog.png Graphic file (type png)
 <use truklmins/JCADVvsJCADVexpvsJCADVgudlog.png>
 Package pdftex.def Info: truklmins/JCADVvsJCADVexpvsJCADVgudlog.png  used on in
-put line 2108. on input line 2108.
+put line 2107. on input line 2107.
 Package pdftex.def Info: Requested size: 207.7358pt x 159.21434pt on input line
- 2108.
-<truklmins/JCKLDvsJCKLexpvsJCKLgudlog.png, id=1059, 415.5525pt x 319.1925pt>
+ 2107.
+<truklmins/JCKLDvsJCKLexpvsJCKLgudlog.png, id=1081, 415.5525pt x 319.1925pt>
 File: truklmins/JCKLDvsJCKLexpvsJCKLgudlog.png Graphic file (type png)
 <use truklmins/JCKLDvsJCKLexpvsJCKLgudlog.png>
 Package pdftex.def Info: truklmins/JCKLDvsJCKLexpvsJCKLgudlog.png  used on inpu
-t line 2112. on input line 2112.
+t line 2111. on input line 2111.
 Package pdftex.def Info: Requested size: 207.7358pt x 159.56662pt on input line
- 2112.
-<estimator_losses/JCADVvsJCADVexpvsJCADVgudlog.png, id=1060, 427.5975pt x 313.9
+ 2111.
+<estimator_losses/JCADVvsJCADVexpvsJCADVgudlog.png, id=1082, 427.5975pt x 313.9
 228pt>
 File: estimator_losses/JCADVvsJCADVexpvsJCADVgudlog.png Graphic file (type png)
 
 <use estimator_losses/JCADVvsJCADVexpvsJCADVgudlog.png>
 Package pdftex.def Info: estimator_losses/JCADVvsJCADVexpvsJCADVgudlog.png  use
-d on input line 2119. on input line 2119.
+d on input line 2118. on input line 2118.
 Package pdftex.def Info: Requested size: 207.7358pt x 152.51103pt on input line
- 2119.
-<estimator_losses/JCKLDvsJCKLexpvsJCKLgudlog.png, id=1061, 420.82219pt x 315.42
+ 2118.
+<estimator_losses/JCKLDvsJCKLexpvsJCKLgudlog.png, id=1083, 420.82219pt x 315.42
 844pt>
 File: estimator_losses/JCKLDvsJCKLexpvsJCKLgudlog.png Graphic file (type png)
 <use estimator_losses/JCKLDvsJCKLexpvsJCKLgudlog.png>
 Package pdftex.def Info: estimator_losses/JCKLDvsJCKLexpvsJCKLgudlog.png  used 
-on input line 2123. on input line 2123.
+on input line 2122. on input line 2122.
 Package pdftex.def Info: Requested size: 207.7358pt x 155.7116pt on input line 
-2123.
-<nelbos/JCADVvsJCADVexpvsJCADVgudlog.png, id=1062, 418.56375pt x 313.17pt>
+2122.
+<nelbos/JCADVvsJCADVexpvsJCADVgudlog.png, id=1084, 418.56375pt x 313.17pt>
 File: nelbos/JCADVvsJCADVexpvsJCADVgudlog.png Graphic file (type png)
 <use nelbos/JCADVvsJCADVexpvsJCADVgudlog.png>
 Package pdftex.def Info: nelbos/JCADVvsJCADVexpvsJCADVgudlog.png  used on input
- line 2131. on input line 2131.
+ line 2130. on input line 2130.
 Package pdftex.def Info: Requested size: 207.7358pt x 155.42819pt on input line
- 2131.
-<nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png, id=1063, 423.83344pt x 316.93407pt>
+ 2130.
+<nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png, id=1085, 423.83344pt x 316.93407pt>
 File: nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png Graphic file (type png)
 <use nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png>
 Package pdftex.def Info: nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png  used on input l
-ine 2135. on input line 2135.
+ine 2134. on input line 2134.
 Package pdftex.def Info: Requested size: 207.7358pt x 155.33774pt on input line
- 2135.
+ 2134.
  [71 <./truklmins/PCADVvsPCADVexpvsPCADVgudlog.png> <./truklmins/PCKLDvsPCKLexp
 vsPCKLgudlog.png> <./estimator_losses/PCADVvsPCADVexpvsPCADVgudlog.png> <./esti
 mator_losses/PCKLDvsPCKLexpvsPCKLgudlog.png> <./nelbos/PCADVvsPCADVexpvsPCADVgu
@@ -1919,13 +1908,13 @@ Chapter 9.
 [73
 
 ] [74]
-Overfull \hbox (6.26077pt too wide) in paragraph at lines 2194--2196
+Overfull \hbox (6.26077pt too wide) in paragraph at lines 2193--2195
 \OT1/cmr/m/n/12 Recall that both di-ver-gences at-tain the same global min-i-mu
 m, which is a parametriza-
  []
 
 [75]
-Overfull \hbox (13.66823pt too wide) in paragraph at lines 2208--2208
+Overfull \hbox (13.66823pt too wide) in paragraph at lines 2207--2207
 [] 
  []
 
@@ -1950,27 +1939,24 @@ Chapter 13.
 
 ] [88]) [89]
 Appendix A.
-
-Package natbib Warning: There were undefined citations.
-
 [90
 
 ] [91]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2303.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2303.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2302.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2302.
  (./shell-honours.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2303.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2303.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2302.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2302.
 
 Package rerunfilecheck Info: File `shell-honours.out' has not changed.
 (rerunfilecheck)             Checksum: B6E2E840A9965080F0E59C54BFB7BD30;5115.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2303.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2302.
  ) 
 Here is how much of TeX's memory you used:
- 33194 strings out of 492990
- 781657 string characters out of 6136334
- 1047703 words of memory out of 5000000
- 35811 multiletter control sequences out of 15000+600000
+ 33206 strings out of 492990
+ 781805 string characters out of 6136334
+ 1047796 words of memory out of 5000000
+ 35819 multiletter control sequences out of 15000+600000
  25107 words of font info for 99 fonts, out of 8000000 for 9000
  1143 hyphenation exceptions out of 8191
  62i,22n,96p,1695b,2161s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -2002,10 +1988,10 @@ am10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10
 .pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb0.pfb><
 c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb2.pfb><c:/tex
 live/2017/texmf-dist/fonts/type1/public/boondox/zxxrw8a.pfb>
-Output written on shell-honours.pdf (103 pages, 2163884 bytes).
+Output written on shell-honours.pdf (103 pages, 2167137 bytes).
 PDF statistics:
- 1342 PDF objects out of 1440 (max. 8388607)
- 1139 compressed objects within 12 object streams
- 322 named destinations out of 1000 (max. 500000)
+ 1366 PDF objects out of 1440 (max. 8388607)
+ 1157 compressed objects within 12 object streams
+ 326 named destinations out of 1000 (max. 500000)
  745 words of extra memory for PDF output out of 10000 (max. 10000000)
 
