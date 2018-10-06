@@ -1,1 +1,0 @@
-Bengio, Y. (2012). Practical recommendations for gradient-based training of deep architectures. Arxiv. 

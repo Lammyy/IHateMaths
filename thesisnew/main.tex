@@ -734,7 +734,6 @@ PC Reverse KL - $D_\alpha(z,x)$ & 0.0647 & 0.0019\\
 \end{itemize}
 \end{frame}
 \begin{frame}{Further Estimator Loss Function Analysis}{Estimator Parametrisation}
-Need some plots xD
 \begin{itemize}
 \item $D_\alpha(u)$ has higher second functional derivative than $r_\alpha(u)$ (for GAN divergence).
 \item The density ratio changes every time the posterior is optimised, and the estimator must catch up.
@@ -748,11 +747,9 @@ Need some plots xD
 \begin{frame}{Summary}
   \begin{itemize}
   \item
-    The \alert{first main message} of your talk in one or two lines.
+    The class probability estimator $D_\alpha(u)\simeq\frac{q(u)}{q(u)+p(u)}$ is the `best' parametrisation as it can store the\alert{highest density ratios}.
   \item
-    The \alert{second main message} of your talk in one or two lines.
-  \item
-    Perhaps a \alert{third message}, but not more than that.
+    Reverse KL divergence upper bound demonstrates \alert{initial instability} (especially when estimator is undertrained) but leads to \alert{faster convergence} when it stabilizes.
   \end{itemize}
   
   \begin{itemize}
@@ -760,9 +757,9 @@ Need some plots xD
     Outlook
     \begin{itemize}
     \item
-      Something you haven't solved.
+      Still unclear exactly why reverse KL divergence is more unstable but more accurate when stable.
     \item
-      Something else you haven't solved.
+      Several more f-divergences exist which have unknown stability when undertrained.
     \end{itemize}
   \end{itemize}
 \end{frame}
@@ -770,34 +767,34 @@ Need some plots xD
 
 
 % All of the following is optional and typically not needed. 
-\appendix
-\section<presentation>*{\appendixname}
-\subsection<presentation>*{For Further Reading}
-
-\begin{frame}[allowframebreaks]
-  \frametitle<presentation>{For Further Reading}
-    
-  \begin{thebibliography}{10}
-    
-  \beamertemplatebookbibitems
-  % Start with overview books.
-
-  \bibitem{Author1990}
-    A.~Author.
-    \newblock {\em Handbook of Everything}.
-    \newblock Some Press, 1990.
- 
-    
-  \beamertemplatearticlebibitems
-  % Followed by interesting articles. Keep the list short. 
-
-  \bibitem{Someone2000}
-    S.~Someone.
-    \newblock On this and that.
-    \newblock {\em Journal of This and That}, 2(1):50--100,
-    2000.
-  \end{thebibliography}
-\end{frame}
+%\appendix
+%\section<presentation>*{\appendixname}
+%\subsection<presentation>*{For Further Reading}
+%
+%\begin{frame}[allowframebreaks]
+%  \frametitle<presentation>{For Further Reading}
+%    
+%  \begin{thebibliography}{10}
+%    
+%  \beamertemplatebookbibitems
+%  % Start with overview books.
+%
+%  \bibitem{Author1990}
+%    A.~Author.
+%    \newblock {\em Handbook of Everything}.
+%    \newblock Some Press, 1990.
+% 
+%    
+%  \beamertemplatearticlebibitems
+%  % Followed by interesting articles. Keep the list short. 
+%
+%  \bibitem{Someone2000}
+%    S.~Someone.
+%    \newblock On this and that.
+%    \newblock {\em Journal of This and That}, 2(1):50--100,
+%    2000.
+%  \end{thebibliography}
+%\end{frame}
 
 \end{document}
 

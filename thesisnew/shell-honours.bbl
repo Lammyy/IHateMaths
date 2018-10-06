@@ -11,6 +11,12 @@ Bishop, C.~M. (1995).
 \newblock {\em Neural Networks for Pattern Recognition}.
 \newblock Oxford University Press, Inc., New York, NY, USA.
 
+\bibitem[Bishop, 2006]{pattern}
+Bishop, C.~M. (2006).
+\newblock {\em Pattern Recognition and Machine Learning (Information Science
+  and Statistics)}.
+\newblock Springer-Verlag, Berlin, Heidelberg.
+
 \bibitem[Blei et~al., 2017]{blei}
 Blei, D.~M., Kucukelbir, A., and McAuliffe, J.~D. (2017).
 \newblock Variational inference: A review for statisticians.
