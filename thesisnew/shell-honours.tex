@@ -2137,18 +2137,12 @@ The GAN and reverse KL divergence NELBO plots are comparable as they use identic
 \caption{Joint-Contrastive NELBO}
 \end{figure}
 \chapter{Comparing Undertrained Estimators}
-Since all three estimator parametrisations have similar accuracies at optimality, it does not matter which one is chosen in that context. However, insufficient estimator training iterations can lead to an inaccurate estimation of the $NELBO$, reducing the speed at which the variational posterior converges. In this chapter, we first theoretically compare the rates of estimator convergence between the three parametrisations by analysing the second functional derivatives of the estimator loss functions and the displacement in the optimal estimator output with each posterior optimisation step. We then perform an experiment comparing the performance of undertrained estimators in 
-\section{First and Second Derivatives of all 6 possible algorithms}
-To evaluate the effectiveness of gradient descent optimization in these algorithms, we formulate the first and second derivatives of the objective functions. We first take the "Class probability" parametrization and observe its optimization problem for the CPE divergence:
-\begin{align*}
-f_{CPE}(u)&=-\E_{q(u)}[\log D(u)]-\E_{p(u)}[\log (1-D(u))]\\
-&=-\int_u q(u)\log D(u) du -\int_u p(u)\log(1-D)du\\
-\frac{df}{dD(u)}&=-\frac{q(u)}{D(u)}+\frac{p(u)}{1-D(u)}\\
-\frac{d^2f}{dD^2(u)}&=\frac{q(u)}{D^2(u)}+\frac{p(u)}{(1-D(u))^2}\\
-&>0 \quad \forall q(u)\in(0,1), p(u)\in (0,1), D(u)\in (0,1) 
-\end{align*}
-Since the second derivative is always greater than zero, the function is strictly convex and therefore converges linearly with gradient descent.\\
-Now observe the optimization problem for the KL Divergence:
+Since all three estimator parametrisations have similar accuracies at optimality, it does not matter which one is chosen in that context. However, insufficient estimator training iterations can lead to an inaccurate estimation of the $NELBO$, reducing the speed at which the variational posterior converges. In this chapter, we first theoretically compare the rates of estimator convergence between the three parametrisations by analysing the second functional derivatives of the estimator loss functions and the displacement in the optimal estimator output with each posterior optimisation step. We then perform an experiment in both prior-contrastive and joint-contrastive contexts comparing the performance of undertrained estimators with different parametrisations and f-divergence upper bounds.
+\section{Theory}
+\subsection{First and Second Derivatives of Estimator Loss Functions}
+To evaluate the effectiveness of gradient descent optimization in these algorithms, we formulate the first and second derivatives of the estimator loss functions.\\
+\textbf{Reverse KL Divergence Upper Bound:}\\
+Class Probability Estimator:
 \begin{align*}
 f_{KL}(u)&=-\E_{q(u)}\left(\log \frac{D(u)}{1-D(u)}\right)+\E_{p(u)}\left(\frac{D(u)}{1-D(u)}\right)\\
 &=-\int_u q(u)\left(\log \frac{D(u)}{1-D(u)}\right)du+\int_u p(u)\left(\frac{D(u)}{1-D(u)}\right)du\\
@@ -2156,44 +2150,50 @@ f_{KL}(u)&=-\E_{q(u)}\left(\log \frac{D(u)}{1-D(u)}\right)+\E_{p(u)}\left(\frac{
 &=-\frac{q(u)}{D(u)}-\frac{q(u)}{1-D(u)}+\frac{p(u)}{(1-D(u))^2}\\
 \frac{d^2f}{dD^2(u)}&=\frac{q(u)}{D^2(u)}-\frac{q(u)}{(1-D(u))^2}+\frac{2p(u)}{(1-D(u))^3}
 \end{align*}
-CPE with ratio parametrisation:
+Direct Ratio Estimator:
+\begin{align*}
+f_{KL}(u)&=-\E_{q(u)}(\log r(u))+\E_{p(u)}r\\
+&=-\int_u q(u)\log r(u) du+\int_u p(u)r(u)du\\
+\frac{df}{dr(u)}&=-\frac{q(u)}{r(u)}+p(u)\\
+\frac{d^2f}{dr^2(u)}&=\frac{q(u)}{r^2(u)}
+\end{align*}
+Direct Log Ratio Estimator:
+\begin{align*}
+f_{KL}(u)&=-\E_{q(u)}[T(u)]+\E_{p(u)}[e^{T(u)}]\\
+&=-\int_u q(u)T(u)du+\int_u p(u)e^{T(u)}du\\
+\frac{df}{dT(u)}&=-q(u)+p(u)e^{T(u)}\\
+\frac{d^2f}{dT^2(u)}&=p(u)e^{T(u)}
+\end{align*}
+\textbf{GAN Divergence Upper Bound:}\\
+Class Probability Estimator:
+\begin{align*}
+f_{CPE}(u)&=-\E_{q(u)}[\log D(u)]-\E_{p(u)}[\log (1-D(u))]\\
+&=-\int_u q(u)\log D(u) du -\int_u p(u)\log(1-D)du\\
+\frac{df}{dD(u)}&=-\frac{q(u)}{D(u)}+\frac{p(u)}{1-D(u)}\\
+\frac{d^2f}{dD^2(u)}&=\frac{q(u)}{D^2(u)}+\frac{p(u)}{(1-D(u))^2}
+\end{align*}
+Direct Ratio Estimator:
 \begin{align*}
 f_{CPE}(u)&=-\E_{q(u)}\left[\log \frac{r(u)}{r(u)+1}\right]+\E_{p(u)}\left[\log(r(u)+1)\right]\\
 &=-\int_u q(u)\left[\log \frac{r(u)}{r(u)+1}\right]du+\int_u p(u)\left[\log(r(u)+1)\right]du\\
 \frac{df}{dr(u)}&=-\frac{q(u)}{r(u)}+\frac{q(u)}{r(u)+1}+\frac{p(u)}{r(u)+1}\\
 \frac{d^2f}{dr^2(u)}&=\frac{q(u)}{r^2(u)}-\frac{q(u)}{(r(u)+1)^2}-\frac{p(u)}{(r(u)+1)^2}
 \end{align*}
-KL with ratio parametrisation:
-\begin{align*}
-f_{KL}(u)&=-\E_{q(u)}(\log r(u))+\E_{p(u)}r\\
-&=-\int_u q(u)\log r(u) du+\int_u p(u)r(u)du\\
-\frac{df}{dr(u)}&=-\frac{q(u)}{r(u)}+p(u)\\
-\frac{d^2f}{dr^2(u)}&=\frac{q(u)}{r^2(u)}\\
-&>0
-\end{align*}
-CPE with log ratio parametrisation:
+Direct Log Ratio Estimator:
 \begin{align*}
 f_{CPE}(u)&=-\E_{q(u)}[T(u)-\log(e^{T(u)}+1)]+\E_{p(u)}[\log(e^{T(u)}+1)]\\
 &=\int_u q(u)[\log(e^{T(u)}+1)-T(u)] du+\int_u p(u)[\log(e^{T(u)}+1)]du\\
 \frac{df}{dT(u)}&=-q(u)+\frac{(q(u)+p(u))e^{T(u)}}{e^{T(u)}+1}\\
 \frac{d^2f}{dT^2(u)}&=\frac{(q(u)+p(u))\exp(T(u))}{e^{T(u)}+1}-\frac{(q(u)+p(u))e^{2T(u)}}{(e^{T(u)}+1)^2}\\
 &=\frac{(q(u)+p(u))(e^{2T(u)}+e^{T(u)})-(q(u)+p(u))e^{2T(u)}}{(e^{T(u)}+1)^2}\\
-&=\frac{(q(u)+p(u))e^{T(u)}}{(e^{T(u)}+1)^2}\\
-&>0
+&=\frac{(q(u)+p(u))e^{T(u)}}{(e^{T(u)}+1)^2}
 \end{align*}
-KL with log ratio parametrisation:
-\begin{align*}
-f_{KL}(u)&=-\E_{q(u)}[T(u)]+\E_{p(u)}[e^{T(u)}]\\
-&=-\int_u q(u)T(u)du+\int_u p(u)e^{T(u)}du\\
-\frac{df}{dT(u)}&=-q(u)+p(u)e^{T(u)}\\
-\frac{d^2f}{dT^2(u)}&=p(u)e^{T(u)}\\
-&>0
-\end{align*}
-\section{Difference between divergences}
-Recall that both divergences attain the same global minimum, which is a parametrization of the estimator, and that these estimators are optimized via stochastic gradient descent. Thus, for a fixed estimator parametrization, the divergences will have varying rates of convergence, which can be analyzed by observing the second derivative. The convergence rate of a gradient descent method is proportional to the size of its second derivative. Due to the variable nature of $p(u)$, $q(u)$ and $D(u)$/$r(u)$/$T(u)$, it is uncertain whether a divergence is superior in this aspect when its second derivative is not strictly greater than the other divergence's equivalent. We are therefore unable to arrive at a certain conclusion for the "Class probability" and direct log ratio estimators, but it can be seen that in the direct ratio parametrisation, the KL divergence is strictly greater than the CPE divergence, implying that it would be superior. However, due to the significant number of iterations taken for each estimator optimization step, it is unlikely the different divergences have a significant impact on the quality of the method. This can be additionally seen in the non-significant decrease in estimator loss over the later half of its optimization step.\\
-The effectiveness of different divergences has also been tested in (Nowozin, 2016). They found that the ideal f-divergence used for the estimator's loss function is the same f-divergence that is being minimized in the variational posterior training: in this case, it is the KL divergence. This provides support for our theory that the KL divergence is superior (at least in the direct ratio case).
-\section{Difference between estimators}
-Again, we compare the second derivatives of the techniques, this time fixing the divergence and observing the difference in estimator parametrization. Due to the exponential term in the log ratio parametrisation, no conclusion can be drawn from its comparisons. We cannot conclude anything from comparing the remaining two estimators for the KL divergence either. It can however be seen that for the CPE divergence, the "Class probability" parametrization is strictly superior.\\
+Recall that both divergences attain the same global minimum, which is a parametrization of the estimator, and that these estimators are optimized via stochastic gradient descent. Thus, for a fixed estimator parametrization, the divergences will have varying rates of convergence, which can be analyzed by observing the second derivative. The convergence rate of a gradient descent method is proportional to the size of its second derivative (citation). For most of the second derivatives, it is difficult to make a clear comparison, particularly with the direct log ratio estimator due to the exponential terms. However, it can be seen that within the GAN divergence, the second derivative of the class probability estimator is strictly superior to that of the direct ratio estimator. Also, the direct ratio estimator has a strictly greater second derivative when its loss function is bounded by the reverse KL divergence than with the GAN divergence.
+%Due to the variable nature of $p(u)$, $q(u)$ and $D(u)$/$r(u)$/$T(u)$, it is uncertain whether a divergence is superior in this aspect when its second derivative is not strictly greater than the other divergence's equivalent. We are therefore unable to arrive at a certain conclusion for the "Class probability" and direct log ratio estimators, but it can be seen that in the direct ratio parametrisation, the KL divergence is strictly greater than the CPE divergence, implying that it would be superior. However, due to the significant number of iterations taken for each estimator optimization step, it is unlikely the different divergences have a significant impact on the quality of the method. This can be additionally seen in the non-significant decrease in estimator loss over the later half of its optimization step.\\
+As previously stated, the effectiveness of different f-divergenec upper bounds has been tested in \citet{nowozin}. They found that the ideal f-divergence used for the estimator's loss function is the same f-divergence that is being minimized in the variational posterior training: in this case, it is the KL divergence. This provides support for our theory that the KL divergence is superior (at least in the direct ratio case).
+%\section{Difference between estimators}
+%Again, we compare the second derivatives of the techniques, this time fixing the divergence and observing the difference in estimator parametrization. Due to the exponential term in the log ratio parametrisation, no conclusion can be drawn from its comparisons. We cannot conclude anything from comparing the remaining two estimators for the KL divergence either. It can however be seen that for the CPE divergence, the "Class probability" parametrization is strictly superior.\\
+\subsection{Displacement of Optimal Estimators}
 Now consider the bounds on the estimators. The class probability estimator with an optimal form of $\frac{q(u)}{q(u)+p(u)}$ is bound in $(0,1)$, so from any arbitrary starting point in the same space, very few optimization steps are required to reach the global minimum. On the other hand, the direct ratio estimator is bound in $\R^+ \ \{0\}$, and the direct log ratio estimator can take any value in $\R$, so optimization can take many iterations if the difference between the estimator's initial and optimal values is too large. This can be problematic if there are insufficient iterations of optimizing the estimator, particularly in the initialization stage: the estimator may not properly converge and the posterior will be trained with an inaccurate density ratio estimation.\\
 Furthermore, we can also consider the effect of the posterior density displacement from each training step: every time $q_\phi(u)$ changes, the optimal value of the estimator also changes. Consequently, the estimator must take optimization steps to 'catch up', but again, if the displacement is too significant, then the estimator may not converge in time. From the bounds, it is intuitive that the class probability estimator's global minimum displaces less than the direct ratio estimator. It can also be shown that $|D^*_{final}-D^*_{init}|<|r^*_{final}-r^*_{init}|$:\\
 Letting $\epsilon\neq0$ be the change in $q(u)$ with an optimization step, and noting that $|\epsilon|<q(u)$, we have

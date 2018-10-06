@@ -51,9 +51,9 @@
 \contentsline {section}{\numberline {8.2}Experiment Outline}{68}{section.8.2}
 \contentsline {section}{\numberline {8.3}Results}{69}{section.8.3}
 \contentsline {chapter}{\numberline {Chapter 9}Comparing Undertrained Estimators}{73}{chapter.9}
-\contentsline {section}{\numberline {9.1}First and Second Derivatives of all 6 possible algorithms}{73}{section.9.1}
-\contentsline {section}{\numberline {9.2}Difference between divergences}{75}{section.9.2}
-\contentsline {section}{\numberline {9.3}Difference between estimators}{75}{section.9.3}
+\contentsline {section}{\numberline {9.1}Theory}{73}{section.9.1}
+\contentsline {subsection}{\numberline {9.1.1}First and Second Derivatives of Estimator Loss Functions}{73}{subsection.9.1.1}
+\contentsline {subsection}{\numberline {9.1.2}Displacement of Optimal Estimators}{75}{subsection.9.1.2}
 \contentsline {chapter}{\numberline {Chapter 10}Inference Experiments - "Sprinkler"}{79}{chapter.10}
 \contentsline {section}{\numberline {10.1}Determining optimal activation function}{79}{section.10.1}
 \contentsline {subsection}{\numberline {10.1.1}Experiment Outline}{79}{subsection.10.1.1}
