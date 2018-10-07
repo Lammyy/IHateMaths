@@ -2011,7 +2011,7 @@ In this chapter, we verify that for a fixed f-divergence, each estimator paramet
 \section{Theory}
 Recall from Section 7.1 that the estimator transformation preserves the equality of the bound. There should be no significant difference in posterior convergence when the estimators are optimized sufficiently between each posterior iteration step, as they reach equality of the f-divergence lower bound, therefore optimally estimating the NELBO.
 
-Theorem 4.2.1 states that equality of the bound is attained at $r_\alpha(u)=\frac{q(u)}{p(u)}$ regardless of the f-divergence used, so we also expect similar levels of convergence between the f-divergences. However, f-GAN: Training Generative Neural Samplers using Variational Divergence Minimization by Nowozin shows experimentally that the fastest posterior convergence is attained when the f-divergence used to optimize the variational posterior is also used to derive the lower bound\citep{nowozin}. Since we train our posterior network by minimising its reverse KL divergence with the true posterior, this paper implies the estimator loss functions corresponding to the reverse KL divergence would correspond to superior posterior convergence.
+Theorem 4.2.1 states that equality of the bound is attained at $r_\alpha(u)=\frac{q(u)}{p(u)}$ regardless of the f-divergence used, so we also expect similar levels of convergence between the f-divergences. However, ``f-GAN: Training Generative Neural Samplers using Variational Divergence Minimization" by \citet{nowozin} shows experimentally that the fastest posterior convergence is attained when the f-divergence used to optimize the variational posterior is also used to derive the lower bound. Since we train our posterior network by minimising its reverse KL divergence with the true posterior, this paper implies the estimator loss functions corresponding to the reverse KL divergence would correspond to superior posterior convergence.
 \section{Experiment Outline}
 Again, the experiment parameters are the same as in the previous two experiments. The low training rates assure smooth estimator and posterior convergence, and we continue to ensure that the estimator attains optimality before it is used to estimate the NELBO by initialising it with 5000 optimisation steps, then training it for 100 steps between each posterior iteration. To save computational time, we reuse our previous experimental results corresponding to the reverse KL divergence with the direct ratio estimator, and the GAN divergence with the class probability estimator. We do not use an output activation function for the direct log ratio estimator as the log of a positive number ranges in $\R$.
 \section{Results}
@@ -2137,109 +2137,202 @@ The GAN and reverse KL divergence NELBO plots are comparable as they use identic
 \caption{Joint-Contrastive NELBO}
 \end{figure}
 \chapter{Comparing Undertrained Estimators}
-Since all three estimator parametrisations have similar accuracies at optimality, it does not matter which one is chosen in that context. However, insufficient estimator training iterations can lead to an inaccurate estimation of the $NELBO$, reducing the speed at which the variational posterior converges. In this chapter, we first theoretically compare the rates of estimator convergence between the three parametrisations by analysing the second functional derivatives of the estimator loss functions and the displacement in the optimal estimator output with each posterior optimisation step. We then perform an experiment in both prior-contrastive and joint-contrastive contexts comparing the performance of undertrained estimators with different parametrisations and f-divergence upper bounds.
+Since all three estimator parametrisations have similar accuracies at optimality, it does not matter which one is chosen in that context. However, insufficient estimator training iterations can lead to an inaccurate estimation of the $NELBO$, reducing the speed at which the variational posterior converges. In this chapter, we first theoretically compare the rates of estimator convergence between the three parametrisations by analysing the bounds of the estimator outputs and the displacement in the optimal estimator output with each posterior optimisation step. We then perform an experiment in both prior-contrastive and joint-contrastive contexts comparing the performance of undertrained estimators with different parametrisations and f-divergence lower bounds.
 \section{Theory}
-\subsection{First and Second Derivatives of Estimator Loss Functions}
-To evaluate the effectiveness of gradient descent optimization in these algorithms, we formulate the first and second derivatives of the estimator loss functions.\\
-\textbf{Reverse KL Divergence Upper Bound:}\\
-Class Probability Estimator:
-\begin{align*}
-f_{KL}(u)&=-\E_{q(u)}\left(\log \frac{D(u)}{1-D(u)}\right)+\E_{p(u)}\left(\frac{D(u)}{1-D(u)}\right)\\
-&=-\int_u q(u)\left(\log \frac{D(u)}{1-D(u)}\right)du+\int_u p(u)\left(\frac{D(u)}{1-D(u)}\right)du\\
-\frac{df}{dD(u)}&=-\frac{q(u)}{D(u)}-\frac{q(u)}{1-D(u)}+\frac{p(u)}{1-D(u)}+\frac{p(u)D(u)}{(1-D(u))^2}\\
-&=-\frac{q(u)}{D(u)}-\frac{q(u)}{1-D(u)}+\frac{p(u)}{(1-D(u))^2}\\
-\frac{d^2f}{dD^2(u)}&=\frac{q(u)}{D^2(u)}-\frac{q(u)}{(1-D(u))^2}+\frac{2p(u)}{(1-D(u))^3}
-\end{align*}
-Direct Ratio Estimator:
-\begin{align*}
-f_{KL}(u)&=-\E_{q(u)}(\log r(u))+\E_{p(u)}r\\
-&=-\int_u q(u)\log r(u) du+\int_u p(u)r(u)du\\
-\frac{df}{dr(u)}&=-\frac{q(u)}{r(u)}+p(u)\\
-\frac{d^2f}{dr^2(u)}&=\frac{q(u)}{r^2(u)}
-\end{align*}
-Direct Log Ratio Estimator:
-\begin{align*}
-f_{KL}(u)&=-\E_{q(u)}[T(u)]+\E_{p(u)}[e^{T(u)}]\\
-&=-\int_u q(u)T(u)du+\int_u p(u)e^{T(u)}du\\
-\frac{df}{dT(u)}&=-q(u)+p(u)e^{T(u)}\\
-\frac{d^2f}{dT^2(u)}&=p(u)e^{T(u)}
-\end{align*}
-\textbf{GAN Divergence Upper Bound:}\\
-Class Probability Estimator:
-\begin{align*}
-f_{CPE}(u)&=-\E_{q(u)}[\log D(u)]-\E_{p(u)}[\log (1-D(u))]\\
-&=-\int_u q(u)\log D(u) du -\int_u p(u)\log(1-D)du\\
-\frac{df}{dD(u)}&=-\frac{q(u)}{D(u)}+\frac{p(u)}{1-D(u)}\\
-\frac{d^2f}{dD^2(u)}&=\frac{q(u)}{D^2(u)}+\frac{p(u)}{(1-D(u))^2}
-\end{align*}
-Direct Ratio Estimator:
-\begin{align*}
-f_{CPE}(u)&=-\E_{q(u)}\left[\log \frac{r(u)}{r(u)+1}\right]+\E_{p(u)}\left[\log(r(u)+1)\right]\\
-&=-\int_u q(u)\left[\log \frac{r(u)}{r(u)+1}\right]du+\int_u p(u)\left[\log(r(u)+1)\right]du\\
-\frac{df}{dr(u)}&=-\frac{q(u)}{r(u)}+\frac{q(u)}{r(u)+1}+\frac{p(u)}{r(u)+1}\\
-\frac{d^2f}{dr^2(u)}&=\frac{q(u)}{r^2(u)}-\frac{q(u)}{(r(u)+1)^2}-\frac{p(u)}{(r(u)+1)^2}
-\end{align*}
-Direct Log Ratio Estimator:
-\begin{align*}
-f_{CPE}(u)&=-\E_{q(u)}[T(u)-\log(e^{T(u)}+1)]+\E_{p(u)}[\log(e^{T(u)}+1)]\\
-&=\int_u q(u)[\log(e^{T(u)}+1)-T(u)] du+\int_u p(u)[\log(e^{T(u)}+1)]du\\
-\frac{df}{dT(u)}&=-q(u)+\frac{(q(u)+p(u))e^{T(u)}}{e^{T(u)}+1}\\
-\frac{d^2f}{dT^2(u)}&=\frac{(q(u)+p(u))\exp(T(u))}{e^{T(u)}+1}-\frac{(q(u)+p(u))e^{2T(u)}}{(e^{T(u)}+1)^2}\\
-&=\frac{(q(u)+p(u))(e^{2T(u)}+e^{T(u)})-(q(u)+p(u))e^{2T(u)}}{(e^{T(u)}+1)^2}\\
-&=\frac{(q(u)+p(u))e^{T(u)}}{(e^{T(u)}+1)^2}
-\end{align*}
-Recall that both divergences attain the same global minimum, which is a parametrization of the estimator, and that these estimators are optimized via stochastic gradient descent. Thus, for a fixed estimator parametrization, the divergences will have varying rates of convergence, which can be analyzed by observing the second derivative. The convergence rate of a gradient descent method is proportional to the size of its second derivative (citation). For most of the second derivatives, it is difficult to make a clear comparison, particularly with the direct log ratio estimator due to the exponential terms. However, it can be seen that within the GAN divergence, the second derivative of the class probability estimator is strictly superior to that of the direct ratio estimator. Also, the direct ratio estimator has a strictly greater second derivative when its loss function is bounded by the reverse KL divergence than with the GAN divergence.
-%Due to the variable nature of $p(u)$, $q(u)$ and $D(u)$/$r(u)$/$T(u)$, it is uncertain whether a divergence is superior in this aspect when its second derivative is not strictly greater than the other divergence's equivalent. We are therefore unable to arrive at a certain conclusion for the "Class probability" and direct log ratio estimators, but it can be seen that in the direct ratio parametrisation, the KL divergence is strictly greater than the CPE divergence, implying that it would be superior. However, due to the significant number of iterations taken for each estimator optimization step, it is unlikely the different divergences have a significant impact on the quality of the method. This can be additionally seen in the non-significant decrease in estimator loss over the later half of its optimization step.\\
-As previously stated, the effectiveness of different f-divergenec upper bounds has been tested in \citet{nowozin}. They found that the ideal f-divergence used for the estimator's loss function is the same f-divergence that is being minimized in the variational posterior training: in this case, it is the KL divergence. This provides support for our theory that the KL divergence is superior (at least in the direct ratio case).
-%\section{Difference between estimators}
-%Again, we compare the second derivatives of the techniques, this time fixing the divergence and observing the difference in estimator parametrization. Due to the exponential term in the log ratio parametrisation, no conclusion can be drawn from its comparisons. We cannot conclude anything from comparing the remaining two estimators for the KL divergence either. It can however be seen that for the CPE divergence, the "Class probability" parametrization is strictly superior.\\
-\subsection{Displacement of Optimal Estimators}
-Now consider the bounds on the estimators. The class probability estimator with an optimal form of $\frac{q(u)}{q(u)+p(u)}$ is bound in $(0,1)$, so from any arbitrary starting point in the same space, very few optimization steps are required to reach the global minimum. On the other hand, the direct ratio estimator is bound in $\R^+ \ \{0\}$, and the direct log ratio estimator can take any value in $\R$, so optimization can take many iterations if the difference between the estimator's initial and optimal values is too large. This can be problematic if there are insufficient iterations of optimizing the estimator, particularly in the initialization stage: the estimator may not properly converge and the posterior will be trained with an inaccurate density ratio estimation.\\
-Furthermore, we can also consider the effect of the posterior density displacement from each training step: every time $q_\phi(u)$ changes, the optimal value of the estimator also changes. Consequently, the estimator must take optimization steps to 'catch up', but again, if the displacement is too significant, then the estimator may not converge in time. From the bounds, it is intuitive that the class probability estimator's global minimum displaces less than the direct ratio estimator. It can also be shown that $|D^*_{final}-D^*_{init}|<|r^*_{final}-r^*_{init}|$:\\
+%\subsection{First and Second Derivatives of Estimator Loss Functions}
+%To evaluate the effectiveness of gradient descent optimization in these algorithms, we formulate the first and second derivatives of the estimator loss functions.\\
+%\textbf{Reverse KL Divergence Upper Bound:}\\
+%Class Probability Estimator:
+%\begin{align*}
+%f_{KL}(u)&=-\E_{q(u)}\left(\log \frac{D(u)}{1-D(u)}\right)+\E_{p(u)}\left(\frac{D(u)}{1-D(u)}\right)\\
+%&=-\int_u q(u)\left(\log \frac{D(u)}{1-D(u)}\right)du+\int_u p(u)\left(\frac{D(u)}{1-D(u)}\right)du\\
+%\frac{df}{dD(u)}&=-\frac{q(u)}{D(u)}-\frac{q(u)}{1-D(u)}+\frac{p(u)}{1-D(u)}+\frac{p(u)D(u)}{(1-D(u))^2}\\
+%&=-\frac{q(u)}{D(u)}-\frac{q(u)}{1-D(u)}+\frac{p(u)}{(1-D(u))^2}\\
+%\frac{d^2f}{dD^2(u)}&=\frac{q(u)}{D^2(u)}-\frac{q(u)}{(1-D(u))^2}+\frac{2p(u)}{(1-D(u))^3}
+%\end{align*}
+%Direct Ratio Estimator:
+%\begin{align*}
+%f_{KL}(u)&=-\E_{q(u)}(\log r(u))+\E_{p(u)}r\\
+%&=-\int_u q(u)\log r(u) du+\int_u p(u)r(u)du\\
+%\frac{df}{dr(u)}&=-\frac{q(u)}{r(u)}+p(u)\\
+%\frac{d^2f}{dr^2(u)}&=\frac{q(u)}{r^2(u)}
+%\end{align*}
+%Direct Log Ratio Estimator:
+%\begin{align*}
+%f_{KL}(u)&=-\E_{q(u)}[T(u)]+\E_{p(u)}[e^{T(u)}]\\
+%&=-\int_u q(u)T(u)du+\int_u p(u)e^{T(u)}du\\
+%\frac{df}{dT(u)}&=-q(u)+p(u)e^{T(u)}\\
+%\frac{d^2f}{dT^2(u)}&=p(u)e^{T(u)}
+%\end{align*}
+%\textbf{GAN Divergence Upper Bound:}\\
+%Class Probability Estimator:
+%\begin{align*}
+%f_{CPE}(u)&=-\E_{q(u)}[\log D(u)]-\E_{p(u)}[\log (1-D(u))]\\
+%&=-\int_u q(u)\log D(u) du -\int_u p(u)\log(1-D)du\\
+%\frac{df}{dD(u)}&=-\frac{q(u)}{D(u)}+\frac{p(u)}{1-D(u)}\\
+%\frac{d^2f}{dD^2(u)}&=\frac{q(u)}{D^2(u)}+\frac{p(u)}{(1-D(u))^2}
+%\end{align*}
+%Direct Ratio Estimator:
+%\begin{align*}
+%f_{CPE}(u)&=-\E_{q(u)}\left[\log \frac{r(u)}{r(u)+1}\right]+\E_{p(u)}\left[\log(r(u)+1)\right]\\
+%&=-\int_u q(u)\left[\log \frac{r(u)}{r(u)+1}\right]du+\int_u p(u)\left[\log(r(u)+1)\right]du\\
+%\frac{df}{dr(u)}&=-\frac{q(u)}{r(u)}+\frac{q(u)}{r(u)+1}+\frac{p(u)}{r(u)+1}\\
+%\frac{d^2f}{dr^2(u)}&=\frac{q(u)}{r^2(u)}-\frac{q(u)}{(r(u)+1)^2}-\frac{p(u)}{(r(u)+1)^2}
+%\end{align*}
+%Direct Log Ratio Estimator:
+%\begin{align*}
+%f_{CPE}(u)&=-\E_{q(u)}[T(u)-\log(e^{T(u)}+1)]+\E_{p(u)}[\log(e^{T(u)}+1)]\\
+%&=\int_u q(u)[\log(e^{T(u)}+1)-T(u)] du+\int_u p(u)[\log(e^{T(u)}+1)]du\\
+%\frac{df}{dT(u)}&=-q(u)+\frac{(q(u)+p(u))e^{T(u)}}{e^{T(u)}+1}\\
+%\frac{d^2f}{dT^2(u)}&=\frac{(q(u)+p(u))\exp(T(u))}{e^{T(u)}+1}-\frac{(q(u)+p(u))e^{2T(u)}}{(e^{T(u)}+1)^2}\\
+%&=\frac{(q(u)+p(u))(e^{2T(u)}+e^{T(u)})-(q(u)+p(u))e^{2T(u)}}{(e^{T(u)}+1)^2}\\
+%&=\frac{(q(u)+p(u))e^{T(u)}}{(e^{T(u)}+1)^2}
+%\end{align*}
+%Recall that both divergences attain the same global minimum, which is a parametrization of the estimator, and that these estimators are optimized via stochastic gradient descent. Thus, for a fixed estimator parametrization, the divergences will have varying rates of convergence, which can be analyzed by observing the second derivative. The convergence rate of a gradient descent method is proportional to the size of its second derivative (citation). For most of the second derivatives, it is difficult to make a clear comparison, particularly with the direct log ratio estimator due to the exponential terms. However, it can be seen that within the GAN divergence, the second derivative of the class probability estimator is strictly superior to that of the direct ratio estimator. Also, the direct ratio estimator has a strictly greater second derivative when its loss function is bounded by the reverse KL divergence than with the GAN divergence.
+%As previously stated, the effectiveness of different f-divergence upper bounds has been tested in \citet{nowozin}. They found that the ideal f-divergence used for the estimator's loss function is the same f-divergence that is being minimized in the variational posterior training: in this case, it is the KL divergence. This provides support for our theory that the KL divergence is superior (at least in the direct ratio case).
+\subsection{Estimator Bounds}
+Consider the bounds on the estimator outputs. The class probability estimator $D_\alpha(u)\simeq \frac{q(u)}{q(u)+p(u)}$ is bound in $(0,1)$, so from any arbitrary starting point in the same space, very few optimization steps are required to reach the global minimum. On the other hand, the direct ratio estimator $r_\alpha(u)\simeq \frac{q(u)}{p(u)}$ is bound in $\R^+ \backslash \{0\}$, and the direct log ratio estimator $T_\alpha(u) \simeq \log \frac{q(u)}{p(u)}$ can take any value in $\R$, so optimization can take many iterations if the difference between the estimator's initial and optimal values is too large. This can be problematic if there are insufficient iterations of optimizing the estimator, particularly in the initialization stage: the estimator may not properly converge and the posterior will be trained with an inaccurate density ratio estimation.
+\subsection{Displacement of Estimator Optimal Values}
+Furthermore, we can also consider the effect of the posterior density displacement from each training step: every time $q_\phi(u)$ changes, the optimal value of the estimator also changes. Consequently, the estimator must take optimization steps to `catch up', but again, if the displacement is too significant, then the estimator may not converge in time.
+\begin{lemma}
+For a fixed displacement of the variational distribution $q(u)$, the class probability estimator's global minimum displaces less than the direct ratio estimator, that is, $|D^*_{n+1}-D^*_{n}|<|r^*_{n+1}-r^*_{n}|$:
+\begin{proof}
 Letting $\epsilon\neq0$ be the change in $q(u)$ with an optimization step, and noting that $|\epsilon|<q(u)$, we have
 \begin{align*}
-|D^*_{final}-D^*_{init}|&=\left|\frac{q(u)+\epsilon}{q(u)+\epsilon+p(u)}-\frac{q(u)}{q(u)+p(u)}\right|\\
+|D^*_{n+1}-D^*_{n}|&=\left|\frac{q(u)+\epsilon}{q(u)+\epsilon+p(u)}-\frac{q(u)}{q(u)+p(u)}\right|\\
 &=\left|\frac{q^2(u)+q(u)p(u)+\epsilon q(u)+\epsilon p(u)}{(q(u)+\epsilon+p(u))(q(u)+p(u))}-\frac{q^2(u)+\epsilon q(u)+q(u)p(u)}{(q(u)+\epsilon+p(u))(q(u)+p(u))}\right|\\
 &=\left|\frac{\epsilon p(u)}{(q(u)+\epsilon+p(u))(q(u)+p(u))}\right|\\
-&=\left|\frac{\epsilon}{(q(u)+\epsilon+p(u))(\frac{q(u)}{p(u)}+1)}\right|\\
-|r^*_{final}-r^*_{init}|&=\left|\frac{q(u)+\epsilon}{p(u)}-\frac{q(u)}{p(u)}\right|\\
-&=\left|\frac{\epsilon}{p(u)}\right|\\
+&=\left|\frac{\epsilon}{(q(u)+\epsilon+p(u))\left(\frac{q(u)}{p(u)}+1\right)}\right|\\
+|r^*_{n+1}-r^*_{n}|&=\left|\frac{q(u)+\epsilon}{p(u)}-\frac{q(u)}{p(u)}\right|\\
+&=\left|\frac{\epsilon}{p(u)}\right|.
 \end{align*}
 If $\epsilon>0$, then
-\[|D^*_{final}-D^*_{init}|<|r^*_{final}-r^*_{init}|\text{ as }(q(u)+\epsilon+p(u))(\frac{q(u)}{p(u)}+1)>p(u).\]
+\[|D^*_{n+1}-D^*_{n}|<|r^*_{n+1}-r^*_{n}|\text{ as }(q(u)+\epsilon+p(u))\left(\frac{q(u)}{p(u)}+1\right)>p(u).\]
 If $\epsilon<0$, then recalling that $|\epsilon| < q(u) < q(u)+p(u)$,
 \begin{align*}
 (q(u)+\epsilon+p(u))(\frac{q(u)}{p(u)}+1)&=\frac{q^2(u)}{p(u)}+2q(u)+p(u)+\epsilon \left(\frac{q(u)}{p(u)}+1\right)\\
 &=(q(u)+\epsilon)\left(\frac{q(u)}{p(u)}+1\right)+q(u)+p(u)\\
 &>p(u)
 \end{align*}
+\end{proof}
+\end{lemma}
+\begin{remark}
+The class probability estimator $D_\alpha(u)$ has more accurate density ratio estimation than the direct ratio estimator $r_\alpha(u)$ when the estimators are undertrained.
+\end{remark}
 For the direct log ratio estimator, we have
 \begin{align*}
-|T^*_{final}-T^*_{init}|&=\left|\log \frac{q(u)+\epsilon}{p(u)}-\log \frac{q(u)}{p(u)}\right|\\
+|T^*_{n+1}-T^*_{n}|&=\left|\log \frac{q(u)+\epsilon}{p(u)}-\log \frac{q(u)}{p(u)}\right|\\
 &=\left|\log \frac{q(u)+\epsilon}{q(u)}\right|
 \end{align*}
-It is difficult to make a direct comparison with the other displacement expressions.\\
-We now address the "failures" experienced by the KL minimization algorithm. Consider that the activation function of the estimator network's output layer, influencing the output range, varies between the estimators. For the direct ratio estimator, ReLU is used for the output, meaning that a 0 is outputted if the previous matrix operations lead to a negative number. Now recall that we take the log of the ratio estimator's output in all of the related optimization problems, and that a small constant $c$ is added to prevent taking the log of $0$. This explains the 'failures' of the KL minimization algorithm: the neural network has been initialised such that a $0$ is outputted, signifying that the previous matrix operations led to a negative number. Its loss function takes a large value according to this scenario (e.g. for KL minimization, it is $-\log c$), and does not decrease over training iterations, as a slight change in the network weights would still output the same result, meaning that the partial derivative of the weights with respect to the loss function is $0$. Due to this occurrence, the "failures" would additionally occur in the direct log ratio estimator, as its output layer is simply the log of a ReLU output, which would suffer from the same problem. On the other hand, the sigmoid activation function of the "Class probability" estimator is bound in $(0,1)$, so it does not experience any "failures".\\
-Aside from the failures, the difference in output activation functions could also explain our experimental results; the rectified linear unit models the density ratio in a linear manner, meaning that it would be asymmetric, in the sense that cases where $q(u)>p(u)$ result in any output in $(1,\infty)$, but if $p(u)<q(u)$, then the outputted is limited to $(0,1)$. On the other hand, the sigmoid function has symmetric output, as if $q(u)>p(u)$, it is bound in $(0.5,1)$, and if $q(u)<p(u)$, the outputs lie within $(0,0.5)$. Taking the log of the rectified linear output and optimizing the objective functions with respect to it may partially resolve this issue, as the cases will become bound in $(0,\infty)$ and $(-\infty,0)$ respectively, but it would retain an additional issue: having a rectified linear unit for the output layer restricts the previous matrix operations to have an output in $\R^{+}\backslash \{0\}$, as its surjective mapping truncates $\R^-$. On the other hand, the sigmoid output layer has a bijective mapping from $\R$ to $(0,1)$.\\
-Instead of using the naive ReLU activation function, we propose to use an exponential activation function for the direct ratio estimator, and a linear activation function for the log ratio estimator. The exponential function is even and bijective, mapping $\R^-$ to $(0,1)$ and $\R^+$ to $(1,\infty)$. Similarly, the linear activation keeps the output in $\R$, which is the space of the log ratio estimator. We believe that this will resolve the key issues in our KL minimization approach: the estimator outputs will be more consistent throughout the early training period and there will be no failures caused by an output of $0$.
-\chapter{Inference Experiments - "Sprinkler"}
-\section{Determining optimal activation function}
-\subsection{Experiment Outline}
-Since we have identified two possible representations for both the direct density ratio and log density ratio estimations, we first compare them to find the ideal activation function. Additionally, if our proposed activation functions prevent the "failures" from occurring, then the posterior training rate can be increased for the following experiments, reducing the computational time required to complete them. The experiment setup is exactly the same as the previous experiment, with the same repetitions, training rates and iterations, but we now aim to compare the ReLU and exponential activation functions for direct density ratio estimation, as well as the log ReLU and linear activation functions for direct log density ratio estimation. These comparisons will be made in four different contexts: both the CPE and KL divergences will be used in both of the prior-contrastive and joint-contrastive environments.
-\subsection{Results}
-Firstly, we note that the bijective activation functions did not experience any failures. This alone confirms our theory as to why the failures occur, and that the surjective activation functions are inferior for this particular purpose. Comparing the simulations that haven't failed, we have the following tables and figures showing the results. It can be seen that the means and standard deviations of the true KL divergence are consistently lower for the exponential and linear activation functions. This is due to the lack of fluctuations in their estimator losses and NELBO estimations, supporting our theory that the unevenness of the ReLU activation function correlates to inconsistent training and outputs.
+It is difficult to make a direct comparison with the other displacement expressions.
+
+\section{Experiment Outline}
+In this experiment, we aim to confirm our theory that the estimator parametrisations have differing density ratio estimation accuracies when improperly trained, also determining which undertrained estimator is the most accurate by observing the convergence of the variational posterior.
+
+The same ``Continuous Sprinkler" experimental setup is used, but with several changes to the training parameters. We significantly reduce the amount of estimator training, lowering the estimator training rate to 0.00004 and the estimator steps before each posterior iteration to 11 in the prior-contrastive setting, and 16 for the joint-contrastive algorithm. We also increase the posterior training rate to 0.0002 and to account for this change, the number of optimization steps of the variational distribution is reduced to 2000 for the prior-contrastive context and 4000 in the joint-contrastive algorithms. 
+\section{Results}
+From Table 9.1, it is immediately clear that using the reverse KL divergence to derive the lower bound for the estimator loss function leads to significantly higher posterior convergence, again supporting our experimental results in Chapter 8. For each fixed contrastive context and f-divergence lower bound, the class probability estimator consistently demonstrates the lowest mean KL divergence, followed by the  It is difficult to discern any related trends in the figures: most of the estimator and NELBO plots have wild fluctuations at the start of the training period, which settles down to a steady decline at about the same point for all three estimators. Most interesting is the joint-contrastive CPE divergence plots for estimator loss and NELBO, which demonstrates greater fluctuations of the direct ratio estimator, deviating from the other two estimators. Despite this, the estimator's effectiveness lies between the other two estimators. This trend is not experienced by any of the other contexts either.
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+Algorithm & Mean KL Divergence & Standard Deviation\\
+\hline
+PC Reverse KL - $D_\alpha(z,x)$ & 1.3572 & 0.0136\\
+\hline
+PC Reverse KL - $r_\alpha(z,x)$ & 1.3607 & 0.0199\\
+\hline
+PC Reverse KL - $T_\alpha(z,x)$ & 1.3641 & 0.0141\\
+\hline
+PC GAN - $D_\alpha(z,x)$ & 1.3788 & 0.0258\\
+\hline
+PC GAN - $r_\alpha(z,x)$ & 1.3811 & 0.0365\\
+\hline
+PC GAN - $T_\alpha(z,x)$ & 1.3849 & 0.0450\\
+\hline
+JC Reverse KL - $D_\alpha(z,x)$ & 1.3786 & 0.0286\\
+\hline
+JC Reverse KL - $r_\alpha(z,x)$ & 1.3934 & 0.0410\\
+\hline
+JC Reverse KL - $T_\alpha(z,x)$ & 1.4133 & 0.0597\\
+\hline
+JC GAN - $D_\alpha(z,x)$ & 1.4017 & 0.0286\\
+\hline
+JC GAN - $r_\alpha(z,x)$ & 1.4086 & 0.0555\\
+\hline
+JC GAN - $T_\alpha(z,x)$ & 1.4214 & 0.0518\\
+\hline
+\end{tabular}
+\caption{}
+\end{table}
 \newpage
-\section{Comparing Estimator Accuracies}
-\subsection{Experiment Outline}
-Now that we have identified optimal activation functions for the estimators, we now verify that the estimators, when optimally trained, lead to similar levels of convergence, regardless of the divergence used or the estimator parametrisation. Again, the setup is the same as in the previous two experiments, with low training rates and high iterations to ensure smooth posterior convergence and optimality of the estimator. Note that at this point, we already have experimental results for all of the divergence and estimator combinations except for the KL divergence with class probability estimator. Thus, to save computational time, we reuse those results.
-\subsection{Results}
-From the figures below, we can see that for each divergence, the graphs of the three estimators are indistinguishable. The final KL divergences in the table below also shows no significant difference between the divergences or estimator parametrizations used. The key point of this result is that it does not matter which estimator training combination is used as long as it is optimally trained.
-\newpage
-\section{Comparing Accuracies of Undertrained Estimators}
-\subsection{Experiment Outline}
-In this experiment, we aim to confirm our theory that the estimators only differ when improperly trained, and that an estimator's accuracy directly correlates with its training rate. We therefore significantly reduce the amount of estimator training between each posterior iteration, lowering the estimator training rate to 0.00004 and the estimator steps to 15 in the prior-contrastive setting, and 20 for the joint-contrastive algorithm. We also increase the posterior training rate to 0.0002 and to account for this change, the number of optimization steps of the variational distribution was reduced to 2000 for prior-contrastive and 4000 for joint-contrastive. The other training parameters were kept consistent with the previous experiments.
-\subsection{Results}
-From the table, it can be seen that the class probability estimator is superior to the direct ratio estimator, which is better than the log ratio estimator. This is supportive of our theories detailing the estimator output bounds, displacements and second derivatives as factors affecting training speed. The theory of second derivatives, as well as Nowozin's paper is further supported by the superiority of the KL divergence. It is difficult to discern any related trends in the figures: most of the estimator and NELBO plots have wild fluctuations at the start of the training period, which settles down to a steady decline at about the same point for all three estimators. Most interesting is the joint-contrastive CPE divergence plots for estimator loss and NELBO, which demonstrates greater fluctuations of the direct ratio estimator, deviating from the other two estimators. Despite this, the estimator's effectiveness lies between the other two estimators. This trend is not experienced by any of the other contexts either.
+\begin{figure}
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{part2truklmins/PCADVvsPCADVexpvsPCADVgudlog.png}
+\caption{GAN Divergence}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{part2truklmins/PCKLDvsPCKLexpvsPCKLgudlog.png}
+\caption{Reverse KL Divergence}
+\end{subfigure}
+\caption{Prior-Contrastive Average KL Divergence}
+\end{figure}
+
+\begin{figure}
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{part2estimatorlosses/PCADVvsPCADVexpvsPCADVgudlog.png}
+\caption{GAN Divergence}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{part2estimatorlosses/PCKLDvsPCKLexpvsPCKLgudlog.png}
+\caption{Reverse KL Divergence}
+\end{subfigure}
+\caption{Prior-Contrastive Estimator Loss}
+\end{figure}
+\begin{figure}
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{part2nelbos/PCADVvsPCADVexpvsPCADVgudlog.png}
+\caption{GAN Divergence}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{part2nelbos/PCKLDvsPCKLexpvsPCKLgudlog.png}
+\caption{Reverse KL Divergence}
+\end{subfigure}
+\caption{Prior-Contrastive NELBO}
+\end{figure}
+\begin{figure}
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{part2truklmins/JCADVvsJCADVexpvsJCADVgudlog.png}
+\caption{GAN Divergence}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{part2truklmins/JCKLDvsJCKLexpvsJCKLgudlog.png}
+\caption{Reverse KL Divergence}
+\end{subfigure}
+\caption{Joint-Contrastive Average KL Divergence}
+\end{figure}
+\begin{figure}
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{part2estimatorlosses/JCADVvsJCADVexpvsJCADVgudlog.png}
+\caption{GAN Divergence}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{part2estimatorlosses/JCKLDvsJCKLexpvsJCKLgudlog.png}
+\caption{Reverse KL Divergence}
+\end{subfigure}
+\caption{Joint-Contrastive Estimator Loss}
+\end{figure}
+\begin{figure}
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png}
+\caption{GAN Divergence}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png}
+\caption{Reverse KL Divergence}
+\end{subfigure}
+\caption{Joint-Contrastive NELBO}
+\end{figure}
 \newpage
 \chapter{Data Generation - (MNIST image generation)}
 \section{Problem Context}

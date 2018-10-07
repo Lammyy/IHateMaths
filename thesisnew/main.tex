@@ -728,14 +728,13 @@ PC Reverse KL - $D_\alpha(z,x)$ & 0.0647 & 0.0019\\
 \section{Theory}
 \begin{frame}{Theory}{Choice of f-divergence}
 \begin{itemize}
-\item Observing second functional derivatives, reverse KL divergence is strictly higher than the GAN divergence (for $r_\alpha(u)$).
-\item Nowozin's f-GAN paper also shows empirically that the reverse KL divergence is superior when it is additionally used to optimize the posterior.
+\item Nowozin's f-GAN paper shows empirically that the reverse KL divergence is superior when it is additionally used to optimize the posterior.
 \item Intuitive that the f-divergence used to optimize posterior is the best upper bound for estimator.
 \end{itemize}
 \end{frame}
 \begin{frame}{Further Estimator Loss Function Analysis}{Estimator Parametrisation}
 \begin{itemize}
-\item $D_\alpha(u)$ has higher second functional derivative than $r_\alpha(u)$ (for GAN divergence).
+\item $D_\alpha(u)$ has smallest bound of $(0,1)$, followed by $r_\alpha(u) \in \R^+$ and $T_\alpha(u)\in \R$.
 \item The density ratio changes every time the posterior is optimised, and the estimator must catch up.
 \item $D_\alpha(u)$ has a strictly lower displacement than $r_\alpha(u)$, that is, $|D_\alpha^{(n+1)}(u)-D_\alpha^{(n)}(u)|<|r_\alpha^{(n+1)}(u)-r_\alpha^{(n)}(u)|$.
 \end{itemize}

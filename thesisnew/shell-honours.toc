@@ -52,23 +52,15 @@
 \contentsline {section}{\numberline {8.3}Results}{69}{section.8.3}
 \contentsline {chapter}{\numberline {Chapter 9}Comparing Undertrained Estimators}{73}{chapter.9}
 \contentsline {section}{\numberline {9.1}Theory}{73}{section.9.1}
-\contentsline {subsection}{\numberline {9.1.1}First and Second Derivatives of Estimator Loss Functions}{73}{subsection.9.1.1}
-\contentsline {subsection}{\numberline {9.1.2}Displacement of Optimal Estimators}{75}{subsection.9.1.2}
-\contentsline {chapter}{\numberline {Chapter 10}Inference Experiments - "Sprinkler"}{79}{chapter.10}
-\contentsline {section}{\numberline {10.1}Determining optimal activation function}{79}{section.10.1}
-\contentsline {subsection}{\numberline {10.1.1}Experiment Outline}{79}{subsection.10.1.1}
-\contentsline {subsection}{\numberline {10.1.2}Results}{79}{subsection.10.1.2}
-\contentsline {section}{\numberline {10.2}Comparing Estimator Accuracies}{80}{section.10.2}
-\contentsline {subsection}{\numberline {10.2.1}Experiment Outline}{80}{subsection.10.2.1}
-\contentsline {subsection}{\numberline {10.2.2}Results}{80}{subsection.10.2.2}
-\contentsline {section}{\numberline {10.3}Comparing Accuracies of Undertrained Estimators}{81}{section.10.3}
-\contentsline {subsection}{\numberline {10.3.1}Experiment Outline}{81}{subsection.10.3.1}
-\contentsline {subsection}{\numberline {10.3.2}Results}{81}{subsection.10.3.2}
-\contentsline {chapter}{\numberline {Chapter 11}Data Generation - (MNIST image generation)}{82}{chapter.11}
-\contentsline {section}{\numberline {11.1}Problem Context}{82}{section.11.1}
-\contentsline {section}{\numberline {11.2}Program Structure}{82}{section.11.2}
-\contentsline {section}{\numberline {11.3}Results}{83}{section.11.3}
-\contentsline {chapter}{\numberline {Chapter 12}Related Work and Discussion}{85}{chapter.12}
-\contentsline {chapter}{\numberline {Chapter 13}Conclusion}{86}{chapter.13}
-\contentsline {chapter}{References}{87}{chapter.13}
-\contentsline {chapter}{\numberline {Appendix A}Kernel Density Estimation}{90}{appendix.A}
+\contentsline {subsection}{\numberline {9.1.1}Estimator Bounds}{73}{subsection.9.1.1}
+\contentsline {subsection}{\numberline {9.1.2}Displacement of Estimator Optimal Values}{73}{subsection.9.1.2}
+\contentsline {section}{\numberline {9.2}Experiment Outline}{75}{section.9.2}
+\contentsline {section}{\numberline {9.3}Results}{75}{section.9.3}
+\contentsline {chapter}{\numberline {Chapter 10}Data Generation - (MNIST image generation)}{79}{chapter.10}
+\contentsline {section}{\numberline {10.1}Problem Context}{79}{section.10.1}
+\contentsline {section}{\numberline {10.2}Program Structure}{79}{section.10.2}
+\contentsline {section}{\numberline {10.3}Results}{80}{section.10.3}
+\contentsline {chapter}{\numberline {Chapter 11}Related Work and Discussion}{82}{chapter.11}
+\contentsline {chapter}{\numberline {Chapter 12}Conclusion}{83}{chapter.12}
+\contentsline {chapter}{References}{84}{chapter.12}
+\contentsline {chapter}{\numberline {Appendix A}Kernel Density Estimation}{87}{appendix.A}

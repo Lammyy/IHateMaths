@@ -52,23 +52,15 @@
 \BOOKMARK [1][-]{section.8.3}{Results}{chapter.8}% 52
 \BOOKMARK [0][-]{chapter.9}{Comparing Undertrained Estimators}{}% 53
 \BOOKMARK [1][-]{section.9.1}{Theory}{chapter.9}% 54
-\BOOKMARK [2][-]{subsection.9.1.1}{First and Second Derivatives of Estimator Loss Functions}{section.9.1}% 55
-\BOOKMARK [2][-]{subsection.9.1.2}{Displacement of Optimal Estimators}{section.9.1}% 56
-\BOOKMARK [0][-]{chapter.10}{Inference Experiments - "Sprinkler"}{}% 57
-\BOOKMARK [1][-]{section.10.1}{Determining optimal activation function}{chapter.10}% 58
-\BOOKMARK [2][-]{subsection.10.1.1}{Experiment Outline}{section.10.1}% 59
-\BOOKMARK [2][-]{subsection.10.1.2}{Results}{section.10.1}% 60
-\BOOKMARK [1][-]{section.10.2}{Comparing Estimator Accuracies}{chapter.10}% 61
-\BOOKMARK [2][-]{subsection.10.2.1}{Experiment Outline}{section.10.2}% 62
-\BOOKMARK [2][-]{subsection.10.2.2}{Results}{section.10.2}% 63
-\BOOKMARK [1][-]{section.10.3}{Comparing Accuracies of Undertrained Estimators}{chapter.10}% 64
-\BOOKMARK [2][-]{subsection.10.3.1}{Experiment Outline}{section.10.3}% 65
-\BOOKMARK [2][-]{subsection.10.3.2}{Results}{section.10.3}% 66
-\BOOKMARK [0][-]{chapter.11}{Data Generation - \(MNIST image generation\)}{}% 67
-\BOOKMARK [1][-]{section.11.1}{Problem Context}{chapter.11}% 68
-\BOOKMARK [1][-]{section.11.2}{Program Structure}{chapter.11}% 69
-\BOOKMARK [1][-]{section.11.3}{Results}{chapter.11}% 70
-\BOOKMARK [0][-]{chapter.12}{Related Work and Discussion}{}% 71
-\BOOKMARK [0][-]{chapter.13}{Conclusion}{}% 72
-\BOOKMARK [0][-]{chapter.13}{References}{}% 73
-\BOOKMARK [0][-]{appendix.A}{Kernel Density Estimation}{}% 74
+\BOOKMARK [2][-]{subsection.9.1.1}{Estimator Bounds}{section.9.1}% 55
+\BOOKMARK [2][-]{subsection.9.1.2}{Displacement of Estimator Optimal Values}{section.9.1}% 56
+\BOOKMARK [1][-]{section.9.2}{Experiment Outline}{chapter.9}% 57
+\BOOKMARK [1][-]{section.9.3}{Results}{chapter.9}% 58
+\BOOKMARK [0][-]{chapter.10}{Data Generation - \(MNIST image generation\)}{}% 59
+\BOOKMARK [1][-]{section.10.1}{Problem Context}{chapter.10}% 60
+\BOOKMARK [1][-]{section.10.2}{Program Structure}{chapter.10}% 61
+\BOOKMARK [1][-]{section.10.3}{Results}{chapter.10}% 62
+\BOOKMARK [0][-]{chapter.11}{Related Work and Discussion}{}% 63
+\BOOKMARK [0][-]{chapter.12}{Conclusion}{}% 64
+\BOOKMARK [0][-]{chapter.12}{References}{}% 65
+\BOOKMARK [0][-]{appendix.A}{Kernel Density Estimation}{}% 66
