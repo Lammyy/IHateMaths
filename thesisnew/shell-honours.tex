@@ -776,7 +776,7 @@ or using our expression for $ELBO(q)$ in line (3.5.3),
 \begin{equation}
 \int_\R q_j(z_j)\left(\mathbb{E}_{\mathcal{z}_{-j}}[\log p(\bm{x},\bm{z})]-\log q_j(z_j)\right)dz_j-\sum^M_{i=1}\lambda_i\int_\R q_i(z_i)dz_i+\text{const}=0.
 \end{equation} 
-We then take the functional derivative of equation (3.5.4) with respect to $q_j(z_j)$:
+Using the Euler-Legendre equation, we then take the functional derivative of equation (3.5.4) with respect to $q_j(z_j)$ \citep{pattern}:
 \begin{align}
 \frac{\partial ELBO(q)}{\partial q_j(z_j)}&= \frac{\partial}{\partial q_j(z_j)}\left[q_j(z_j)\left(\mathbb{E}_{\bm{z}_{-j}}[\log p(\bm{x},\bm{z})]-\log q_j(z_j)\right)-\lambda_jq_j(z_j)\right]\nonumber
 \\&= \mathbb{E}_{\bm{z}_{-j}}[\log p(\bm{x},\bm{z})]-\log q_j(z_j)-1-\lambda_j.
@@ -1119,6 +1119,7 @@ Observing that $q(u)$ and $p(u)$ are densities, this expression is a minimum as
 \frac{\partial^2L_D}{\partial D^2_\alpha(u)}&=\frac{q(u)}{D^2_\alpha(u)}+\frac{p(u)}{(1-D_\alpha(u))^2}\\
 &>0.
 \end{align*}
+It can be shown that the conditions to take the first and second functional derivative using the Euler-Legendre equation are met \citep{pattern}.
 \end{proof}
 \end{lemma}
 \begin{corollary}
@@ -2139,59 +2140,8 @@ The GAN and reverse KL divergence NELBO plots are comparable as they use identic
 \chapter{Comparing Undertrained Estimators}
 Since all three estimator parametrisations have similar accuracies at optimality, it does not matter which one is chosen in that context. However, insufficient estimator training iterations can lead to an inaccurate estimation of the $NELBO$, reducing the speed at which the variational posterior converges. In this chapter, we first theoretically compare the rates of estimator convergence between the three parametrisations by analysing the bounds of the estimator outputs and the displacement in the optimal estimator output with each posterior optimisation step. We then perform an experiment in both prior-contrastive and joint-contrastive contexts comparing the performance of undertrained estimators with different parametrisations and f-divergence lower bounds.
 \section{Theory}
-%\subsection{First and Second Derivatives of Estimator Loss Functions}
-%To evaluate the effectiveness of gradient descent optimization in these algorithms, we formulate the first and second derivatives of the estimator loss functions.\\
-%\textbf{Reverse KL Divergence Upper Bound:}\\
-%Class Probability Estimator:
-%\begin{align*}
-%f_{KL}(u)&=-\E_{q(u)}\left(\log \frac{D(u)}{1-D(u)}\right)+\E_{p(u)}\left(\frac{D(u)}{1-D(u)}\right)\\
-%&=-\int_u q(u)\left(\log \frac{D(u)}{1-D(u)}\right)du+\int_u p(u)\left(\frac{D(u)}{1-D(u)}\right)du\\
-%\frac{df}{dD(u)}&=-\frac{q(u)}{D(u)}-\frac{q(u)}{1-D(u)}+\frac{p(u)}{1-D(u)}+\frac{p(u)D(u)}{(1-D(u))^2}\\
-%&=-\frac{q(u)}{D(u)}-\frac{q(u)}{1-D(u)}+\frac{p(u)}{(1-D(u))^2}\\
-%\frac{d^2f}{dD^2(u)}&=\frac{q(u)}{D^2(u)}-\frac{q(u)}{(1-D(u))^2}+\frac{2p(u)}{(1-D(u))^3}
-%\end{align*}
-%Direct Ratio Estimator:
-%\begin{align*}
-%f_{KL}(u)&=-\E_{q(u)}(\log r(u))+\E_{p(u)}r\\
-%&=-\int_u q(u)\log r(u) du+\int_u p(u)r(u)du\\
-%\frac{df}{dr(u)}&=-\frac{q(u)}{r(u)}+p(u)\\
-%\frac{d^2f}{dr^2(u)}&=\frac{q(u)}{r^2(u)}
-%\end{align*}
-%Direct Log Ratio Estimator:
-%\begin{align*}
-%f_{KL}(u)&=-\E_{q(u)}[T(u)]+\E_{p(u)}[e^{T(u)}]\\
-%&=-\int_u q(u)T(u)du+\int_u p(u)e^{T(u)}du\\
-%\frac{df}{dT(u)}&=-q(u)+p(u)e^{T(u)}\\
-%\frac{d^2f}{dT^2(u)}&=p(u)e^{T(u)}
-%\end{align*}
-%\textbf{GAN Divergence Upper Bound:}\\
-%Class Probability Estimator:
-%\begin{align*}
-%f_{CPE}(u)&=-\E_{q(u)}[\log D(u)]-\E_{p(u)}[\log (1-D(u))]\\
-%&=-\int_u q(u)\log D(u) du -\int_u p(u)\log(1-D)du\\
-%\frac{df}{dD(u)}&=-\frac{q(u)}{D(u)}+\frac{p(u)}{1-D(u)}\\
-%\frac{d^2f}{dD^2(u)}&=\frac{q(u)}{D^2(u)}+\frac{p(u)}{(1-D(u))^2}
-%\end{align*}
-%Direct Ratio Estimator:
-%\begin{align*}
-%f_{CPE}(u)&=-\E_{q(u)}\left[\log \frac{r(u)}{r(u)+1}\right]+\E_{p(u)}\left[\log(r(u)+1)\right]\\
-%&=-\int_u q(u)\left[\log \frac{r(u)}{r(u)+1}\right]du+\int_u p(u)\left[\log(r(u)+1)\right]du\\
-%\frac{df}{dr(u)}&=-\frac{q(u)}{r(u)}+\frac{q(u)}{r(u)+1}+\frac{p(u)}{r(u)+1}\\
-%\frac{d^2f}{dr^2(u)}&=\frac{q(u)}{r^2(u)}-\frac{q(u)}{(r(u)+1)^2}-\frac{p(u)}{(r(u)+1)^2}
-%\end{align*}
-%Direct Log Ratio Estimator:
-%\begin{align*}
-%f_{CPE}(u)&=-\E_{q(u)}[T(u)-\log(e^{T(u)}+1)]+\E_{p(u)}[\log(e^{T(u)}+1)]\\
-%&=\int_u q(u)[\log(e^{T(u)}+1)-T(u)] du+\int_u p(u)[\log(e^{T(u)}+1)]du\\
-%\frac{df}{dT(u)}&=-q(u)+\frac{(q(u)+p(u))e^{T(u)}}{e^{T(u)}+1}\\
-%\frac{d^2f}{dT^2(u)}&=\frac{(q(u)+p(u))\exp(T(u))}{e^{T(u)}+1}-\frac{(q(u)+p(u))e^{2T(u)}}{(e^{T(u)}+1)^2}\\
-%&=\frac{(q(u)+p(u))(e^{2T(u)}+e^{T(u)})-(q(u)+p(u))e^{2T(u)}}{(e^{T(u)}+1)^2}\\
-%&=\frac{(q(u)+p(u))e^{T(u)}}{(e^{T(u)}+1)^2}
-%\end{align*}
-%Recall that both divergences attain the same global minimum, which is a parametrization of the estimator, and that these estimators are optimized via stochastic gradient descent. Thus, for a fixed estimator parametrization, the divergences will have varying rates of convergence, which can be analyzed by observing the second derivative. The convergence rate of a gradient descent method is proportional to the size of its second derivative (citation). For most of the second derivatives, it is difficult to make a clear comparison, particularly with the direct log ratio estimator due to the exponential terms. However, it can be seen that within the GAN divergence, the second derivative of the class probability estimator is strictly superior to that of the direct ratio estimator. Also, the direct ratio estimator has a strictly greater second derivative when its loss function is bounded by the reverse KL divergence than with the GAN divergence.
-%As previously stated, the effectiveness of different f-divergence upper bounds has been tested in \citet{nowozin}. They found that the ideal f-divergence used for the estimator's loss function is the same f-divergence that is being minimized in the variational posterior training: in this case, it is the KL divergence. This provides support for our theory that the KL divergence is superior (at least in the direct ratio case).
 \subsection{Estimator Bounds}
-Consider the bounds on the estimator outputs. The class probability estimator $D_\alpha(u)\simeq \frac{q(u)}{q(u)+p(u)}$ is bound in $(0,1)$, so from any arbitrary starting point in the same space, very few optimization steps are required to reach the global minimum. On the other hand, the direct ratio estimator $r_\alpha(u)\simeq \frac{q(u)}{p(u)}$ is bound in $\R^+ \backslash \{0\}$, and the direct log ratio estimator $T_\alpha(u) \simeq \log \frac{q(u)}{p(u)}$ can take any value in $\R$, so optimization can take many iterations if the difference between the estimator's initial and optimal values is too large. This can be problematic if there are insufficient iterations of optimizing the estimator, particularly in the initialization stage: the estimator may not properly converge and the posterior will be trained with an inaccurate density ratio estimation.
+Consider the bounds on the estimator outputs. The class probability estimator $D_\alpha(u)\simeq \frac{q(u)}{q(u)+p(u)}$ is bound in $(0,1)$, so from any arbitrary starting point in the same space, very few optimization steps are required to reach the global minimum. On the other hand, the direct ratio estimator $r_\alpha(u)\simeq \frac{q(u)}{p(u)}$ is bound in $\R^+ \backslash \{0\}$, and the direct log ratio estimator $T_\alpha(u) \simeq \log \frac{q(u)}{p(u)}$ can take any value in $\R$, so optimization can take many iterations if the difference between the estimator's initial and optimal values is too large. This can be problematic if there are insufficient iterations of optimizing the estimator, particularly in the initialization stage: the estimator may not properly converge and the posterior will be trained with an inaccurate density ratio estimation. Essentially, the gradient descent convergence can be improved by using an appropriate transformation \citep{lecun}.
 
 By converting the loss functions to integral form, we are able to visualise the bounds on the loss function output by fixing $q(u)$ and $p(u)$ as arbitrary values in $(0,1)$, and plotting the functional inside the integral. Figure 9.1 on page 75 depicts plots of estimator outputs against the loss functional where $q(u)=p(u)=0.5$.
 \begin{example}
@@ -2231,9 +2181,62 @@ In the derivation above we have set $q(u)=p(u)=0.5$. Note we plot the functional
 \end{subfigure}
 \caption{\small Above we have plotted the estimator output against its loss functional. The same x and y-axis scales are used for all plots. Due to the bounds, it is evident that the loss functionals using the class probability estimator $D_\alpha(u)$ are associated with the highest gradient values and therefore the fastest convergence. It is difficult to compare the direct ratio estimator $r_\alpha(u)$ and the direct log ratio estimator $T_\alpha(u)$, as the former estimator appears to have higher gradients when $q(u)<p(u)$, but slower convergence when $q(u)>p(u)$. Since the relative gradients of the graph can vary with the choice of $p(u)$ and $q(u)$, we cannot compare the f-divergences.}
 \end{figure}
+\subsection{First and Second Derivatives of Estimator Loss Functions}
+To evaluate the effectiveness of gradient descent optimization in these algorithms, we formulate the first and second functional derivatives of the estimator loss functions.\\
+\textbf{Reverse KL Divergence Upper Bound:}\\
+Class Probability Estimator:
+\begin{align*}
+f_{KL}(u)&=-\E_{q(u)}\left(\log \frac{D(u)}{1-D(u)}\right)+\E_{p(u)}\left(\frac{D(u)}{1-D(u)}\right)\\
+&=-\int_u q(u)\left(\log \frac{D(u)}{1-D(u)}\right)du+\int_u p(u)\left(\frac{D(u)}{1-D(u)}\right)du\\
+\frac{df}{dD(u)}&=-\frac{q(u)}{D(u)}-\frac{q(u)}{1-D(u)}+\frac{p(u)}{1-D(u)}+\frac{p(u)D(u)}{(1-D(u))^2}\\
+&=-\frac{q(u)}{D(u)}-\frac{q(u)}{1-D(u)}+\frac{p(u)}{(1-D(u))^2}\\
+\frac{d^2f}{dD^2(u)}&=\frac{q(u)}{D^2(u)}-\frac{q(u)}{(1-D(u))^2}+\frac{2p(u)}{(1-D(u))^3}.
+\end{align*}
+\newpage
+Direct Ratio Estimator:
+\begin{align*}
+f_{KL}(u)&=-\E_{q(u)}(\log r(u))+\E_{p(u)}r\\
+&=-\int_u q(u)\log r(u) du+\int_u p(u)r(u)du\\
+\frac{df}{dr(u)}&=-\frac{q(u)}{r(u)}+p(u)\\
+\frac{d^2f}{dr^2(u)}&=\frac{q(u)}{r^2(u)}.
+\end{align*}
+Direct Log Ratio Estimator:
+\begin{align*}
+f_{KL}(u)&=-\E_{q(u)}[T(u)]+\E_{p(u)}[e^{T(u)}]\\
+&=-\int_u q(u)T(u)du+\int_u p(u)e^{T(u)}du\\
+\frac{df}{dT(u)}&=-q(u)+p(u)e^{T(u)}\\
+\frac{d^2f}{dT^2(u)}&=p(u)e^{T(u)}.
+\end{align*}
+\textbf{GAN Divergence Upper Bound:}\\
+Class Probability Estimator:
+\begin{align*}
+f_{CPE}(u)&=-\E_{q(u)}[\log D(u)]-\E_{p(u)}[\log (1-D(u))]\\
+&=-\int_u q(u)\log D(u) du -\int_u p(u)\log(1-D)du\\
+\frac{df}{dD(u)}&=-\frac{q(u)}{D(u)}+\frac{p(u)}{1-D(u)}\\
+\frac{d^2f}{dD^2(u)}&=\frac{q(u)}{D^2(u)}+\frac{p(u)}{(1-D(u))^2}.
+\end{align*}
+Direct Ratio Estimator:
+\begin{align*}
+f_{CPE}(u)&=-\E_{q(u)}\left[\log \frac{r(u)}{r(u)+1}\right]+\E_{p(u)}\left[\log(r(u)+1)\right]\\
+&=-\int_u q(u)\left[\log \frac{r(u)}{r(u)+1}\right]du+\int_u p(u)\left[\log(r(u)+1)\right]du\\
+\frac{df}{dr(u)}&=-\frac{q(u)}{r(u)}+\frac{q(u)}{r(u)+1}+\frac{p(u)}{r(u)+1}\\
+\frac{d^2f}{dr^2(u)}&=\frac{q(u)}{r^2(u)}-\frac{q(u)}{(r(u)+1)^2}-\frac{p(u)}{(r(u)+1)^2}.
+\end{align*}
+Direct Log Ratio Estimator:
+\begin{align*}
+f_{CPE}(u)&=-\E_{q(u)}[T(u)-\log(e^{T(u)}+1)]+\E_{p(u)}[\log(e^{T(u)}+1)]\\
+&=\int_u q(u)[\log(e^{T(u)}+1)-T(u)] du+\int_u p(u)[\log(e^{T(u)}+1)]du\\
+\frac{df}{dT(u)}&=-q(u)+\frac{(q(u)+p(u))e^{T(u)}}{e^{T(u)}+1}\\
+\frac{d^2f}{dT^2(u)}&=\frac{(q(u)+p(u))\exp(T(u))}{e^{T(u)}+1}-\frac{(q(u)+p(u))e^{2T(u)}}{(e^{T(u)}+1)^2}\\
+&=\frac{(q(u)+p(u))(e^{2T(u)}+e^{T(u)})-(q(u)+p(u))e^{2T(u)}}{(e^{T(u)}+1)^2}\\
+&=\frac{(q(u)+p(u))e^{T(u)}}{(e^{T(u)}+1)^2}.
+\end{align*}
+Recall that both divergences attain the same global minimum, which is a parametrization of the estimator, and that these estimators are optimized via stochastic gradient descent. Thus, for a fixed estimator parametrization, the divergences will have varying rates of convergence, which can be analyzed by observing the second derivative. The convergence rate of a gradient descent method is proportional to the size of its second derivative \citep{lecun}.
+
+For most of the second derivatives, it is difficult to make a clear comparison, particularly with the direct log ratio estimator due to the exponential terms. However, it can be seen that within the GAN divergence, the second derivative of the class probability estimator is strictly superior to that of the direct ratio estimator. Also, the direct ratio estimator has a strictly greater second derivative when its loss function is bounded by the reverse KL divergence than with the GAN divergence.
+As previously stated, the effectiveness of different f-divergence upper bounds has been tested in \citet{nowozin}. They found that the ideal f-divergence used for the estimator's loss function is the same f-divergence that is being minimized in the variational posterior training: in this case, it is the KL divergence. This provides support for our theory that the KL divergence is superior (at least in the direct ratio case).
 \subsection{Displacement of Estimator Optimal Values}
 Furthermore, we can also consider the effect of the posterior density displacement from each training step: every time $q_\phi(u)$ changes, the optimal value of the estimator also changes. Consequently, the estimator must take optimization steps to `catch up', but again, if the displacement is too significant, then the estimator may not converge in time.
-\newpage
 \begin{lemma}
 For a fixed displacement of the variational distribution $q(u)$, the class probability estimator's global minimum displaces less than the direct ratio estimator, that is, $|D^*_{n+1}-D^*_{n}|<|r^*_{n+1}-r^*_{n}|$:
 \begin{proof}
@@ -2269,7 +2272,7 @@ It is difficult to make a direct comparison with the other displacement expressi
 \section{Experiment Outline}
 In this experiment, we aim to confirm our theory that the estimator parametrisations have differing density ratio estimation accuracies when improperly trained, also determining which undertrained estimator is the most accurate by observing the convergence of the variational posterior.
 
-The same ``Continuous Sprinkler" experimental setup is used, but with several changes to the training parameters. We significantly reduce the amount of estimator training, lowering the estimator training rate to 0.00004 and the estimator steps before each posterior iteration to 11 in the prior-contrastive setting, and 16 for the joint-contrastive algorithm. We also increase the posterior training rate to 0.0002 and to account for this change, the number of optimization steps of the variational distribution is reduced to 2000 for the prior-contrastive context and 4000 in the joint-contrastive algorithms. 
+The same ``Continuous Sprinkler" experimental setup is used, but with several changes to the training parameters. We significantly reduce the amount of estimator training, lowering the estimator training rate to 0.00004 and the estimator steps before each posterior iteration to 11 for both contrastive settings. We also increase the posterior training rate to 0.0002 and to account for this change, the number of optimization steps of the variational distribution is reduced to 2000 for the prior-contrastive context and 4000 in the joint-contrastive algorithms. 
 \section{Results}
 From Table 9.1, it is immediately clear that using the reverse KL divergence to derive the lower bound for the estimator loss function leads to significantly higher posterior convergence, again supporting our experimental results in Chapter 8. For each fixed contrastive context and f-divergence lower bound, the class probability estimator $D_\alpha(z,x)$ consistently demonstrates the lowest mean KL divergence, followed by the direct ratio estimator $r_\alpha (z,x)$ and the direct log ratio estimator $T_\alpha(z,x)$. This is consistent with the theory we present in Section 9.1, but the significance of the results varies depending on the comparison made.
 
@@ -2390,24 +2393,286 @@ In Figures 9.8 (a) and 9.9 (a), we notice that the direct ratio estimator plots 
 \end{figure}
 \newpage
 \chapter{Data Generation - (MNIST image generation)}
-\section{Problem Context}
-The MNIST (Modified National Institute of Standards and Technology) dataset is widely used for testing machine learning algorithms related to image analysis. It contains 60,000 training and 10,000 testing images of handwritten digits, each grayscale and of 28x28 pixel size. Thus, the image distribution has 784 dimensions and follows a Bernoulli distribution. A sample of the images can be seen in Figure.\\
-In this problem, we aim to generate new MNIST images indistinguishable from those in the original dataset. To do so, we use the algorithm described in section, alternating between density ratio estimator training and simultaneous training of an encoder that maps images to a lower dimensional normal distribution and a decoder that generates new images using samples from the same latent space.\\
-Recall that joint-contrastive algorithms are more suited to pairing between different sample spaces than for data generation, so we only formulate prior-contrastive algorithms for this experiment. The main goal of this experiment is to compare the estimator parametrizations for high dimensional data, verifying the result from the last Sprinkler experiment. We repeat the experiment with two different latent spaces, one with 2 dimensions and one with 10 dimensions, to determine if the dimensionality of the densities in the density ratio $\frac{q_\phi(z|x)}{p(z)}$ has any effect.
-\section{Program Structure}
-Both our posterior sample generator and estimator have the same structures as in the Sprinkler problem, except the number of posterior noise inputs and nodes per layer have increased to account for the higher dimensionality of the problem. Although this problem involves image analysis, due to its simplicity we refrain from using convolutional layers, similar to other experiments (insert ref). To model the problem's likelihood function, we use an additional decoder network that is trained simultaneously with the posterior. Its structure is as shown in Figure below:\\
-A training rate of 0.0004 is used for all of the optimization steps, with a batch size of 512. Again, the estimator is pre-trained for 5000 iterations, afterwards the program alternates between 20 iterations of estimator optimizaton and 1 iteration of posterior training, for 4000 total posterior iterations.
-\section{Results}
-The higher dimensional problem shows an estimator that is clearly superior. In this part of the experiment, the values involved with estimating the direct density ratio and log density ratio are greater than the largest positive number representable by a 64-bit floating point number, and the program overflows to Inf. This occurs during the estimator initialization phase when the KL divergence between the two distributions is the greatest. The class probability estimator is the only estimator that does not experience this problem.\\
-This is because the density ratio $\frac{q_\phi(z|x)}{p(z)}$ increases exponentially with the dimensionality of the latent space, eventually reaching a value that is too large to be represented by a computer. For both direct density ratio algorithms, the estimator network is programmed to output $\E_{p(z)q^*(x)}\frac{q_\phi(z|x)}{p(z)}$ directly, and if the log density ratio is estimated instead, its exponential is taken in the estimator loss function, leading back to the direct density ratio. On the other hand, the class probability estimator output is bound in $(0,1)$, so a large density ratio would cause the estimate to output a number near 1. In fact, since the sigmoid activation function is used to map the network output from $R$ to $(0,1)$, it can be easily shown that the input of the activation function is the log ratio (we can output this value directly, slightly reducing the computation time needed to calculate the log ratio in this parametrization). Letting $x$ be the neural network output before being mapped to $(0,1)$, we have:
+In this chapter we compare the different f-divergence bounds and estimator parametrisations in the density ratio estimation involved with data generation. Specifically, we use the MNIST dataset: a popular dataset used in machine learning algorithms. Again, we undertrain the estimators to determine which parametrisation performs the best. The primary goals of this experiment are to confirm the conclusions presented in Chapter 9, and to possibly gain further insights by applying the algorithms to a different experimental setting. Due to limited experimental time, we only test the prior-contrastive algorithms. We repeat the experiment with two different latent spaces, one with 2 dimensions and one with 10 dimensions, to determine if the dimensionality of the densities in the density ratio $\frac{q_\phi(z|x)}{p(z)}$ has any effect on the results.
+\section{Experiment Outline}
+The MNIST (Modified National Institute of Standards and Technology) dataset is widely used for testing machine learning algorithms related to image analysis. It contains 60,000 labelled training images and 10,000 testing images of handwritten digits, each greyscale and of 28x28 pixel size. A sample of the images can be seen in Figure 10.1. Our algorithms do not require the images to be labelled so we combine the two image sets and ignore the labelling.
+\begin{figure}[b]
+\includegraphics[width=\linewidth]{mnist-digits-small.png}
+\caption{Samples from the MNIST Dataset}
+\end{figure}
+In this problem, we aim to generate new MNIST images indistinguishable from those in the original dataset. To do so, we use the ``Adversarial Variational Bayes" variation of the autoencoder as described in Section 3.9.1. Recall that the associated optimisation problem is:
+\[\min_{\phi,\theta}\E_{q^*(x)}\left[-\E_{q_\phi(z|x)}[\log p_\theta(x|z)]+KL(q_\phi(z|x)\|p(z))\right].\]
+We therefore have three neural networks:
+\begin{itemize}
+\item An encoder network $\mathcal{G}_\phi(\epsilon;x)$ that outputs samples from the variational posterior $q_\phi(z|x)$, effectively creating a latent representation of a data sample $x$.
+\begin{figure}[h!]
+\begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
+    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=25pt,inner sep=0pt]
+    \tikzstyle{input neuron}=[neuron, fill=green!50];
+    \tikzstyle{output neuron}=[neuron, fill=red!50];
+    \tikzstyle{hidden neuron}=[neuron, fill=blue!50];
+    \tikzstyle{annot} = [text width=4em, text centered]
+    
+	%\node[input neuron, pin=left:Bias] (I-0) at (0,0) {$x_0$};
+    % Draw the input layer nodes
+    %\foreach \name / \y in {1,...,3}
+    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+    \node[input neuron, pin=left:$x$] (I-1) at (0,-1) {$784$};
+	\node[input neuron, pin=left:$\epsilon$] (I-2) at (0,-3) {$4$};
+
+    \path[yshift=0cm] node[hidden neuron] (H-11) at (2.0cm,-1) {$200$};
+	\path[yshift=0cm] node[hidden neuron] (H-12) at (4.0cm,-1) {$400$};
+    \path[yshift=0cm] node[hidden neuron] (H-2) at (4.0cm,-3) {$400$};
+    \path[yshift=0cm] node[hidden neuron] (H-3) at (6.0cm,-2) {$800$};
+    \path[yshift=0cm] node[hidden neuron] (H-31) at (8.0cm,-2) {$200$};
+    \path[yshift=0cm] node[hidden neuron] (H-32) at (10.0cm,-2) {$400$};
+	\path[yshift=0cm] node[output neuron,pin={[pin edge={->}]right:$z$}] (O) at (12.0cm, -2) {dim$(z)$};
+    \path (I-1) edge (H-11);
+    \path (H-11) edge (H-12);
+	\path (I-2) edge (H-2);
+	\path (H-12) edge (H-3);
+	\path (H-2) edge (H-3);
+	\path (H-3) edge (H-31);
+	\path (H-31) edge (H-32);
+	\path (H-32) edge (O);
+    % Annotate the layers
+    \node[annot,above of=I-1, node distance=1cm] {Linear};
+    \node[annot,above of=I-2, node distance=1cm] {Linear};
+    \node[annot,above of=H-11, node distance=1cm] {ReLU};
+    \node[annot,above of=H-12, node distance=1cm] {ReLU};
+    \node[annot,above of=H-2, node distance=1cm] {ReLU};
+    \node[annot,above of=H-3, node distance=1cm] {Concat.};
+    \node[annot,above of=H-31, node distance=1cm] {ReLU};
+    \node[annot,above of=H-32, node distance=1cm] {ReLU};
+    \node[annot,above of=O, node distance=1cm] {Linear};
+\end{tikzpicture}
+\caption{\small This figure illustrates the structure of the generator network $\mathcal{G}(x,\bm{\epsilon})$ used in the MNIST data generation experiment. The notation used in the figure is the same as in Figures 5.2 and 5.3, and overall the network structure is very similar except significantly more nodes are used, suiting the higher dimensionality of the data. The dimensionality of latent variable $z$ is either 2 or 10 depending on the experimental setting. We have arbitrarily chosen the number of random noise inputs $\epsilon$ to be 4.}
+\end{figure}
+\item A decoder network representing the likelihood distribution $p_\theta(x|z)$ that reconstructs a data sample $x$ from a latent variable input $z$.
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
+    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=25pt,inner sep=0pt]
+    \tikzstyle{input neuron}=[neuron, fill=green!50];
+    \tikzstyle{output neuron}=[neuron, fill=red!50];
+    \tikzstyle{hidden neuron}=[neuron, fill=blue!50];
+    \tikzstyle{annot} = [text width=4em, text centered]
+    
+	%\node[input neuron, pin=left:Bias] (I-0) at (0,0) {$x_0$};
+    % Draw the input layer nodes
+    %\foreach \name / \y in {1,...,3}
+    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+    \node[input neuron, pin=left:$z$] (I-1) at (0,-1) {dim$(z)$};
+    \path[yshift=0cm] node[hidden neuron] (H-1) at (2.0cm,-1) {$500$};
+	\path[yshift=0cm] node[hidden neuron] (H-2) at (4.0cm,-1) {$500$};
+	\path[yshift=0cm] node[hidden neuron] (H-3) at (6.0cm,-1) {$1000$};
+	\path[yshift=0cm] node[hidden neuron] (H-4) at (8.0cm,-1) {$1000$};
+	\path[yshift=0cm] node[output neuron,pin={[pin edge={->}]right:$x$}] (O) at (10.0cm, -1) {$784$};
+    \path (I-1) edge (H-1);
+    \path (H-1) edge (H-2);
+	\path (H-2) edge (H-3);
+	\path (H-3) edge (H-4);
+	\path (H-4) edge (O);
+    % Annotate the layers
+    \node[annot,above of=I-1, node distance=1cm] {Linear};
+    \node[annot,above of=H-1, node distance=1cm] {ReLU};
+    \node[annot,above of=H-2, node distance=1cm] {ReLU};
+    \node[annot,above of=H-3, node distance=1cm] {ReLU};
+    \node[annot,above of=H-4, node distance=1cm] {ReLU};
+    \node[annot,above of=O, node distance=1cm] {Sigmoid};
+\end{tikzpicture}
+\caption{\small This is a diagram of the decoder network used in the MNIST data generation experiment. A sigmoid output layer is used to map the network output to $(0,1)$, suiting the grayscale nature of the data. The amount of effective hidden layers is the same as in the encoder network, but there are significantly more nodes in each layer. This is because the objective of the program is to output relatively high dimensional image data. Although this problem involves image analysis, due to the relatively small image size we refrain from using convolutional layers. This is consistent with other similar MNIST experiments \citep{nowozin, bgan}.}
+\end{figure}
+\item A density ratio estimator network ($D_\alpha(z,x),r_\alpha(z,x)$ or $T_\alpha(z,x)$) used to evaluate the intractable $KL(q_\phi(z|x)\|p(z))$ term in the optimisation problem.
+\begin{figure}[h!]
+
+\begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
+    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=25pt,inner sep=0pt]
+    \tikzstyle{input neuron}=[neuron, fill=green!50];
+    \tikzstyle{output neuron}=[neuron, fill=red!50];
+    \tikzstyle{hidden neuron}=[neuron, fill=blue!50];
+    \tikzstyle{annot} = [text width=4em, text centered]
+    
+	%\node[input neuron, pin=left:Bias] (I-0) at (0,0) {$x_0$};
+    % Draw the input layer nodes
+    %\foreach \name / \y in {1,...,3}
+    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+    \node[input neuron, pin=left:$x$] (I-1) at (0,-1) {$784$};
+	\node[input neuron, pin=left:$z$] (I-2) at (0,-3) {dim$(z)$};
+
+    \path[yshift=0cm] node[hidden neuron] (H-11) at (1.7cm,-1) {$200$};
+	\path[yshift=0cm] node[hidden neuron] (H-12) at (3.4cm,-1) {$400$};
+	\path[yshift=0cm] node[hidden neuron] (H-21) at (1.7cm,-3) {$200$};
+    \path[yshift=0cm] node[hidden neuron] (H-22) at (3.4cm,-3) {$400$};
+    \path[yshift=0cm] node[hidden neuron] (H-3) at (5.1cm,-2) {$800$};
+    \path[yshift=0cm] node[hidden neuron] (H-31) at (6.8cm,-2) {$200$};
+    \path[yshift=0cm] node[hidden neuron] (H-32) at (8.5cm,-2) {$400$};
+	\path[yshift=0cm] node[output neuron,pin={[pin edge={->}]right:Output}] (O) at (10.2cm, -2) {$2$};
+    \path (I-1) edge (H-11);
+    \path (H-11) edge (H-12);
+	\path (I-2) edge (H-21);
+	\path (H-21) edge (H-22);
+	\path (H-12) edge (H-3);
+	\path (H-22) edge (H-3);
+	\path (H-3) edge (H-31);
+	\path (H-31) edge (H-32);
+	\path (H-32) edge (O);
+    % Annotate the layers
+    \node[annot,above of=I-1, node distance=1cm] {Linear};
+    \node[annot,above of=I-2, node distance=1cm] {Linear};
+    \node[annot,above of=H-11, node distance=1cm] {ReLU};
+    \node[annot,above of=H-12, node distance=1cm] {ReLU};
+    \node[annot,above of=H-21, node distance=1cm] {ReLU};
+    \node[annot,above of=H-22, node distance=1cm] {ReLU};
+    \node[annot,above of=H-3, node distance=1cm] {Concat.};
+    \node[annot,above of=H-31, node distance=1cm] {ReLU};
+    \node[annot,above of=H-32, node distance=1cm] {ReLU};
+    \node[annot,above of=O, node distance=1cm] {Output Activ.};
+\end{tikzpicture}
+\caption{\small This figure depicts the estimator network for the MNIST data generation experiment. Depending on the estimator parametrisation, the output activation function is either sigmoid for the class probability estimator $D_\alpha(z,x)\simeq \frac{q_\phi(z|x)}{q_\phi(z|x)+p(z)}$, exponential for the direct ratio estimator $r_\alpha(z,x)\simeq \frac{q_\phi(z|x)}{p(z)}$ or linear for the direct log ratio estimator $T_\alpha(z,x)\simeq \log \frac{q_\phi(z|x)}{p(z)}$.}
+\end{figure}
+\end{itemize}
+The program alternates between several iterations of estimator training and a simultaneous training step of the encoder and decoder weights.
+
+Unlike the exact ``Adversarial Variational Bayes" specification in Section 3.9.1, we do not add random noise to the decoder, therefore resulting in a deterministic output. To express the likelihood term $\E_{q_\phi(z|x)}[\log p_\theta(x|z)]$ in the optimisation problem, we use the likelihood function of a Bernoulli distribution, with probability equal to the output of the decoder. This likelihood representation is common in literature, and is used for several reasons \citep{nowozin,bgan, tiao}:
+\begin{itemize}
+\item Image blurriness is reduced as there is no random noise in the pixel values.
+\item We use the reconstruction error $\|x-\tilde{x}\|^2$ to evaluate convergence, so a noisy sample reconstruction can make it difficult to compare the algorithms.
+\item In this experiment, we are primarily interested in the accuracy of the density ratio estimation between the variational posterior and the prior: this is independent of the decoder parametrisation.
+\end{itemize}
+\begin{figure}[h]
+  \centering
+  \tikz{ %
+    \node[latent] (x) {$\bm{x}$} ; %
+    \node[det, right=of x] (q) {$\mathcal{G}_\phi(\epsilon_1;\bm{x})$} ; %
+    \node [latent, above=of q] (eps) {$\epsilon_1$} ;
+    \node [latent, right=of q] (z) {$\bm{z}$} ;
+    \node [det, right=of z] (p) {$p_\theta(\bm{x}|\bm{z})$} ;
+    \node [latent, right=of p] (pout) {$\tilde{\bm{x}}$} ;
+    \edge {x} {q} ; %
+    \edge {q} {z}
+    \edge {eps} {q} ;
+    \edge {z} {p} ;
+    \edge {p} {pout} ;
+  }
+   \caption{\small This diagram depicts the ``Adversarial Variational Bayes" formulation of the variational autoencoder used in the MNIST data generation experiment. Note that there is no random noise added to the decoder.}
+\end{figure}
+
+The network structure and parameters have been configured to be similar to the MNIST experiment performed in ``f-GAN: Training Generative Neural Samplers using Variational Divergence Minimization" by \citet{nowozin}: a large batch size of 2048 is used and for each network, a training rate of 0.0004 is used in the low dimensional configuration, whilst the high dimensional setting uses a training rate of 0.0001. Again, the estimator is pre-trained for 5000 iterations, afterwards the program alternates between 20 iterations of estimator optimizaton and 1 iteration of posterior training, for 4000 total posterior iterations. Like in the ``Sprinkler" experiments, the estimator loss and estimated NELBO at each posterior iteration was saved, and every 10 posterior iterations, 500 MNIST samples were passed through the autoencoder and the average reconstruction error $\|x-\tilde{x}\|^2$ was saved.
+\section{Low Dimensional Experiment Results}
+Table 10.1 below tabulates the mean and standard deviation of the autoencoder's final reconstruction error between the 30 experiment repetitions. The only notable observation is that the direct log ratio estimator trained with a GAN divergence leads to significantly higher reconstruction error. This is consistent throughout the 30 repetitions and is not due to any outlier instances, reinforcing the theory and conclusions in Chapter 9. We also note that the estimators trained with the reverse KL divergence have consistently lower reconstruction errors, and that the class probability estimator appears to give the most accurate density ratio estimation, followed by the direct ratio estimator and the direct log ratio estimator. However, the differences are insignificant, likely because the estimators experience a relatively higher level of training in comparison to the experiment in Chapter 9. Additionally, the presence of the likelihood term in the $NELBO$ loss function reduces the importance of correct density ratio estimation.
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+Algorithm & Mean Reconstruction Error & Standard Deviation\\
+\hline
+PC Reverse KL - $D_\alpha(z,x)$ & 0.08662 & 0.00154\\
+\hline
+PC Reverse KL - $r_\alpha(z,x)$ & 0.08710 & 0.00214\\
+\hline
+PC Reverse KL - $T_\alpha(z,x)$ & 0.08730 & 0.00157\\
+\hline
+PC GAN - $D_\alpha(z,x)$ & 0.08673 & 0.00129\\
+\hline
+PC GAN - $r_\alpha(z,x)$ & 0.08716 & 0.00151\\
+\hline
+PC GAN - $T_\alpha(z,x)$ & 0.10683 & 0.00199\\
+\hline
+\end{tabular}
+\caption{Reconstruction Errors for the Low Dimensional MNIST Generation Experiment}
+\end{table}
+\newpage
+\begin{figure}[t!]
+\centering
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{part3reconerrors/PCADVvsPCADVexpvsPCADVgudlog.png}
+\caption{GAN Divergence}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{part3reconerrors/PCKLDvsPCKLexpvsPCKLgudlog.png}
+\caption{Reverse KL Divergence}
+\end{subfigure}
+\caption{\small In the above average KL divergence plots, the only noticeable feature is that the direct log ratio estimator in sub-figure (a) consistently has a higher reconstruction error for most of the iterations.}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{part3estimatorlosses/PCADVvsPCADVexpvsPCADVgudlog.png}
+\caption{GAN Divergence}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{part3estimatorlosses/PCKLDvsPCKLexpvsPCKLgudlog.png}
+\caption{Reverse KL Divergence}
+\end{subfigure}
+\caption{\small Noting the scale of the estimator loss plot in sub-figure (b), it is evident that the reverse KL divergence leads to unstable estimator training. Unlike the estimators plotted in Figure 9.3 (b), these estimators don't appear to stabilise after a certain period. Sub-figure (a) shows that the direct log ratio estimator loss is consistently higher than the other two estimators, correlating with its poorer reconstruction.}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{part3nelbos/PCADVvsPCADVexpvsPCADVgudlog.png}
+\caption{GAN Divergence}
+\end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{part3nelbos/PCKLDvsPCKLexpvsPCKLgudlog.png}
+\caption{Reverse KL Divergence}
+\end{subfigure}
+\caption{\small Despite the apparent instability of the estimators trained with the reverse KL divergence, the NELBO plot in sub-figure (b) is relatively consistent, leading to a smooth convergence as plotted in Figure 10.6 (b). The high estimator losses shown in Figure 10.7 (a) correspond to an overestimated NELBO as depicted in sub-figure (a).}
+\end{figure}
+\section{High Dimensional Experiment Results}
+When the dimensionality of the latent space was increased to 10, the direct ratio and direct log ratio estimator loss functions involved quantities greater than the largest representable 64-bit floating point number, overflowing to \verb+Inf+ and outputting \verb+NaN+ for the remainder of the program runtime. This is because the density ratio $\frac{q_\phi(z|x)}{p(z)}$ increases with the dimensionality of the latent space, eventually reaching a value that is too large to be represented by a 64-bit float. The direct ratio estimator $r_\alpha(z,x)\simeq \frac{q_\phi(z|x)}{p(z)}$ therefore fails in this scenario. Now recall that the direct log ratio estimator loss function involves taking the exponential of the estimator output. For example, the loss function formulated by the reverse KL divergence is
+\[-\E_{q^*(x)\pi(\epsilon)}[T_\alpha(\mathcal{G}(\epsilon;x),x)]+\E_{p(z)q^*(x)}[\exp(T_\alpha(z,x))].\]
+So despite $T_\alpha(z,x)$ outputting the log of the density ratio, the exact density ratio is expressed in the loss function when the exponential is taken, causing the program to fail. On the other hand, the class probability estimator does not experience this problem as its output is bound in $(0,1)$.
+\begin{lemma}
+The class probability estimator network output before passing through the sigmoid activation function $g(x)=\frac{1}{1+e^{-x}}$ is the estimated log density ratio $\log \frac{q_\phi(z|x)}{p(z)}$.
+\begin{proof}
+Letting $x$ be the neural network output before being mapped to $(0,1)$, we have:
 \begin{align*}
-\frac{1}{1+e^{-x}}&=\frac{q_\phi(z|x)}{p(z)+q_\phi(z|x)}\\
-e^{-x}+1&=\frac{p(z)+q_\phi(z|x)}{q_\phi(z|x)}\\
-e^{-x}&=\frac{p(z)}{q_\phi(z|x)}\\
-x&=\log \frac{q_\phi(z|x)}{p(z)}.
+\frac{1}{1+e^{-x}}&\simeq\frac{q_\phi(z|x)}{p(z)+q_\phi(z|x)}\\
+e^{-x}+1&\simeq\frac{p(z)+q_\phi(z|x)}{q_\phi(z|x)}\\
+e^{-x}&\simeq\frac{p(z)}{q_\phi(z|x)}\\
+x&\simeq\log \frac{q_\phi(z|x)}{p(z)}.
 \end{align*}
-The calculations involved with the class probability estimator are therefore within the space of representable number by 64-bit, and even 32-bit floating point numbers. Using a 32-bit representation leads to much faster computations. We can therefore conclude that the class probability estimator is superior in the sense that it is the only feasible parametrization.
-\chapter{Related Work and Discussion}
+\end{proof}
+\end{lemma}
+\begin{remark}
+The calculations involved with the class probability estimator lie within the space of representable numbers by 64-bit, and even 32-bit floating point numbers.
+\end{remark}
+We can therefore conclude that the class probability estimator is superior in the sense that it is the only feasible parametrization. It remains to compare the f-divergence used to formulate the estimator loss function. The reconstruction errors are tabulated in Table 10.2 below.
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+Algorithm & Mean Reconstruction Error & Standard Deviation\\
+\hline
+PC Reverse KL - $D_\alpha(z,x)$ & 0.06470 & 0.01949\\
+\hline
+PC GAN - $D_\alpha(z,x)$ & 0.04440 & 0.00174\\
+\hline
+\end{tabular}
+\caption{Reconstruction Errors for the High Dimensional MNIST Generation Experiment}
+\end{table}\\
+Here, the GAN divergence leads to significantly lower reconstruction error mean and standard deviation, contradicting the superiority of the reverse KL divergence shown in the previous experiments. An analysis of the plots in Figures 10.9-10.11 may explain this occurrence.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.49\linewidth]{part4reconerrors/PCADVvsPCKLD.png}
+\caption{\small This plot shows that the reconstruction error associated with the reverse KL divergence is consistently higher for the majority of the program runtime.}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.49\linewidth]{part4estimatorlosses/PCADVvsPCKLD.png}
+\caption{\small The estimator loss corresponding to the reverse KL divergence appears to be extremely unstable for the entire program runtime, spiking to values exceeding $10^{14}$. On the other hand, the GAN divergence estimator loss appears to be relatively stable.}
+\end{figure}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.49\linewidth]{part4nelbos/PCADVvsPCKLD.png}
+\caption{\small The instability of the reverse KL divergence estimator loss propagates to its NELBO estimation, which appears to fluctuate wildly in comparison to the GAN divergence's loss. This correlates to the superiority of the GAN divergence in this particular experiment. Again recalling Figures 9.3 and 9.6 (b), estimators formulated by the reverse KL divergence experience initial instability, but have more accurate density ratio estimation when stable. It is possible that the estimator in this experiment has not stabilised, leading to poorer network convergence. This may be due to the increased complexity of the distributions associated with the MNIST dataset, as opposed to the simplicity of the previous ``Sprinkler" problem.}
+\end{figure}
+\chapter{Discussion and Conclusion}
 Leave this as a brainstorm list for now
 \begin{itemize}
 \item Of course many other problems and training parameters can be explored, variational inference and implicit models are used for more than inference and generation
@@ -2417,8 +2682,6 @@ Leave this as a brainstorm list for now
 \item I don't know how denoisers work but they may be comparable to the methods discussed in this thesis (Huszar)
 \item Hopefully in the future everyone will be using class probability estimators trained under the loss function formulated by the KL divergence :)
 \end{itemize}
-\chapter{Conclusion}
-This thesis is hot trash.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

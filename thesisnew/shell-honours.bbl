@@ -140,6 +140,11 @@ Kullback, S. (1959).
 \newblock {\em Information Theory and Statistics}.
 \newblock Wiley, New York.
 
+\bibitem[LeCun et~al., 2012]{lecun}
+LeCun, Y.~A., Bottou, L., Orr, G.~B., and M{\"u}ller, K.-R. (2012).
+\newblock {\em Efficient BackProp}, pages 9--48.
+\newblock Springer Berlin Heidelberg, Berlin, Heidelberg.
+
 \bibitem[Li et~al., 2014]{batch}
 Li, M., Zhang, T., Chen, Y., and Smola, A.~J. (2014).
 \newblock Efficient mini-batch training for stochastic optimization.
@@ -221,6 +226,13 @@ Tiao, L.~C., Bonilla, E.~V., and Ramos, F. (2018).
 {Tran}, D., {Ranganath}, R., and {Blei}, D.~M. (2017).
 \newblock {Hierarchical Implicit Models and Likelihood-Free Variational
   Inference}.
+\newblock {\em ArXiv e-prints}.
+
+\bibitem[{Uehara} et~al., 2016]{bgan}
+{Uehara}, M., {Sato}, I., {Suzuki}, M., {Nakayama}, K., and {Matsuo}, Y.
+  (2016).
+\newblock {Generative Adversarial Nets from a Density Ratio Estimation
+  Perspective}.
 \newblock {\em ArXiv e-prints}.
 
 \bibitem[Wu, 2009]{wu}

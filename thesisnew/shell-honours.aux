@@ -86,6 +86,7 @@
 \citation{pattern}
 \citation{blei}
 \@writefile{toc}{\contentsline {section}{\numberline {3.5}Mean-Field Variational Family}{20}{section.3.5}}
+\citation{pattern}
 \@writefile{loa}{\contentsline {algocf}{\numberline {2}{\ignorespaces Coordinate Ascent Variational Inference (CAVI)\relax }}{22}{algocf.2}}
 \citation{blei}
 \@writefile{toc}{\contentsline {section}{\numberline {3.6}Example: Bayesian Mixture of Gaussians}{23}{section.3.6}}
@@ -118,6 +119,7 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1.1}Derivation}{35}{subsection.4.1.1}}
 \citation{sugiyama}
 \citation{gan}
+\citation{pattern}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1.2}Prior-Contrastive Algorithm}{37}{subsection.4.1.2}}
 \@writefile{loa}{\contentsline {algocf}{\numberline {4}{\ignorespaces Prior-Contrastive Class Probability Estimation\relax }}{39}{algocf.4}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1.3}Joint-Contrastive Algorithm}{40}{subsection.4.1.3}}
@@ -198,36 +200,53 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {8.4}{\ignorespaces Joint-Contrastive Average KL Divergence\relax }}{72}{figure.caption.40}}
 \@writefile{lof}{\contentsline {figure}{\numberline {8.5}{\ignorespaces Joint-Contrastive Estimator Loss\relax }}{72}{figure.caption.41}}
 \@writefile{lof}{\contentsline {figure}{\numberline {8.6}{\ignorespaces Joint-Contrastive NELBO\relax }}{72}{figure.caption.42}}
+\citation{lecun}
 \@writefile{toc}{\contentsline {chapter}{\numberline {Chapter 9}Comparing Undertrained Estimators}{73}{chapter.9}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
 \@writefile{toc}{\contentsline {section}{\numberline {9.1}Theory}{73}{section.9.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {9.1.1}Estimator Bounds}{73}{subsection.9.1.1}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.1.2}Displacement of Estimator Optimal Values}{74}{subsection.9.1.2}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.1.2}First and Second Derivatives of Estimator Loss Functions}{74}{subsection.9.1.2}}
 \@writefile{lof}{\contentsline {figure}{\numberline {9.1}{\ignorespaces \relax \fontsize  {10.95}{13.6}\selectfont  \abovedisplayskip 11\p@ plus3\p@ minus6\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \def \leftmargin \leftmargini \labelsep .5em\labelwidth \leftmargini \advance \labelwidth -\labelsep \parsep \z@ \topsep 0.4ex plus\p@ \itemsep 0\p@ plus1\p@ {\leftmargin \leftmargini \topsep 9\p@ plus3\p@ minus5\p@ \parsep 4.5\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip Above we have plotted the estimator output against its loss functional. The same x and y-axis scales are used for all plots. Due to the bounds, it is evident that the loss functionals using the class probability estimator $D_\alpha (u)$ are associated with the highest gradient values and therefore the fastest convergence. It is difficult to compare the direct ratio estimator $r_\alpha (u)$ and the direct log ratio estimator $T_\alpha (u)$, as the former estimator appears to have higher gradients when $q(u)<p(u)$, but slower convergence when $q(u)>p(u)$. Since the relative gradients of the graph can vary with the choice of $p(u)$ and $q(u)$, we cannot compare the f-divergences.\relax }}{75}{figure.caption.43}}
-\@writefile{toc}{\contentsline {section}{\numberline {9.2}Experiment Outline}{77}{section.9.2}}
-\@writefile{toc}{\contentsline {section}{\numberline {9.3}Results}{77}{section.9.3}}
-\@writefile{lot}{\contentsline {table}{\numberline {9.1}{\ignorespaces Prior-Contrastive Results\relax }}{78}{table.caption.44}}
-\@writefile{lot}{\contentsline {table}{\numberline {9.2}{\ignorespaces Joint-Contrastive Results\relax }}{78}{table.caption.45}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9.2}{\ignorespaces Prior-Contrastive Average KL Divergence\relax }}{79}{figure.caption.46}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9.3}{\ignorespaces Prior-Contrastive Estimator Loss\relax }}{79}{figure.caption.47}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9.4}{\ignorespaces Prior-Contrastive NELBO\relax }}{79}{figure.caption.48}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9.5}{\ignorespaces Joint-Contrastive Average KL Divergence\relax }}{80}{figure.caption.49}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9.6}{\ignorespaces Joint-Contrastive Estimator Loss\relax }}{80}{figure.caption.50}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9.7}{\ignorespaces Joint-Contrastive NELBO\relax }}{80}{figure.caption.51}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {Chapter 10}Data Generation - (MNIST image generation)}{81}{chapter.10}}
+\citation{lecun}
+\citation{nowozin}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.1.3}Displacement of Estimator Optimal Values}{77}{subsection.9.1.3}}
+\@writefile{toc}{\contentsline {section}{\numberline {9.2}Experiment Outline}{79}{section.9.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {9.3}Results}{79}{section.9.3}}
+\@writefile{lot}{\contentsline {table}{\numberline {9.1}{\ignorespaces Prior-Contrastive Results\relax }}{80}{table.caption.44}}
+\@writefile{lot}{\contentsline {table}{\numberline {9.2}{\ignorespaces Joint-Contrastive Results\relax }}{80}{table.caption.45}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9.2}{\ignorespaces Prior-Contrastive Average KL Divergence\relax }}{81}{figure.caption.46}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9.3}{\ignorespaces Prior-Contrastive Estimator Loss\relax }}{81}{figure.caption.47}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9.4}{\ignorespaces Prior-Contrastive NELBO\relax }}{81}{figure.caption.48}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9.5}{\ignorespaces Joint-Contrastive Average KL Divergence\relax }}{82}{figure.caption.49}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9.6}{\ignorespaces Joint-Contrastive Estimator Loss\relax }}{82}{figure.caption.50}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9.7}{\ignorespaces Joint-Contrastive NELBO\relax }}{82}{figure.caption.51}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {Chapter 10}Data Generation - (MNIST image generation)}{83}{chapter.10}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {10.1}Problem Context}{81}{section.10.1}}
-\@writefile{toc}{\contentsline {section}{\numberline {10.2}Program Structure}{81}{section.10.2}}
-\@writefile{toc}{\contentsline {section}{\numberline {10.3}Results}{82}{section.10.3}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {Chapter 11}Related Work and Discussion}{84}{chapter.11}}
-\@writefile{lof}{\addvspace {10\p@ }}
-\@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{loa}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {chapter}{\numberline {Chapter 12}Conclusion}{85}{chapter.12}}
+\@writefile{toc}{\contentsline {section}{\numberline {10.1}Experiment Outline}{83}{section.10.1}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10.1}{\ignorespaces Samples from the MNIST Dataset\relax }}{83}{figure.caption.52}}
+\citation{nowozin,bgan}
+\citation{nowozin,bgan}
+\@writefile{lof}{\contentsline {figure}{\numberline {10.2}{\ignorespaces \relax \fontsize  {10.95}{13.6}\selectfont  \abovedisplayskip 11\p@ plus3\p@ minus6\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \def \leftmargin \leftmargini \labelsep .5em\labelwidth \leftmargini \advance \labelwidth -\labelsep \parsep \z@ \topsep 0.4ex plus\p@ \itemsep 0\p@ plus1\p@ {\leftmargin \leftmargini \topsep 9\p@ plus3\p@ minus5\p@ \parsep 4.5\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip This figure illustrates the structure of the generator network $\mathcal  {G}(x,\bm  {\epsilon })$ used in the MNIST data generation experiment. The notation used in the figure is the same as in Figures 5.2 and 5.3, and overall the network structure is very similar except significantly more nodes are used, suiting the higher dimensionality of the data. The dimensionality of latent variable $z$ is either 2 or 10 depending on the experimental setting. We have arbitrarily chosen the number of random noise inputs $\epsilon $ to be 4.\relax }}{84}{figure.caption.53}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10.3}{\ignorespaces \relax \fontsize  {10.95}{13.6}\selectfont  \abovedisplayskip 11\p@ plus3\p@ minus6\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \def \leftmargin \leftmargini \labelsep .5em\labelwidth \leftmargini \advance \labelwidth -\labelsep \parsep \z@ \topsep 0.4ex plus\p@ \itemsep 0\p@ plus1\p@ {\leftmargin \leftmargini \topsep 9\p@ plus3\p@ minus5\p@ \parsep 4.5\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip This is a diagram of the decoder network used in the MNIST data generation experiment. A sigmoid output layer is used to map the network output to $(0,1)$, suiting the grayscale nature of the data. The amount of effective hidden layers is the same as in the encoder network, but there are significantly more nodes in each layer. This is because the objective of the program is to output relatively high dimensional image data. Although this problem involves image analysis, due to the relatively small image size we refrain from using convolutional layers. This is consistent with other similar MNIST experiments \citep  {nowozin, bgan}.\relax }}{84}{figure.caption.54}}
+\citation{nowozin,bgan,tiao}
+\citation{nowozin}
+\@writefile{lof}{\contentsline {figure}{\numberline {10.4}{\ignorespaces \relax \fontsize  {10.95}{13.6}\selectfont  \abovedisplayskip 11\p@ plus3\p@ minus6\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \def \leftmargin \leftmargini \labelsep .5em\labelwidth \leftmargini \advance \labelwidth -\labelsep \parsep \z@ \topsep 0.4ex plus\p@ \itemsep 0\p@ plus1\p@ {\leftmargin \leftmargini \topsep 9\p@ plus3\p@ minus5\p@ \parsep 4.5\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip This figure depicts the estimator network for the MNIST data generation experiment. Depending on the estimator parametrisation, the output activation function is either sigmoid for the class probability estimator $D_\alpha (z,x)\simeq \frac  {q_\phi (z|x)}{q_\phi (z|x)+p(z)}$, exponential for the direct ratio estimator $r_\alpha (z,x)\simeq \frac  {q_\phi (z|x)}{p(z)}$ or linear for the direct log ratio estimator $T_\alpha (z,x)\simeq \qopname  \relax o{log}\frac  {q_\phi (z|x)}{p(z)}$.\relax }}{85}{figure.caption.55}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10.5}{\ignorespaces \relax \fontsize  {10.95}{13.6}\selectfont  \abovedisplayskip 11\p@ plus3\p@ minus6\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \def \leftmargin \leftmargini \labelsep .5em\labelwidth \leftmargini \advance \labelwidth -\labelsep \parsep \z@ \topsep 0.4ex plus\p@ \itemsep 0\p@ plus1\p@ {\leftmargin \leftmargini \topsep 9\p@ plus3\p@ minus5\p@ \parsep 4.5\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip This diagram depicts the ``Adversarial Variational Bayes" formulation of the variational autoencoder used in the MNIST data generation experiment. Note that there is no random noise added to the decoder.\relax }}{85}{figure.caption.56}}
+\@writefile{toc}{\contentsline {section}{\numberline {10.2}Low Dimensional Experiment Results}{86}{section.10.2}}
+\@writefile{lot}{\contentsline {table}{\numberline {10.1}{\ignorespaces Reconstruction Errors for the Low Dimensional MNIST Generation Experiment\relax }}{86}{table.caption.57}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10.6}{\ignorespaces \relax \fontsize  {10.95}{13.6}\selectfont  \abovedisplayskip 11\p@ plus3\p@ minus6\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \def \leftmargin \leftmargini \labelsep .5em\labelwidth \leftmargini \advance \labelwidth -\labelsep \parsep \z@ \topsep 0.4ex plus\p@ \itemsep 0\p@ plus1\p@ {\leftmargin \leftmargini \topsep 9\p@ plus3\p@ minus5\p@ \parsep 4.5\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip In the above average KL divergence plots, the only noticeable feature is that the direct log ratio estimator in sub-figure (a) consistently has a higher reconstruction error for most of the iterations.\relax }}{87}{figure.caption.58}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10.7}{\ignorespaces \relax \fontsize  {10.95}{13.6}\selectfont  \abovedisplayskip 11\p@ plus3\p@ minus6\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \def \leftmargin \leftmargini \labelsep .5em\labelwidth \leftmargini \advance \labelwidth -\labelsep \parsep \z@ \topsep 0.4ex plus\p@ \itemsep 0\p@ plus1\p@ {\leftmargin \leftmargini \topsep 9\p@ plus3\p@ minus5\p@ \parsep 4.5\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip Noting the scale of the estimator loss plot in sub-figure (b), it is evident that the reverse KL divergence leads to unstable estimator training. Unlike the estimators plotted in Figure 9.3 (b), these estimators don't appear to stabilise after a certain period. Sub-figure (a) shows that the direct log ratio estimator loss is consistently higher than the other two estimators, correlating with its poorer reconstruction.\relax }}{87}{figure.caption.59}}
+\@writefile{toc}{\contentsline {section}{\numberline {10.3}High Dimensional Experiment Results}{87}{section.10.3}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10.8}{\ignorespaces \relax \fontsize  {10.95}{13.6}\selectfont  \abovedisplayskip 11\p@ plus3\p@ minus6\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \def \leftmargin \leftmargini \labelsep .5em\labelwidth \leftmargini \advance \labelwidth -\labelsep \parsep \z@ \topsep 0.4ex plus\p@ \itemsep 0\p@ plus1\p@ {\leftmargin \leftmargini \topsep 9\p@ plus3\p@ minus5\p@ \parsep 4.5\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip Despite the apparent instability of the estimators trained with the reverse KL divergence, the NELBO plot in sub-figure (b) is relatively consistent, leading to a smooth convergence as plotted in Figure 10.6 (b). The high estimator losses shown in Figure 10.7 (a) correspond to an overestimated NELBO as depicted in sub-figure (a).\relax }}{88}{figure.caption.60}}
+\@writefile{lot}{\contentsline {table}{\numberline {10.2}{\ignorespaces Reconstruction Errors for the High Dimensional MNIST Generation Experiment\relax }}{89}{table.caption.61}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10.9}{\ignorespaces \relax \fontsize  {10.95}{13.6}\selectfont  \abovedisplayskip 11\p@ plus3\p@ minus6\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \def \leftmargin \leftmargini \labelsep .5em\labelwidth \leftmargini \advance \labelwidth -\labelsep \parsep \z@ \topsep 0.4ex plus\p@ \itemsep 0\p@ plus1\p@ {\leftmargin \leftmargini \topsep 9\p@ plus3\p@ minus5\p@ \parsep 4.5\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip This plot shows that the reconstruction error associated with the reverse KL divergence is consistently higher for the majority of the program runtime.\relax }}{89}{figure.caption.62}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10.10}{\ignorespaces \relax \fontsize  {10.95}{13.6}\selectfont  \abovedisplayskip 11\p@ plus3\p@ minus6\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \def \leftmargin \leftmargini \labelsep .5em\labelwidth \leftmargini \advance \labelwidth -\labelsep \parsep \z@ \topsep 0.4ex plus\p@ \itemsep 0\p@ plus1\p@ {\leftmargin \leftmargini \topsep 9\p@ plus3\p@ minus5\p@ \parsep 4.5\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip The estimator loss corresponding to the reverse KL divergence appears to be extremely unstable for the entire program runtime, spiking to values exceeding $10^{14}$. On the other hand, the GAN divergence estimator loss appears to be relatively stable.\relax }}{90}{figure.caption.63}}
+\@writefile{lof}{\contentsline {figure}{\numberline {10.11}{\ignorespaces \relax \fontsize  {10.95}{13.6}\selectfont  \abovedisplayskip 11\p@ plus3\p@ minus6\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \def \leftmargin \leftmargini \labelsep .5em\labelwidth \leftmargini \advance \labelwidth -\labelsep \parsep \z@ \topsep 0.4ex plus\p@ \itemsep 0\p@ plus1\p@ {\leftmargin \leftmargini \topsep 9\p@ plus3\p@ minus5\p@ \parsep 4.5\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip The instability of the reverse KL divergence estimator loss propagates to its NELBO estimation, which appears to fluctuate wildly in comparison to the GAN divergence's loss. This correlates to the superiority of the GAN divergence in this particular experiment. Again recalling Figures 9.3 and 9.6 (b), estimators formulated by the reverse KL divergence experience initial instability, but have more accurate density ratio estimation when stable. It is possible that the estimator in this experiment has not stabilised, leading to poorer network convergence. This may be due to the increased complexity of the distributions associated with the MNIST dataset, as opposed to the simplicity of the previous ``Sprinkler" problem.\relax }}{90}{figure.caption.64}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {Chapter 11}Discussion and Conclusion}{91}{chapter.11}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
@@ -247,7 +266,7 @@
 \bibcite{JS}{{12}{2004}{{Fuglede and Topsoe}}{{}}}
 \bibcite{gelman}{{13}{2004}{{Gelman et~al.}}{{}}}
 \bibcite{xavier}{{14}{2010}{{Glorot and Bengio}}{{}}}
-\@writefile{toc}{\contentsline {chapter}{References}{86}{chapter.12}}
+\@writefile{toc}{\contentsline {chapter}{References}{92}{chapter.11}}
 \bibcite{sparse}{{15}{2011}{{Glorot et~al.}}{{}}}
 \bibcite{DeepLearning}{{16}{2016}{{Goodfellow et~al.}}{{}}}
 \bibcite{gan}{{17}{2014}{{Goodfellow et~al.}}{{}}}
@@ -259,25 +278,27 @@
 \bibcite{kingma}{{23}{2013}{{{Kingma} and {Welling}}}{{}}}
 \bibcite{kolen}{{24}{2001}{{Kolen and Kremer}}{{}}}
 \bibcite{KL}{{25}{1959}{{Kullback}}{{}}}
-\bibcite{batch}{{26}{2014}{{Li et~al.}}{{}}}
-\bibcite{relu2}{{27}{2017}{{Liu et~al.}}{{}}}
-\bibcite{leaky}{{28}{2013}{{Maas}}{{}}}
-\bibcite{mescheder}{{29}{2017}{{Mescheder et~al.}}{{}}}
-\bibcite{mohamed}{{30}{2016}{{{Mohamed} and {Lakshminarayanan}}}{{}}}
-\bibcite{relu1}{{31}{2015}{{Nam and Sugiyama}}{{}}}
-\bibcite{nguyen}{{32}{2010}{{Nguyen et~al.}}{{}}}
-\bibcite{nowozin}{{33}{2016}{{Nowozin et~al.}}{{}}}
-\bibcite{explain}{{34}{1993}{{P.~Wellman and Henrion}}{{}}}
-\bibcite{optimneural}{{35}{2016}{{Ruder}}{{}}}
-\bibcite{mnist}{{36}{2003}{{Simard et~al.}}{{}}}
-\bibcite{snyman}{{37}{2005}{{Snyman}}{{}}}
-\bibcite{sugiyama}{{38}{2012}{{Sugiyama et~al.}}{{}}}
-\bibcite{tiao}{{39}{2018}{{Tiao et~al.}}{{}}}
-\bibcite{tran}{{40}{2017}{{{Tran} et~al.}}{{}}}
-\bibcite{wu}{{41}{2009}{{Wu}}{{}}}
-\bibcite{ADVVI}{{42}{2017}{{Zhang et~al.}}{{}}}
-\bibcite{neuroplast}{{43}{1992}{{Zilles}}{{}}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {Appendix A}Kernel Density Estimation}{89}{appendix.A}}
+\bibcite{lecun}{{26}{2012}{{LeCun et~al.}}{{}}}
+\bibcite{batch}{{27}{2014}{{Li et~al.}}{{}}}
+\bibcite{relu2}{{28}{2017}{{Liu et~al.}}{{}}}
+\bibcite{leaky}{{29}{2013}{{Maas}}{{}}}
+\bibcite{mescheder}{{30}{2017}{{Mescheder et~al.}}{{}}}
+\bibcite{mohamed}{{31}{2016}{{{Mohamed} and {Lakshminarayanan}}}{{}}}
+\bibcite{relu1}{{32}{2015}{{Nam and Sugiyama}}{{}}}
+\bibcite{nguyen}{{33}{2010}{{Nguyen et~al.}}{{}}}
+\bibcite{nowozin}{{34}{2016}{{Nowozin et~al.}}{{}}}
+\bibcite{explain}{{35}{1993}{{P.~Wellman and Henrion}}{{}}}
+\bibcite{optimneural}{{36}{2016}{{Ruder}}{{}}}
+\bibcite{mnist}{{37}{2003}{{Simard et~al.}}{{}}}
+\bibcite{snyman}{{38}{2005}{{Snyman}}{{}}}
+\bibcite{sugiyama}{{39}{2012}{{Sugiyama et~al.}}{{}}}
+\bibcite{tiao}{{40}{2018}{{Tiao et~al.}}{{}}}
+\bibcite{tran}{{41}{2017}{{{Tran} et~al.}}{{}}}
+\bibcite{bgan}{{42}{2016}{{{Uehara} et~al.}}{{}}}
+\bibcite{wu}{{43}{2009}{{Wu}}{{}}}
+\bibcite{ADVVI}{{44}{2017}{{Zhang et~al.}}{{}}}
+\bibcite{neuroplast}{{45}{1992}{{Zilles}}{{}}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {Appendix A}Kernel Density Estimation}{95}{appendix.A}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
