@@ -5,5 +5,5 @@
 \beamer@sectionintoc {2}{Activation Function Experiment}{17}{0}{2}
 \beamer@sectionintoc {3}{Optimal Estimator Experiment}{22}{0}{3}
 \beamer@sectionintoc {4}{Undertrained Estimator Experiment}{26}{0}{4}
-\beamer@subsectionintoc {4}{1}{Generation Experiment}{31}{0}{4}
-\beamer@sectionintoc {5}{Theory}{35}{0}{5}
+\beamer@subsectionintoc {4}{1}{Generation Experiment}{29}{0}{4}
+\beamer@sectionintoc {5}{Theory}{33}{0}{5}

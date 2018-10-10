@@ -562,18 +562,6 @@ JC GAN - $T_\alpha(z,x)$ & 1.3670 & 0.0387\\
 \hline
 Algorithm & Mean KL Divergence & Standard Deviation\\
 \hline
-PC Reverse KL - $D_\alpha(z,x)$ & 1.3572 & 0.0136\\
-\hline
-PC Reverse KL - $r_\alpha(z,x)$ & 1.3607 & 0.0199\\
-\hline
-PC Reverse KL - $T_\alpha(z,x)$ & 1.3641 & 0.0141\\
-\hline
-PC GAN - $D_\alpha(z,x)$ & 1.3788 & 0.0258\\
-\hline
-PC GAN - $r_\alpha(z,x)$ & 1.3811 & 0.0365\\
-\hline
-PC GAN - $T_\alpha(z,x)$ & 1.3849 & 0.0450\\
-\hline
 JC Reverse KL - $D_\alpha(z,x)$ & 1.3786 & 0.0286\\
 \hline
 JC Reverse KL - $r_\alpha(z,x)$ & 1.3934 & 0.0410\\
@@ -591,31 +579,7 @@ JC GAN - $T_\alpha(z,x)$ & 1.4214 & 0.0518\\
 \end{table}
 \begin{itemize}
 \item Reverse KL divergence significantly better than GAN divergence.
-
-\end{itemize}
-\end{frame}
-\begin{frame}{Undertrained Estimator Experiment}{Comparing Undertrained Estimators}
-\begin{itemize}
-\item For PC, $D_\alpha(z,x)<r_\alpha(z,x)<T_\alpha(z,x)$ in terms of mean KL divergence but not by a significant amount.
-\item Same trend but more significant in JC because likelihood term also used for optimization in PC.
-\item f-divergence used is more significant than estimator parametrisation.
-\item Optimal combination is reverse KL divergence with class probability estimator.
-\end{itemize}
-\end{frame}
-\begin{frame}{Undertrained Estimator Experiment}{Prior-Contrastive NELBO Plots}
-\begin{figure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{part2nelbos/PCADVvsPCADVexpvsPCADVgudlog.png}
-\caption{GAN Divergence}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{part2nelbos/PCKLDvsPCKLexpvsPCKLgudlog.png}
-\caption{Reverse KL Divergence}
-\end{subfigure}
-\end{figure}
-\begin{itemize}
-\item Reverse KL divergence unstable initially but stabilises later.
-\item Overall reverse KL divergence showed faster convergence.
+\item $D_\alpha(z,x)<r_\alpha(z,x)<T_\alpha(z,x)$
 \end{itemize}
 \end{frame}
 \begin{frame}{Undertrained Estimator Experiment}{Joint-Contrastive NELBO Plots}
