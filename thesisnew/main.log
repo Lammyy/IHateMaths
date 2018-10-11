@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  10 OCT 2018 17:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  11 OCT 2018 18:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1634,19 +1634,19 @@ your preamble.
  on input line 109.
 
 (./main.nav)
-Overfull \hbox (57.09915pt too wide) in paragraph at lines 109--109
+Overfull \hbox (86.33488pt too wide) in paragraph at lines 109--109
  [][][][]  
  []
 
 
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [1
 
 {c:/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./main.toc)
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -1682,84 +1682,68 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [3
 
 ]
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-
-Overfull \hbox (2.95036pt too wide) in paragraph at lines 237--237
- [][][][]\OT1/cmss/m/n/10.95 Activation 
- []
-
-
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [4
 
 ]
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+LaTeX Font Info:    Try loading font information for U+BOONDOX-cal on input lin
+e 218.
+ (c:/texlive/2017/texmf-dist/tex/latex/boondox/uboondox-cal.fd
+File: uboondox-cal.fd 2011/04/26 Fontinst v1.933 font definitions for U/BOONDOX
+-cal.
+)
+LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
+(Font)              scaled to size 10.95pt on input line 218.
+LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
+(Font)              scaled to size 8.0pt on input line 218.
+LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
+(Font)              scaled to size 6.0pt on input line 218.
+
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [5
 
 ]
-LaTeX Font Info:    Try loading font information for U+BOONDOX-cal on input lin
-e 272.
- (c:/texlive/2017/texmf-dist/tex/latex/boondox/uboondox-cal.fd
-File: uboondox-cal.fd 2011/04/26 Fontinst v1.933 font definitions for U/BOONDOX
--cal.
-)
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 10.95pt on input line 272.
+(Font)              scaled to size 10.0pt on input line 237.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 8.0pt on input line 272.
+(Font)              scaled to size 7.0pt on input line 237.
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 6.0pt on input line 272.
+(Font)              scaled to size 5.0pt on input line 237.
+LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 237.
+LaTeX Font Info:    Font shape `U/lasy/b/n' in size <5> not available
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 237.
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [6
 
 ]
-LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 10.0pt on input line 291.
-LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 7.0pt on input line 291.
-LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 5.0pt on input line 291.
-LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 291.
-LaTeX Font Info:    Font shape `U/lasy/b/n' in size <5> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 291.
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
- [][][][]  
- []
-
-[7
-
-]
-Overfull \hbox (8.29726pt too wide) detected at line 300
+Overfull \hbox (8.29726pt too wide) detected at line 246
 [] \OT1/mathkerncmss/m/sl/10.95 NELBO\OT1/cmss/m/n/10.95 (\OT1/mathkerncmss/m/s
 l/10.95 q\OT1/cmss/m/n/10.95 ) = \OMS/cmsy/m/n/10.95 ^^@\U/msb/m/n/10.95 E[]\OT
 1/cmss/m/n/10.95 [[] \OT1/mathkerncmss/m/sl/10.95 p\OT1/cmss/m/n/10.95 (\OT1/ma
@@ -1773,259 +1757,186 @@ OML/cmm/m/it/10.95 :
  []
 
 
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[7
+
+]
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [8
 
 ]
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [9
 
 ]
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [10
 
 ]
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [11
 
 ]
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [12
 
 ]
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [13
 
 ]
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [14
 
 ]
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [15
 
 ]
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+<sprinklertrue.png, id=500, 1087.06125pt x 213.04594pt>
+File: sprinklertrue.png Graphic file (type png)
+<use sprinklertrue.png>
+Package pdftex.def Info: sprinklertrue.png  used on input line 351. on input li
+ne 351.
+Package pdftex.def Info: Requested size: 342.2953pt x 67.08382pt on input line 
+351.
+
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [16
 
-]
-<sprinklertrue.png, id=524, 1087.06125pt x 213.04594pt>
-File: sprinklertrue.png Graphic file (type png)
-<use sprinklertrue.png>
-Package pdftex.def Info: sprinklertrue.png  used on input line 405. on input li
-ne 405.
-Package pdftex.def Info: Requested size: 342.2953pt x 67.08382pt on input line 
-405.
-
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+ <./sprinklertrue.png>]
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [17
 
- <./sprinklertrue.png>]
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+]
+<13288.png, id=555, 1180.41pt x 228.855pt>
+File: 13288.png Graphic file (type png)
+<use 13288.png>
+Package pdftex.def Info: 13288.png  used on input line 395. on input line 395.
+Package pdftex.def Info: Requested size: 342.2953pt x 66.36275pt on input line 
+395.
+<13963.png, id=556, 1178.15157pt x 231.86626pt>
+File: 13963.png Graphic file (type png)
+<use 13963.png>
+Package pdftex.def Info: 13963.png  used on input line 395. on input line 395.
+Package pdftex.def Info: Requested size: 342.2953pt x 67.36331pt on input line 
+395.
+
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [18
 
-]
-<13288.png, id=580, 1180.41pt x 228.855pt>
-File: 13288.png Graphic file (type png)
-<use 13288.png>
-Package pdftex.def Info: 13288.png  used on input line 449. on input line 449.
-Package pdftex.def Info: Requested size: 342.2953pt x 66.36275pt on input line 
-449.
-<13963.png, id=581, 1178.15157pt x 231.86626pt>
-File: 13963.png Graphic file (type png)
-<use 13963.png>
-Package pdftex.def Info: 13963.png  used on input line 449. on input line 449.
-Package pdftex.def Info: Requested size: 342.2953pt x 67.36331pt on input line 
-449.
+ <./13288.png> <./13963.png>]
+<truklmins/PCKLvsPCKLEXP.png, id=585, 410.2828pt x 314.67563pt>
+File: truklmins/PCKLvsPCKLEXP.png Graphic file (type png)
+<use truklmins/PCKLvsPCKLEXP.png>
+Package pdftex.def Info: truklmins/PCKLvsPCKLEXP.png  used on input line 410. o
+n input line 410.
+Package pdftex.def Info: Requested size: 167.72658pt x 128.6385pt on input line
+ 410.
+<nelbos/PCKLvsPCKLEXP.png, id=586, 419.31656pt x 315.42844pt>
+File: nelbos/PCKLvsPCKLEXP.png Graphic file (type png)
+<use nelbos/PCKLvsPCKLEXP.png>
+Package pdftex.def Info: nelbos/PCKLvsPCKLEXP.png  used on input line 410. on i
+nput line 410.
+Package pdftex.def Info: Requested size: 167.72658pt x 126.16913pt on input lin
+e 410.
 
-Overfull \vbox (1.03088pt too high) detected at line 449
- []
-
-
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [19
 
- <./13288.png> <./13963.png>]
-<truklmins/PCKLvsPCKLEXP.png, id=612, 410.2828pt x 314.67563pt>
-File: truklmins/PCKLvsPCKLEXP.png Graphic file (type png)
-<use truklmins/PCKLvsPCKLEXP.png>
-Package pdftex.def Info: truklmins/PCKLvsPCKLEXP.png  used on input line 464. o
-n input line 464.
-Package pdftex.def Info: Requested size: 167.72658pt x 128.6385pt on input line
- 464.
-<truklmins/JCKLvsJCKLEXP.png, id=613, 409.53pt x 314.67563pt>
-File: truklmins/JCKLvsJCKLEXP.png Graphic file (type png)
-<use truklmins/JCKLvsJCKLEXP.png>
-Package pdftex.def Info: truklmins/JCKLvsJCKLEXP.png  used on input line 464. o
-n input line 464.
-Package pdftex.def Info: Requested size: 167.72658pt x 128.87859pt on input lin
-e 464.
-
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+ <./truklmins/PCKLvsPCKLEXP.png> <./nelbos/PCKLvsPCKLEXP.png>]
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [20
 
- <./truklmins/PCKLvsPCKLEXP.png> <./truklmins/JCKLvsJCKLEXP.png>]
-<nelbos/PCKLvsPCKLEXP.png, id=641, 419.31656pt x 315.42844pt>
-File: nelbos/PCKLvsPCKLEXP.png Graphic file (type png)
-<use nelbos/PCKLvsPCKLEXP.png>
-Package pdftex.def Info: nelbos/PCKLvsPCKLEXP.png  used on input line 480. on i
-nput line 480.
-Package pdftex.def Info: Requested size: 167.72658pt x 126.16913pt on input lin
-e 480.
-<nelbos/JCKLvsJCKLEXP.png, id=642, 416.30531pt x 314.67563pt>
-File: nelbos/JCKLvsJCKLEXP.png Graphic file (type png)
-<use nelbos/JCKLvsJCKLEXP.png>
-Package pdftex.def Info: nelbos/JCKLvsJCKLEXP.png  used on input line 480. on i
-nput line 480.
-Package pdftex.def Info: Requested size: 167.72658pt x 126.7803pt on input line
- 480.
+]
+Overfull \hbox (2.78236pt too wide) in paragraph at lines 463--463
+ [] 
+ []
 
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [21
 
- <./nelbos/PCKLvsPCKLEXP.png> <./nelbos/JCKLvsJCKLEXP.png>]
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+]
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [22
 
 ]
-Overfull \hbox (2.78236pt too wide) in paragraph at lines 517--517
- [] 
- []
-
-
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [23
 
 ]
-<truklmins/JCADVvsJCADVexpvsJCADVgudlog.png, id=724, 412.54124pt x 316.18124pt>
+<part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png, id=721, 462.528pt x 346.896pt>
+File: part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png Graphic file (type png)
+<use part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png>
+Package pdftex.def Info: part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png  used on 
+input line 545. on input line 545.
+Package pdftex.def Info: Requested size: 167.72658pt x 125.7929pt on input line
+ 545.
+<part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png, id=722, 462.528pt x 346.896pt>
+File: part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png Graphic file (type png)
+<use part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png>
+Package pdftex.def Info: part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png  used on in
+put line 545. on input line 545.
+Package pdftex.def Info: Requested size: 167.72658pt x 125.7929pt on input line
+ 545.
 
-File: truklmins/JCADVvsJCADVexpvsJCADVgudlog.png Graphic file (type png)
-<use truklmins/JCADVvsJCADVexpvsJCADVgudlog.png>
-Package pdftex.def Info: truklmins/JCADVvsJCADVexpvsJCADVgudlog.png  used on in
-put line 532. on input line 532.
-Package pdftex.def Info: Requested size: 167.72658pt x 128.54962pt on input lin
-e 532.
-<truklmins/JCKLDvsJCKLexpvsJCKLgudlog.png, id=725, 415.5525pt x 319.1925pt>
-File: truklmins/JCKLDvsJCKLexpvsJCKLgudlog.png Graphic file (type png)
-<use truklmins/JCKLDvsJCKLexpvsJCKLgudlog.png>
-Package pdftex.def Info: truklmins/JCKLDvsJCKLexpvsJCKLgudlog.png  used on inpu
-t line 532. on input line 532.
-Package pdftex.def Info: Requested size: 167.72658pt x 128.83391pt on input lin
-e 532.
-
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [24
-
- <./truklmins/JCADVvsJCADVexpvsJCADVgudlog.png> <./truklmins/JCKLDvsJCKLexpvsJC
-KLgudlog.png>]
-<nelbos/JCADVvsJCADVexpvsJCADVgudlog.png, id=753, 418.56375pt x 313.17pt>
-File: nelbos/JCADVvsJCADVexpvsJCADVgudlog.png Graphic file (type png)
-<use nelbos/JCADVvsJCADVexpvsJCADVgudlog.png>
-Package pdftex.def Info: nelbos/JCADVvsJCADVexpvsJCADVgudlog.png  used on input
- line 548. on input line 548.
-Package pdftex.def Info: Requested size: 167.72658pt x 125.49036pt on input lin
-e 548.
-<nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png, id=754, 423.83344pt x 316.93407pt>
-File: nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png Graphic file (type png)
-<use nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png>
-Package pdftex.def Info: nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png  used on input l
-ine 548. on input line 548.
-Package pdftex.def Info: Requested size: 167.72658pt x 125.42212pt on input lin
-e 548.
-
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
- [][][][]  
- []
-
-[25
-
- <./nelbos/JCADVvsJCADVexpvsJCADVgudlog.png> <./nelbos/JCKLDvsJCKLexpvsJCKLgudl
-og.png>]
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
- [][][][]  
- []
-
-[26
-
-]
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
- [][][][]  
- []
-
-[27
-
-]
-<part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png, id=838, 462.528pt x 346.896pt>
-File: part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png Graphic file (type png)
-<use part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png>
-Package pdftex.def Info: part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png  used on 
-input line 599. on input line 599.
-Package pdftex.def Info: Requested size: 167.72658pt x 125.7929pt on input line
- 599.
-<part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png, id=839, 462.528pt x 346.896pt>
-File: part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png Graphic file (type png)
-<use part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png>
-Package pdftex.def Info: part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png  used on in
-put line 599. on input line 599.
-Package pdftex.def Info: Requested size: 167.72658pt x 125.7929pt on input line
- 599.
-
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
- [][][][]  
- []
-
-[28
 
  <./part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png> <./part2nelbos/JCKLDvsJCKLexp
 vsJCKLgudlog.png>]
@@ -2045,68 +1956,68 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[25
+
+]
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[26
+
+]
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[27
+
+]
+<part4reconerrors/PCADVvsPCKLD.png, id=830, 420.06938pt x 314.67563pt>
+File: part4reconerrors/PCADVvsPCKLD.png Graphic file (type png)
+<use part4reconerrors/PCADVvsPCKLD.png>
+Package pdftex.def Info: part4reconerrors/PCADVvsPCKLD.png  used on input line 
+623. on input line 623.
+Package pdftex.def Info: Requested size: 167.72658pt x 125.64233pt on input lin
+e 623.
+<part4nelbos/PCADVvsPCKLD.png, id=831, 432.11438pt x 316.18124pt>
+File: part4nelbos/PCADVvsPCKLD.png Graphic file (type png)
+<use part4nelbos/PCADVvsPCKLD.png>
+Package pdftex.def Info: part4nelbos/PCADVvsPCKLD.png  used on input line 623. 
+on input line 623.
+Package pdftex.def Info: Requested size: 167.72658pt x 122.72641pt on input lin
+e 623.
+
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[28
+
+ <./part4reconerrors/PCADVvsPCKLD.png> <./part4nelbos/PCADVvsPCKLD.png>]
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [29
 
 ]
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [30
 
 ]
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [31
-
-]
-<part4reconerrors/PCADVvsPCKLD.png, id=947, 420.06938pt x 314.67563pt>
-File: part4reconerrors/PCADVvsPCKLD.png Graphic file (type png)
-<use part4reconerrors/PCADVvsPCKLD.png>
-Package pdftex.def Info: part4reconerrors/PCADVvsPCKLD.png  used on input line 
-677. on input line 677.
-Package pdftex.def Info: Requested size: 167.72658pt x 125.64233pt on input lin
-e 677.
-<part4nelbos/PCADVvsPCKLD.png, id=948, 432.11438pt x 316.18124pt>
-File: part4nelbos/PCADVvsPCKLD.png Graphic file (type png)
-<use part4nelbos/PCADVvsPCKLD.png>
-Package pdftex.def Info: part4nelbos/PCADVvsPCKLD.png  used on input line 677. 
-on input line 677.
-Package pdftex.def Info: Requested size: 167.72658pt x 122.72641pt on input lin
-e 677.
-
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
- [][][][]  
- []
-
-[32
-
- <./part4reconerrors/PCADVvsPCKLD.png> <./part4nelbos/PCADVvsPCKLD.png>]
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
- [][][][]  
- []
-
-[33
-
-]
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
- [][][][]  
- []
-
-[34
-
-]
-Overfull \hbox (57.09915pt too wide) has occurred while \output is active
- [][][][]  
- []
-
-[35
 
 ]
 \tf@nav=\write6
@@ -2118,11 +2029,11 @@ Overfull \hbox (57.09915pt too wide) has occurred while \output is active
 \tf@snm=\write8
 \openout8 = `main.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 762.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 762.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 708.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 708.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 762.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 762.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 708.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 708.
 
 
 Package rerunfilecheck Warning: File `main.out' has changed.
@@ -2130,22 +2041,28 @@ Package rerunfilecheck Warning: File `main.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: 40DA09FA51158E6137A80FAD000C250F;580
-(rerunfilecheck)             After:  AFE02B0C3B019776B838353FDE432490;580.
+(rerunfilecheck)             Before: 5C4598AF379ADB6111FAC98BF8B8BD43;580
+(rerunfilecheck)             After:  9A45758D50EDAF506F21B44CFBF4606C;580.
  ) 
 Here is how much of TeX's memory you used:
- 35857 strings out of 492990
- 854825 string characters out of 6136334
+ 35765 strings out of 492990
+ 852727 string characters out of 6136334
  1086691 words of memory out of 5000000
- 38541 multiletter control sequences out of 15000+600000
+ 38456 multiletter control sequences out of 15000+600000
  31582 words of font info for 104 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 65i,16n,100p,797b,1151s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{Navigation36} has been referenced but does not ex
+ 65i,16n,100p,797b,1084s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): name{Navigation32} has been referenced but does not ex
 ist, replaced by a fixed one
 
-pdfTeX warning (dest): name{Outline0.4.1.30} has been referenced but does not e
+pdfTeX warning (dest): name{Outline0.4.1.26} has been referenced but does not e
 xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Outline0.1.3.11} has been referenced but does not e
+xist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Outline0.1.2.6} has been referenced but does not ex
+ist, replaced by a fixed one
 
 {c:/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}<c:/texliv
 e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2017/te
@@ -2154,23 +2071,22 @@ onts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2017/texmf-dist/fonts/type
 1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmmi6.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmmi7.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pf
-b><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><c
-:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb><c:/texlive
-/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb><c:/texlive/2017/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb><c:/texlive/2017/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmss9.pfb><c:/texlive/2017/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmssbx10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmssi10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmssi8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
-0.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/
-texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/20
-17/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2017/t
-exmf-dist/fonts/type1/public/cm-super/sfso1000.pfb><c:/texlive/2017/texmf-dist/
-fonts/type1/public/boondox/zxxrw8a.pfb>
-Output written on main.pdf (35 pages, 918963 bytes).
+b><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb><c:/tex
+live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb><c:/texlive/2017
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb><c:/texlive/2017/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmss9.pfb><c:/texlive/2017/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmssbx10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmssi10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmssi8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/c
+msy10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb>
+<c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texliv
+e/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/20
+17/texmf-dist/fonts/type1/public/cm-super/sfso1000.pfb><c:/texlive/2017/texmf-d
+ist/fonts/type1/public/boondox/zxxrw8a.pfb>
+Output written on main.pdf (31 pages, 749450 bytes).
 PDF statistics:
- 1143 PDF objects out of 1200 (max. 8388607)
- 1030 compressed objects within 11 object streams
- 83 named destinations out of 1000 (max. 500000)
- 232 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1023 PDF objects out of 1200 (max. 8388607)
+ 928 compressed objects within 10 object streams
+ 77 named destinations out of 1000 (max. 500000)
+ 202 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -62,12 +62,12 @@
 %\usetheme{Szeged}
 %\usetheme{Warsaw}
 
-\title{Density Ratio Estimators in Variational Bayesian Machine Learning}
+\title{Density Ratio Estimation in Variational Methods in Bayesian Neural Networks}
 
 % A subtitle is optional and this may be deleted
 %\subtitle{Optional Subtitle}
 
-\author{Lammy}
+\author{Alexander Lam}
 % - Give the names in the same order as the appear in the paper.
 % - Use the \inst{?} command only if the authors have different
 %   affiliation.
@@ -135,7 +135,7 @@
   	Universal Approximation Theorem states a neural network can approximate (almost) any function if it is complex enough.
   }
   \item {
-    Consists of layers of nodes:
+    Each node output is a weighted sum of previous node outputs, passed through an activation function.
   }
   \end{itemize}
   \begin{figure}[h]
@@ -184,57 +184,6 @@
 \end{figure}
 
 \end{frame}
-\begin{frame}{Neural Networks}{Individual Node Structure}
-\begin{itemize}
-\item Each node is a generalised linear model of preceding layer output.
-\item Weights $\theta$ are randomly initialised.
-\item Bias $x_0=1$ has role of intercept term in typical regression.
-\item $g(x)$ is activation function, e.g. ReLU is $g(x)=\max\{0,x\}$ in $[0,\infty)$, Sigmoid is $g(x)=(1+\exp(-x))^{-1}$ in $(0,1)$.
-\begin{figure}[h]
-  \resizebox{.4\linewidth}{!}{
-\begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
-    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
-    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=50pt,inner sep=0pt]
-    \tikzstyle{input neuron}=[neuron, fill=green!50];
-    \tikzstyle{output neuron}=[neuron, fill=red!50];
-    \tikzstyle{hidden neuron}=[neuron, fill=blue!50];
-    \tikzstyle{annot} = [text width=4em, text centered]
-
-    % Draw the input layer nodes
- %   \foreach \name / \y in {0,...,3}
-    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
-        \node[input neuron, pin=left:Bias $x_0$] (I-0) at (0,-0) {$\theta_0 x_0$};
-	\foreach \name / \y in {1,...,3}
-    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
-        \node[input neuron, pin=left:Input $x_{\y}$] (I-\name) at (0,-2*\y) {$\theta_{\y}x_\y$};
-    % Draw the hidden layer nodes
-    %\foreach \name / \y in {1,...,5}
-     %   \path[yshift=0.5cm]
-      %      node[hidden neuron] (H-\name) at (\layersep,-\y cm) {};
-
-    % Draw the output layer node
-    \node[output neuron,pin={[pin edge={->}]right:$h_{\bm{\theta}}(x)$}, right of=I-2, node distance=4cm] (O) {$g\left(\sum\limits^3_{i=0}\theta_ix_i\right)$};
-
-    % Connect every node in the input layer with every node in the
-    % hidden layer.
-   % \foreach \source in {1,...,4}
-    %    \foreach \dest in {1,...,5}
-     %       \path (I-\source) edge (H-\dest);
-
-    % Connect every node in the hidden layer with the output layer
-    \foreach \source in {0,...,3}
-        \path (I-\source) edge (O);
-
-    % Annotate the layers
-%    \node[annot,above of=H-1, node distance=1cm] (hl) {Hidden layer};
-    \node[annot,above of=I-0, node distance=1.5cm](il) {Weighted Inputs};
-    \node[annot,right of=il, node distance=4cm] {Activation Function};
-\end{tikzpicture}
-}
-\end{figure}
-
-\end{itemize}
-\end{frame}
 \begin{frame}{Neural Networks}{Training}
 \begin{itemize}
 \item Weights and biases trained such that (ideally convex) loss function is minimized e.g. Mean Squared Error: $\min_\Theta \frac{1}{2}||\bm{y}-\bm{f}_\Theta(\bm{x})||^2_2$.
@@ -249,15 +198,12 @@
 \begin{frame}{(Amortized) Variational Inference}{Bayesian Inference}
   \begin{itemize}
   \item {
-    Fundamental problem in Bayesian computation is to estimate posterior densities $p(z|x)$.
+    Fundamental problem in Bayesian computation is to estimate posterior densities $p(z|x)$:
     %\pause % The slide will pause after showing the first item
   }
   \begin{equation*}
-p(z|x)=\frac{p(z,x)}{p(x)}= \frac{p(z)p(x|z)}{\int_\mathcal{z}p(z,x)dz}
+p(z|x)=\frac{p(z,x)}{p(x)}= \frac{p(z)p(x|z)}{\int_\mathcal{z}p(z,x)dz}.
 \end{equation*}
-  \item {   
-    Problems arise when $\int_\mathcal{z}p(z,x)dz$ is computationally intractable.
-  }
   % You can also specify when the content should appear
   % by using <n->:
   \item {
@@ -394,7 +340,7 @@ Joint-Contrastive Application:
 \section{Activation Function Experiment}
 \begin{frame}{Activation Function Experiment}{Experiment Outline}
 \[p(z_1,z_2)\sim \mathcal{N} (0,\sigma^2 I_{2\times 2})\]
-\[p(x|\bm{z})\sim EXP(3+\max(0,z_1)^3+\max(0,z_2)^3)\]
+\[p(x|\bm{z})\sim Exp(3+\max(0,z_1)^3+\max(0,z_2)^3)\]
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{sprinklertrue.png}
 \end{figure}
@@ -425,10 +371,10 @@ Prior Contrastive - ReLU & 1.3807 & 0.0391\\
 \hline
 Prior Contrastive - Exp & 1.3265 & 0.0045\\
 \hline
-Joint-Contrastive - ReLU & 1.6954 & 0.4337\\
-\hline
-Joint-Contrastive - Exp & 1.3397 & 0.0066\\
-\hline
+%Joint-Contrastive - ReLU & 1.6954 & 0.4337\\
+%\hline
+%Joint-Contrastive - Exp & 1.3397 & 0.0066\\
+%\hline
 \end{tabular}
 }
 \end{table}
@@ -451,33 +397,33 @@ Joint-Contrastive - Exp & 1.3397 & 0.0066\\
 \begin{figure}
 \begin{subfigure}{0.49\textwidth}
 \includegraphics[width=\linewidth]{truklmins/PCKLvsPCKLEXP.png}
-\caption{Prior-Contrastive}
+\caption{True KL Divergence}
 \end{subfigure}
 \begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{truklmins/JCKLvsJCKLEXP.png}
-\caption{Joint-Contrastive}
+\includegraphics[width=\linewidth]{nelbos/PCKLvsPCKLEXP.png}
+\caption{NELBOs}
 \end{subfigure}
 \end{figure}
 \begin{itemize}
 \item Exponential output has smoother and faster convergence.
 \end{itemize}
 \end{frame}
-\begin{frame}{Inference Experiment - Activation Function}{NELBOs}
-\begin{figure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{nelbos/PCKLvsPCKLEXP.png}
-\caption{Prior-Contrastive}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{nelbos/JCKLvsJCKLEXP.png}
-\caption{Joint-Contrastive}
-\end{subfigure}
-\end{figure}
-\begin{itemize}
-\item More stable NELBO estimation by exponential output.
-\item Variance of exponential output in joint-contrastive case increases over time.
-\end{itemize}
-\end{frame}
+%\begin{frame}{Inference Experiment - Activation Function}{NELBOs}
+%\begin{figure}
+%\begin{subfigure}{0.49\textwidth}
+%\includegraphics[width=\linewidth]{nelbos/PCKLvsPCKLEXP.png}
+%\caption{Prior-Contrastive}
+%\end{subfigure}
+%\begin{subfigure}{0.49\textwidth}
+%\includegraphics[width=\linewidth]{nelbos/JCKLvsJCKLEXP.png}
+%\caption{Joint-Contrastive}
+%\end{subfigure}
+%\end{figure}
+%\begin{itemize}
+%\item More stable NELBO estimation by exponential output.
+%\item Variance of exponential output in joint-contrastive case increases over time.
+%\end{itemize}
+%\end{frame}
 \section{Optimal Estimator Experiment}
 \begin{frame}{Optimal Estimator Experiment}{Experiment Outline}
 \begin{itemize}
@@ -515,37 +461,37 @@ JC GAN - $T_\alpha(z,x)$ & 1.3670 & 0.0387\\
 \item Reverse KL converged faster in joint-contrastive context.
 \end{itemize}
 \end{frame}
-\begin{frame}{Optimal Estimator Experiment}{Joint-Contrastive KL Divergence Plots}
-\begin{figure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{truklmins/JCADVvsJCADVexpvsJCADVgudlog.png}
-\caption{GAN Divergence}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{truklmins/JCKLDvsJCKLexpvsJCKLgudlog.png}
-\caption{Reverse KL Divergence}
-\end{subfigure}
-\end{figure}
-\begin{itemize}
-\item Plots almost indistinguishable with exception of class probability estimator outlier in GAN divergence.
-\end{itemize}
-\end{frame}
-\begin{frame}{Optimal Estimator Experiment}{Joint-Contrastive NELBO Plots}
-\begin{figure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{nelbos/JCADVvsJCADVexpvsJCADVgudlog.png}
-\caption{GAN Divergence}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png}
-\caption{Reverse KL Divergence}
-\end{subfigure}
-\end{figure}
-\begin{itemize}
-\item Again very similar plots.
-\item NELBO estimation smooth but has increasing variance over time.
-\end{itemize}
-\end{frame}
+%\begin{frame}{Optimal Estimator Experiment}{Joint-Contrastive KL Divergence Plots}
+%\begin{figure}
+%\begin{subfigure}{0.49\textwidth}
+%\includegraphics[width=\linewidth]{truklmins/JCADVvsJCADVexpvsJCADVgudlog.png}
+%\caption{GAN Divergence}
+%\end{subfigure}
+%\begin{subfigure}{0.49\textwidth}
+%\includegraphics[width=\linewidth]{truklmins/JCKLDvsJCKLexpvsJCKLgudlog.png}
+%\caption{Reverse KL Divergence}
+%\end{subfigure}
+%\end{figure}
+%\begin{itemize}
+%\item Plots almost indistinguishable with exception of class probability estimator outlier in GAN divergence.
+%\end{itemize}
+%\end{frame}
+%\begin{frame}{Optimal Estimator Experiment}{Joint-Contrastive NELBO Plots}
+%\begin{figure}
+%\begin{subfigure}{0.49\textwidth}
+%\includegraphics[width=\linewidth]{nelbos/JCADVvsJCADVexpvsJCADVgudlog.png}
+%\caption{GAN Divergence}
+%\end{subfigure}
+%\begin{subfigure}{0.49\textwidth}
+%\includegraphics[width=\linewidth]{nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png}
+%\caption{Reverse KL Divergence}
+%\end{subfigure}
+%\end{figure}
+%\begin{itemize}
+%\item Again very similar plots.
+%\item NELBO estimation smooth but has increasing variance over time.
+%\end{itemize}
+%\end{frame}
 \section{Undertrained Estimator Experiment}
 \begin{frame}{Undertrained Estimator Experiment}{Experiment Outline}
 \begin{itemize}
@@ -710,7 +656,7 @@ PC Reverse KL - $D_\alpha(z,x)$ & 0.0647 & 0.0019\\
 \begin{frame}{Summary}
   \begin{itemize}
   \item
-    The class probability estimator $D_\alpha(u)\simeq\frac{q(u)}{q(u)+p(u)}$ is the `best' parametrisation as it can store the\alert{highest density ratios}.
+    The class probability estimator $D_\alpha(u)\simeq\frac{q(u)}{q(u)+p(u)}$ is the `best' parametrisation as it can store the \alert{highest density ratios}.
   \item
     Reverse KL divergence upper bound demonstrates \alert{initial instability} (especially when estimator is undertrained) but leads to \alert{faster convergence} when it stabilizes.
   \end{itemize}

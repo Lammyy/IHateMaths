@@ -235,6 +235,18 @@ Tiao, L.~C., Bonilla, E.~V., and Ramos, F. (2018).
   Perspective}.
 \newblock {\em ArXiv e-prints}.
 
+\bibitem[Vincent et~al., 2008]{vincent}
+Vincent, P., Larochelle, H., Bengio, Y., and Manzagol, P.-A. (2008).
+\newblock Extracting and composing robust features with denoising autoencoders.
+\newblock In {\em Proceedings of the 25th International Conference on Machine
+  Learning}, ICML '08, pages 1096--1103, New York, NY, USA. ACM.
+
+\bibitem[Wang et~al., 2009]{wang}
+Wang, Q., Kulkarni, S.~R., and Verd\'{u}, S. (2009).
+\newblock Divergence estimation for multidimensional densities via
+  k-nearest-neighbor distances.
+\newblock {\em IEEE Trans. Inf. Theor.}, 55(5):2392--2405.
+
 \bibitem[Wu, 2009]{wu}
 Wu, H. (2009).
 \newblock Global stability analysis of a general class of discontinuous neural

@@ -17,15 +17,21 @@
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
 \providecommand \oddpage@label [2]{}
+\citation{gelman}
+\citation{blei}
 \@writefile{toc}{\contentsline {chapter}{\numberline {Chapter 1}Introduction}{1}{chapter.1}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
 \newlabel{s-intro}{{1}{1}{Introduction}{chapter.1}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.1}Aims}{1}{section.1.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {1.2}Problem Context}{1}{section.1.2}}
+\citation{ADVVI}
+\citation{kingma}
 \citation{mescheder}
-\@writefile{toc}{\contentsline {section}{\numberline {1.2}Problem Context}{2}{section.1.2}}
+\citation{sugiyama}
 \citation{huszar}
+\citation{kingma}
 \@writefile{toc}{\contentsline {section}{\numberline {1.3}Results}{3}{section.1.3}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.4}Thesis Structure}{4}{section.1.4}}
 \citation{DeepLearning}
@@ -251,11 +257,16 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {10.9}{\ignorespaces \relax \fontsize  {10.95}{13.6}\selectfont  \abovedisplayskip 11\p@ plus3\p@ minus6\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \def \leftmargin \leftmargini \labelsep .5em\labelwidth \leftmargini \advance \labelwidth -\labelsep \parsep \z@ \topsep 0.4ex plus\p@ \itemsep 0\p@ plus1\p@ {\leftmargin \leftmargini \topsep 9\p@ plus3\p@ minus5\p@ \parsep 4.5\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip This plot shows that the reconstruction error associated with the reverse KL divergence is consistently higher for the majority of the program runtime.\relax }}{94}{figure.caption.62}}
 \@writefile{lof}{\contentsline {figure}{\numberline {10.10}{\ignorespaces \relax \fontsize  {10.95}{13.6}\selectfont  \abovedisplayskip 11\p@ plus3\p@ minus6\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \def \leftmargin \leftmargini \labelsep .5em\labelwidth \leftmargini \advance \labelwidth -\labelsep \parsep \z@ \topsep 0.4ex plus\p@ \itemsep 0\p@ plus1\p@ {\leftmargin \leftmargini \topsep 9\p@ plus3\p@ minus5\p@ \parsep 4.5\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip The estimator loss corresponding to the reverse KL divergence appears to be extremely unstable for the entire program runtime, spiking to values exceeding $10^{14}$. On the other hand, the GAN divergence estimator loss appears to be relatively stable.\relax }}{95}{figure.caption.63}}
 \@writefile{lof}{\contentsline {figure}{\numberline {10.11}{\ignorespaces \relax \fontsize  {10.95}{13.6}\selectfont  \abovedisplayskip 11\p@ plus3\p@ minus6\p@ \abovedisplayshortskip \z@ plus3\p@ \belowdisplayshortskip 6.5\p@ plus3.5\p@ minus3\p@ \def \leftmargin \leftmargini \labelsep .5em\labelwidth \leftmargini \advance \labelwidth -\labelsep \parsep \z@ \topsep 0.4ex plus\p@ \itemsep 0\p@ plus1\p@ {\leftmargin \leftmargini \topsep 9\p@ plus3\p@ minus5\p@ \parsep 4.5\p@ plus2\p@ minus\p@ \itemsep \parsep }\belowdisplayskip \abovedisplayskip The instability of the reverse KL divergence estimator loss propagates to its NELBO estimation, which appears to fluctuate wildly in comparison to the GAN divergence's loss. This correlates to the superiority of the GAN divergence in this particular experiment. Again recalling Figures 9.3 and 9.6 (b), estimators formulated by the reverse KL divergence experience initial instability, but have more accurate density ratio estimation when stable. It is possible that the estimator in this experiment has not stabilised, leading to poorer network convergence. This may be due to the increased complexity of the distributions associated with the MNIST dataset, as opposed to the simplicity of the previous ``Sprinkler" problem.\relax }}{95}{figure.caption.64}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {Chapter 11}Discussion and Conclusion}{96}{chapter.11}}
+\citation{nowozin}
+\@writefile{toc}{\contentsline {chapter}{\numberline {Chapter 11}Conclusion and Further Research}{96}{chapter.11}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
 \@writefile{toc}{\contentsline {section}{\numberline {11.1}Further Research}{96}{section.11.1}}
+\citation{bgan}
+\citation{ali}
+\citation{wang}
+\citation{vincent}
 \bibstyle{apalike}
 \bibdata{bible}
 \bibcite{bengio}{{1}{2012}{{Bengio}}{{}}}
@@ -301,10 +312,12 @@
 \bibcite{tiao}{{40}{2018}{{Tiao et~al.}}{{}}}
 \bibcite{tran}{{41}{2017}{{{Tran} et~al.}}{{}}}
 \bibcite{bgan}{{42}{2016}{{{Uehara} et~al.}}{{}}}
-\bibcite{wu}{{43}{2009}{{Wu}}{{}}}
-\bibcite{ADVVI}{{44}{2017}{{Zhang et~al.}}{{}}}
-\bibcite{neuroplast}{{45}{1992}{{Zilles}}{{}}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {Appendix A}Kernel Density Estimation}{101}{appendix.A}}
+\bibcite{vincent}{{43}{2008}{{Vincent et~al.}}{{}}}
+\bibcite{wang}{{44}{2009}{{Wang et~al.}}{{}}}
+\bibcite{wu}{{45}{2009}{{Wu}}{{}}}
+\bibcite{ADVVI}{{46}{2017}{{Zhang et~al.}}{{}}}
+\bibcite{neuroplast}{{47}{1992}{{Zilles}}{{}}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {Appendix A}Kernel Density Estimation}{102}{appendix.A}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{loa}{\addvspace {10\p@ }}
