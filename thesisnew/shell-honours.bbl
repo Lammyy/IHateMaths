@@ -1,5 +1,12 @@
 \begin{thebibliography}{}
 
+\bibitem[Beck, 2014]{beck}
+Beck, A. (2014).
+\newblock {\em Introduction to Nonlinear Optimization: Theory, Algorithms, and
+  Applications with MATLAB}.
+\newblock Society for Industrial and Applied Mathematics, Philadelphia, PA,
+  USA.
+
 \bibitem[Bengio, 2012]{bengio}
 Bengio, Y. (2012).
 \newblock {\em Practical Recommendations for Gradient-Based Training of Deep

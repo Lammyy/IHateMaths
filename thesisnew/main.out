@@ -1,9 +1,9 @@
 \BOOKMARK [2][]{Outline0.1}{Background Info}{}% 1
 \BOOKMARK [3][]{Outline0.1.1.3}{Neural Networks}{Outline0.1}% 2
 \BOOKMARK [3][]{Outline0.1.2.5}{\(Amortized\) Variational Inference}{Outline0.1}% 3
-\BOOKMARK [3][]{Outline0.1.3.10}{Density Ratio Estimation}{Outline0.1}% 4
+\BOOKMARK [3][]{Outline0.1.3.9}{Density Ratio Estimation}{Outline0.1}% 4
 \BOOKMARK [2][]{Outline0.2}{Activation Function Experiment}{}% 5
 \BOOKMARK [2][]{Outline0.3}{Optimal Estimator Experiment}{}% 6
 \BOOKMARK [2][]{Outline0.4}{Undertrained Estimator Experiment}{}% 7
-\BOOKMARK [3][]{Outline0.4.1.25}{Generation Experiment}{Outline0.4}% 8
-\BOOKMARK [2][]{Outline0.5}{Theory}{}% 9
+\BOOKMARK [2][]{Outline0.5}{Autoencoder Experiment}{}% 8
+\BOOKMARK [2][]{Outline0.6}{Theory}{}% 9

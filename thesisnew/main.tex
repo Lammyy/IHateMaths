@@ -186,7 +186,7 @@
 \end{frame}
 \begin{frame}{Neural Networks}{Training}
 \begin{itemize}
-\item Weights and biases trained such that (ideally convex) loss function is minimized e.g. Mean Squared Error: $\min_\Theta \frac{1}{2}||\bm{y}-\bm{f}_\Theta(\bm{x})||^2_2$.
+\item Weights trained such that (ideally convex) loss function is minimized e.g. Mean Squared Error: $\min_\Theta \frac{1}{2}||\bm{y}-\bm{f}_\Theta(\bm{x})||^2_2$.
 \item Back-propagation finds partial derivatives of loss function with respect to weights.
 \item Gradient descent uses these partial derivatives to optimize network.
 \end{itemize}
@@ -202,7 +202,7 @@
     %\pause % The slide will pause after showing the first item
   }
   \begin{equation*}
-p(z|x)=\frac{p(z,x)}{p(x)}= \frac{p(z)p(x|z)}{\int_\mathcal{z}p(z,x)dz}.
+p(z|x)\propto \underbrace{p(z)}_\text{Prior}\underbrace{p(x|z)}_\text{Likelihood}.
 \end{equation*}
   % You can also specify when the content should appear
   % by using <n->:
@@ -244,23 +244,24 @@ p(z|x)=\frac{p(z,x)}{p(x)}= \frac{p(z)p(x|z)}{\int_\mathcal{z}p(z,x)dz}.
 \item Taking expectation with respect to dataset distribution $q^*(x)$ allows model to work for different data points.
 \end{itemize}
 \end{frame}
-\begin{frame}{(Amortized) Variational Inference}{Prior-Contrastive}
+\begin{frame}{(Amortized) Variational Inference}{Problems with Implicit Distributions}
 \[\min_\phi \underbrace{-\mathbb{E}_{q_\phi(z|x)q^*(x)}[\log p(x|z)]}_\text{Likelihood}+\underbrace{\mathbb{E}_{q^*(x)}[KL(q_\phi(z|x)||p(z))]}_\text{Log Density Ratio}.\]
 \begin{itemize}
 \item $q_\phi(z|x)$ is a neural network so extremely difficult to evaluate density function but easy to draw samples, we therefore say that it is \textbf{implicit}.
 \item Use density ratio estimation to evaluate $\frac{q_\phi(z|x)}{p(z)}$ in $KL(q_\phi(z|x)||p(z))$.
 \item The prior $p(z)$ can also be implicit.
 \item We call this the ``prior-contrastive" formulation.
+\item ``Joint-contrastive" formulation used with implicit likelihood minimizes $NELBO(q)=\underbrace{KL(q(z,x)\|p(z,x))}_\text{Log Density Ratio}$.
 \end{itemize}
 \end{frame}
-\begin{frame}{(Amortized) Variational Inference}{Joint-Contrastive}
-\begin{itemize}
-\item If the likelihood $p(x|z)$ is implicit, then our optimization problem is \[\min_\phi KL(q(z,x)||p(z,x))=\E_{q^*(x)q_\phi(z|x)}\log \frac{q^*(x)q_\phi(z|x)}{p(z)p(x|z)}.\]
-\item Use density ratio estimation to evaluate $\frac{q(z,x)}{p(z,x)}$.
-\item For consistency, $NELBO(q)= KL(q(z,x)||p(z,x))$.
-\item We call this the ``joint-contrastive" formulation.
-\end{itemize}
-\end{frame}
+%\begin{frame}{(Amortized) Variational Inference}{Joint-Contrastive}
+%\begin{itemize}
+%\item If the likelihood $p(x|z)$ is implicit, then our optimization problem is \[\min_\phi KL(q(z,x)||p(z,x))=\E_{q^*(x)q_\phi(z|x)}\log \frac{q^*(x)q_\phi(z|x)}{p(z)p(x|z)}.\]
+%\item Use density ratio estimation to evaluate $\frac{q(z,x)}{p(z,x)}$.
+%\item For consistency, $NELBO(q)= KL(q(z,x)||p(z,x))$.
+%\item We call this the ``joint-contrastive" formulation.
+%\end{itemize}
+%\end{frame}
 %\begin{frame}{(Amortized) Variational Inference}{Autoencoders}
 %\begin{itemize}
 %\item An autoencoder consists of an encoder $q_\phi(z|x)$ that `compresses' data $x$ into lower dimensional latent $z$, and a decoder $p_\theta(x|z)$ that generates data $x$ from $z$.
@@ -355,9 +356,8 @@ Joint-Contrastive Application:
 \item Experiences `dying ReLU problem'.
 \item Linearity of ReLU activation causes imbalance between ratios in $(0,1)$ and $(1,\infty)$.
 \item We propose exponential activation function $g(x)=e^x$.
-\item Compare them for $r_\alpha(u)$ with reverse KL divergence upper bound.
+\item Compare them with reverse KL divergence upper bound.
 \item Low training rate, high iterations.
-\item Use Gaussian kernel density estimator to estimate `true' KL divergence.
 \end{itemize}
 \end{frame}
 \begin{frame}{Activation Function Experiment}{Results}
@@ -393,21 +393,21 @@ Prior Contrastive - Exp & 1.3265 & 0.0045\\
 }
 \end{figure}
 \end{frame}
-\begin{frame}{Inference Experiment - Activation Function}{KL Divergence Plots}
-\begin{figure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{truklmins/PCKLvsPCKLEXP.png}
-\caption{True KL Divergence}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{nelbos/PCKLvsPCKLEXP.png}
-\caption{NELBOs}
-\end{subfigure}
-\end{figure}
-\begin{itemize}
-\item Exponential output has smoother and faster convergence.
-\end{itemize}
-\end{frame}
+%\begin{frame}{Inference Experiment - Activation Function}{KL Divergence Plots}
+%\begin{figure}
+%\begin{subfigure}{0.49\textwidth}
+%\includegraphics[width=\linewidth]{truklmins/PCKLvsPCKLEXP.png}
+%\caption{True KL Divergence}
+%\end{subfigure}
+%\begin{subfigure}{0.49\textwidth}
+%\includegraphics[width=\linewidth]{nelbos/PCKLvsPCKLEXP.png}
+%\caption{NELBOs}
+%\end{subfigure}
+%\end{figure}
+%\begin{itemize}
+%\item Exponential output has smoother and faster convergence.
+%\end{itemize}
+%\end{frame}
 %\begin{frame}{Inference Experiment - Activation Function}{NELBOs}
 %\begin{figure}
 %\begin{subfigure}{0.49\textwidth}
@@ -540,11 +540,12 @@ JC GAN - $T_\alpha(z,x)$ & 1.4214 & 0.0518\\
 \end{subfigure}
 \begin{itemize}
 \item Unclear why direct ratio estimator has unusual NELBO plot: posterior convergence was not affected.
+\item Reverse KL Divergence has initial instability.
 \end{itemize}
 \end{figure}
 \end{frame}
-\subsection{Generation Experiment}
-\begin{frame}{Generation Experiment}{Autoencoders}
+\section{Autoencoder Experiment}
+\begin{frame}{Autoencoder Experiment}{Autoencoders}
 \begin{itemize}
 \item Likelihood $p_\theta(x|z)$ is now a neural network.
 \item Posterior $q_\phi(z|x)$ represents data $x$ as lower dimensional latent $z$.
@@ -571,7 +572,7 @@ JC GAN - $T_\alpha(z,x)$ & 1.4214 & 0.0518\\
 \end{figure}
 \[\min_{\theta, \phi} -\mathbb{E}_{q_\phi(z|x)q^*(x)}[\log p_\theta(x|z)]+\mathbb{E}_{q^*(x)}[KL(q_\phi(z|x)||p(z))]\]
 \end{frame}
-\begin{frame}{Generation Experiment}{Experiment Outline}
+\begin{frame}{Autoencoder Experiment}{Experiment Outline}
 \begin{itemize}
 \item MNIST dataset - $28\times 28$ grey-scale images of handwritten digits
 \item Joint-contrastive context not tested here.
@@ -603,7 +604,7 @@ PC Reverse KL - $D_\alpha(z,x)$ & 0.0647 & 0.0019\\
 \item This time GAN divergence leads to better convergence than reverse KL.
 \end{itemize}
 \end{frame}
-\begin{frame}{Generation Experiment}{Results - high dimensional latent space}
+\begin{frame}{Autoencoder Experiment}{Results - high dimensional latent space}
 \begin{figure}
 \begin{subfigure}{0.49\textwidth}
 \includegraphics[width=\linewidth]{part4reconerrors/PCADVvsPCKLD.png}
