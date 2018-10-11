@@ -33,37 +33,38 @@
 \contentsline {subsection}{\numberline {4.2.2}Prior-Contrastive Algorithm}{48}{subsection.4.2.2}
 \contentsline {subsection}{\numberline {4.2.3}Joint-Contrastive Algorithm}{50}{subsection.4.2.3}
 \contentsline {subsection}{\numberline {4.2.4}Alternative Derivation of Class Probability Estimation}{52}{subsection.4.2.4}
-\contentsline {chapter}{\numberline {Chapter 5}Initial Experiment - Inference, ``Sprinkler" Example}{54}{chapter.5}
-\contentsline {section}{\numberline {5.1}Problem Context}{54}{section.5.1}
-\contentsline {section}{\numberline {5.2}Program Structure}{55}{section.5.2}
-\contentsline {section}{\numberline {5.3}Results}{60}{section.5.3}
-\contentsline {chapter}{\numberline {Chapter 6}Activation Function Experiment}{63}{chapter.6}
-\contentsline {section}{\numberline {6.1}Theory}{63}{section.6.1}
-\contentsline {section}{\numberline {6.2}Experiment Outline}{65}{section.6.2}
-\contentsline {section}{\numberline {6.3}Results}{65}{section.6.3}
-\contentsline {chapter}{\numberline {Chapter 7}Algorithm Analysis}{68}{chapter.7}
-\contentsline {section}{\numberline {7.1}Introduction}{68}{section.7.1}
-\contentsline {section}{\numberline {7.2}Algorithm Generalisation}{69}{section.7.2}
-\contentsline {subsection}{\numberline {7.2.1}Reverse KL Divergence}{69}{subsection.7.2.1}
-\contentsline {subsection}{\numberline {7.2.2}GAN Divergence}{69}{subsection.7.2.2}
-\contentsline {section}{\numberline {7.3}Optimization Algorithms}{70}{section.7.3}
-\contentsline {subsection}{\numberline {7.3.1}Prior-Contrastive}{70}{subsection.7.3.1}
-\contentsline {subsection}{\numberline {7.3.2}Joint-Contrastive}{71}{subsection.7.3.2}
-\contentsline {chapter}{\numberline {Chapter 8}Comparing Optimal Estimators}{72}{chapter.8}
-\contentsline {section}{\numberline {8.1}Theory}{72}{section.8.1}
-\contentsline {section}{\numberline {8.2}Experiment Outline}{72}{section.8.2}
-\contentsline {section}{\numberline {8.3}Results}{73}{section.8.3}
-\contentsline {chapter}{\numberline {Chapter 9}Comparing Undertrained Estimators}{77}{chapter.9}
-\contentsline {section}{\numberline {9.1}Theory}{77}{section.9.1}
-\contentsline {subsection}{\numberline {9.1.1}Estimator Bounds}{77}{subsection.9.1.1}
-\contentsline {subsection}{\numberline {9.1.2}First and Second Derivatives of Estimator Loss Functions}{78}{subsection.9.1.2}
-\contentsline {subsection}{\numberline {9.1.3}Displacement of Estimator Optimal Values}{81}{subsection.9.1.3}
-\contentsline {section}{\numberline {9.2}Experiment Outline}{83}{section.9.2}
-\contentsline {section}{\numberline {9.3}Results}{83}{section.9.3}
-\contentsline {chapter}{\numberline {Chapter 10}Data Generation - (MNIST image generation)}{87}{chapter.10}
-\contentsline {section}{\numberline {10.1}Experiment Outline}{87}{section.10.1}
-\contentsline {section}{\numberline {10.2}Low Dimensional Experiment Results}{90}{section.10.2}
-\contentsline {section}{\numberline {10.3}High Dimensional Experiment Results}{91}{section.10.3}
-\contentsline {chapter}{\numberline {Chapter 11}Discussion and Conclusion}{95}{chapter.11}
-\contentsline {chapter}{References}{96}{chapter.11}
-\contentsline {chapter}{\numberline {Appendix A}Kernel Density Estimation}{99}{appendix.A}
+\contentsline {chapter}{\numberline {Chapter 5}Initial Experiment - Inference, ``Sprinkler" Example}{55}{chapter.5}
+\contentsline {section}{\numberline {5.1}Problem Context}{55}{section.5.1}
+\contentsline {section}{\numberline {5.2}Program Structure}{56}{section.5.2}
+\contentsline {section}{\numberline {5.3}Results}{61}{section.5.3}
+\contentsline {chapter}{\numberline {Chapter 6}Activation Function Experiment}{64}{chapter.6}
+\contentsline {section}{\numberline {6.1}Theory}{64}{section.6.1}
+\contentsline {section}{\numberline {6.2}Experiment Outline}{66}{section.6.2}
+\contentsline {section}{\numberline {6.3}Results}{66}{section.6.3}
+\contentsline {chapter}{\numberline {Chapter 7}Algorithm Analysis}{69}{chapter.7}
+\contentsline {section}{\numberline {7.1}Introduction}{69}{section.7.1}
+\contentsline {section}{\numberline {7.2}Algorithm Generalisation}{70}{section.7.2}
+\contentsline {subsection}{\numberline {7.2.1}Reverse KL Divergence}{70}{subsection.7.2.1}
+\contentsline {subsection}{\numberline {7.2.2}GAN Divergence}{70}{subsection.7.2.2}
+\contentsline {section}{\numberline {7.3}Optimization Algorithms}{71}{section.7.3}
+\contentsline {subsection}{\numberline {7.3.1}Prior-Contrastive}{71}{subsection.7.3.1}
+\contentsline {subsection}{\numberline {7.3.2}Joint-Contrastive}{72}{subsection.7.3.2}
+\contentsline {chapter}{\numberline {Chapter 8}Comparing Optimal Estimators}{73}{chapter.8}
+\contentsline {section}{\numberline {8.1}Theory}{73}{section.8.1}
+\contentsline {section}{\numberline {8.2}Experiment Outline}{73}{section.8.2}
+\contentsline {section}{\numberline {8.3}Results}{74}{section.8.3}
+\contentsline {chapter}{\numberline {Chapter 9}Comparing Undertrained Estimators}{78}{chapter.9}
+\contentsline {section}{\numberline {9.1}Theory}{78}{section.9.1}
+\contentsline {subsection}{\numberline {9.1.1}Estimator Bounds}{78}{subsection.9.1.1}
+\contentsline {subsection}{\numberline {9.1.2}First and Second Derivatives of Estimator Loss Functions}{79}{subsection.9.1.2}
+\contentsline {subsection}{\numberline {9.1.3}Displacement of Estimator Optimal Values}{82}{subsection.9.1.3}
+\contentsline {section}{\numberline {9.2}Experiment Outline}{84}{section.9.2}
+\contentsline {section}{\numberline {9.3}Results}{84}{section.9.3}
+\contentsline {chapter}{\numberline {Chapter 10}Data Generation - (MNIST image generation)}{88}{chapter.10}
+\contentsline {section}{\numberline {10.1}Experiment Outline}{88}{section.10.1}
+\contentsline {section}{\numberline {10.2}Low Dimensional Experiment Results}{91}{section.10.2}
+\contentsline {section}{\numberline {10.3}High Dimensional Experiment Results}{92}{section.10.3}
+\contentsline {chapter}{\numberline {Chapter 11}Discussion and Conclusion}{96}{chapter.11}
+\contentsline {section}{\numberline {11.1}Further Research}{96}{section.11.1}
+\contentsline {chapter}{References}{98}{section.11.1}
+\contentsline {chapter}{\numberline {Appendix A}Kernel Density Estimation}{101}{appendix.A}
