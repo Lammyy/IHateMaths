@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  12 OCT 2018 15:22
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  12 OCT 2018 18:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -754,11 +754,6 @@ LaTeX Info: Redefining \addtolength on input line 81.
 \pgfphysicalwidth=\dimen257
 \pgfpages@shipoutbox=\box58
 )
-\pgfpages@box@1=\box59
-\pgfpages@box@2=\box60
-\pgfpages@box@3=\box61
-\pgfpages@box@4=\box62
-
 (c:/texlive/2017/texmf-dist/tex/latex/tikz-bayesnet/tikzlibrarybayesnet.code.te
 x
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzli
@@ -812,26 +807,26 @@ File: tikzlibraryshapes.multipart.code.tex 2008/01/09 v3.0.1a (rcs-revision 1.1
 ultipart.code.tex
 File: pgflibraryshapes.multipart.code.tex 2010/01/07 v3.0.1a (rcs-revision 1.2)
 
-\pgfnodepartlowerbox=\box63
-\pgfnodeparttwobox=\box64
-\pgfnodepartthreebox=\box65
-\pgfnodepartfourbox=\box66
-\pgfnodeparttwentybox=\box67
-\pgfnodepartnineteenbox=\box68
-\pgfnodeparteighteenbox=\box69
-\pgfnodepartseventeenbox=\box70
-\pgfnodepartsixteenbox=\box71
-\pgfnodepartfifteenbox=\box72
-\pgfnodepartfourteenbox=\box73
-\pgfnodepartthirteenbox=\box74
-\pgfnodeparttwelvebox=\box75
-\pgfnodepartelevenbox=\box76
-\pgfnodeparttenbox=\box77
-\pgfnodepartninebox=\box78
-\pgfnodeparteightbox=\box79
-\pgfnodepartsevenbox=\box80
-\pgfnodepartsixbox=\box81
-\pgfnodepartfivebox=\box82
+\pgfnodepartlowerbox=\box59
+\pgfnodeparttwobox=\box60
+\pgfnodepartthreebox=\box61
+\pgfnodepartfourbox=\box62
+\pgfnodeparttwentybox=\box63
+\pgfnodepartnineteenbox=\box64
+\pgfnodeparteighteenbox=\box65
+\pgfnodepartseventeenbox=\box66
+\pgfnodepartsixteenbox=\box67
+\pgfnodepartfifteenbox=\box68
+\pgfnodepartfourteenbox=\box69
+\pgfnodepartthirteenbox=\box70
+\pgfnodeparttwelvebox=\box71
+\pgfnodepartelevenbox=\box72
+\pgfnodeparttenbox=\box73
+\pgfnodepartninebox=\box74
+\pgfnodeparteightbox=\box75
+\pgfnodepartsevenbox=\box76
+\pgfnodepartsixbox=\box77
+\pgfnodepartfivebox=\box78
 )))
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzli
 braryfit.code.tex
@@ -1357,7 +1352,7 @@ ex
 \pgfdecorationsegmentamplitude=\dimen273
 \pgfdecorationsegmentlength=\dimen274
 )
-\tikz@lib@dec@box=\box83
+\tikz@lib@dec@box=\box79
 )
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzli
 brarydecorations.pathmorphing.code.tex
@@ -1385,8 +1380,8 @@ File: pgflibraryplotmarks.code.tex 2015/08/03 v3.0.1a (rcs-revision 1.14)
 ))) (c:/texlive/2017/texmf-dist/tex/latex/tools/afterpage.sty
 Package: afterpage 2014/10/28 v1.08 After-Page Package (DPC)
 \AP@output=\toks54
-\AP@partial=\box84
-\AP@footins=\box85
+\AP@partial=\box80
+\AP@footins=\box81
 )
 (c:/texlive/2017/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
 Package: algorithm2e 2017/07/18 v5.2 algorithms environments
@@ -1422,16 +1417,16 @@ Package: relsize 2013/03/29 ver 4.1
 \interspacealgoruled=\dimen285
 \interspacetitleboxruled=\dimen286
 \algocf@ruledwidth=\skip69
-\algocf@inoutbox=\box86
-\algocf@inputbox=\box87
+\algocf@inoutbox=\box82
+\algocf@inputbox=\box83
 \AlCapSkip=\skip70
 \AlCapHSkip=\skip71
 \algoskipindent=\skip72
-\algocf@nlbox=\box88
-\algocf@hangingbox=\box89
-\algocf@untilbox=\box90
+\algocf@nlbox=\box84
+\algocf@hangingbox=\box85
+\algocf@untilbox=\box86
 \algocf@skipuntil=\skip73
-\algocf@capbox=\box91
+\algocf@capbox=\box87
 \algocf@lcaptionbox=\skip74
 \algoheightruledefault=\skip75
 \algoheightrule=\skip76
@@ -1440,8 +1435,8 @@ Package: relsize 2013/03/29 ver 4.1
 \c@algocfline=\count187
 \c@algocfproc=\count188
 \c@algocf=\count189
-\algocf@algoframe=\box92
-\algocf@algobox=\box93
+\algocf@algoframe=\box88
+\algocf@algobox=\box89
 )
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
@@ -1530,7 +1525,7 @@ LaTeX Font Info:    ... okay on input line 117.
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count190
 \scratchdimen=\dimen287
-\scratchbox=\box94
+\scratchbox=\box90
 \nofMPsegments=\count191
 \nofMParguments=\count192
 \everyMPshowfont=\toks55
@@ -1557,7 +1552,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 ABD: EveryShipout initializing macros
-\AtBeginShipoutBox=\box95
+\AtBeginShipoutBox=\box91
 Package hyperref Info: Link coloring OFF on input line 117.
 
 (c:/texlive/2017/texmf-dist/tex/latex/hyperref/nameref.sty
@@ -1674,13 +1669,18 @@ Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
-(./main.toc)
+[1
+
+{c:/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./main.toc)
 Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
+[2
+
+]
 LaTeX Font Info:    Try loading font information for U+msa on input line 194.
-(c:/texlive/2017/texmf-dist/tex/latex/amsfonts/umsa.fd
+ (c:/texlive/2017/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Try loading font information for U+msb on input line 194.
@@ -1712,27 +1712,26 @@ Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
+[3
 
+]
 Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
+[4
 
+]
 Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [5
 
-{c:/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
-
-
-
 ]
 LaTeX Font Info:    Try loading font information for U+BOONDOX-cal on input lin
 e 245.
-
-(c:/texlive/2017/texmf-dist/tex/latex/boondox/uboondox-cal.fd
+ (c:/texlive/2017/texmf-dist/tex/latex/boondox/uboondox-cal.fd
 File: uboondox-cal.fd 2011/04/26 Fontinst v1.933 font definitions for U/BOONDOX
 -cal.
 )
@@ -1766,7 +1765,9 @@ Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
+[6
 
+]
 Overfull \hbox (8.29726pt too wide) detected at line 254
 [] \OT1/mathkerncmss/m/sl/10.95 NELBO\OT1/cmss/m/n/10.95 (\OT1/mathkerncmss/m/s
 l/10.95 q\OT1/cmss/m/n/10.95 ) = \OMS/cmsy/m/n/10.95 ^^@\U/msb/m/n/10.95 E[]\OT
@@ -1785,52 +1786,59 @@ Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
+[7
 
+]
 Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
+[8
 
+]
 Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [9
 
+]
+Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+ [][][][]  
+ []
 
-
+[10
 
 ]
 Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
+[11
 
+]
 Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
+[12
 
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
- [][][][]  
- []
-
-
+]
 Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [13
 
-
-
-
 ]
 Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
-<sprinklertrue.png, id=142, 1087.06125pt x 213.04594pt>
+[14
+
+]
+<sprinklertrue.png, id=182, 1087.06125pt x 213.04594pt>
 File: sprinklertrue.png Graphic file (type png)
 <use sprinklertrue.png>
 Package pdftex.def Info: sprinklertrue.png  used on input line 360. on input li
@@ -1842,13 +1850,16 @@ Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
-<13288.png, id=145, 1180.41pt x 228.855pt>
+[15
+
+ <./sprinklertrue.png>]
+<13288.png, id=190, 1180.41pt x 228.855pt>
 File: 13288.png Graphic file (type png)
 <use 13288.png>
 Package pdftex.def Info: 13288.png  used on input line 455. on input line 455.
 Package pdftex.def Info: Requested size: 342.2953pt x 66.36275pt on input line 
 455.
-<13963.png, id=146, 1178.15157pt x 231.86626pt>
+<13963.png, id=191, 1178.15157pt x 231.86626pt>
 File: 13963.png Graphic file (type png)
 <use 13963.png>
 Package pdftex.def Info: 13963.png  used on input line 455. on input line 455.
@@ -1863,7 +1874,9 @@ Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
+[16
 
+ <./13288.png> <./13963.png>]
 Overfull \hbox (2.78236pt too wide) in paragraph at lines 483--483
  [] 
  []
@@ -1875,27 +1888,29 @@ Overfull \hbox (86.33488pt too wide) has occurred while \output is active
 
 [17
 
-
-
-
- <./sprinklertrue.png> <./13288.png> <./13963.png>]
+]
 Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
+[18
 
+]
 Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
-<part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png, id=164, 462.528pt x 346.896pt>
+[19
+
+]
+<part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png, id=218, 462.528pt x 346.896pt>
 File: part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png Graphic file (type png)
 <use part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png>
 Package pdftex.def Info: part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png  used on 
 input line 566. on input line 566.
 Package pdftex.def Info: Requested size: 167.72658pt x 125.7929pt on input line
  566.
-<part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png, id=165, 462.528pt x 346.896pt>
+<part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png, id=219, 462.528pt x 346.896pt>
 File: part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png Graphic file (type png)
 <use part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png>
 Package pdftex.def Info: part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png  used on in
@@ -1907,6 +1922,10 @@ Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
+[20
+
+ <./part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png> <./part2nelbos/JCKLDvsJCKLexp
+vsJCKLgudlog.png>]
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -1929,28 +1948,29 @@ Overfull \hbox (86.33488pt too wide) has occurred while \output is active
 
 [21
 
-
-
-
- <./part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png> <./part2nelbos/JCKLDvsJCKLexp
-vsJCKLgudlog.png>]
+]
 Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
+[22
 
+]
 Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
-<part4reconerrors/PCADVvsPCKLD.png, id=183, 420.06938pt x 314.67563pt>
+[23
+
+]
+<part4reconerrors/PCADVvsPCKLD.png, id=245, 420.06938pt x 314.67563pt>
 File: part4reconerrors/PCADVvsPCKLD.png Graphic file (type png)
 <use part4reconerrors/PCADVvsPCKLD.png>
 Package pdftex.def Info: part4reconerrors/PCADVvsPCKLD.png  used on input line 
 644. on input line 644.
 Package pdftex.def Info: Requested size: 167.72658pt x 125.64233pt on input lin
 e 644.
-<part4nelbos/PCADVvsPCKLD.png, id=184, 432.11438pt x 316.18124pt>
+<part4nelbos/PCADVvsPCKLD.png, id=246, 432.11438pt x 316.18124pt>
 File: part4nelbos/PCADVvsPCKLD.png Graphic file (type png)
 <use part4nelbos/PCADVvsPCKLD.png>
 Package pdftex.def Info: part4nelbos/PCADVvsPCKLD.png  used on input line 644. 
@@ -1962,6 +1982,13 @@ Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
+[24
+
+ <./part4reconerrors/PCADVvsPCKLD.png> <./part4nelbos/PCADVvsPCKLD.png>]
+LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
+(Font)              scaled to size 9.0pt on input line 665.
+LaTeX Font Info:    Font shape `U/lasy/b/n' in size <9> not available
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 665.
 
 Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
@@ -1969,19 +1996,21 @@ Overfull \hbox (86.33488pt too wide) has occurred while \output is active
 
 [25
 
-
-
-
- <./part4reconerrors/PCADVvsPCKLD.png> <./part4nelbos/PCADVvsPCKLD.png>]
+]
 Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
+[26
 
+]
 Overfull \hbox (86.33488pt too wide) has occurred while \output is active
  [][][][]  
  []
 
+[27
+
+]
 \tf@nav=\write6
 \openout6 = `main.nav'.
 
@@ -1991,11 +2020,6 @@ Overfull \hbox (86.33488pt too wide) has occurred while \output is active
 \tf@snm=\write8
 \openout8 = `main.snm'.
 
-[28
-
-
-
-]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 729.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 729.
  (./main.aux)
@@ -2005,11 +2029,11 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 81B4B5023C12357066B3A71A29AF3C5C;500.
  ) 
 Here is how much of TeX's memory you used:
- 35987 strings out of 492990
- 858288 string characters out of 6136334
- 1123056 words of memory out of 5000000
- 38688 multiletter control sequences out of 15000+600000
- 31582 words of font info for 104 fonts, out of 8000000 for 9000
+ 35943 strings out of 492990
+ 857124 string characters out of 6136334
+ 1093785 words of memory out of 5000000
+ 38636 multiletter control sequences out of 15000+600000
+ 34543 words of font info for 115 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  65i,16n,100p,797b,1097s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}<c:/texl
@@ -2026,15 +2050,16 @@ ist/fonts/type1/public/amsfonts/cm/cmss9.pfb><c:/texlive/2017/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmssbx10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmssi10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/am
 sfonts/cm/cmssi8.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmsy10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pf
-b><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texl
-ive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/
-2017/texmf-dist/fonts/type1/public/cm-super/sfso1000.pfb><c:/texlive/2017/texmf
--dist/fonts/type1/public/boondox/zxxrw8a.pfb>
-Output written on main.pdf (7 pages, 656076 bytes).
+/cmssi9.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.p
+fb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/tex
+live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2017/
+texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2017/texm
+f-dist/fonts/type1/public/cm-super/sfso1000.pfb><c:/texlive/2017/texmf-dist/fon
+ts/type1/public/boondox/zxxrw8a.pfb>
+Output written on main.pdf (27 pages, 677554 bytes).
 PDF statistics:
- 292 PDF objects out of 1000 (max. 8388607)
- 232 compressed objects within 3 object streams
+ 359 PDF objects out of 1000 (max. 8388607)
+ 278 compressed objects within 3 object streams
  64 named destinations out of 1000 (max. 500000)
  184 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -8,50 +8,49 @@ Warning--empty journal in backprop
 Warning--empty journal in gan
 Warning--empty chapter and pages in kolen
 Warning--can't use both author and editor fields in lecun
-Warning--empty booktitle in leaky
 Warning--empty journal in nowozin
 Warning--empty journal in explain
 Warning--empty publisher in snyman
 Warning--empty journal in wu
-You've used 48 entries,
+You've used 46 entries,
             1935 wiz_defined-function locations,
-            731 strings with 10718 characters,
-and the built_in function-call counts, 18066 in all, are:
-= -- 1733
-> -- 723
-< -- 35
-+ -- 239
-- -- 237
-* -- 1446
-:= -- 3168
-add.period$ -- 144
-call.type$ -- 48
-change.case$ -- 345
-chr.to.int$ -- 48
-cite$ -- 58
-duplicate$ -- 747
-empty$ -- 1285
-format.name$ -- 305
-if$ -- 3566
+            721 strings with 10395 characters,
+and the built_in function-call counts, 17367 in all, are:
+= -- 1667
+> -- 703
+< -- 33
++ -- 233
+- -- 231
+* -- 1390
+:= -- 3049
+add.period$ -- 139
+call.type$ -- 46
+change.case$ -- 332
+chr.to.int$ -- 46
+cite$ -- 55
+duplicate$ -- 716
+empty$ -- 1226
+format.name$ -- 295
+if$ -- 3426
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 62
-newline$ -- 240
-num.names$ -- 146
-pop$ -- 362
+missing$ -- 60
+newline$ -- 231
+num.names$ -- 140
+pop$ -- 347
 preamble$ -- 1
-purify$ -- 357
+purify$ -- 344
 quote$ -- 0
-skip$ -- 568
+skip$ -- 547
 stack$ -- 0
-substring$ -- 1074
-swap$ -- 105
+substring$ -- 1023
+swap$ -- 104
 text.length$ -- 8
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 260
-warning$ -- 10
-while$ -- 133
+type$ -- 248
+warning$ -- 9
+while$ -- 128
 width$ -- 0
-write$ -- 612
-(There were 10 warnings)
+write$ -- 589
+(There were 9 warnings)

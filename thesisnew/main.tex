@@ -19,7 +19,7 @@
 %  Load other packages you may need here
 % 
 % \pgfpagesuselayout{4 on 1}[a4paper,landscape,border shrink=5mm
-\pgfpagesuselayout{4 on 1}[a4paper,landscape,border shrink=5mm]
+%\pgfpagesuselayout{4 on 1}[a4paper,landscape,border shrink=5mm]
 %
 \usetikzlibrary{bayesnet}
 \usepackage{kotex}
@@ -310,7 +310,7 @@ Program alternates between several optimisation steps of discriminator and one o
 \end{frame}
 \begin{frame}{Density Ratio Estimation}{Divergence Minimisation}
 \begin{theorem}
-If $f$ is a convex function with derivative $f'$ and convex conjugate $f^*$, and $\mathcal{R}$ is a class of functions with codomains equal to the domain of $f'$, then we have the lower bound for the f-divergence between distributions $p(u)$ and $q(u)$:
+If $f$ is a convex function with derivative $f'$ and convex conjugate $f^*$, and $\mathcal{R}$ is a class of functions with codomains equal to the domain of $f'$, then we have the lower bound for the $f$-divergence between distributions $p(u)$ and $q(u)$:
 \[D_f [p(u)||q(u)]\geq \sup_{r\in \mathcal{R}} \{\mathbb{E}_{q(u)}[f'(r(u))]-\mathbb{E}_{p(u)}[f^*(f'(r(u)))]\},\]
 with equality when $r(u)=q(u)/p(u)$.
 \end{theorem}
@@ -337,8 +337,8 @@ Joint-Contrastive Application:
 \begin{frame}{Density Ratio Estimation}{Algorithm Generalisation}
 \begin{itemize}
 \item Actually, $f(u)=u\log u-(u+1)\log (u+1)$ and $D(u)=\frac{r(u)}{r(u)+1}$ leads to class probability estimation equations.
-\item The upper bound f-divergence is $2JS(p(u)\|q(u))-\log 4$, we call this the GAN divergence.
-\item To formulate optimisation problems for density ratio estimation, choose either reverse KL or GAN f-divergence upper bound and estimator parametrisation:
+\item The upper bound $f$-divergence is $2JS(p(u)\|q(u))-\log 4$, we call this the GAN divergence.
+\item To formulate optimisation problems for density ratio estimation, choose either reverse KL or GAN $f$-divergence upper bound and estimator parametrisation:
 \begin{itemize}
 \item Class Probability Estimator $D_\alpha(u)\simeq \frac{q(u)}{q(u)+p(u)}$
 \item Direct Ratio Estimator $r_\alpha(u)\simeq \frac{q(u)}{p(u)}$
@@ -477,7 +477,7 @@ JC GAN - $T_\alpha(z,x)$ & 1.3670 & 0.0387\\
 \end{table}
 \begin{itemize}
 \item Prior-contrastive posteriors fully converged at $\approx 1.325$.
-\item No significant difference in convergence between estimators in each f-divergence.
+\item No significant difference in convergence between estimators in each $f$-divergence.
 \item Reverse KL converged faster in joint-contrastive context.
 \end{itemize}
 \end{frame}
@@ -657,10 +657,10 @@ PC Reverse KL - $D_\alpha(z,x)$ & 0.0647 & 0.0019\\
 % Placing a * after \section means it will not show in the
 % outline or table of contents.
 \section{Theory}
-\begin{frame}{Theory}{Choice of f-divergence}
+\begin{frame}{Theory}{Choice of $f$-divergence}
 \begin{itemize}
-\item Nowozin's f-GAN paper shows empirically that the reverse KL divergence is superior when it is additionally used to optimize the posterior.
-\item Intuitive that the f-divergence used to optimize posterior is the best upper bound for estimator.
+\item Nowozin's $f$-GAN paper shows empirically that the reverse KL divergence is superior when it is additionally used to optimize the posterior.
+\item Intuitive that the $f$-divergence used to optimize posterior is the best upper bound for estimator.
 \end{itemize}
 \end{frame}
 \begin{frame}{Further Estimator Loss Function Analysis}{Estimator Parametrisation}
@@ -689,7 +689,7 @@ PC Reverse KL - $D_\alpha(z,x)$ & 0.0647 & 0.0019\\
     \item
       Still unclear exactly why reverse KL divergence is more unstable but more accurate when stable.
     \item
-      Several more f-divergences exist which have unknown stability when undertrained.
+      Several more $f$-divergences exist which have unknown stability when undertrained.
     \end{itemize}
   \end{itemize}
 \end{frame}

@@ -3,68 +3,69 @@
 \contentsline {section}{\numberline {1.2}Problem Context}{1}{section.1.2}
 \contentsline {section}{\numberline {1.3}Results}{3}{section.1.3}
 \contentsline {section}{\numberline {1.4}Thesis Structure}{4}{section.1.4}
-\contentsline {chapter}{\numberline {Chapter 2}Background on Neural Networks}{6}{chapter.2}
-\contentsline {section}{\numberline {2.1}Motivation}{6}{section.2.1}
-\contentsline {section}{\numberline {2.2}Individual Node Structure}{7}{section.2.2}
-\contentsline {section}{\numberline {2.3}Activation Functions}{8}{section.2.3}
-\contentsline {section}{\numberline {2.4}Neural Network Structure}{10}{section.2.4}
-\contentsline {section}{\numberline {2.5}Weight Initialisation}{13}{section.2.5}
-\contentsline {section}{\numberline {2.6}Optimisation}{14}{section.2.6}
-\contentsline {section}{\numberline {2.7}Back-Propagation}{16}{section.2.7}
-\contentsline {chapter}{\numberline {Chapter 3}Variational Inference}{19}{chapter.3}
-\contentsline {section}{\numberline {3.1}Context}{19}{section.3.1}
-\contentsline {section}{\numberline {3.2}The KL Divergence}{20}{section.3.2}
-\contentsline {section}{\numberline {3.3}Introduction to Variational Inference}{22}{section.3.3}
-\contentsline {section}{\numberline {3.4}Derivation of the ELBO}{22}{section.3.4}
-\contentsline {section}{\numberline {3.5}Mean-Field Variational Family}{24}{section.3.5}
-\contentsline {section}{\numberline {3.6}Example: Bayesian Mixture of Gaussians}{27}{section.3.6}
-\contentsline {section}{\numberline {3.7}Amortized Inference}{31}{section.3.7}
-\contentsline {section}{\numberline {3.8}Example: Variational Autoencoder}{33}{section.3.8}
-\contentsline {section}{\numberline {3.9}Problems with Implicit Distributions}{35}{section.3.9}
-\contentsline {subsection}{\numberline {3.9.1}Implicit Prior and/or Variational Posterior}{35}{subsection.3.9.1}
-\contentsline {subsection}{\numberline {3.9.2}Implicit Likelihood}{37}{subsection.3.9.2}
-\contentsline {chapter}{\numberline {Chapter 4}Density Ratio Estimation}{39}{chapter.4}
-\contentsline {section}{\numberline {4.1}Class Probability Estimation}{39}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Derivation}{39}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Prior-Contrastive Algorithm}{41}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}Joint-Contrastive Algorithm}{44}{subsection.4.1.3}
-\contentsline {section}{\numberline {4.2}Divergence Minimisation}{45}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Derivation}{46}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}Prior-Contrastive Algorithm}{48}{subsection.4.2.2}
-\contentsline {subsection}{\numberline {4.2.3}Joint-Contrastive Algorithm}{49}{subsection.4.2.3}
-\contentsline {subsection}{\numberline {4.2.4}Alternative Derivation of Class Probability Estimation}{51}{subsection.4.2.4}
-\contentsline {chapter}{\numberline {Chapter 5}Initial Experiment - Inference, ``Sprinkler" Example}{54}{chapter.5}
-\contentsline {section}{\numberline {5.1}Problem Context}{54}{section.5.1}
-\contentsline {section}{\numberline {5.2}Program Structure}{55}{section.5.2}
-\contentsline {section}{\numberline {5.3}Results}{60}{section.5.3}
-\contentsline {chapter}{\numberline {Chapter 6}Activation Function Experiment}{63}{chapter.6}
-\contentsline {section}{\numberline {6.1}Theory}{63}{section.6.1}
-\contentsline {section}{\numberline {6.2}Experiment Outline}{65}{section.6.2}
-\contentsline {section}{\numberline {6.3}Results}{65}{section.6.3}
-\contentsline {chapter}{\numberline {Chapter 7}Algorithm Analysis}{68}{chapter.7}
-\contentsline {section}{\numberline {7.1}Introduction}{68}{section.7.1}
-\contentsline {section}{\numberline {7.2}Algorithm Generalisation}{69}{section.7.2}
-\contentsline {subsection}{\numberline {7.2.1}Reverse KL Divergence}{69}{subsection.7.2.1}
-\contentsline {subsection}{\numberline {7.2.2}GAN Divergence}{69}{subsection.7.2.2}
-\contentsline {section}{\numberline {7.3}Optimization Algorithms}{70}{section.7.3}
-\contentsline {subsection}{\numberline {7.3.1}Prior-Contrastive}{70}{subsection.7.3.1}
-\contentsline {subsection}{\numberline {7.3.2}Joint-Contrastive}{71}{subsection.7.3.2}
-\contentsline {chapter}{\numberline {Chapter 8}Comparing Optimal Estimators}{72}{chapter.8}
-\contentsline {section}{\numberline {8.1}Theory}{72}{section.8.1}
-\contentsline {section}{\numberline {8.2}Experiment Outline}{72}{section.8.2}
-\contentsline {section}{\numberline {8.3}Results}{73}{section.8.3}
-\contentsline {chapter}{\numberline {Chapter 9}Comparing Undertrained Estimators}{77}{chapter.9}
-\contentsline {section}{\numberline {9.1}Theory}{77}{section.9.1}
-\contentsline {subsection}{\numberline {9.1.1}Estimator Bounds}{77}{subsection.9.1.1}
-\contentsline {subsection}{\numberline {9.1.2}First and Second Derivatives of Estimator Loss Functions}{78}{subsection.9.1.2}
-\contentsline {subsection}{\numberline {9.1.3}Displacement of Estimator Optimal Values}{81}{subsection.9.1.3}
-\contentsline {section}{\numberline {9.2}Experiment Outline}{83}{section.9.2}
-\contentsline {section}{\numberline {9.3}Results}{83}{section.9.3}
-\contentsline {chapter}{\numberline {Chapter 10}Data Generation - (MNIST image generation)}{87}{chapter.10}
-\contentsline {section}{\numberline {10.1}Experiment Outline}{87}{section.10.1}
-\contentsline {section}{\numberline {10.2}Low Dimensional Experiment Results}{90}{section.10.2}
-\contentsline {section}{\numberline {10.3}High Dimensional Experiment Results}{91}{section.10.3}
-\contentsline {chapter}{\numberline {Chapter 11}Conclusion and Further Research}{95}{chapter.11}
-\contentsline {section}{\numberline {11.1}Further Research}{95}{section.11.1}
-\contentsline {chapter}{References}{97}{section.11.1}
-\contentsline {chapter}{\numberline {Appendix A}Kernel Density Estimation}{101}{appendix.A}
+\contentsline {chapter}{\numberline {Chapter 2}Background on Neural Networks}{5}{chapter.2}
+\contentsline {section}{\numberline {2.1}Motivation}{5}{section.2.1}
+\contentsline {section}{\numberline {2.2}Individual Node Structure}{6}{section.2.2}
+\contentsline {section}{\numberline {2.3}Activation Functions}{7}{section.2.3}
+\contentsline {section}{\numberline {2.4}Neural Network Structure}{9}{section.2.4}
+\contentsline {section}{\numberline {2.5}Weight Initialisation}{11}{section.2.5}
+\contentsline {section}{\numberline {2.6}Optimisation}{12}{section.2.6}
+\contentsline {section}{\numberline {2.7}Back-Propagation}{14}{section.2.7}
+\contentsline {chapter}{\numberline {Chapter 3}Variational Inference}{16}{chapter.3}
+\contentsline {section}{\numberline {3.1}Context}{16}{section.3.1}
+\contentsline {section}{\numberline {3.2}The KL Divergence}{17}{section.3.2}
+\contentsline {section}{\numberline {3.3}Introduction to Variational Inference}{19}{section.3.3}
+\contentsline {section}{\numberline {3.4}Derivation of the ELBO}{19}{section.3.4}
+\contentsline {section}{\numberline {3.5}Mean-Field Variational Family}{21}{section.3.5}
+\contentsline {section}{\numberline {3.6}Amortized Inference}{23}{section.3.6}
+\contentsline {section}{\numberline {3.7}Example: Variational Autoencoder}{25}{section.3.7}
+\contentsline {section}{\numberline {3.8}Problems with Implicit Distributions}{27}{section.3.8}
+\contentsline {subsection}{\numberline {3.8.1}Implicit Prior and/or Variational Posterior}{27}{subsection.3.8.1}
+\contentsline {subsection}{\numberline {3.8.2}Implicit Likelihood}{29}{subsection.3.8.2}
+\contentsline {chapter}{\numberline {Chapter 4}Density Ratio Estimation}{31}{chapter.4}
+\contentsline {section}{\numberline {4.1}Class Probability Estimation}{31}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Derivation}{31}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Prior-Contrastive Algorithm}{33}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}Joint-Contrastive Algorithm}{36}{subsection.4.1.3}
+\contentsline {section}{\numberline {4.2}Divergence Minimisation}{37}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Derivation}{38}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Prior-Contrastive Algorithm}{40}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}Joint-Contrastive Algorithm}{41}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}Alternative Derivation of Class Probability Estimation}{43}{subsection.4.2.4}
+\contentsline {chapter}{\numberline {Chapter 5}Algorithm Generalisation}{46}{chapter.5}
+\contentsline {section}{\numberline {5.1}Introduction}{46}{section.5.1}
+\contentsline {section}{\numberline {5.2}Algorithm Generalisation}{47}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Reverse KL Divergence}{47}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}GAN Divergence}{47}{subsection.5.2.2}
+\contentsline {section}{\numberline {5.3}Optimization Algorithms}{48}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Prior-Contrastive}{48}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}Joint-Contrastive}{49}{subsection.5.3.2}
+\contentsline {chapter}{\numberline {Chapter 6}Comparing Optimal Estimators}{50}{chapter.6}
+\contentsline {section}{\numberline {6.1}Theory}{50}{section.6.1}
+\contentsline {section}{\numberline {6.2}Problem Context}{50}{section.6.2}
+\contentsline {section}{\numberline {6.3}Program Structure}{52}{section.6.3}
+\contentsline {section}{\numberline {6.4}Results}{54}{section.6.4}
+\contentsline {chapter}{\numberline {Chapter 7}Comparing Undertrained Estimators}{57}{chapter.7}
+\contentsline {section}{\numberline {7.1}Theory}{57}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}Estimator Bounds}{57}{subsection.7.1.1}
+\contentsline {subsection}{\numberline {7.1.2}First and Second Derivatives of Estimator Loss Functions}{58}{subsection.7.1.2}
+\contentsline {subsection}{\numberline {7.1.3}Displacement of Estimator Optimal Values}{61}{subsection.7.1.3}
+\contentsline {section}{\numberline {7.2}Experiment Outline}{63}{section.7.2}
+\contentsline {section}{\numberline {7.3}Results}{63}{section.7.3}
+\contentsline {chapter}{\numberline {Chapter 8}Data Generation - (MNIST image generation)}{67}{chapter.8}
+\contentsline {section}{\numberline {8.1}Experiment Outline}{67}{section.8.1}
+\contentsline {section}{\numberline {8.2}Low Dimensional Experiment Results}{70}{section.8.2}
+\contentsline {section}{\numberline {8.3}High Dimensional Experiment Results}{71}{section.8.3}
+\contentsline {chapter}{\numberline {Chapter 9}Conclusion and Further Research}{75}{chapter.9}
+\contentsline {section}{\numberline {9.1}Further Research}{75}{section.9.1}
+\contentsline {chapter}{References}{77}{section.9.1}
+\contentsline {chapter}{\numberline {Appendix A}Proofs}{81}{appendix.A}
+\contentsline {section}{\numberline {A.1}Proof of Proposition 2.6.2}{81}{section.A.1}
+\contentsline {section}{\numberline {A.2}Proof of Lemma 3.7.1}{82}{section.A.2}
+\contentsline {chapter}{\numberline {Appendix B}Algorithms}{83}{appendix.B}
+\contentsline {section}{\numberline {B.1}Back-Propagation Algorithm}{83}{section.B.1}
+\contentsline {section}{\numberline {B.2}Coordinate Ascent Variational Inference Algorithm}{84}{section.B.2}
+\contentsline {section}{\numberline {B.3}Algorithms for ``Sprinkler" Experiment}{85}{section.B.3}
+\contentsline {chapter}{\numberline {Appendix C}Mean Field Variational Inference Example}{87}{appendix.C}
+\contentsline {chapter}{\numberline {Appendix D}Kernel Density Estimation}{91}{appendix.D}
+\contentsline {chapter}{\numberline {Appendix E}Prior-Contrastive Optimal Estimator Experiment Plots}{93}{appendix.E}
