@@ -20,9 +20,9 @@
 \contentsline {section}{\numberline {3.6}Example: Bayesian Mixture of Gaussians}{27}{section.3.6}
 \contentsline {section}{\numberline {3.7}Amortized Inference}{31}{section.3.7}
 \contentsline {section}{\numberline {3.8}Example: Variational Autoencoder}{33}{section.3.8}
-\contentsline {section}{\numberline {3.9}Problems with Implicit Distributions}{34}{section.3.9}
+\contentsline {section}{\numberline {3.9}Problems with Implicit Distributions}{35}{section.3.9}
 \contentsline {subsection}{\numberline {3.9.1}Implicit Prior and/or Variational Posterior}{35}{subsection.3.9.1}
-\contentsline {subsection}{\numberline {3.9.2}Implicit Likelihood}{36}{subsection.3.9.2}
+\contentsline {subsection}{\numberline {3.9.2}Implicit Likelihood}{37}{subsection.3.9.2}
 \contentsline {chapter}{\numberline {Chapter 4}Density Ratio Estimation}{39}{chapter.4}
 \contentsline {section}{\numberline {4.1}Class Probability Estimation}{39}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Derivation}{39}{subsection.4.1.1}

@@ -94,6 +94,7 @@
 \def\sparen(#1){\Bigl ( #1 \Bigr )}
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator{\tr}{tr}
 \newcommand\blankpage{%
     \null
     \thispagestyle{empty}%
@@ -830,7 +831,6 @@ Equating Expression (3.5.5) to 0 and observing that $1+\lambda_j$ is constant wi
 q_j^*(z_j)&=\frac{\exp(\mathbb{E}_{\bm{z}_{-j}}[\log p(\bm{x},\bm{z})])}{\exp{(\text{C})}}\nonumber\\
 &= \frac{\exp(\mathbb{E}_{\bm{z}_{-j}}[\log p(\bm{x},\bm{z})])}{\int \exp(\mathbb{E}_{\bm{z}_{-j}}[\log p(\bm{x},\bm{z})])dz_j}.
 \end{align}
-\newpage
 The normalization constant on the denominator of (3.5.6) is derived by observing $q^*_j(z_j)$ as a density. Finally, we derive a simpler expression of $q^*_j(z_j)$ by observing that terms independent of $z_j$ can be treated as a constant:
 \begin{align}
 q^*_j(z_j)&\propto \exp\left(\mathbb{E}_{\bm{z}_{-j}}[\log p(\bm{x},\bm{z})]\right)\nonumber\\
@@ -1011,9 +1011,23 @@ In our current formulation, we are trying to represent the variational posterior
 Often in practice, this is achieved by sampling random standard normal noise $\epsilon$, multiplying it by the variance and adding the result to the mean:
 \[\bm{\epsilon}\sim \mathcal{N}(0,I_{M\times M}),\qquad \bm{z}=\bm{\mu}+\bm{\epsilon}\cdot\bm{\sigma}^2.\]
 A similar process of adding random noise is used for the decoder network representing the likelihood distribution $p_\theta(\bm{x}|\bm{z})$, but the parametrisation of the distribution is chosen depending on the nature of the data. For example, for most continuous data, we can use a multivariate normal parametrisation similar to our variational posterior. For binary data, a sigmoid output layer is specified in the neural network and the likelihood distribution is expressed as a Bernoulli distribution with probabilities given by the network output.
-
-Since we have the explicit form of the multivariate normal $q_\phi(\bm{z}|\bm{x})$ and $p(\bm{z})$ densities, the KL divergence term can be calculated through the equation:
-\[KL(q(\bm{z}|\bm{x})\|p(\bm{z}))=\frac12 \sum_{i=1}^k\left(\sigma^2_i+\mu^2_i-\log(\sigma^2_i)-1\right).\]
+\begin{lemma}
+Using the explicit form of the multivariate normal $q_\phi(\bm{z}|\bm{x})$ and $p(\bm{z})$ densities, the KL divergence term can be calculated through the equation:
+\[KL(q_\phi(\bm{z}|\bm{x})\|p(\bm{z}))=\frac12 \sum_{i=1}^k\left(\sigma^2_i+\mu^2_i-\log(\sigma^2_i)-1\right).\]
+\begin{proof}
+Denoting the identity matrix as $I$ and the covariance matrix of $q_\phi(\bm{z}|\bm{x})$ as $\Sigma$, we state the probability density functions of the two densities:
+\[q_\phi(\bm{z}|\bm{x})=\frac{1}{(2\pi)^{k/2}\det(\Sigma)^{1/2}}\exp\left(-\frac{1}{2}(\bm{z}-\bm{\mu})^\top\Sigma^{-1}(\bm{z}-\bm{\mu})\right),\]
+\[p(\bm{z})=\frac{1}{(2\pi)^{k/2}}\exp\left(-\frac{1}{2}\bm{z}^\top I\bm{z}\right).\]
+From Definition 3.2.2, we have:
+\begin{align*}
+KL(q_\phi(\bm{z}|\bm{x})\|p(\bm{z}))&=\E_{q_\phi(\bm{z}|\bm{x})}[\log q_\phi(\bm{z}|\bm{x})-\log p(\bm{z})]\\
+&=-\frac{1}{2}\log(\det \Sigma)+\frac{1}{2}\E_{q_\phi(\bm{z}|\bm{x})}\left[-(\bm{z}-\bm{\mu})^\top \Sigma^{-1}(\bm{z}-\bm{\mu})+\bm{z}^\top I\bm{z}\right]\\
+&=-\frac{1}{2}\log(\det \Sigma)+\frac{1}{2}\E_{q_\phi(\bm{z}|\bm{x})}\left[-\tr\left(\Sigma^{-1}\Sigma\right)+\tr\left(I\bm{z}\bm{z}^\top\right)\right]\\
+&=-\frac{1}{2}\log(\det \Sigma)-\frac{k}{2}+\frac{1}{2}\tr\left(I+\left(\Sigma+\mu\mu^\top\right)\right)\\
+&=\frac12 \sum_{i=1}^k\left(\sigma^2_i+\mu^2_i-\log(\sigma^2_i)-1\right).
+\end{align*}
+\end{proof}
+\end{lemma}
 We can now evaluate and minimise the $NELBO$ in Equation (3.8.1) as we have an explicit parametrisation of all of the terms.
 \begin{figure}[h]
   \centering
@@ -1615,7 +1629,7 @@ The network is only trained on data values $x=0,5,8,12,50$. In each training ite
 
 To prevent problems with taking $\log 0$ in the loss functions, we add a small constant $c=10^{-18}$ to the log function's input. The estimator is pre-trained for 5000 iterations to ensure that optimization of the variational network begins with an optimal estimator; an inaccurate ratio estimation leads to incorrect optimization of the posterior network. The variance of the results is also reduced as the initial parametrisation of the estimator will be approximately the same for a fixed generator initialization. Afterwards, the generator is optimized for 10000 iterations when we have an implicit prior, and 40000 iterations in the joint-contrastive formulation. The algorithm alternates between 100 training steps of the estimator and 1 training step of the generator. The processes for class probability estimation and divergence minimisation, based off the algorithms derived in chapter 4, are shown in Algorithms 8 and 9.
 
-We evaluate the techniques by comparing the average KL divergence between the true and variational posteriors at the end of the program's runtime: \[\E_{q^*(x)}KL(q_\phi(\bm{z}|x)\|p(\bm{z}|x)).\] To do so, we estimate the probability density function of the variational posterior output for each of the 5 data points with a Gaussian kernel density estimator $\hat{q}(\bm{z}|x)$. We also use the unnormalised true posterior as derived in Equation (5.1.1). The normalisation constant $p(x)$ is independent of the variational posterior $q_\phi(\bm{z}|x)$ that we compare it with, so its omission has no impact on our comparison of the algorithms. This density estimation technique is suitable for our low dimensional problem, and the accuracy is independent of the algorithm used. An explanation of kernel density estimation can be found in Appendix A. Due to the stochastic nature of the optimisation, it is desirable to have a large number of experiment repetitions for reliable results. However, we have limited computational time available, so each algorithm was run 30 times. At the end of each posterior optimisation step, the estimator loss and NELBO estimation was stored. Every 100 iterations, kernel density estimation was used to estimate the true average KL divergence.
+We evaluate the techniques by comparing the average KL divergence between the true and variational posteriors at the end of the program's runtime: \[\E_{q^*(x)}KL(q_\phi(\bm{z}|x)\|p(\bm{z}|x)).\] To do so, we estimate the probability density function of the variational posterior output for each of the 5 data points with a Gaussian kernel density estimator $\hat{q}(\bm{z}|x)$. We also use the unnormalised true posterior as derived in Equation (5.1.1). The normalisation constant $p(x)$ is independent of the variational posterior $q_\phi(\bm{z}|x)$ that we compare it with, so its omission has no impact on our comparison of the algorithms. This density estimation technique is suitable for our low dimensional problem, and the accuracy is independent of the algorithm used. An explanation of kernel density estimation can be found in Appendix B. Due to the stochastic nature of the optimisation, it is desirable to have a large number of experiment repetitions for reliable results. However, we have limited computational time available, so each algorithm was run 30 times. At the end of each posterior optimisation step, the estimator loss and NELBO estimation was stored. Every 100 iterations, kernel density estimation was used to estimate the true average KL divergence.
 \begin{algorithm}
 \SetKw{update}{update}
 \caption{Sprinkler Prior-Contrastive Algorithm}
