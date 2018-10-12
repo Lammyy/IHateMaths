@@ -338,8 +338,8 @@ Joint-Contrastive Application:
 \end{itemize}
 \end{itemize}
 \end{frame}
-\section{Activation Function Experiment}
-\begin{frame}{Activation Function Experiment}{Experiment Outline}
+\section{Optimal Estimator Experiment}
+\begin{frame}{Optimal Estimator Experiment}{Experiment Outline}
 \[p(z_1,z_2)\sim \mathcal{N} (0,\sigma^2 I_{2\times 2})\]
 \[p(x|\bm{z})\sim Exp(3+\max(0,z_1)^3+\max(0,z_2)^3)\]
 \begin{figure}[h]
@@ -350,49 +350,49 @@ Joint-Contrastive Application:
 \item Use Gaussian KDE to find `true' KL divergence for $q_\phi(z|x=0,5,8,12,50)$.
 \end{itemize}
 \end{frame}
-\begin{frame}{Activation Function Experiment}{Experiment Outline}
-\begin{itemize}
-\item Common to use ReLU $g(x)=\max\{0,x\}$ as activation function for output layer of direct ratio estimator $r_\alpha(u)\simeq \frac{q(u)}{p(u)}$.
-\item Experiences `dying ReLU problem'.
-\item Linearity of ReLU activation causes imbalance between ratios in $(0,1)$ and $(1,\infty)$.
-\item We propose exponential activation function $g(x)=e^x$.
-\item Compare them with reverse KL divergence upper bound.
-\item Low training rate, high iterations.
-\end{itemize}
-\end{frame}
-\begin{frame}{Activation Function Experiment}{Results}
-\begin{table}[h]
-\scalebox{0.8}{
-\begin{tabular}{|c|c|c|}
-\hline
-Algorithm & Mean KL Divergence & Standard Deviation\\
-\hline
-Prior Contrastive - ReLU & 1.3807 & 0.0391\\
-\hline
-Prior Contrastive - Exp & 1.3265 & 0.0045\\
-\hline
-%Joint-Contrastive - ReLU & 1.6954 & 0.4337\\
+%\begin{frame}{Activation Function Experiment}{Experiment Outline}
+%\begin{itemize}
+%\item Common to use ReLU $g(x)=\max\{0,x\}$ as activation function for output layer of direct ratio estimator $r_\alpha(u)\simeq \frac{q(u)}{p(u)}$.
+%\item Experiences `dying ReLU problem'.
+%\item Linearity of ReLU activation causes imbalance between ratios in $(0,1)$ and $(1,\infty)$.
+%\item We propose exponential activation function $g(x)=e^x$.
+%\item Compare them with reverse KL divergence upper bound.
+%\item Low training rate, high iterations.
+%\end{itemize}
+%\end{frame}
+%\begin{frame}{Activation Function Experiment}{Results}
+%\begin{table}[h]
+%\scalebox{0.8}{
+%\begin{tabular}{|c|c|c|}
 %\hline
-%Joint-Contrastive - Exp & 1.3397 & 0.0066\\
+%Algorithm & Mean KL Divergence & Standard Deviation\\
 %\hline
-\end{tabular}
-}
-\end{table}
-\begin{figure}[h]
-\scalebox{0.8}{
-\begin{subfigure}{\textwidth}
-\includegraphics[width=\textwidth]{13288.png}
-\caption{Average KL Divergence of 1.3288}
-\end{subfigure}
-}
-\scalebox{0.8}{
-\begin{subfigure}{\textwidth}
-\includegraphics[width=\textwidth]{13963.png}
-\caption{Average KL Divergence of 1.3963}
-\end{subfigure}
-}
-\end{figure}
-\end{frame}
+%Prior Contrastive - ReLU & 1.3807 & 0.0391\\
+%\hline
+%Prior Contrastive - Exp & 1.3265 & 0.0045\\
+%\hline
+%%Joint-Contrastive - ReLU & 1.6954 & 0.4337\\
+%%\hline
+%%Joint-Contrastive - Exp & 1.3397 & 0.0066\\
+%%\hline
+%\end{tabular}
+%}
+%\end{table}
+%\begin{figure}[h]
+%\scalebox{0.8}{
+%\begin{subfigure}{\textwidth}
+%\includegraphics[width=\textwidth]{13288.png}
+%\caption{Average KL Divergence of 1.3288}
+%\end{subfigure}
+%}
+%\scalebox{0.8}{
+%\begin{subfigure}{\textwidth}
+%\includegraphics[width=\textwidth]{13963.png}
+%\caption{Average KL Divergence of 1.3963}
+%\end{subfigure}
+%}
+%\end{figure}
+%\end{frame}
 %\begin{frame}{Inference Experiment - Activation Function}{KL Divergence Plots}
 %\begin{figure}
 %\begin{subfigure}{0.49\textwidth}
@@ -424,14 +424,26 @@ Prior Contrastive - Exp & 1.3265 & 0.0045\\
 %\item Variance of exponential output in joint-contrastive case increases over time.
 %\end{itemize}
 %\end{frame}
-\section{Optimal Estimator Experiment}
 \begin{frame}{Optimal Estimator Experiment}{Experiment Outline}
 \begin{itemize}
-\item Same inference problem as before.
-\item Aim of this experiment is to verify that choice of estimator does not matter as long as it reaches equality.
+\item Aim of this experiment is to verify that choice of estimator does not matter as long as it reaches optimality.
 \item Low training rate with high estimator to posterior optimisation ratio (100:1).
 \item High posterior iterations.
 \end{itemize}
+\begin{figure}[h]
+\scalebox{0.8}{
+\begin{subfigure}{\textwidth}
+\includegraphics[width=\textwidth]{13288.png}
+\caption{Average KL Divergence of 1.3288}
+\end{subfigure}
+}
+\scalebox{0.8}{
+\begin{subfigure}{\textwidth}
+\includegraphics[width=\textwidth]{13963.png}
+\caption{Average KL Divergence of 1.3963}
+\end{subfigure}
+}
+\end{figure}
 \end{frame}
 \begin{frame}{Optimal Estimator Experiment}{Results}
 \begin{table}[h]

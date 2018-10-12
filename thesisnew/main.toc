@@ -2,8 +2,7 @@
 \beamer@subsectionintoc {1}{1}{Neural Networks}{3}{0}{1}
 \beamer@subsectionintoc {1}{2}{(Amortized) Variational Inference}{5}{0}{1}
 \beamer@subsectionintoc {1}{3}{Density Ratio Estimation}{9}{0}{1}
-\beamer@sectionintoc {2}{Activation Function Experiment}{15}{0}{2}
-\beamer@sectionintoc {3}{Optimal Estimator Experiment}{18}{0}{3}
-\beamer@sectionintoc {4}{Undertrained Estimator Experiment}{20}{0}{4}
-\beamer@sectionintoc {5}{Autoencoder Experiment}{23}{0}{5}
-\beamer@sectionintoc {6}{Theory}{27}{0}{6}
+\beamer@sectionintoc {2}{Optimal Estimator Experiment}{15}{0}{2}
+\beamer@sectionintoc {3}{Undertrained Estimator Experiment}{18}{0}{3}
+\beamer@sectionintoc {4}{Autoencoder Experiment}{21}{0}{4}
+\beamer@sectionintoc {5}{Theory}{25}{0}{5}

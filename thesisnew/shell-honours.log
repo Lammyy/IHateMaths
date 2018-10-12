@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  12 OCT 2018 02:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  12 OCT 2018 14:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2273,7 +2273,7 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2774.
 Here is how much of TeX's memory you used:
  33978 strings out of 492990
  797933 string characters out of 6136334
- 1059812 words of memory out of 5000000
+ 1059802 words of memory out of 5000000
  36525 multiletter control sequences out of 15000+600000
  25276 words of font info for 100 fonts, out of 8000000 for 9000
  1143 hyphenation exceptions out of 8191
@@ -2305,7 +2305,7 @@ y10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.
 pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb0.pfb><c
 :/texlive/2017/texmf-dist/fonts/type1/public/nanumtype1/nanummjmb2.pfb><c:/texl
 ive/2017/texmf-dist/fonts/type1/public/boondox/zxxrw8a.pfb>
-Output written on shell-honours.pdf (114 pages, 2919723 bytes).
+Output written on shell-honours.pdf (114 pages, 2920071 bytes).
 PDF statistics:
  1540 PDF objects out of 1728 (max. 8388607)
  1260 compressed objects within 13 object streams

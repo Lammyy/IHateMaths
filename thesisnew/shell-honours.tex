@@ -136,7 +136,7 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Density Ratio Estimation for Variational Methods in Bayesian Neural Networks}
+\title{Density Ratio Estimation in Variational Bayesian Machine Learning}
 
 \authornameonly{Alexander Lam}
 
@@ -201,11 +201,11 @@ Signed: \rule{7cm}{0.25pt} \hfill Date: \rule{4cm}{0.25pt} \newline
 
 {\bigskip\noindent}Discord Group+Kong+Brian
 
-{\bigskip\noindent}Sunchit
+{\bigskip\noindent}Sunchit and Allan
 
 {\bigskip\noindent}누나
 
-{\bigskip\noindent}Family
+{\bigskip\noindent}JC
 
 {\bigskip\bigskip\bigskip\noindent} Lammy, 11 September 2018.
 
@@ -214,9 +214,9 @@ Signed: \rule{7cm}{0.25pt} \hfill Date: \rule{4cm}{0.25pt} \newline
 % Abstract
 
 \prefacesection{Abstract}
-Never use ReLU output to estimate density ratios.\\
-Class probability estimator = good, direct density ratio and direct log density ratio estimators = bad.\\ 
-Also KL Divergence $>$ "CPE" Divergence for formulating estimator loss function but we already know that (although everyone seems to continue to use CPE divergence).
+In variational Bayesian machine learning, deep neural networks can be used to efficiently model posterior distributions associated with high dimensional data or large datasets. This can be furthered to an autoencoder model which simultaneously expresses data points as a lower dimensional latent representation, and reconstructs said data given a latent variable input. Due to the implicit nature of the involved distributions, density ratio estimation techniques are used to approximate the intractable KL divergence term in the posterior network optimisation problem. 
+
+In this thesis, we generalise the estimator loss function selection to a choice of $f$-divergence lower bound and estimator parametrisation. We then demonstrate that, of the tested parametrisations, the class probability estimator is the optimal choice as it is feasible with large density ratios and experiences the quickest convergence. Additionally, the high accuracy yet instability of the reverse KL divergence lower bound is experimentally shown, in contrast to the stable yet inaccurate GAN divergence, implying a trade-off between estimator stability and accuracy in the choice of $f$-divergence.
 \afterpage{\blankpage}
 
 
