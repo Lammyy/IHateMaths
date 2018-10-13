@@ -60,12 +60,15 @@
 \BOOKMARK [1][-]{section.9.1}{Further Research}{chapter.9}% 60
 \BOOKMARK [0][-]{section.9.1}{References}{}% 61
 \BOOKMARK [0][-]{appendix.A}{Proofs}{}% 62
-\BOOKMARK [1][-]{section.A.1}{Proof of Proposition 2.6.2}{appendix.A}% 63
-\BOOKMARK [1][-]{section.A.2}{Proof of Lemma 3.7.1}{appendix.A}% 64
-\BOOKMARK [0][-]{appendix.B}{Algorithms}{}% 65
-\BOOKMARK [1][-]{section.B.1}{Back-Propagation Algorithm}{appendix.B}% 66
-\BOOKMARK [1][-]{section.B.2}{Coordinate Ascent Variational Inference Algorithm}{appendix.B}% 67
-\BOOKMARK [1][-]{section.B.3}{Algorithms for ``Sprinkler" Experiment}{appendix.B}% 68
-\BOOKMARK [0][-]{appendix.C}{Mean Field Variational Inference Example}{}% 69
-\BOOKMARK [0][-]{appendix.D}{Kernel Density Estimation}{}% 70
-\BOOKMARK [0][-]{appendix.E}{Prior-Contrastive Optimal Estimator Experiment Plots}{}% 71
+\BOOKMARK [1][-]{appendix.A.1}{Proof of Proposition 2.6.2}{appendix.A}% 63
+\BOOKMARK [1][-]{appendix.A.2}{Proof of Lemma 3.7.1}{appendix.A}% 64
+\BOOKMARK [1][-]{appendix.A.3}{Proof of Lemma 4.1.1}{appendix.A}% 65
+\BOOKMARK [1][-]{appendix.A.4}{Proof of Lemma 4.2.2}{appendix.A}% 66
+\BOOKMARK [0][-]{appendix.B}{Algorithms}{}% 67
+\BOOKMARK [1][-]{appendix.B.1}{Back-Propagation Algorithm}{appendix.B}% 68
+\BOOKMARK [1][-]{appendix.B.2}{Coordinate Ascent Variational Inference Algorithm}{appendix.B}% 69
+\BOOKMARK [1][-]{appendix.B.3}{Algorithms for ``Sprinkler" Experiment}{appendix.B}% 70
+\BOOKMARK [0][-]{appendix.C}{Mean Field Variational Inference Example}{}% 71
+\BOOKMARK [0][-]{appendix.D}{Kernel Density Estimation}{}% 72
+\BOOKMARK [0][-]{appendix.E}{Prior-Contrastive Optimal Estimator Experiment Plots}{}% 73
+\BOOKMARK [0][-]{appendix.F}{Second Functional Derivatives of Direct Log Ratio Estimator Losses}{}% 74

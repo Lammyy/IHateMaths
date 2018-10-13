@@ -248,6 +248,12 @@ Wu, Y., Burda, Y., Salakhutdinov, R., and Grosse, R.~B. (2016).
 \newblock On the quantitative analysis of decoder-based generative models.
 \newblock {\em CoRR}, abs/1611.04273.
 
+\bibitem[{Zanin Zambom} and {Dias}, 2012]{kde}
+{Zanin Zambom}, A. and {Dias}, R. (2012).
+\newblock {A Review of Kernel Density Estimation with Applications to
+  Econometrics}.
+\newblock {\em ArXiv e-prints}.
+
 \bibitem[Zhang et~al., 2017]{ADVVI}
 Zhang, C., B{\"u}tepage, J., Kjellstr{\"o}m, H., and Mandt, S. (2017).
 \newblock Advances in variational inference.

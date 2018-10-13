@@ -12,45 +12,45 @@ Warning--empty journal in nowozin
 Warning--empty journal in explain
 Warning--empty publisher in snyman
 Warning--empty journal in wu
-You've used 46 entries,
+You've used 47 entries,
             1935 wiz_defined-function locations,
-            721 strings with 10395 characters,
-and the built_in function-call counts, 17367 in all, are:
-= -- 1667
-> -- 703
-< -- 33
-+ -- 233
-- -- 231
-* -- 1390
-:= -- 3049
-add.period$ -- 139
-call.type$ -- 46
-change.case$ -- 332
-chr.to.int$ -- 46
-cite$ -- 55
-duplicate$ -- 716
-empty$ -- 1226
-format.name$ -- 295
-if$ -- 3426
+            724 strings with 10504 characters,
+and the built_in function-call counts, 17678 in all, are:
+= -- 1697
+> -- 716
+< -- 34
++ -- 237
+- -- 235
+* -- 1413
+:= -- 3107
+add.period$ -- 142
+call.type$ -- 47
+change.case$ -- 339
+chr.to.int$ -- 47
+cite$ -- 56
+duplicate$ -- 729
+empty$ -- 1246
+format.name$ -- 302
+if$ -- 3485
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 60
-newline$ -- 231
-num.names$ -- 140
-pop$ -- 347
+missing$ -- 61
+newline$ -- 236
+num.names$ -- 143
+pop$ -- 353
 preamble$ -- 1
-purify$ -- 344
+purify$ -- 351
 quote$ -- 0
-skip$ -- 547
+skip$ -- 558
 stack$ -- 0
-substring$ -- 1023
-swap$ -- 104
+substring$ -- 1035
+swap$ -- 105
 text.length$ -- 8
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 248
+type$ -- 254
 warning$ -- 9
-while$ -- 128
+while$ -- 130
 width$ -- 0
-write$ -- 589
+write$ -- 601
 (There were 9 warnings)
