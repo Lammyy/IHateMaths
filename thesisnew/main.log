@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  12 OCT 2018 18:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  14 OCT 2018 22:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1660,69 +1660,69 @@ your preamble.
  on input line 117.
 
 (./main.nav)
-Overfull \hbox (86.33488pt too wide) in paragraph at lines 117--117
+Overfull \hbox (57.46791pt too wide) in paragraph at lines 117--117
  [][][][]  
  []
 
 
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [1
 
 {c:/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./main.toc)
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [2
 
 ]
-LaTeX Font Info:    Try loading font information for U+msa on input line 194.
+LaTeX Font Info:    Try loading font information for U+msa on input line 191.
  (c:/texlive/2017/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 194.
+LaTeX Font Info:    Try loading font information for U+msb on input line 191.
 
 (c:/texlive/2017/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+lasy on input line 194.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 191.
 
 (c:/texlive/2017/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
 LaTeX Font Info:    Try loading font information for OT1+mathkerncmss on input 
-line 194.
+line 191.
 
 (c:/texlive/2017/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2013/03/27 Fontinst v1.933 font definitions for OT1/ma
 thkerncmss.
 )
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <8> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 194.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 191.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <6> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 194.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 191.
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [3
 
 ]
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [4
 
 ]
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -1761,77 +1761,63 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [6
 
 ]
-Overfull \hbox (8.29726pt too wide) detected at line 254
-[] \OT1/mathkerncmss/m/sl/10.95 NELBO\OT1/cmss/m/n/10.95 (\OT1/mathkerncmss/m/s
-l/10.95 q\OT1/cmss/m/n/10.95 ) = \OMS/cmsy/m/n/10.95 ^^@\U/msb/m/n/10.95 E[]\OT
-1/cmss/m/n/10.95 [[] \OT1/mathkerncmss/m/sl/10.95 p\OT1/cmss/m/n/10.95 (\OT1/ma
-thkerncmss/m/sl/10.95 x\OMS/cmsy/m/n/10.95 j\OT1/mathkerncmss/m/sl/10.95 z\OT1/
-cmss/m/n/10.95 )] + \U/msb/m/n/10.95 E[]\OT1/cmss/m/n/10.95 [\OT1/mathkerncmss/
-m/sl/10.95 KL\OT1/cmss/m/n/10.95 (\OT1/mathkerncmss/m/sl/10.95 q[]\OT1/cmss/m/n
-/10.95 (\OT1/mathkerncmss/m/sl/10.95 z\OMS/cmsy/m/n/10.95 j\OT1/mathkerncmss/m/
-sl/10.95 x\OT1/cmss/m/n/10.95 )\OMS/cmsy/m/n/10.95 jj\OT1/mathkerncmss/m/sl/10.
-95 p\OT1/cmss/m/n/10.95 (\OT1/mathkerncmss/m/sl/10.95 z\OT1/cmss/m/n/10.95 ))]\
-OML/cmm/m/it/10.95 :
- []
-
-
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [7
 
 ]
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [8
 
 ]
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [9
 
 ]
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [10
 
 ]
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [11
 
 ]
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [12
 
 ]
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [13
 
 ]
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -1841,12 +1827,12 @@ Overfull \hbox (86.33488pt too wide) has occurred while \output is active
 <sprinklertrue.png, id=182, 1087.06125pt x 213.04594pt>
 File: sprinklertrue.png Graphic file (type png)
 <use sprinklertrue.png>
-Package pdftex.def Info: sprinklertrue.png  used on input line 360. on input li
-ne 360.
+Package pdftex.def Info: sprinklertrue.png  used on input line 367. on input li
+ne 367.
 Package pdftex.def Info: Requested size: 342.2953pt x 67.08382pt on input line 
-360.
+367.
 
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -1856,69 +1842,70 @@ Overfull \hbox (86.33488pt too wide) has occurred while \output is active
 <13288.png, id=190, 1180.41pt x 228.855pt>
 File: 13288.png Graphic file (type png)
 <use 13288.png>
-Package pdftex.def Info: 13288.png  used on input line 455. on input line 455.
+Package pdftex.def Info: 13288.png  used on input line 462. on input line 462.
 Package pdftex.def Info: Requested size: 342.2953pt x 66.36275pt on input line 
-455.
+462.
 <13963.png, id=191, 1178.15157pt x 231.86626pt>
 File: 13963.png Graphic file (type png)
 <use 13963.png>
-Package pdftex.def Info: 13963.png  used on input line 455. on input line 455.
+Package pdftex.def Info: 13963.png  used on input line 462. on input line 462.
 Package pdftex.def Info: Requested size: 342.2953pt x 67.36331pt on input line 
-455.
+462.
 
-Overfull \vbox (6.83995pt too high) detected at line 455
+Overfull \vbox (6.83995pt too high) detected at line 462
  []
 
 
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [16
 
  <./13288.png> <./13963.png>]
-Overfull \hbox (2.78236pt too wide) in paragraph at lines 483--483
+Overfull \hbox (2.78236pt too wide) in paragraph at lines 490--490
  [] 
  []
 
 
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [17
 
 ]
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [18
 
 ]
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [19
 
 ]
-<part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png, id=218, 462.528pt x 346.896pt>
+<part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png, id=218, 403.5075pt x 313.9228pt>
+
 File: part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png Graphic file (type png)
 <use part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png>
 Package pdftex.def Info: part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png  used on 
-input line 566. on input line 566.
-Package pdftex.def Info: Requested size: 167.72658pt x 125.7929pt on input line
- 566.
-<part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png, id=219, 462.528pt x 346.896pt>
+input line 577. on input line 577.
+Package pdftex.def Info: Requested size: 167.72658pt x 130.48628pt on input lin
+e 577.
+<part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png, id=219, 410.2828pt x 313.17pt>
 File: part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png Graphic file (type png)
 <use part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png>
 Package pdftex.def Info: part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png  used on in
-put line 566. on input line 566.
-Package pdftex.def Info: Requested size: 167.72658pt x 125.7929pt on input line
- 566.
+put line 577. on input line 577.
+Package pdftex.def Info: Requested size: 167.72658pt x 128.02301pt on input lin
+e 577.
 
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -1942,21 +1929,21 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [21
 
 ]
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [22
 
 ]
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -1967,18 +1954,18 @@ Overfull \hbox (86.33488pt too wide) has occurred while \output is active
 File: part4reconerrors/PCADVvsPCKLD.png Graphic file (type png)
 <use part4reconerrors/PCADVvsPCKLD.png>
 Package pdftex.def Info: part4reconerrors/PCADVvsPCKLD.png  used on input line 
-644. on input line 644.
+658. on input line 658.
 Package pdftex.def Info: Requested size: 167.72658pt x 125.64233pt on input lin
-e 644.
+e 658.
 <part4nelbos/PCADVvsPCKLD.png, id=246, 432.11438pt x 316.18124pt>
 File: part4nelbos/PCADVvsPCKLD.png Graphic file (type png)
 <use part4nelbos/PCADVvsPCKLD.png>
-Package pdftex.def Info: part4nelbos/PCADVvsPCKLD.png  used on input line 644. 
-on input line 644.
+Package pdftex.def Info: part4nelbos/PCADVvsPCKLD.png  used on input line 658. 
+on input line 658.
 Package pdftex.def Info: Requested size: 167.72658pt x 122.72641pt on input lin
-e 644.
+e 658.
 
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -1986,25 +1973,25 @@ Overfull \hbox (86.33488pt too wide) has occurred while \output is active
 
  <./part4reconerrors/PCADVvsPCKLD.png> <./part4nelbos/PCADVvsPCKLD.png>]
 LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 9.0pt on input line 665.
+(Font)              scaled to size 9.0pt on input line 680.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <9> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 665.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 680.
 
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [25
 
 ]
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [26
 
 ]
-Overfull \hbox (86.33488pt too wide) has occurred while \output is active
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
@@ -2020,18 +2007,18 @@ Overfull \hbox (86.33488pt too wide) has occurred while \output is active
 \tf@snm=\write8
 \openout8 = `main.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 729.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 729.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 746.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 746.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 729.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 729.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 746.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 746.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 81B4B5023C12357066B3A71A29AF3C5C;500.
  ) 
 Here is how much of TeX's memory you used:
  35943 strings out of 492990
  857124 string characters out of 6136334
- 1093785 words of memory out of 5000000
+ 1092785 words of memory out of 5000000
  38636 multiletter control sequences out of 15000+600000
  34543 words of font info for 115 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -2056,7 +2043,7 @@ live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2017/
 texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2017/texm
 f-dist/fonts/type1/public/cm-super/sfso1000.pfb><c:/texlive/2017/texmf-dist/fon
 ts/type1/public/boondox/zxxrw8a.pfb>
-Output written on main.pdf (27 pages, 677554 bytes).
+Output written on main.pdf (27 pages, 675044 bytes).
 PDF statistics:
  359 PDF objects out of 1000 (max. 8388607)
  278 compressed objects within 3 object streams

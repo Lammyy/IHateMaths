@@ -13,8 +13,8 @@ from tensorflow.examples.tutorials.mnist import input_data
 RECON=[None]*501
 ISTHISLOSS=[None]*501
 mnist = input_data.read_data_sets('../../MNIST_data', one_hot=True)
-mb_size = 32
-z_dim = 24
+mb_size = 128
+z_dim = 20
 noise_dim = 4
 data_dim = mnist.train.images.shape[1]
 y_dim = mnist.train.labels.shape[1]
@@ -25,12 +25,12 @@ epsilon=1E-18
 disc_hidden_dim1=200
 disc_hidden_dim2=400
 gen_hidden_dim1=200
-batch_size=32
+batch_size=128
 gen_hidden_dim2=400
 like_hidden_dim1=500
 like_hidden_dim2=1000
-learning_rate_p=0.0002
-learning_rate_d=0.0002
+learning_rate_p=0.0001
+learning_rate_d=0.0001
 def plot(samples):
     fig = plt.figure(figsize=(4, 4))
     gs = gridspec.GridSpec(4, 4)

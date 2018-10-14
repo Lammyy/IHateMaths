@@ -52,23 +52,24 @@
 \contentsline {subsection}{\numberline {7.1.3}Displacement of Estimator Optimal Values}{60}{subsection.7.1.3}
 \contentsline {section}{\numberline {7.2}Experiment Outline}{61}{section.7.2}
 \contentsline {section}{\numberline {7.3}Results}{62}{section.7.3}
-\contentsline {chapter}{\numberline {Chapter 8}Data Generation - (MNIST image generation)}{66}{chapter.8}
+\contentsline {chapter}{\numberline {Chapter 8}Autoencoder Experiment - (MNIST Dataset)}{66}{chapter.8}
 \contentsline {section}{\numberline {8.1}Experiment Outline}{66}{section.8.1}
 \contentsline {section}{\numberline {8.2}Low Dimensional Experiment Results}{69}{section.8.2}
-\contentsline {section}{\numberline {8.3}High Dimensional Experiment Results}{70}{section.8.3}
-\contentsline {chapter}{\numberline {Chapter 9}Conclusion and Further Research}{74}{chapter.9}
-\contentsline {section}{\numberline {9.1}Further Research}{74}{section.9.1}
-\contentsline {chapter}{References}{76}{section.9.1}
-\contentsline {chapter}{\numberline {Appendix A}Proofs}{80}{appendix.A}
-\contentsline {section}{\numberline {A.1}Proof of Proposition 2.6.2}{80}{appendix.A.1}
-\contentsline {section}{\numberline {A.2}Proof of Lemma 3.7.1}{81}{appendix.A.2}
-\contentsline {section}{\numberline {A.3}Proof of Lemma 4.1.1}{81}{appendix.A.3}
-\contentsline {section}{\numberline {A.4}Proof of Lemma 4.2.2}{82}{appendix.A.4}
-\contentsline {chapter}{\numberline {Appendix B}Algorithms}{83}{appendix.B}
-\contentsline {section}{\numberline {B.1}Back-Propagation Algorithm}{83}{appendix.B.1}
-\contentsline {section}{\numberline {B.2}Coordinate Ascent Variational Inference Algorithm}{84}{appendix.B.2}
-\contentsline {section}{\numberline {B.3}Algorithms for ``Sprinkler" Experiment}{85}{appendix.B.3}
-\contentsline {chapter}{\numberline {Appendix C}Mean Field Variational Inference Example}{87}{appendix.C}
-\contentsline {chapter}{\numberline {Appendix D}Kernel Density Estimation}{91}{appendix.D}
-\contentsline {chapter}{\numberline {Appendix E}Prior-Contrastive Optimal Estimator Experiment Plots}{92}{appendix.E}
+\contentsline {section}{\numberline {8.3}High Dimensional Experiment Results}{71}{section.8.3}
+\contentsline {chapter}{\numberline {Chapter 9}Conclusion and Further Research}{75}{chapter.9}
+\contentsline {section}{\numberline {9.1}Further Research}{75}{section.9.1}
+\contentsline {chapter}{References}{77}{section.9.1}
+\contentsline {chapter}{\numberline {Appendix A}Proofs}{81}{appendix.A}
+\contentsline {section}{\numberline {A.1}Proof of Proposition 2.6.2}{81}{appendix.A.1}
+\contentsline {section}{\numberline {A.2}Proof of Lemma 3.7.1}{82}{appendix.A.2}
+\contentsline {section}{\numberline {A.3}Proof of Lemma 4.1.1}{82}{appendix.A.3}
+\contentsline {section}{\numberline {A.4}Proof of Lemma 4.2.2}{83}{appendix.A.4}
+\contentsline {section}{\numberline {A.5}Proof of Lemma 8.3.1}{83}{appendix.A.5}
+\contentsline {chapter}{\numberline {Appendix B}Algorithms}{84}{appendix.B}
+\contentsline {section}{\numberline {B.1}Back-Propagation Algorithm}{84}{appendix.B.1}
+\contentsline {section}{\numberline {B.2}Coordinate Ascent Variational Inference Algorithm}{85}{appendix.B.2}
+\contentsline {section}{\numberline {B.3}Algorithms for ``Sprinkler" Experiment}{86}{appendix.B.3}
+\contentsline {chapter}{\numberline {Appendix C}Mean Field Variational Inference Example}{88}{appendix.C}
+\contentsline {chapter}{\numberline {Appendix D}Kernel Density Estimation}{92}{appendix.D}
+\contentsline {chapter}{\numberline {Appendix E}Prior-Contrastive Optimal Estimator Experiment Plots}{93}{appendix.E}
 \contentsline {chapter}{\numberline {Appendix F}Second Functional Derivatives of Direct Log Ratio Estimator Losses}{94}{appendix.F}

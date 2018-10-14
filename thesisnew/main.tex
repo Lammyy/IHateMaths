@@ -70,7 +70,7 @@
 %\usetheme{Szeged}
 %\usetheme{Warsaw}
 
-\title{Density Ratio Estimation in Variational Methods in Bayesian Neural Networks}
+\title{Density Ratio Estimation in Variational Bayesian Machine Learning}
 
 % A subtitle is optional and this may be deleted
 %\subtitle{Optional Subtitle}
@@ -134,9 +134,6 @@
 \begin{frame}{Neural Networks}{Overall Structure}
   \begin{itemize}
   \item {
-    Mathematical model based off human brain.
-  }
-  \item {
   	Objective is to approximate a function $f^*$ using mapping with parameters $\bm{\Theta}$: $\textbf{f}_{\bm{\Theta}}(\bm{x})$.  
   }
   \item {
@@ -195,7 +192,9 @@
 \begin{frame}{Neural Networks}{Training}
 \begin{itemize}
 \item Weights trained such that (ideally convex) loss function is minimized e.g. Mean Squared Error: $\min_\Theta \frac{1}{2}||\bm{y}-\bm{f}_\Theta(\bm{x})||^2_2$.
+\vspace{0.5cm}
 \item Back-propagation finds partial derivatives of loss function with respect to weights.
+\vspace{0.5cm}
 \item Gradient descent uses these partial derivatives to optimize network.
 \end{itemize}
 \end{frame}
@@ -219,6 +218,7 @@ p(z|x)\propto \underbrace{p(z)}_\text{Prior}\underbrace{p(x|z)}_\text{Likelihood
   }
   % or you can use the \uncover command to reveal general
   % content (not just \items):
+  \vspace{0.5cm}
   \item {
     Variational Inference is a solution.
   }
@@ -245,8 +245,8 @@ p(z|x)\propto \underbrace{p(z)}_\text{Prior}\underbrace{p(x|z)}_\text{Likelihood
 \end{frame}
 \begin{frame}{(Amortized) Variational Inference}{Network Training}
 \begin{itemize}
-\item Minimize the \textbf{n}egative of the \textbf{e}vidence \textbf{l}ower \textbf{bo}und $NELBO(q)$:
-\[\min_\phi NELBO(q)=-\mathbb{E}_{q_\phi(z|x)q^*(x)}[\log p(x|z)]+\mathbb{E}_{q^*(x)}[KL(q_\phi(z|x)||p(z))].\]
+\item Minimize the \textbf{n}egative of \textbf{e}vidence \textbf{l}ower \textbf{bo}und $NELBO(q)$ w.r.t. $\phi$:
+\[NELBO(q)=-\mathbb{E}_{q_\phi(z|x)q^*(x)}[\log p(x|z)]+\mathbb{E}_{q^*(x)}[KL(q_\phi(z|x)||p(z))].\]
 \item This is the same as minimizing the reverse KL divergence between the two distributions:
 \[\E_{q^*(x)}[KL(q(z|x)||p(z|x))]=\mathbb{E}_{q^*(x)q(z|x)}\left[\log \left(\frac{q(z|x)}{p(z|x)}\right)\right]\].
 \item Taking expectation with respect to dataset distribution $q^*(x)$ allows model to work for different data points.
@@ -255,10 +255,12 @@ p(z|x)\propto \underbrace{p(z)}_\text{Prior}\underbrace{p(x|z)}_\text{Likelihood
 \begin{frame}{(Amortized) Variational Inference}{Problems with Implicit Distributions}
 \[\min_\phi \underbrace{-\mathbb{E}_{q_\phi(z|x)q^*(x)}[\log p(x|z)]}_\text{Likelihood}+\underbrace{\mathbb{E}_{q^*(x)}[KL(q_\phi(z|x)||p(z))]}_\text{Log Density Ratio}.\]
 \begin{itemize}
-\item $q_\phi(z|x)$ is a neural network so extremely difficult to evaluate density function but easy to draw samples, we therefore say that it is \textbf{implicit}.
+\item $q_\phi(z|x)$ is an \textbf{implicit} distribution.
+\vspace{0.2cm}
 \item Use density ratio estimation to evaluate $\frac{q_\phi(z|x)}{p(z)}$ in $KL(q_\phi(z|x)||p(z))$.
-\item The prior $p(z)$ can also be implicit.
+\vspace{0.2cm}
 \item We call this the ``prior-contrastive" formulation.
+\vspace{0.2cm}
 \item ``Joint-contrastive" formulation used with implicit likelihood minimizes $NELBO(q)=\underbrace{KL(q(z,x)\|p(z,x))}_\text{Log Density Ratio}$.
 \end{itemize}
 \end{frame}
@@ -286,16 +288,18 @@ p(z|x)\propto \underbrace{p(z)}_\text{Prior}\underbrace{p(x|z)}_\text{Likelihood
 % with the \pause command:
 \begin{frame}{Density Ratio Estimation}{Class Probability Estimation}
 We want to estimate $\frac{q(u)}{p(u)}$.
+\vspace{0.3cm}
   \begin{enumerate}
   \item {
-    Define discriminator function that finds probability that a sample $u$ came from $q(u)$: $D_\alpha(u)\simeq P(u\sim q(u))$, so that $\frac{q(u)}{p(u)}\simeq \frac{D_\alpha(u)}{1-D_\alpha(u)}$.
+    Define discriminator network that finds probability that a sample $u$ came from $q(u)$: $D_\alpha(u)\simeq P(u\sim q(u))$, so that $\frac{q(u)}{p(u)}\simeq \frac{D_\alpha(u)}{1-D_\alpha(u)}$.
   }
-  \item $D_\alpha(u)$ is neural network parametrised by $\alpha$, sigmoid activation function used for output layer
+  \vspace{0.5cm}
   % or you can use the \uncover command to reveal general
   % content (not just \items):
   \item {
     Train discriminator with Bernoulli loss: $\min_\alpha -\mathbb{E}_{q(u)}[\log D_\alpha(u)]-\mathbb{E}_{p(u)}[\log(1-D_\alpha(u))]$.
   }
+  \vspace{0.5cm}
   \item Optimal discriminator is $D^*_\alpha(u)=\frac{q(u)}{q(u)+p(u)}$.
   \end{enumerate}
 \end{frame}
@@ -321,6 +325,7 @@ For the reverse KL divergence, $f(u)=u\log u$ so we have
 \begin{frame}{Density Ratio Estimation}{Divergence Minimisation}
 \begin{itemize}
 \item Let our ratio estimator be a neural network parametrised by $\alpha$: $r_\alpha(u)\simeq \frac{q(u)}{p(u)}$.
+\vspace{0.5cm}
 \item Maximise the lower bound w.r.t. $\alpha$ until equality, which is when $r_\alpha(u)=\frac{q(u)}{p(u)}$. The optimisation problem for this is
 \[\min_\alpha -\mathbb{E}_{q(u)}[\log r_\alpha(u)]+\mathbb{E}_{p(u)}[r_\alpha(u)].\]
 \item Obviously our optimal ratio estimator is $r^*_\alpha(u)=\frac{q(u)}{p(u)}$.
@@ -337,8 +342,10 @@ Joint-Contrastive Application:
 \begin{frame}{Density Ratio Estimation}{Algorithm Generalisation}
 \begin{itemize}
 \item Actually, $f(u)=u\log u-(u+1)\log (u+1)$ and $D(u)=\frac{r(u)}{r(u)+1}$ leads to class probability estimation equations.
+\vspace{0.5cm}
 \item The upper bound $f$-divergence is $2JS(p(u)\|q(u))-\log 4$, we call this the GAN divergence.
-\item To formulate optimisation problems for density ratio estimation, choose either reverse KL or GAN $f$-divergence upper bound and estimator parametrisation:
+\vspace{0.5cm}
+\item Choose either reverse KL or GAN $f$-divergence bound and estimator parametrisation:
 \begin{itemize}
 \item Class Probability Estimator $D_\alpha(u)\simeq \frac{q(u)}{q(u)+p(u)}$
 \item Direct Ratio Estimator $r_\alpha(u)\simeq \frac{q(u)}{p(u)}$
@@ -516,8 +523,11 @@ JC GAN - $T_\alpha(z,x)$ & 1.3670 & 0.0387\\
 \begin{frame}{Undertrained Estimator Experiment}{Experiment Outline}
 \begin{itemize}
 \item Estimators are similar when they are optimal but what if they are not optimal?
+\vspace{0.5cm}
 \item Same inference experiment again.
+\vspace{0.5cm}
 \item Significantly reduce amount of estimator training between posterior iterations.
+\vspace{0.5cm}
 \item Increased posterior training rate.
 \end{itemize}
 \end{frame}
@@ -545,6 +555,7 @@ JC GAN - $T_\alpha(z,x)$ & 1.4214 & 0.0518\\
 \end{table}
 \begin{itemize}
 \item Reverse KL divergence significantly better than GAN divergence.
+\vspace{0.5cm}
 \item $D_\alpha(z,x)<r_\alpha(z,x)<T_\alpha(z,x)$
 \end{itemize}
 \end{frame}
@@ -595,11 +606,12 @@ JC GAN - $T_\alpha(z,x)$ & 1.4214 & 0.0518\\
 \begin{frame}{Autoencoder Experiment}{Experiment Outline}
 \begin{itemize}
 \item MNIST dataset - $28\times 28$ grey-scale images of handwritten digits
-\item Joint-contrastive context not tested here.
+\vspace{0.5cm}
 \item Again use undertrained estimator.
+\vspace{0.5cm}
 \item Use reconstruction error $\|x-\tilde{x}\|^2$ as metric.
+\vspace{0.5cm}
 \item Perform experiment with low dimensional latent space (2 dimensions) and high dimensional latent space (20 dimensions).
-\item Low dimensional case had similar results to previous experiment.
 \end{itemize}
 \end{frame}
 \begin{frame}{Generation Experiment}{Results - high dimensional latent space}
@@ -609,7 +621,7 @@ JC GAN - $T_\alpha(z,x)$ & 1.4214 & 0.0518\\
 \hline
 Algorithm & Mean Reconstruction Error & Standard Deviation\\
 \hline
-PC GAN - $D_\alpha(z,x)$ & 0.0444 & 0.0017\\
+PC GAN - $D_\alpha(z,x)$ & \textbf{0.0444} & \textbf{0.0017}\\
 \hline
 PC Reverse KL - $D_\alpha(z,x)$ & 0.0647 & 0.0019\\
 \hline
@@ -618,10 +630,12 @@ PC Reverse KL - $D_\alpha(z,x)$ & 0.0647 & 0.0019\\
 \end{table}
 \begin{itemize}
 \item Direct ratio and direct log ratio estimators attempted to store numbers exceeding float64(max).
+\vspace{0.5cm}
 \item Exponential of $T_\alpha(z,x)$ taken in loss function.
+\vspace{0.5cm}
 \item $D_\alpha(z,x)$ ranges in $(0,1)$.
+\vspace{0.5cm}
 \item Value before sigmoid activation function for $D_\alpha(z,x)$ is log density ratio.
-\item This time GAN divergence leads to better convergence than reverse KL.
 \end{itemize}
 \end{frame}
 \begin{frame}{Autoencoder Experiment}{Results - high dimensional latent space}
@@ -660,13 +674,16 @@ PC Reverse KL - $D_\alpha(z,x)$ & 0.0647 & 0.0019\\
 \begin{frame}{Theory}{Choice of $f$-divergence}
 \begin{itemize}
 \item Nowozin's $f$-GAN paper shows empirically that the reverse KL divergence is superior when it is additionally used to optimize the posterior.
+\vspace{0.5cm}
 \item Intuitive that the $f$-divergence used to optimize posterior is the best upper bound for estimator.
 \end{itemize}
 \end{frame}
 \begin{frame}{Further Estimator Loss Function Analysis}{Estimator Parametrisation}
 \begin{itemize}
 \item $D_\alpha(u)$ has smallest bound of $(0,1)$, followed by $r_\alpha(u) \in \R^+$ and $T_\alpha(u)\in \R$.
+\vspace{0.5cm}
 \item The density ratio changes every time the posterior is optimised, and the estimator must catch up.
+\vspace{0.5cm}
 \item $D_\alpha(u)$ has a strictly lower displacement than $r_\alpha(u)$, that is, $|D_\alpha^{(n+1)}(u)-D_\alpha^{(n)}(u)|<|r_\alpha^{(n+1)}(u)-r_\alpha^{(n)}(u)|$.
 \end{itemize}
 \end{frame}
