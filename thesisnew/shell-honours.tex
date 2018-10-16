@@ -613,7 +613,7 @@ KL(p(x)\|q(x))&=\int_{-\infty}^\infty p(x)\log \left(\frac{p(x)}{q(x)}\right)dx\
 &=-\int_{-\infty}^\infty p(x)\log \left(\frac{q(x)}{p(x)}\right)dx\\
 &\geq -\int_{-\infty}^\infty p(x) \left(\frac{q(x)}{p(x)}-1\right)dx\\
 &=-\int_{-\infty}^\infty q(x)dx + \int_{-\infty}^\infty p(x)dx\\
-&=0
+&=0.
 \end{align*}
 In the third line we use $-\log x \geq -(x-1)$ for all $x>0$ with equality if and only if $x=1$, therefore $KL(q(x)\|p(x))=0$ if and only if $q(x)=p(x)$. The last line is due to $p(x)$ and $q(x)$ being probability densities.
 \end{proof}
