@@ -1195,7 +1195,7 @@ D^*(u)&=\frac{\frac{q(u)}{p(u)}}{\frac{q(u)}{p(u)}+1}\\
 \end{align*}
 which is the optimal discriminator of class probability estimation. Thus, the density ratio in terms of this discriminator function is 
 \[\frac{q(u)}{p(u)}\simeq \frac{D(u)}{1-D(u)},\]
-and therefore our previous formulation of class probability estimation by minimizing the Bernoulli loss of a discriminator function is the same as maximizing the lower bound of the ``GAN" divergence between the two distributions.
+and therefore our previous formulation of class probability estimation by minimizing the Bernoulli loss of a discriminator function is equivalent to maximizing the lower bound of the ``GAN" divergence between the two distributions.
 \chapter{Algorithm Generalisation}\label{ch5}
 In this chapter, we present the two density ratio estimation techniques in a comparable form, that is, in terms of the relevant $f$-divergence's lower bound as derived in \autoref{sec:4.2} using Theorem \ref{4.2.1}. From this, we generalise the density ratio algorithms to a selection of $f$-divergence to formulate the lower bound, and a parametrisation of the density ratio estimator. We also suggest a third estimator parametrisation: the direct log density ratio estimator $T_\alpha(u)$. The formal generalisation of density ratio estimation algorithms is the first contribution of this thesis.
 \section{Introduction}\label{sec:5.1}
