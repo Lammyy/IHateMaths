@@ -61,16 +61,18 @@
 \BOOKMARK [0][-]{section.9.1}{References}{}% 61
 \BOOKMARK [0][-]{appendix.A}{Proofs}{}% 62
 \BOOKMARK [1][-]{appendix.A.1}{Proof of Proposition 2.6.2}{appendix.A}% 63
-\BOOKMARK [1][-]{appendix.A.2}{Proof of Lemma 3.7.1}{appendix.A}% 64
-\BOOKMARK [1][-]{appendix.A.3}{Proof of Lemma 4.1.1}{appendix.A}% 65
-\BOOKMARK [1][-]{appendix.A.4}{Proof of Lemma 4.2.2}{appendix.A}% 66
-\BOOKMARK [1][-]{appendix.A.5}{Proof of Lemma 8.3.1}{appendix.A}% 67
-\BOOKMARK [0][-]{appendix.B}{Algorithms}{}% 68
-\BOOKMARK [1][-]{appendix.B.1}{Back-Propagation Algorithm}{appendix.B}% 69
-\BOOKMARK [1][-]{appendix.B.2}{Coordinate Ascent Variational Inference Algorithm}{appendix.B}% 70
-\BOOKMARK [1][-]{appendix.B.3}{Algorithms for ``Sprinkler" Experiment}{appendix.B}% 71
-\BOOKMARK [0][-]{appendix.C}{Coordinate Ascent Variational Inference Derivation}{}% 72
-\BOOKMARK [0][-]{appendix.D}{Mean Field Variational Inference Example}{}% 73
-\BOOKMARK [0][-]{appendix.E}{Kernel Density Estimation}{}% 74
-\BOOKMARK [0][-]{appendix.F}{Prior-Contrastive Optimal Estimator Experiment Plots}{}% 75
-\BOOKMARK [0][-]{appendix.G}{Second Functional Derivatives of Direct Log Ratio Estimator Losses}{}% 76
+\BOOKMARK [1][-]{appendix.A.2}{Proof of Lemma 3.2.4}{appendix.A}% 64
+\BOOKMARK [1][-]{appendix.A.3}{Proof of Lemma 3.2.5}{appendix.A}% 65
+\BOOKMARK [1][-]{appendix.A.4}{Proof of Lemma 3.7.1}{appendix.A}% 66
+\BOOKMARK [1][-]{appendix.A.5}{Proof of Lemma 4.1.1}{appendix.A}% 67
+\BOOKMARK [1][-]{appendix.A.6}{Proof of Lemma 4.2.2}{appendix.A}% 68
+\BOOKMARK [1][-]{appendix.A.7}{Proof of Lemma 8.3.1}{appendix.A}% 69
+\BOOKMARK [0][-]{appendix.B}{Algorithms}{}% 70
+\BOOKMARK [1][-]{appendix.B.1}{Back-Propagation Algorithm}{appendix.B}% 71
+\BOOKMARK [1][-]{appendix.B.2}{Coordinate Ascent Variational Inference Algorithm}{appendix.B}% 72
+\BOOKMARK [1][-]{appendix.B.3}{Algorithms for ``Sprinkler" Experiment}{appendix.B}% 73
+\BOOKMARK [0][-]{appendix.C}{Coordinate Ascent Variational Inference Derivation}{}% 74
+\BOOKMARK [0][-]{appendix.D}{Mean Field Variational Inference Example}{}% 75
+\BOOKMARK [0][-]{appendix.E}{Kernel Density Estimation}{}% 76
+\BOOKMARK [0][-]{appendix.F}{Prior-Contrastive Optimal Estimator Experiment Plots}{}% 77
+\BOOKMARK [0][-]{appendix.G}{Second Functional Derivatives of Direct Log Ratio Estimator Losses}{}% 78
