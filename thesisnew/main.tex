@@ -13,6 +13,7 @@
 \documentclass[handout]{beamer}
 \usepackage{boondox-cal}
 \usepackage{tikz}
+\usepackage{multirow}
 \usepackage{pgfpages}
 %\usepackage{handoutWithNotes}
 %
@@ -77,14 +78,14 @@
 %\subtitle{Optional Subtitle}
 
 \author{Alexander Lam}
+
 % - Give the names in the same order as the appear in the paper.
 % - Use the \inst{?} command only if the authors have different
 %   affiliation.
 
 \institute[UNSW] % (optional, but mostly needed)
 {
-  Department of Mathematics and Statistics\\
-  UNSW
+  Supervised by Prof. Scott Sisson and Doctor Edwin Bonilla
   }
 % - Use the \inst command only if there are several affiliations.
 % - Keep it simple, no one is interested in your street address.
@@ -227,8 +228,8 @@ p(z|x)\propto \underbrace{p(z)}_\text{Prior}\underbrace{p(x|z)}_\text{Likelihood
 \end{frame}
 \begin{frame}{(Amortized) Variational Inference}{Introduction}
 \begin{itemize}
-\item Amortized variational inference approximates $p(z|x)$ with a different distribution $q_\phi(z|x)$.
-\item $q_\phi(z|x)$ is a \textbf{neural network} with parameters $\phi$ that takes in data $x$ and random noise $\epsilon\sim \mathcal{N}(0,I_{n\times n})$ and outputs samples $z\sim q_\phi(z|x)$.
+\item Amortized variational inference approximates $p(z|x)$ with a different density $q_\phi(z|x)$.
+\item $q_\phi(z|x)$ is a \textbf{neural network} with parameters $\phi$.
 \begin{figure}[h]
   \centering
   \tikz{ %
@@ -245,22 +246,22 @@ p(z|x)\propto \underbrace{p(z)}_\text{Prior}\underbrace{p(x|z)}_\text{Likelihood
 \end{frame}
 \begin{frame}{(Amortized) Variational Inference}{Network Training}
 \begin{itemize}
-\item Train network by minimizing the (expected) reverse KL divergence between the two distributions:
-\[\E_{q^*(x)}[KL(q(z|x)||p(z|x))]=\mathbb{E}_{q^*(x)q(z|x)}\left[\log \left(\frac{q(z|x)}{p(z|x)}\right)\right]\].
-\item This is the same as solving the following minimization problem:
-\[\min_\phi \underbrace{-\mathbb{E}_{q_\phi(z|x)q^*(x)}[\log p(x|z)]}_{\text{Likelihood}}+\underbrace{\mathbb{E}_{q^*(x)}[KL(q_\phi(z|x)||p(z))]}_{\text{Log Density Ratio}}.\]
+\item Train network by minimizing the (expected) reverse KL divergence:
+\[\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{q_\phi(z|x)}{p(z|x)}\right].\]
+\item This is the same as solving:
+\[\min_\phi \E_{q^*(x)}[\underbrace{-\mathbb{E}_{q_\phi(z|x)}[\log p(x|z)]}_{\text{Likelihood}}+\underbrace{KL(q_\phi(z|x)||p(z))}_{\text{Log Density Ratio}}].\]
 \item We call this $NELBO(q)$ as it is the \textbf{n}egative of \textbf{e}vidence \textbf{l}ower \textbf{bo}und.
 \end{itemize}
 \end{frame}
 \begin{frame}{(Amortized) Variational Inference}{Problems with Implicit Distributions}
 Consider our log density ratio term
-\[KL(q_\phi(z|x)||p(z))=\E_{q_\phi(z|x)}\left[\frac{q_\phi(z|x)}{p(z)}\right].\]
+\[KL(q_\phi(z|x)||p(z))=\E_{q_\phi(z|x)}\left[\log \frac{q_\phi(z|x)}{p(z)}\right].\]
 \begin{itemize}
-\item $q_\phi(z|x)$ is an \textbf{implicit} distribution.
+\item $q_\phi(z|x)$ is \textbf{implicit}.
 \vspace{0.2cm}
 \item Use density ratio estimation to evaluate $\frac{q_\phi(z|x)}{p(z)}$ in $KL(q_\phi(z|x)||p(z))$.
 \vspace{0.2cm}
-\item Density ratio estimation only requires \textbf{samples} from the distributions.
+\item Density ratio estimation only requires \textbf{samples}.
 \end{itemize}
 \end{frame}
 %\begin{frame}{(Amortized) Variational Inference}{Joint-Contrastive}
@@ -285,24 +286,24 @@ Consider our log density ratio term
 
 % You can reveal the parts of a slide one at a time
 % with the \pause command:
-\begin{frame}{Density Ratio Estimation}{Class Probability Estimation}
-We want to estimate $\frac{q(u)}{p(u)}$.
-\vspace{0.3cm}
-  \begin{enumerate}
-  \item {
-    Define discriminator network with parameters $\alpha$ that finds probability that a sample $u$ came from $q(u)$.
-  }
-  \vspace{0.5cm}
-  % or you can use the \uncover command to reveal general
-  % content (not just \items):
-  \item {
-    Train discriminator with Bernoulli loss: $\min_\alpha -\mathbb{E}_{q(u)}[\log D_\alpha(u)]-\mathbb{E}_{p(u)}[\log(1-D_\alpha(u))]$.
-  }
-  \vspace{0.5cm}
-  \item Optimal discriminator is $D^*_\alpha(u)=\frac{q(u)}{q(u)+p(u)}$.
-  \[\frac{q(u)}{p(u)}=\frac{D^*_\alpha(u)}{1-D^*_\alpha(u)}\]
-  \end{enumerate}
-\end{frame}
+%\begin{frame}{Density Ratio Estimation}{Class Probability Estimation}
+%We want to estimate $q(u)/p(u)$.
+%\vspace{0.3cm}
+%  \begin{enumerate}
+%  \item {
+%    Discriminator network $D_\alpha(u)$ finds probability that a sample $u$ came from $q(u)$.
+%  }
+%  \[D^*_\alpha(u)=\frac{q(u)}{q(u)+p(u)}\]
+%  % or you can use the \uncover command to reveal general
+%  % content (not just \items):
+%  \item {
+%    Train discriminator with Bernoulli loss.
+%  }
+%  \vspace{0.3cm}
+%  \item Express density ratio in terms of discriminator.
+%  \[\frac{q(u)}{p(u)}=\frac{D^*_\alpha(u)}{1-D^*_\alpha(u)}\]
+%  \end{enumerate}
+%\end{frame}
 %\begin{frame}{Density Ratio Estimation}{Class Probability Estimation}
 %Prior-Contrastive Application:
 %\[\min_\alpha -\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log D_\alpha(z,x)]-\mathbb{E}_{q^*(x)p_\theta(z)}[\log (1-D_\alpha(z,x))]\]
@@ -312,15 +313,16 @@ We want to estimate $\frac{q(u)}{p(u)}$.
 %\[\min_\phi \mathbb{E}_{q^*(x)q_\phi(z|x)}\log\frac{D_\alpha(z,x)}{1-D_\alpha(z,x)}\]
 %Program alternates between several optimisation steps of discriminator and one optimisation step of posterior.
 %\end{frame}
-\begin{frame}{Density Ratio Estimation}{Divergence Minimisation}
+\begin{frame}{Density Ratio Estimation}{Theorem}
 \begin{theorem}
-If $f$ is a convex function with derivative $f'$ and convex conjugate $f^*$, and $\mathcal{R}$ is a class of functions with codomains equal to the domain of $f'$, then we have the lower bound for the $f$-divergence between distributions $p(u)$ and $q(u)$:
-\[D_f [p(u)||q(u)]\geq \sup_{r\in \mathcal{R}} \{\mathbb{E}_{q(u)}[f'(r(u))]-\mathbb{E}_{p(u)}[f^*(f'(r(u)))]\},\]
-with equality when $r(u)=q(u)/p(u)$.
+If $f$ is a convex function with derivative $f'$ and convex conjugate $f^*$, and $r_\alpha(u)$ is a neural network, then we have the lower bound for the $f$-divergence between densities $p(u)$ and $q(u)$:
+\[D_f [p(u)||q(u)]\geq \sup_{\alpha} \{\mathbb{E}_{q(u)}[f'(r_\alpha(u))]-\mathbb{E}_{p(u)}[f^*(f'(r_\alpha(u)))]\},\]
+with equality when $r_\alpha(u)=q(u)/p(u)$.
 \end{theorem}
-For the reverse KL divergence, $f(u)=u\log u$ so letting $r_\alpha(u)\simeq \frac{q(u)}{p(u)}$ we have:
-\[KL[q(u)||p(u)]\geq \sup_{\alpha}\{\mathbb{E}_{q(u)}[1+\log r_\alpha(u)]-\mathbb{E}_{p(u)}[r_\alpha(u)]\}\]
-
+\begin{example}
+For the reverse KL divergence, we have:
+\[KL[q(u)||p(u)]\geq \sup_{\alpha}\{\mathbb{E}_{q(u)}[1+\log r_\alpha(u)]-\mathbb{E}_{p(u)}[r_\alpha(u)]\}.\]
+\end{example}
 \end{frame}
 %\begin{frame}{Density Ratio Estimation}{Divergence Minimisation}
 %\begin{itemize}
@@ -341,13 +343,22 @@ For the reverse KL divergence, $f(u)=u\log u$ so letting $r_\alpha(u)\simeq \fra
 %\end{frame}
 \begin{frame}{Density Ratio Estimation}{Algorithm Generalisation}
 \begin{itemize}
-\item Actually, upper bound $f$-divergence of $\underbrace{2JS(p(u)\|q(u))-\log 4}_\text{GAN Divergence}$ and $D(u)=\frac{r(u)}{r(u)+1}$ leads to class probability estimation loss function.
-\vspace{0.5cm}
-\item Choose either reverse KL or GAN $\bm{f}$-\textbf{divergence bound} and \textbf{estimator parametrisation}:
+\item Apply theorem to generalise density ratio estimator loss functions.
+\vspace{0.4cm}
+\item Choose $\bm{f}$-\textbf{divergence bound}:
 \begin{itemize}
-\item Class Probability Estimator $D_\alpha(u)\simeq \frac{q(u)}{q(u)+p(u)}$
-\item Direct Ratio Estimator $r_\alpha(u)\simeq \frac{q(u)}{p(u)}$
-\item Direct Log Ratio Estimator $T_\alpha(u)\simeq\log \frac{q(u)}{p(u)}$.
+\item Reverse KL Divergence
+\vspace{0.2cm}
+\item GAN Divergence
+\end{itemize}
+\vspace{0.3cm}
+and \textbf{estimator parametrisation}:
+\begin{itemize}
+\item Direct Ratio Estimator: $r_\alpha(u)\simeq \frac{q(u)}{p(u)}$
+\vspace{0.1cm}
+\item Class Probability Estimator: $D_\alpha(u)=\frac{r_\alpha(u)}{r_\alpha(u)+1}\iff \frac{q(u)}{p(u)}\simeq \frac{D_\alpha(u)}{1-D_\alpha(u)}$
+\vspace{0.1cm}
+\item Direct Log Ratio Estimator: $T_\alpha(u)=\log r_\alpha(u)\iff \frac{q(u)}{p(u)}\simeq {\rm e}^{T_\alpha(u)}$
 \end{itemize}
 \end{itemize}
 \end{frame}
@@ -365,8 +376,8 @@ To train a variational posterior network:
 \end{frame}
 \section{Undertrained Estimator Experiment}
 \begin{frame}{Undertrained Estimator Experiment}{Experiment Outline}
-\[p(z_1,z_2)\sim \mathcal{N} (0,\sigma^2 I_{2\times 2})\]
-\[p(x|\bm{z})\sim Exp(3+\max(0,z_1)^3+\max(0,z_2)^3)\]
+\[z_1,z_2\sim \mathcal{N} (0,\sigma^2 I_{2\times 2})\]
+\[x|\bm{z}\sim Exp(3+\max(0,z_1)^3+\max(0,z_2)^3)\]
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{sprinklertrue.png}
 \end{figure}
@@ -523,21 +534,21 @@ To train a variational posterior network:
 \begin{frame}{Undertrained Estimator Experiment}{Results}
 \begin{table}[h]
 \scalebox{0.8}{
-\begin{tabular}{|c|c|c|}
+\begin{tabular}{|l|c|c|c|}
 \hline
-Algorithm & Mean KL Divergence & Standard Deviation\\
+\multicolumn{2}{|l|}{Algorithm} & Mean KL Divergence & Standard Deviation\\
 \hline
-Reverse KL - $D_\alpha(z,x)$ & \textbf{1.3786} & \textbf{0.0286}\\
+\multirow{3}{*}{Reverse KL} & $D_\alpha(z,x)$ & \textbf{1.3786} & \textbf{0.0286}\\
+\cline{2-4}
+ & $r_\alpha(z,x)$ & 1.3934 & 0.0410\\
+ \cline{2-4}
+ & $T_\alpha(z,x)$ & 1.4133 & 0.0597\\
 \hline
-Reverse KL - $r_\alpha(z,x)$ & 1.3934 & 0.0410\\
-\hline
-Reverse KL - $T_\alpha(z,x)$ & 1.4133 & 0.0597\\
-\hline
-GAN - $D_\alpha(z,x)$ & 1.4017 & \textbf{0.0286}\\
-\hline
-GAN - $r_\alpha(z,x)$ & 1.4086 & 0.0555\\
-\hline
-GAN - $T_\alpha(z,x)$ & 1.4214 & 0.0518\\
+\multirow{3}{*}{GAN} & $D_\alpha(z,x)$ & 1.4017 & \textbf{0.0286}\\
+\cline{2-4}
+ & $r_\alpha(z,x)$ & 1.4086 & 0.0555\\
+ \cline{2-4}
+ & $T_\alpha(z,x)$ & 1.4214 & 0.0518\\
 \hline
 \end{tabular}
 }
@@ -567,15 +578,15 @@ GAN - $T_\alpha(z,x)$ & 1.4214 & 0.0518\\
 \begin{frame}{Undertrained Estimator Experiment}{NELBO Plots}
 \begin{figure}
 \begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png}
-\caption{GAN Divergence}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
 \includegraphics[width=\linewidth]{part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png}
 \caption{Reverse KL Divergence}
 \end{subfigure}
+\begin{subfigure}{0.49\textwidth}
+\includegraphics[width=\linewidth]{part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png}
+\caption{GAN Divergence}
+\end{subfigure}
 \begin{itemize}
-\item Unclear why direct ratio estimator has unusual NELBO plot: posterior convergence was not affected.
+\vspace{0.3cm}
 \item Reverse KL Divergence has initial instability.
 \end{itemize}
 \end{figure}
@@ -583,14 +594,11 @@ GAN - $T_\alpha(z,x)$ & 1.4214 & 0.0518\\
 \section{Autoencoder Experiment}
 \begin{frame}{Autoencoder Experiment}{Autoencoders}
 \begin{itemize}
-\item Likelihood $p_\theta(x|z)$ is now a neural network.
-\item Posterior $q_\phi(z|x)$ represents data $x$ as lower dimensional latent $z$.
-\item Likelihood $p_\theta(x|z)$ reconstructs data $\tilde{x}$ from $z$.
-\item Generate new data $\tilde{x}$ using $z$ from $p(z)$.
+\item Posterior $q_\phi(z|x)$ `compresses' data $x$ into $z$.
+\item Likelihood $p_\theta(x|z)$ `reconstructs' data $\tilde{x}$ from $z$.
 \end{itemize}
 \begin{figure}[h]
   \centering
-  \scalebox{0.8}{
   \tikz{ %
     \node[latent] (x) {$\bm{x}$} ; %
     \node[det, right=of x] (q) {$q_\phi(z|x)$} ; %
@@ -604,9 +612,23 @@ GAN - $T_\alpha(z,x)$ & 1.4214 & 0.0518\\
     \edge {z} {p} ;
     \edge {p} {pout} ;
   }
+\end{figure}
+\[\min_{\theta, \phi} \E_{q^*(x)}[\underbrace{-\mathbb{E}_{q_\phi(z|x)}[\log p_\theta(x|z)]}_{\text{Likelihood}}+\underbrace{KL(q_\phi(z|x)||p(z))}_{\text{Log Density Ratio}}]\]
+\end{frame}
+\begin{frame}{Autoencoder Experiment}{Autoencoders}
+\begin{itemize}
+\item Generate $z$ from $p(z)$.
+\end{itemize}
+\begin{figure}[h]
+  \centering
+  \tikz{ %
+    \node [latent] (z) {$\bm{z}$} ;
+    \node [det, right=of z] (p) {$p_\theta(x|z)$} ;
+    \node [latent, right=of p] (pout) {$\tilde{\bm{x}}$} ;
+    \edge {z} {p} ;
+    \edge {p} {pout} ;
   }
 \end{figure}
-\[\min_{\theta, \phi} \underbrace{-\mathbb{E}_{q_\phi(z|x)q^*(x)}[\log p_\theta(x|z)]}_{\text{Likelihood}}+\underbrace{\mathbb{E}_{q^*(x)}[KL(q_\phi(z|x)||p(z))]}_{\text{Density Ratio}}\]
 \end{frame}
 \begin{frame}{Autoencoder Experiment}{Experiment Outline}
 \begin{figure}
@@ -618,11 +640,9 @@ GAN - $T_\alpha(z,x)$ & 1.4214 & 0.0518\\
 \item Again use undertrained estimator.
 \vspace{0.3cm}
 \item Use reconstruction error $\|x-\tilde{x}\|^2$ as metric.
-\vspace{0.3cm}
-\item Perform experiment with low dimensional latent space (2 dimensions) and high dimensional latent space (20 dimensions).
 \end{itemize}
 \end{frame}
-\begin{frame}{Generation Experiment}{Results - high dimensional latent space}
+\begin{frame}{Generation Experiment}{Results - 20-dimensional latent space}
 \begin{table}[h]
 \scalebox{0.9}{
 \begin{tabular}{|c|c|c|}
@@ -650,26 +670,18 @@ GAN - $D_\alpha(z,x)$ & \textbf{0.0444} & \textbf{0.0017}\\
 \end{subfigure}
 \end{figure}
 \begin{itemize}
-\item Direct ratio and direct log ratio estimators attempted to store numbers exceeding float64(max).
+\item Density ratios too big for direct ratio and log ratio estimators.
 \item Exponential of $T_\alpha(z,x)$ taken in loss function.
 \item $D_\alpha(z,x)$ ranges in $(0,1)$.
 \end{itemize}
 
 \end{frame}
-\begin{frame}{Autoencoder Experiment}{Results - high dimensional latent space}
+\begin{frame}{Autoencoder Experiment}{NELBO plot}
 \begin{figure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{part4reconerrors/PCADVvsPCKLD.png}
-\caption{Reconstruction Error}
-\end{subfigure}
-\begin{subfigure}{0.49\textwidth}
-\includegraphics[width=\linewidth]{part4nelbos/PCADVvsPCKLD.png}
-\caption{NELBO}
-\end{subfigure}
+\includegraphics[width=0.49\linewidth]{part4nelbos/PCADVvsPCKLD.png}
 \begin{itemize}
-\item As before, GAN divergence is more stable.
-\item Recall reverse KL divergence is initially unstable but stabilizes later.
-\item In this case it fails to stabilise by the end of the program runtime.
+\vspace{0.3cm}
+\item Reverse KL divergence fails to stabilise by the end of runtime.
 \end{itemize}
 \end{figure}
 
@@ -702,12 +714,13 @@ GAN - $D_\alpha(z,x)$ & \textbf{0.0444} & \textbf{0.0017}\\
   
   \begin{itemize}
   \item
-    Outlook
+    Future Research
     \begin{itemize}
     \item
       Still unclear exactly why reverse KL divergence is more unstable but more accurate when stable.
     \item
       Several more $f$-divergences exist which have unknown stability when undertrained.
+    \item Alternate density ratio estimation algorithms e.g. denoisers, k-nearest neighbours
     \end{itemize}
   \end{itemize}
 \end{frame}
