@@ -1203,12 +1203,12 @@ Therefore, our previous formulation of class probability estimation by minimizin
 \chapter{Algorithm Generalisation}\label{ch5}
 In this chapter, we present the two density ratio estimation techniques in a comparable form, that is, in terms of the relevant $f$-divergence's lower bound as derived in \autoref{sec:4.2} using Theorem \ref{4.2.1}. From this, we generalise the density ratio algorithms to a selection of $f$-divergence to formulate the lower bound, and a parametrisation of the density ratio estimator. We also suggest a third estimator parametrisation: the direct log density ratio estimator $T_\alpha(u)$. The formal generalisation of density ratio estimation algorithms is the first contribution of this thesis.
 \section{Introduction}\label{sec:5.1}
-First, recall that within each of the prior-contrastive and joint-contrastive formulations, both class probability estimation and divergence minimisation methods use the same loss function to optimise the posterior weights. It is therefore evident that the only differences between the two density ratio estimation techniques are the lower bound of the loss function and the parametrization of the estimator. We demonstrate this by restating the $f$-divergence lower bounds used to formulate these loss functions, as derived in \autoref{sec:4.2}. For divergence minimisation, the lower bound is achieved using the reverse KL divergence $D_{RKL}(p\|q)=KL(q(u)\|p(u))$:
-\[D_{RKL}(p\|q)\geq \sup_{\alpha}\{\mathbb{E}_{q(u)}[1+\log r_\alpha(u)]-\mathbb{E}_{p(u)}[r_\alpha(u)]\},\]
-and class probability estimation follows the GAN divergence $D_{GAN}(p\|q)=2D_{JS}(p\|q)-\log 4$:
+First, recall that within each of the prior-contrastive and joint-contrastive formulations, both class probability estimation and divergence minimisation methods use the same $NELBO$ loss function to optimise the posterior weights. It is therefore evident that the only differences between the two density ratio estimation techniques are the loss functions used. As shown in Subsections \ref{sec:4.2.1} and \ref{sec:4.2.4}, both of these loss functions can be derived using \autoref{4.2.1}, hence the difference between these loss functions lie within their $f$-divergence bound and the parametrization of the estimator. We demonstrate this by restating the $f$-divergences used to formulate these loss functions, as derived in \autoref{sec:4.2}. For divergence minimisation, the following lower bound is achieved using the reverse KL divergence $D_{RKL}(p(u)\|q(u))=KL(q(u)\|p(u))$:
+\[D_{RKL}(p(u)\|q(u))\geq \sup_{\alpha}\{\mathbb{E}_{q(u)}[1+\log r_\alpha(u)]-\mathbb{E}_{p(u)}[r_\alpha(u)]\},\]
+and class probability estimation follows the GAN divergence $D_{GAN}(p(u)\|q(u))=2JS(p(u)\|q(u))-\log 4$:
 \[D_{GAN}(p\|q)\geq \sup_\alpha\{\mathbb{E}_{q(u)}\left[\log \frac{r_\alpha(u)}{r_\alpha(u)+1}\right]-\mathbb{E}_{p(u)}[\log(r_\alpha(u)+1)]\},\]
-with equality at $r_\alpha(u)=\frac{q(u)}{p(u)}$.\\
-To convert the latter equation to class probability estimation loss function, we have used the estimator transformation $r_\alpha(u)=\frac{D_\alpha(u)}{1-D_\alpha(u)}\iff D_\alpha(u)=\frac{r_\alpha(u)}{r_\alpha(u)+1}$. Since this mapping is bijective and monotonically increasing, the equality of the bound is retained at equivalent points. We can therefore also use this transformation on the lower bound of the reverse KL divergence, deriving its respective loss function as a function of $D_\alpha\simeq \frac{q(u)}{q(u)+p(u)}$ instead of $r_\alpha\simeq \frac{q(u)}{p(u)}$.
+with equality at $r_\alpha(u)=q(u)/p(u)$.\\
+To convert the latter equation to the class probability estimation loss function, we have used the estimator transformation $r_\alpha(u)=\frac{D_\alpha(u)}{1-D_\alpha(u)}\iff D_\alpha(u)=\frac{r_\alpha(u)}{r_\alpha(u)+1}$. Since this mapping is bijective and monotonically increasing, the equality of the bound is retained at equivalent points. We can therefore also use this transformation on the lower bound of the reverse KL divergence, deriving its respective loss function as a function of $D_\alpha\simeq \frac{q(u)}{q(u)+p(u)}$ instead of $r_\alpha\simeq \frac{q(u)}{p(u)}$.
 
 We also propose a third estimator parametrisation, the direct log density ratio estimator
 \[T_\alpha(u)\simeq \log \frac{q(u)}{p(u)}.\]
@@ -1242,7 +1242,7 @@ and a choice of estimator parametrization:
 \end{itemize}
 The original ``KL divergence minimization approach" simply chooses the reverse KL Divergence and the direct ratio estimator, and ``class probability estimation" uses the GAN Divergence and the ``Class probability" estimator. These are just two variations of the six available algorithms.
 \section{Optimization Algorithms}
-The ratio estimator in the posterior loss functions also has to be transformed accordingly. In the following sections we give the specific prior-contrastive and joint-contrastive $NELBO$s as functions of each estimator parametrisation. For completeness, we also list the two different estimator loss functions for each case, corresponding to the two $f$-divergences that we have discussed.
+The ratio estimators in the posterior loss functions also have to be transformed accordingly. In the following sections we give the specific prior-contrastive and joint-contrastive $NELBO$s as functions of each estimator parametrisation. For completeness, we also list the two different estimator loss functions for each case, corresponding to the two $f$-divergences that we have discussed.
 \subsection{Prior-Contrastive}
 \textbf{Direct Ratio Estimator} $r_\alpha(u)$:
 \[\text{Reverse KL: }\min_\alpha \left\lbrace-\E_{q^*(x)\pi(\epsilon)}[\log r_\alpha(\mathcal{G}(\epsilon;x),x)]+\E_{p(z)q^*(x)}[r_\alpha(z,x)]\right\rbrace\]
@@ -1283,7 +1283,7 @@ The latent variables $\bm{z}=(z_1, z_2)$ represent the sprinkler and the rain re
 The prior-contrastive algorithm requires the likelihood function of the likelihood density:
 \[p(x|\bm{z})=-\log (3+\max \{0,z_1\}^3+\max\{0,z_2\}^3)-\frac{x}{3+\max \{0,z_1\}^3+\max\{0,z_2\}^3}.\]
 This likelihood function is not required for the joint-contrastive algorithms as it is assumed to be implicit.\\
-The unnormalised true posterior is derived as shown below. The lack of normalisation does not affect the variational density as the true posterior is assumed to be unknown, and the algorithm only uses samples from the prior and likelihood densities.\\
+The unnormalised true posterior is derived as shown below. The lack of normalisation does not affect the variational density as the true posterior is assumed to be unknown.\\
 \textbf{Posterior Calculation:}
 \begin{equation}
 \begin{aligned}
@@ -1519,7 +1519,7 @@ JC GAN - $T_\alpha(\bm{z},x)$ & 1.3670 & 0.0387\\
 \label{fig:6.7}
 \end{figure}
 \chapter{Comparing Undertrained Estimators}\label{ch7}
-Since all three estimator parametrisations have similar accuracies at optimality, it does not matter which one is chosen in that context. However, insufficient estimator training iterations can lead to an inaccurate estimation of the $NELBO$, reducing the speed at which the variational posterior converges. In this chapter, we first theoretically compare the rates of estimator convergence between the three parametrisations by analysing the bounds of the estimator outputs, the second functional derivatives of their loss functions and the displacement in the optimal estimator output with each posterior optimisation step. We then compare the performance of undertrained estimators with different parametrisations and $f$-divergence lower bounds.
+Since all three estimator parametrisations have similar accuracies at optimality, it does not matter which one is chosen in that context. However, insufficient estimator training iterations can lead to an inaccurate estimation of the $NELBO$, reducing the speed at which the variational posterior converges. In this chapter, we theoretically compare the estimator convergence rates between the three parametrisations by analysing the bounds of the estimator outputs, the second functional derivatives of their loss functions and the displacement in the optimal estimator output with each posterior optimisation step. We then compare the performance of undertrained estimators with different parametrisations and $f$-divergence lower bounds.
 \section{Theory}\label{sec:7.1}
 \subsection{Estimator Bounds}
 Consider the bounds on the estimator outputs. The class probability estimator $D_\alpha(u)\simeq q(u)/(q(u)+p(u))$ is bound in $(0,1)$, so from any arbitrary starting point in the same space, very few optimization steps are required to reach the global minimum. On the other hand, the direct ratio estimator $r_\alpha(u)\simeq q(u)/p(u)$ is bound in $(0,\infty)$, and the direct log ratio estimator $T_\alpha(u) \simeq \log (q(u)/p(u))$ can take any value in $\R$, so optimization can take many iterations if the difference between the estimator's initial and optimal values is too large. This can be problematic if there are insufficient iterations of optimizing the estimator, particularly in the initialization stage: the estimator may not properly converge and the posterior will be trained with an inaccurate density ratio estimation. Essentially, the gradient descent convergence can be improved by using an appropriate transformation \citep{lecun}.
@@ -1600,7 +1600,7 @@ L_{GAN}(u)&\coloneqq-\E_{q(u)}\left[\log \frac{r_\alpha(u)}{r_\alpha(u)+1}\right
 It can be seen that within the GAN divergence, the second derivative of the class probability estimator is strictly superior to that of the direct ratio estimator. Also, the direct ratio estimator has a strictly greater second derivative when its loss function is bounded by the reverse KL divergence than with the GAN divergence.
 As previously stated, the effectiveness of different $f$-divergence upper bounds has been tested in \citet{nowozin}. They found that the ideal $f$-divergence used for the estimator's loss function is the same $f$-divergence that is being minimized in the variational posterior training: in our case, it is the reverse KL divergence.
 \subsection{Displacement of Estimator Optimal Values}
-Furthermore, we can also consider the effect of the posterior density displacement from each training step: every time $q(u)$ changes, the optimal value of the estimator also changes. Consequently, the estimator must take optimization steps to `catch up', but again, if the displacement is too significant, then the estimator may not converge in time.
+We can also consider the effect of the posterior density displacement from each training step: every time $q(u)$ changes, the optimal value of the estimator also changes. Consequently, the estimator must take optimization steps to `catch up', but again, if the displacement is too significant, then the estimator may not converge in time.
 \begin{lemma}
 For a fixed displacement of the variational density $q(u)$, the class probability estimator's global minimum displaces less than the direct ratio estimator, that is, $|D^*_{n+1}-D^*_{n}|<|r^*_{n+1}-r^*_{n}|$:
 \begin{proof}
@@ -2096,7 +2096,7 @@ We have
 &= \sum^k_{i=1}\frac{\partial f(\bm{x})}{\partial x_i}|_{\bm{x}=\bm{x}^{(n)}+\alpha \bm{s}^{(n)}}\frac{{\rm d}\left(x_i^{(n)}(\alpha)\right)}{{\rm d}\alpha}\\
 &=\sum_{i=1}^k\frac{\partial f(\bm{x})}{\partial x_i}|_{\bm{x}=\bm{x}^{(n)}+\alpha \bm{s}^{(n)}}\bm{s}_i^{(n)}\\
 %\frac{\partial f(\bm{x})}{\partial x_1}|_{\bm{x}=\bm{x}^{(n)}+\alpha \bm{s}^{(n)}}\bm{s}_1^{(n)}+\dots+\frac{\partial f(\bm{x})}{\partial x_n}|_{\bm{x}=\bm{x}^{(n)}+\alpha \bm{s}^{(n)}}\bm{s}_k^{(n)}\\
-&=\nabla f\left(\bm{x}^{(n)}+\alpha \bm{s}^{(n)}\right)^\top \bm{s}^{(n)}
+&=\nabla f\left(\bm{x}^{(n)}+\alpha \bm{s}^{(n)}\right)^\top \bm{s}^{(n)}.
 \end{align*}
 Setting $\alpha=0$ and using Definition 2.7.1,
 \[\frac{{\rm d}}{{\rm d}\alpha}f\left(\bm{x}^{(n)}+\alpha\bm{s}^{(n)}\right)|_{\alpha=0}=\nabla f\left(\bm{x}^{(n)}\right)^\top \bm{s}^{(n)}<0.\]

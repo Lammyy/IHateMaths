@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  18 OCT 2018 16:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.8.15)  20 OCT 2018 15:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1681,31 +1681,31 @@ Overfull \hbox (57.46791pt too wide) has occurred while \output is active
 [2
 
 ]
-LaTeX Font Info:    Try loading font information for U+msa on input line 193.
+LaTeX Font Info:    Try loading font information for U+msa on input line 195.
  (c:/texlive/2017/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 193.
+LaTeX Font Info:    Try loading font information for U+msb on input line 195.
 
 (c:/texlive/2017/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+lasy on input line 193.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 195.
 
 (c:/texlive/2017/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
 LaTeX Font Info:    Try loading font information for OT1+mathkerncmss on input 
-line 193.
+line 195.
 
 (c:/texlive/2017/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2013/03/27 Fontinst v1.933 font definitions for OT1/ma
 thkerncmss.
 )
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <8> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 193.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 195.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <6> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 193.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 195.
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
@@ -1717,6 +1717,15 @@ Overfull \hbox (57.46791pt too wide) has occurred while \output is active
 [3
 
 ]
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+
+Overfull \hbox (2.95036pt too wide) in paragraph at lines 239--239
+ [][][][]\OT1/cmss/m/n/10.95 Activation 
+ []
+
+
 Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
@@ -1731,20 +1740,6 @@ Overfull \hbox (57.46791pt too wide) has occurred while \output is active
 [5
 
 ]
-LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 246.
-LaTeX Font Info:    Font shape `U/lasy/b/n' in size <5> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 246.
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-
 Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
@@ -1752,6 +1747,20 @@ Overfull \hbox (57.46791pt too wide) has occurred while \output is active
 [6
 
 ]
+LaTeX Font Info:    Font shape `U/lasy/b/n' in size <7> not available
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 295.
+LaTeX Font Info:    Font shape `U/lasy/b/n' in size <5> not available
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 295.
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+
 Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
@@ -1759,6 +1768,10 @@ Overfull \hbox (57.46791pt too wide) has occurred while \output is active
 [7
 
 ]
+
+LaTeX Font Warning: Command \small invalid in math mode on input line 306.
+
+
 Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
@@ -1787,33 +1800,13 @@ Overfull \hbox (57.46791pt too wide) has occurred while \output is active
 [11
 
 ]
-LaTeX Font Info:    Try loading font information for U+BOONDOX-cal on input lin
-e 388.
- (c:/texlive/2017/texmf-dist/tex/latex/boondox/uboondox-cal.fd
-File: uboondox-cal.fd 2011/04/26 Fontinst v1.933 font definitions for U/BOONDOX
--cal.
-)
-LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 10.95pt on input line 388.
-LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 8.0pt on input line 388.
-LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 6.0pt on input line 388.
-<sprinklertrue.png, id=152, 1087.06125pt x 213.04594pt>
-File: sprinklertrue.png Graphic file (type png)
-<use sprinklertrue.png>
-Package pdftex.def Info: sprinklertrue.png  used on input line 388. on input li
-ne 388.
-Package pdftex.def Info: Requested size: 342.2953pt x 67.08382pt on input line 
-388.
-
 Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [12
 
- <./sprinklertrue.png>]
+]
 Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
@@ -1821,27 +1814,25 @@ Overfull \hbox (57.46791pt too wide) has occurred while \output is active
 [13
 
 ]
-<sprinklertruea.png, id=168, 189.70876pt x 189.70876pt>
-File: sprinklertruea.png Graphic file (type png)
-<use sprinklertruea.png>
-Package pdftex.def Info: sprinklertruea.png  used on input line 577. on input l
-ine 577.
-Package pdftex.def Info: Requested size: 51.3448pt x 51.34361pt on input line 5
-77.
-<13837a.png, id=169, 201.75375pt x 204.01219pt>
-File: 13837a.png Graphic file (type png)
-<use 13837a.png>
-Package pdftex.def Info: 13837a.png  used on input line 577. on input line 577.
-
-Package pdftex.def Info: Requested size: 51.3448pt x 51.91812pt on input line 5
-77.
-<14081a.png, id=170, 203.25937pt x 204.01219pt>
-File: 14081a.png Graphic file (type png)
-<use 14081a.png>
-Package pdftex.def Info: 14081a.png  used on input line 577. on input line 577.
-
-Package pdftex.def Info: Requested size: 51.3448pt x 51.53212pt on input line 5
-77.
+LaTeX Font Info:    Try loading font information for U+BOONDOX-cal on input lin
+e 423.
+ (c:/texlive/2017/texmf-dist/tex/latex/boondox/uboondox-cal.fd
+File: uboondox-cal.fd 2011/04/26 Fontinst v1.933 font definitions for U/BOONDOX
+-cal.
+)
+LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
+(Font)              scaled to size 10.95pt on input line 423.
+LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
+(Font)              scaled to size 8.0pt on input line 423.
+LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
+(Font)              scaled to size 6.0pt on input line 423.
+<sprinklertrue.png, id=165, 1087.06125pt x 213.04594pt>
+File: sprinklertrue.png Graphic file (type png)
+<use sprinklertrue.png>
+Package pdftex.def Info: sprinklertrue.png  used on input line 423. on input li
+ne 423.
+Package pdftex.def Info: Requested size: 342.2953pt x 67.08382pt on input line 
+423.
 
 Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
@@ -1849,52 +1840,35 @@ Overfull \hbox (57.46791pt too wide) has occurred while \output is active
 
 [14
 
- <./sprinklertruea.png> <./13837a.png> <./14081a.png>]
-<part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png, id=181, 410.2828pt x 313.17pt>
-File: part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png Graphic file (type png)
-<use part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png>
-Package pdftex.def Info: part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png  used on in
-put line 593. on input line 593.
-Package pdftex.def Info: Requested size: 167.72658pt x 128.02301pt on input lin
-e 593.
-<part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png, id=182, 403.5075pt x 313.9228pt>
-
-File: part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png Graphic file (type png)
-<use part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png>
-Package pdftex.def Info: part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png  used on 
-input line 593. on input line 593.
-Package pdftex.def Info: Requested size: 167.72658pt x 130.48628pt on input lin
-e 593.
-
+ <./sprinklertrue.png>]
 Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [15
 
- <./part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png> <./part2nelbos/JCADVvsJCADVexpv
-sJCADVgudlog.png>]
-LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 10.0pt on input line 617.
-LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 7.0pt on input line 617.
-LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
-(Font)              scaled to size 5.0pt on input line 617.
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
+]
+<sprinklertruea.png, id=181, 189.70876pt x 189.70876pt>
+File: sprinklertruea.png Graphic file (type png)
+<use sprinklertruea.png>
+Package pdftex.def Info: sprinklertruea.png  used on input line 612. on input l
+ine 612.
+Package pdftex.def Info: Requested size: 51.3448pt x 51.34361pt on input line 6
+12.
+<13837a.png, id=182, 201.75375pt x 204.01219pt>
+File: 13837a.png Graphic file (type png)
+<use 13837a.png>
+Package pdftex.def Info: 13837a.png  used on input line 612. on input line 612.
+
+Package pdftex.def Info: Requested size: 51.3448pt x 51.91812pt on input line 6
+12.
+<14081a.png, id=183, 203.25937pt x 204.01219pt>
+File: 14081a.png Graphic file (type png)
+<use 14081a.png>
+Package pdftex.def Info: 14081a.png  used on input line 612. on input line 612.
+
+Package pdftex.def Info: Requested size: 51.3448pt x 51.53212pt on input line 6
+12.
 
 Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
@@ -1902,13 +1876,22 @@ Overfull \hbox (57.46791pt too wide) has occurred while \output is active
 
 [16
 
-]
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
+ <./sprinklertruea.png> <./13837a.png> <./14081a.png>]
+<part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png, id=193, 410.2828pt x 313.17pt>
+File: part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png Graphic file (type png)
+<use part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png>
+Package pdftex.def Info: part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png  used on in
+put line 628. on input line 628.
+Package pdftex.def Info: Requested size: 167.72658pt x 128.02301pt on input lin
+e 628.
+<part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png, id=194, 403.5075pt x 313.9228pt>
+
+File: part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png Graphic file (type png)
+<use part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png>
+Package pdftex.def Info: part2nelbos/JCADVvsJCADVexpvsJCADVgudlog.png  used on 
+input line 628. on input line 628.
+Package pdftex.def Info: Requested size: 167.72658pt x 130.48628pt on input lin
+e 628.
 
 Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
@@ -1916,14 +1899,29 @@ Overfull \hbox (57.46791pt too wide) has occurred while \output is active
 
 [17
 
-]
-<mnist-digits-small.png, id=202, 744.53156pt x 186.6975pt>
-File: mnist-digits-small.png Graphic file (type png)
-<use mnist-digits-small.png>
-Package pdftex.def Info: mnist-digits-small.png  used on input line 644. on inp
-ut line 644.
-Package pdftex.def Info: Requested size: 342.2953pt x 85.8363pt on input line 6
-44.
+ <./part2nelbos/JCKLDvsJCKLexpvsJCKLgudlog.png> <./part2nelbos/JCADVvsJCADVexpv
+sJCADVgudlog.png>]
+LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
+(Font)              scaled to size 10.0pt on input line 652.
+LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
+(Font)              scaled to size 7.0pt on input line 652.
+LaTeX Font Info:    Font shape `U/BOONDOX-cal/m/n' will be
+(Font)              scaled to size 5.0pt on input line 652.
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
 
 Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
@@ -1931,21 +1929,13 @@ Overfull \hbox (57.46791pt too wide) has occurred while \output is active
 
 [18
 
- <./mnist-digits-small.png>]
-<064834a.png, id=210, 96.36pt x 44.41594pt>
-File: 064834a.png Graphic file (type png)
-<use 064834a.png>
-Package pdftex.def Info: 064834a.png  used on input line 678. on input line 678
-.
-Package pdftex.def Info: Requested size: 83.86328pt x 38.65576pt on input line 
-678.
-<044944a.png, id=211, 98.61844pt x 45.92157pt>
-File: 044944a.png Graphic file (type png)
-<use 044944a.png>
-Package pdftex.def Info: 044944a.png  used on input line 678. on input line 678
-.
-Package pdftex.def Info: Requested size: 83.86328pt x 39.05103pt on input line 
-678.
+]
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
+Missing character: There is no ; in font nullfont!
 
 Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
@@ -1953,14 +1943,14 @@ Overfull \hbox (57.46791pt too wide) has occurred while \output is active
 
 [19
 
- <./064834a.png> <./044944a.png>]
-<part4nelbos/PCADVvsPCKLD.png, id=221, 432.11438pt x 316.18124pt>
-File: part4nelbos/PCADVvsPCKLD.png Graphic file (type png)
-<use part4nelbos/PCADVvsPCKLD.png>
-Package pdftex.def Info: part4nelbos/PCADVvsPCKLD.png  used on input line 688. 
-on input line 688.
-Package pdftex.def Info: Requested size: 167.72658pt x 122.72641pt on input lin
-e 688.
+]
+<mnist-digits-small.png, id=215, 744.53156pt x 186.6975pt>
+File: mnist-digits-small.png Graphic file (type png)
+<use mnist-digits-small.png>
+Package pdftex.def Info: mnist-digits-small.png  used on input line 680. on inp
+ut line 680.
+Package pdftex.def Info: Requested size: 342.2953pt x 85.8363pt on input line 6
+80.
 
 Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
@@ -1968,14 +1958,73 @@ Overfull \hbox (57.46791pt too wide) has occurred while \output is active
 
 [20
 
- <./part4nelbos/PCADVvsPCKLD.png>]
+ <./mnist-digits-small.png>]
+<064834a.png, id=223, 96.36pt x 44.41594pt>
+File: 064834a.png Graphic file (type png)
+<use 064834a.png>
+Package pdftex.def Info: 064834a.png  used on input line 714. on input line 714
+.
+Package pdftex.def Info: Requested size: 83.86328pt x 38.65576pt on input line 
+714.
+<044944a.png, id=224, 98.61844pt x 45.92157pt>
+File: 044944a.png Graphic file (type png)
+<use 044944a.png>
+Package pdftex.def Info: 044944a.png  used on input line 714. on input line 714
+.
+Package pdftex.def Info: Requested size: 83.86328pt x 39.05103pt on input line 
+714.
+
 Overfull \hbox (57.46791pt too wide) has occurred while \output is active
  [][][][]  
  []
 
 [21
 
+ <./064834a.png> <./044944a.png>]
+<part4nelbos/PCADVvsPCKLD.png, id=233, 432.11438pt x 316.18124pt>
+File: part4nelbos/PCADVvsPCKLD.png Graphic file (type png)
+<use part4nelbos/PCADVvsPCKLD.png>
+Package pdftex.def Info: part4nelbos/PCADVvsPCKLD.png  used on input line 724. 
+on input line 724.
+Package pdftex.def Info: Requested size: 167.72658pt x 122.72641pt on input lin
+e 724.
+
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[22
+
+ <./part4nelbos/PCADVvsPCKLD.png>]
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[23
+
 ]
+<cats.png, id=248, 531.9875pt x 531.9875pt>
+File: cats.png Graphic file (type png)
+<use cats.png>
+Package pdftex.def Info: cats.png  used on input line 767. on input line 767.
+Package pdftex.def Info: Requested size: 212.79123pt x 212.79123pt on input lin
+e 767.
+
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[24
+
+ <./cats.png (PNG copy)>]
+Overfull \hbox (57.46791pt too wide) has occurred while \output is active
+ [][][][]  
+ []
+
+[25
+
+ <c:/texlive/2017/texmf-dist/tex/latex/beamer/art/beamericonbook.pdf> <c:/texli
+ve/2017/texmf-dist/tex/latex/beamer/art/beamericonarticle.pdf>]
 \tf@nav=\write6
 \openout6 = `main.nav'.
 
@@ -1985,22 +2034,22 @@ Overfull \hbox (57.46791pt too wide) has occurred while \output is active
 \tf@snm=\write8
 \openout8 = `main.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 760.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 760.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 804.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 804.
  (./main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 760.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 760.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 804.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 804.
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 3CD988076C3B844F83716668FEC6FE07;403.
+(rerunfilecheck)             Checksum: F5A7CA3C76964CC7EDF84FFC21F8312A;404.
  ) 
 Here is how much of TeX's memory you used:
- 35979 strings out of 492990
- 858336 string characters out of 6136334
+ 36113 strings out of 492990
+ 861608 string characters out of 6136334
  1093301 words of memory out of 5000000
- 38687 multiletter control sequences out of 15000+600000
+ 38809 multiletter control sequences out of 15000+600000
  31725 words of font info for 104 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 65i,16n,100p,797b,1097s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 65i,16n,100p,797b,1091s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}<c:/texl
 ive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2017/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2017/texmf-dist
@@ -2023,10 +2072,10 @@ fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2017/texmf-dist/fonts/type
 1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2017/texmf-dist/fonts/type1/pu
 blic/cm-super/sfso1000.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/boond
 ox/zxxrw8a.pfb>
-Output written on main.pdf (21 pages, 624495 bytes).
+Output written on main.pdf (25 pages, 1163008 bytes).
 PDF statistics:
- 325 PDF objects out of 1000 (max. 8388607)
- 241 compressed objects within 3 object streams
- 50 named destinations out of 1000 (max. 500000)
- 189 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 368 PDF objects out of 1000 (max. 8388607)
+ 274 compressed objects within 3 object streams
+ 61 named destinations out of 1000 (max. 500000)
+ 194 words of extra memory for PDF output out of 10000 (max. 10000000)
 

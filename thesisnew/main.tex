@@ -138,16 +138,18 @@
   \item {
   	Objective is to approximate a function $f^*$ using mapping with parameters $\bm{\Theta}$: $\textbf{f}_{\bm{\Theta}}(\bm{x})$.  
   }
+  \vspace{0.1cm}
   \item {
   	Universal Approximation Theorem states a neural network can\textbf{ approximate (almost) any function} if it is complex enough.
   }
+  \vspace{0.1cm}
   \item {
     Each node output is a transformed, weighted sum of previous node outputs.
   }
   \end{itemize}
-  \begin{figure}[h]
-  \resizebox{.5\linewidth}{!}{
-\begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
+  \begin{figure}[h!]
+  \scalebox{0.7}{
+\begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.0cm]
     \tikzstyle{every pin edge}=[<-,shorten <=1pt]
     \tikzstyle{neuron}=[circle,fill=black!25,minimum size=25pt,inner sep=0pt]
     \tikzstyle{input neuron}=[neuron, fill=green!50];
@@ -155,18 +157,18 @@
     \tikzstyle{hidden neuron}=[neuron, fill=blue!50];
     \tikzstyle{annot} = [text width=4em, text centered]
     
-	\node[input neuron, pin=left:Bias] (I-0) at (0,0) {};
+	\node[input neuron, pin=left:Bias] (I-0) at (-2,0) {};
     % Draw the input layer nodes
     \foreach \name / \y in {1,...,3}
     % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
-        \node[input neuron, pin=left:Input \y] (I-\name) at (0,-\y) {};
+        \node[input neuron, pin=left:Input \y] (I-\name) at (-2,-\y) {};
 
  \path[yshift=0cm]
-            node[hidden neuron, pin=left:Bias] (H-0) at (2.5cm,0) {};
+            node[hidden neuron, pin=left:Bias] (H-0) at (0.5cm,0) {};
     % Draw the hidden layer nodes
     \foreach \name / \y in {1,...,3}
         \path[yshift=0cm]
-            node[hidden neuron] (H-\name) at (2.5cm,-\y) {};
+            node[hidden neuron] (H-\name) at (0.5cm,-\y) {};
 
     % Draw the output layer node
 	\path[yshift=1cm]    
@@ -190,6 +192,50 @@
 }
 \end{figure}
 
+\end{frame}
+\begin{frame}{Neural Networks}{Individual Node}
+\begin{figure}
+\scalebox{0.8}{
+\begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
+    \tikzstyle{every pin edge}=[<-,shorten <=1pt]
+    \tikzstyle{neuron}=[circle,fill=black!25,minimum size=45pt,inner sep=0pt]
+    \tikzstyle{input neuron}=[neuron, fill=green!50];
+    \tikzstyle{output neuron}=[neuron, fill=red!50];
+    \tikzstyle{hidden neuron}=[neuron, fill=blue!50];
+    \tikzstyle{annot} = [text width=4em, text centered]
+
+    % Draw the input layer nodes
+ %   \foreach \name / \y in {0,...,3}
+    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+        \node[input neuron, pin=left:Bias $x_0$] (I-0) at (0,-0) {$\theta_0 x_0$};
+	\foreach \name / \y in {1,...,3}
+    % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+        \node[input neuron, pin=left:Input $x_{\y}$] (I-\name) at (0,-1.7*\y) {$\theta_{\y}x_\y$};
+    % Draw the hidden layer nodes
+    %\foreach \name / \y in {1,...,5}
+     %   \path[yshift=0.5cm]
+      %      node[hidden neuron] (H-\name) at (\layersep,-\y cm) {};
+
+    % Draw the output layer node
+    \node[output neuron,pin={[pin edge={->}]right:Node Output}, right of=I-2, node distance=4cm] (O) {$g\left(\sum\limits^3_{i=0}\theta_ix_i\right)$};
+
+    % Connect every node in the input layer with every node in the
+    % hidden layer.
+   % \foreach \source in {1,...,4}
+    %    \foreach \dest in {1,...,5}
+     %       \path (I-\source) edge (H-\dest);
+
+    % Connect every node in the hidden layer with the output layer
+    \foreach \source in {0,...,3}
+        \path (I-\source) edge (O);
+
+    % Annotate the layers
+%    \node[annot,above of=H-1, node distance=1cm] (hl) {Hidden layer};
+    \node[annot,above of=I-0, node distance=1.3cm](il) {Weighted Inputs};
+    \node[annot,right of=il, node distance=4cm] {Activation Function};
+\end{tikzpicture}
+}
+\end{figure}
 \end{frame}
 \begin{frame}{Neural Networks}{Training}
 \begin{itemize}
@@ -216,20 +262,23 @@ p(z|x)\propto \underbrace{p(z)}_\text{Prior}\underbrace{p(x|z)}_\text{Likelihood
   % You can also specify when the content should appear
   % by using <n->:
   \item {
-    Typical MCMC methods are slow with large datasets or high dimensional data.
+    Typical MCMC methods are slow with high dimensional data or large datasets.
   }
   % or you can use the \uncover command to reveal general
   % content (not just \items):
   \vspace{0.5cm}
   \item {
-    Variational Inference is a solution.
+    (Amortized) Variational Inference is a solution.
   }
   \end{itemize}
 \end{frame}
 \begin{frame}{(Amortized) Variational Inference}{Introduction}
 \begin{itemize}
 \item Amortized variational inference approximates $p(z|x)$ with a different density $q_\phi(z|x)$.
+\vspace{0.1cm}
 \item $q_\phi(z|x)$ is a \textbf{neural network} with parameters $\phi$.
+\vspace{0.1cm}
+\item Random noise $\epsilon$ makes the network probabilistic.
 \begin{figure}[h]
   \centering
   \tikz{ %
@@ -246,11 +295,13 @@ p(z|x)\propto \underbrace{p(z)}_\text{Prior}\underbrace{p(x|z)}_\text{Likelihood
 \end{frame}
 \begin{frame}{(Amortized) Variational Inference}{Network Training}
 \begin{itemize}
-\item Train network by minimizing the (expected) reverse KL divergence:
-\[\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{q_\phi(z|x)}{p(z|x)}\right].\]
+\item Train network by minimizing the reverse KL divergence:
+\[KL(q_\phi(z|x)\|p(z|x)):=\mathbb{E}_{q_\phi(z|x)}\left[\log \frac{q_\phi(z|x)}{p(z|x)}\right].\]
 \item This is the same as solving:
 \[\min_\phi \E_{q^*(x)}[\underbrace{-\mathbb{E}_{q_\phi(z|x)}[\log p(x|z)]}_{\text{Likelihood}}+\underbrace{KL(q_\phi(z|x)||p(z))}_{\text{Log Density Ratio}}].\]
 \item We call this $NELBO(q)$ as it is the \textbf{n}egative of \textbf{e}vidence \textbf{l}ower \textbf{bo}und.
+\[\small NELBO(q)\geq -\log p(x)\]
+\item $q^*(x)$ is the density of the dataset.
 \end{itemize}
 \end{frame}
 \begin{frame}{(Amortized) Variational Inference}{Problems with Implicit Distributions}
@@ -284,35 +335,19 @@ Consider our log density ratio term
 %\end{frame}
 \subsection{Density Ratio Estimation}
 
-% You can reveal the parts of a slide one at a time
-% with the \pause command:
-%\begin{frame}{Density Ratio Estimation}{Class Probability Estimation}
-%We want to estimate $q(u)/p(u)$.
-%\vspace{0.3cm}
-%  \begin{enumerate}
-%  \item {
-%    Discriminator network $D_\alpha(u)$ finds probability that a sample $u$ came from $q(u)$.
-%  }
-%  \[D^*_\alpha(u)=\frac{q(u)}{q(u)+p(u)}\]
-%  % or you can use the \uncover command to reveal general
-%  % content (not just \items):
-%  \item {
-%    Train discriminator with Bernoulli loss.
-%  }
-%  \vspace{0.3cm}
-%  \item Express density ratio in terms of discriminator.
-%  \[\frac{q(u)}{p(u)}=\frac{D^*_\alpha(u)}{1-D^*_\alpha(u)}\]
-%  \end{enumerate}
-%\end{frame}
-%\begin{frame}{Density Ratio Estimation}{Class Probability Estimation}
-%Prior-Contrastive Application:
-%\[\min_\alpha -\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log D_\alpha(z,x)]-\mathbb{E}_{q^*(x)p_\theta(z)}[\log (1-D_\alpha(z,x))]\]
-%\[\min_\phi \underbrace{-\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log p(x|z)]}_\text{Likelihood}+\underbrace{\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{D_\alpha(z,x)}{1-D_\alpha(z,x)}\right]}_\text{Log Density Ratio}\]
-%Joint-Contrastive Application:
-%\[\min_\alpha -\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log D_\alpha(z,x)]-\mathbb{E}_{p(z)p(x|z)}[\log (1-D_\alpha(z,x))]\]
-%\[\min_\phi \mathbb{E}_{q^*(x)q_\phi(z|x)}\log\frac{D_\alpha(z,x)}{1-D_\alpha(z,x)}\]
-%Program alternates between several optimisation steps of discriminator and one optimisation step of posterior.
-%\end{frame}
+\begin{frame}{Density Ratio Estimation}{Introduction}
+\begin{itemize}
+\item There exist different methods of estimating a density ratio $\frac{q(u)}{p(u)}$.
+\item Many of them use a neural network $r_\alpha(u)\simeq \frac{q(u)}{p(u)}$.
+\vspace{0.1cm}
+\item Various different loss functions used to train network.
+\end{itemize}
+\begin{example}
+The following loss function
+\[\min_\alpha -\E_{q(u)}[\log D_\alpha(u)]-\E_{p(u)}[\log(1-D_\alpha(u))]\]
+trains a network $D_\alpha(u)$ estimating $\frac{q(u)}{q(u)+p(u)}$.
+\end{example}
+\end{frame}
 \begin{frame}{Density Ratio Estimation}{Theorem}
 \begin{theorem}
 If $f$ is a convex function with derivative $f'$ and convex conjugate $f^*$, and $r_\alpha(u)$ is a neural network, then we have the lower bound for the $f$-divergence between densities $p(u)$ and $q(u)$:
@@ -618,6 +653,7 @@ To train a variational posterior network:
 \begin{frame}{Autoencoder Experiment}{Autoencoders}
 \begin{itemize}
 \item Generate $z$ from $p(z)$.
+\item Typically $p(z)$ is $\mathcal{N}(0,I)$.
 \end{itemize}
 \begin{figure}[h]
   \centering
@@ -724,7 +760,11 @@ GAN - $D_\alpha(z,x)$ & \textbf{0.0444} & \textbf{0.0017}\\
     \end{itemize}
   \end{itemize}
 \end{frame}
-
+\begin{frame}{Cats}
+\begin{figure}
+\includegraphics[scale=0.4]{cats.png}
+\end{figure}
+\end{frame}
 
 
 % All of the following is optional and typically not needed. 
@@ -732,30 +772,34 @@ GAN - $D_\alpha(z,x)$ & \textbf{0.0444} & \textbf{0.0017}\\
 %\section<presentation>*{\appendixname}
 %\subsection<presentation>*{For Further Reading}
 %
-%\begin{frame}[allowframebreaks]
-%  \frametitle<presentation>{For Further Reading}
-%    
-%  \begin{thebibliography}{10}
-%    
-%  \beamertemplatebookbibitems
-%  % Start with overview books.
-%
-%  \bibitem{Author1990}
-%    A.~Author.
-%    \newblock {\em Handbook of Everything}.
-%    \newblock Some Press, 1990.
-% 
-%    
-%  \beamertemplatearticlebibitems
-%  % Followed by interesting articles. Keep the list short. 
-%
-%  \bibitem{Someone2000}
-%    S.~Someone.
-%    \newblock On this and that.
-%    \newblock {\em Journal of This and That}, 2(1):50--100,
-%    2000.
-%  \end{thebibliography}
-%\end{frame}
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{For Further Reading}
+    
+  \begin{thebibliography}{10}
+    
+  \beamertemplatebookbibitems
+  % Start with overview books.
+
+  \bibitem{Author1990}
+    M.~Sugiyama, T.~Suzuki, T.~Kanamori
+    \newblock {\em Density Ratio Estimation in Machine Learning}.
+    \newblock Cambridge University Press, 2012.
+ 
+    
+  \beamertemplatearticlebibitems
+  % Followed by interesting articles. Keep the list short. 
+  \bibitem{blei}
+    D.M.~Blei, A.~Kucukelbir, D.J.~McAuliffe
+    \newblock Variational inference: A review for statisticians.
+    \newblock {\em Journal of the American Statistical Association}, 112(518):859-877
+    2017.
+  \bibitem{Someone2000}
+    F.~Huszar
+    \newblock Variational Inference Using Implicit Distributions.
+    \newblock {\em ArXiv e-prints},
+    2017.
+  \end{thebibliography}
+\end{frame}
 
 \end{document}
 
