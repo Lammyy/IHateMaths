@@ -36,43 +36,43 @@
 \contentsline {section}{\numberline {5.1}Introduction}{41}{section.5.1}
 \contentsline {section}{\numberline {5.2}Algorithm Generalisation}{42}{section.5.2}
 \contentsline {subsection}{\numberline {5.2.1}Reverse KL Divergence}{42}{subsection.5.2.1}
-\contentsline {subsection}{\numberline {5.2.2}GAN Divergence}{42}{subsection.5.2.2}
-\contentsline {section}{\numberline {5.3}Optimization Algorithms}{43}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}Prior-Contrastive}{43}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.2.2}GAN Divergence}{43}{subsection.5.2.2}
+\contentsline {section}{\numberline {5.3}Optimization Algorithms}{44}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Prior-Contrastive}{44}{subsection.5.3.1}
 \contentsline {subsection}{\numberline {5.3.2}Joint-Contrastive}{44}{subsection.5.3.2}
-\contentsline {chapter}{\numberline {Chapter 6}Comparing Optimal Estimators}{45}{chapter.6}
-\contentsline {section}{\numberline {6.1}Theory}{45}{section.6.1}
-\contentsline {section}{\numberline {6.2}Problem Context}{45}{section.6.2}
-\contentsline {section}{\numberline {6.3}Program Structure}{47}{section.6.3}
-\contentsline {section}{\numberline {6.4}Results}{49}{section.6.4}
-\contentsline {chapter}{\numberline {Chapter 7}Comparing Undertrained Estimators}{53}{chapter.7}
-\contentsline {section}{\numberline {7.1}Theory}{53}{section.7.1}
-\contentsline {subsection}{\numberline {7.1.1}Estimator Bounds}{53}{subsection.7.1.1}
-\contentsline {subsection}{\numberline {7.1.2}First and Second Derivatives of Estimator Loss Functions}{54}{subsection.7.1.2}
+\contentsline {chapter}{\numberline {Chapter 6}Comparing Optimal Estimators}{46}{chapter.6}
+\contentsline {section}{\numberline {6.1}Theory}{46}{section.6.1}
+\contentsline {section}{\numberline {6.2}Problem Context}{46}{section.6.2}
+\contentsline {section}{\numberline {6.3}Program Structure}{48}{section.6.3}
+\contentsline {section}{\numberline {6.4}Results}{50}{section.6.4}
+\contentsline {chapter}{\numberline {Chapter 7}Comparing Undertrained Estimators}{54}{chapter.7}
+\contentsline {section}{\numberline {7.1}Theory}{54}{section.7.1}
+\contentsline {subsection}{\numberline {7.1.1}Estimator Bounds}{54}{subsection.7.1.1}
+\contentsline {subsection}{\numberline {7.1.2}First and Second Derivatives of Estimator Loss Functions}{55}{subsection.7.1.2}
 \contentsline {subsection}{\numberline {7.1.3}Displacement of Estimator Optimal Values}{57}{subsection.7.1.3}
-\contentsline {section}{\numberline {7.2}Experiment Outline}{58}{section.7.2}
-\contentsline {section}{\numberline {7.3}Results}{58}{section.7.3}
-\contentsline {chapter}{\numberline {Chapter 8}Autoencoder Experiment - (MNIST Dataset)}{63}{chapter.8}
-\contentsline {section}{\numberline {8.1}Experiment Outline}{63}{section.8.1}
-\contentsline {section}{\numberline {8.2}Low Dimensional Experiment Results}{66}{section.8.2}
-\contentsline {section}{\numberline {8.3}High Dimensional Experiment Results}{68}{section.8.3}
-\contentsline {chapter}{\numberline {Chapter 9}Conclusion and Further Research}{72}{chapter.9}
-\contentsline {section}{\numberline {9.1}Further Research}{72}{section.9.1}
-\contentsline {chapter}{References}{74}{section.9.1}
-\contentsline {chapter}{\numberline {Appendix A}Proofs}{78}{appendix.A}
-\contentsline {section}{\numberline {A.1}Proof of Proposition 2.6.2}{78}{appendix.A.1}
-\contentsline {section}{\numberline {A.2}Proof of Lemma 3.2.4}{79}{appendix.A.2}
-\contentsline {section}{\numberline {A.3}Proof of Lemma 3.2.5}{79}{appendix.A.3}
-\contentsline {section}{\numberline {A.4}Proof of Lemma 3.7.1}{79}{appendix.A.4}
-\contentsline {section}{\numberline {A.5}Proof of Lemma 4.1.1}{80}{appendix.A.5}
-\contentsline {section}{\numberline {A.6}Proof of Lemma 4.2.2}{80}{appendix.A.6}
-\contentsline {section}{\numberline {A.7}Proof of Lemma 8.3.1}{81}{appendix.A.7}
-\contentsline {chapter}{\numberline {Appendix B}Algorithms}{82}{appendix.B}
-\contentsline {section}{\numberline {B.1}Back-Propagation Algorithm}{82}{appendix.B.1}
-\contentsline {section}{\numberline {B.2}Coordinate Ascent Variational Inference Algorithm}{83}{appendix.B.2}
-\contentsline {section}{\numberline {B.3}Algorithms for ``Sprinkler" Experiment}{84}{appendix.B.3}
-\contentsline {chapter}{\numberline {Appendix C}Coordinate Ascent Variational Inference Derivation}{86}{appendix.C}
-\contentsline {chapter}{\numberline {Appendix D}Mean Field Variational Inference Example}{88}{appendix.D}
-\contentsline {chapter}{\numberline {Appendix E}Kernel Density Estimation}{92}{appendix.E}
-\contentsline {chapter}{\numberline {Appendix F}Prior-Contrastive Optimal Estimator Experiment Plots}{93}{appendix.F}
-\contentsline {chapter}{\numberline {Appendix G}Second Functional Derivatives of Direct Log Ratio Estimator Losses}{94}{appendix.G}
+\contentsline {section}{\numberline {7.2}Experiment Outline}{59}{section.7.2}
+\contentsline {section}{\numberline {7.3}Results}{59}{section.7.3}
+\contentsline {chapter}{\numberline {Chapter 8}Autoencoder Experiment - (MNIST Dataset)}{64}{chapter.8}
+\contentsline {section}{\numberline {8.1}Experiment Outline}{64}{section.8.1}
+\contentsline {section}{\numberline {8.2}Low Dimensional Experiment Results}{67}{section.8.2}
+\contentsline {section}{\numberline {8.3}High Dimensional Experiment Results}{69}{section.8.3}
+\contentsline {chapter}{\numberline {Chapter 9}Conclusion and Further Research}{73}{chapter.9}
+\contentsline {section}{\numberline {9.1}Further Research}{73}{section.9.1}
+\contentsline {chapter}{References}{75}{section.9.1}
+\contentsline {chapter}{\numberline {Appendix A}Proofs}{79}{appendix.A}
+\contentsline {section}{\numberline {A.1}Proof of Proposition 2.6.2}{79}{appendix.A.1}
+\contentsline {section}{\numberline {A.2}Proof of Lemma 3.2.4}{80}{appendix.A.2}
+\contentsline {section}{\numberline {A.3}Proof of Lemma 3.2.5}{80}{appendix.A.3}
+\contentsline {section}{\numberline {A.4}Proof of Lemma 3.7.1}{80}{appendix.A.4}
+\contentsline {section}{\numberline {A.5}Proof of Lemma 4.1.1}{81}{appendix.A.5}
+\contentsline {section}{\numberline {A.6}Proof of Lemma 4.2.2}{81}{appendix.A.6}
+\contentsline {section}{\numberline {A.7}Proof of Lemma 8.3.1}{82}{appendix.A.7}
+\contentsline {chapter}{\numberline {Appendix B}Algorithms}{83}{appendix.B}
+\contentsline {section}{\numberline {B.1}Back-Propagation Algorithm}{83}{appendix.B.1}
+\contentsline {section}{\numberline {B.2}Coordinate Ascent Variational Inference Algorithm}{84}{appendix.B.2}
+\contentsline {section}{\numberline {B.3}Algorithms for ``Sprinkler" Experiment}{85}{appendix.B.3}
+\contentsline {chapter}{\numberline {Appendix C}Coordinate Ascent Variational Inference Derivation}{87}{appendix.C}
+\contentsline {chapter}{\numberline {Appendix D}Mean Field Variational Inference Example}{89}{appendix.D}
+\contentsline {chapter}{\numberline {Appendix E}Kernel Density Estimation}{93}{appendix.E}
+\contentsline {chapter}{\numberline {Appendix F}Prior-Contrastive Optimal Estimator Experiment Plots}{94}{appendix.F}
+\contentsline {chapter}{\numberline {Appendix G}Second Functional Derivatives of Direct Log Ratio Estimator Losses}{95}{appendix.G}
