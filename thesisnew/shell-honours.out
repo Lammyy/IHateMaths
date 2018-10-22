@@ -38,8 +38,8 @@
 \BOOKMARK [2][-]{subsection.5.2.1}{Reverse KL Divergence}{section.5.2}% 38
 \BOOKMARK [2][-]{subsection.5.2.2}{GAN Divergence}{section.5.2}% 39
 \BOOKMARK [1][-]{section.5.3}{Optimization Algorithms}{chapter.5}% 40
-\BOOKMARK [2][-]{subsection.5.3.1}{Prior-Contrastive}{section.5.3}% 41
-\BOOKMARK [2][-]{subsection.5.3.2}{Joint-Contrastive}{section.5.3}% 42
+\BOOKMARK [2][-]{subsection.5.3.1}{Prior-Contrastive Loss Functions}{section.5.3}% 41
+\BOOKMARK [2][-]{subsection.5.3.2}{Joint-Contrastive Loss Functions}{section.5.3}% 42
 \BOOKMARK [0][-]{chapter.6}{Comparing Optimal Estimators}{}% 43
 \BOOKMARK [1][-]{section.6.1}{Theory}{chapter.6}% 44
 \BOOKMARK [1][-]{section.6.2}{Problem Context}{chapter.6}% 45

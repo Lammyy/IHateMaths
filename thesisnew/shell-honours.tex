@@ -187,7 +187,7 @@
 
 \beforepreface
 
-\afterpage{\blankpage}
+\afterpage{\clearpage}
 
 % plagiarism
 
@@ -215,7 +215,7 @@ agreeing to the statements and conditions above.
 Signed: \rule{7cm}{0.25pt} \hfill Date: \rule{4cm}{0.25pt} \newline
 \vskip 1pc
 
-\afterpage{\blankpage}
+\afterpage{\cleardoublepage}
 
 % Acknowledgements are optional
 
@@ -226,7 +226,7 @@ Signed: \rule{7cm}{0.25pt} \hfill Date: \rule{4cm}{0.25pt} \newline
 
 {\bigskip\noindent}Trevor Trotman
 
-{\bigskip\noindent}Honours Room Inhabitants, esp. Bouldering crew
+{\bigskip\noindent}Honours Room Inhabitants
 
 {\bigskip\noindent}Discord Group+Kong+Brian
 
@@ -238,7 +238,7 @@ Signed: \rule{7cm}{0.25pt} \hfill Date: \rule{4cm}{0.25pt} \newline
 
 {\bigskip\bigskip\bigskip\noindent} Lammy, 11 September 2018.
 
-\afterpage{\blankpage}
+\afterpage{\cleardoublepage}
 
 % Abstract
 
@@ -246,15 +246,15 @@ Signed: \rule{7cm}{0.25pt} \hfill Date: \rule{4cm}{0.25pt} \newline
 In variational Bayesian machine learning, deep neural networks can be used to efficiently model posterior densities associated with high dimensional data or large datasets. This can be furthered to an autoencoder model which simultaneously expresses data points as a lower dimensional latent representation, and reconstructs said data given a latent variable input. Due to the implicit nature of the involved densities, density ratio estimation techniques are used to approximate the intractable KL divergence term in the posterior network optimisation problem. 
 
 In this thesis, we generalise the estimator loss function selection to a choice of $f$-divergence lower bound and estimator parametrisation. We then demonstrate that, of the tested parametrisations, the class probability estimator is the optimal choice as it is feasible with large density ratios and experiences the quickest convergence. Additionally, the high accuracy yet instability of the reverse KL divergence lower bound is experimentally shown, in contrast to the stable yet inaccurate GAN divergence, implying a trade-off between estimator stability and accuracy in the choice of $f$-divergence.
-\afterpage{\blankpage}
+\afterpage{\clearpage}
 
 
 \afterpreface
-\afterpage{\blankpage}
+\afterpage{\clearpage}
 
 \chapter{Introduction}\label{intro}
 \section{Problem Context}
-In any Bayesian statistics problem, the quintessential objective is to evaluate the posterior density $p(z|x)$ \citep{gelman}. In cases where algebraic posterior evaluation is difficult, Markov Chain Monte Carlo (MCMC) methods have been used to estimate the posterior density, but they tend to have slow convergence when applied to high dimensional data or large datasets. Variational inference methods overcome this obstacle by optimising a different, approximate density parametrized by $\phi$: $q_\phi(z)$, dubbed the `variational density'. This is achieved by minimising its reverse KL divergence with the true posterior density, equivalent to minimising an expression equal to the negative of the evidence lower bound, $NELBO(q)$ \citep{blei}:
+In any Bayesian statistics problem, the quintessential objective is to evaluate the posterior density $p(z|x)$ \citep{gelman}. In cases where algebraic posterior evaluation is difficult, Markov Chain Monte Carlo (MCMC) methods have been used to approximate the posterior density, but they tend to have slow convergence when applied to high dimensional data or large datasets. Variational inference methods overcome this obstacle by approximating the posterior density with a different, optimized density parametrized by $\phi$: $q_\phi(z)$, dubbed the `variational density'. This is achieved by minimising its reverse KL divergence with the true posterior density, equivalent to minimising an expression equal to the negative of the evidence lower bound, $NELBO(q)$ \citep{blei}:
 \[\min_\phi \lbrace\underbrace{-\E_{q_\phi(z)}[\log p(x|z)]+KL(q_\phi(z)\|p(z))}_{=NELBO(q)}\rbrace.\]
 In traditional `mean-field variational inference', the variational density factorises over the latent variables, taking the form $q_\phi(z)=\prod_i q_{\phi_i}(z_i)$. This algorithm is inefficient in large datasets, as a new variational density would have to be trained for each data observation. The recent increased popularity of neural networks, brought forward by improvements in computational power, has led to a new type of variational inference: amortized variational inference \citep{ADVVI}. This method uses the universal function approximating capability of the neural network model to condition the variational posterior on the observation $x$, producing a flexible model that is able to generalise over large datasets. This density $q_\phi(z|x)$ is optimised with respect to the density of the dataset $q^*(x)$: 
 \[\min_{\phi} \left\lbrace\E_{q^*(x)}\left[-\E_{q_\phi(z|x)}[\log p(x|z)]+KL(q_\phi(z|x)\|p(z))\right]\right\rbrace.\]
@@ -265,18 +265,18 @@ Since density ratio estimation only requires samples from the densities, we are 
 
 The uses of amortized variational inference are not limited to posterior inference; it can additionally be used to train an autoencoder, a model consisting of an encoder that represents a data point $x$ as a lower dimensional latent variable $z$ according to the variational posterior $q_\phi(z|x)$, and a decoder that reconstructs data $\tilde{x}$ from latent $z$ according to the likelihood $p_\theta(x|z)$ \citep{kingma}. The decoder can be used to generate new data by inputting a latent variable $z$ from the prior $p(z)$.
 \section{Aims}
-In the context of variational Bayesian machine learning, we often face an intractable optimisation problem due to the implicit nature of one or more densities involved. By using density ratio estimation, we are able to estimate the intractable term using only samples from the implicit densities. The primary goal of this thesis is to analyse and investigate different algorithms used to train density ratio estimators. We accomplish this by comparing the convergence of the variational posterior networks, reflective of the accuracy of the density ratio estimation. We begin by generalising the selection of a density ratio estimation algorithm to a choice of estimator parametrisation:
+In the context of variational Bayesian machine learning, we often face an intractable density ratio term $q(u)/p(u)$ due to the implicit nature of one or more densities involved. By using density ratio estimation techniques, we are able to estimate this term using only samples from the densities. The primary goal of this thesis is to analyse and investigate different algorithms used to train density ratio estimators. We accomplish this by comparing the convergence of the variational posterior networks, reflective of the density ratio estimation accuracy. We begin by generalising the selection of a density ratio estimation algorithm to a choice of density ratio transformation, represented by the estimator parametrisation:
 \begin{itemize}
 \item Class Probability Estimator: $D_\alpha(u)\simeq q(u)/(q(u)+p(u))$,
 \item Direct Ratio Estimator: $r_\alpha(u)\simeq q(u)/p(u)$,
 \item Direct Log Ratio Estimator: $T_\alpha(u)\simeq \log (q(u)/p(u))$,
 \end{itemize} 
-and the selection of $f$-divergence used to formulate the estimator loss function:
+and a selection of $f$-divergence used to formulate the estimator loss function:
 \begin{itemize}
 \item Reverse KL Divergence: $KL(q(u)\|p(u))$,
-\item GAN Divergence: $2JS(p(u)\|q(u))-\log 4$.
+\item GAN Divergence: $2JS(p(u)\|q(u))-\log 4$,
 \end{itemize}
-We then compare all algorithm combinations in varying conditions on a basic inference problem and an autoencoder experiment to determine the optimal combination of $f$-divergence and estimator parametrisation.
+where $JS(\cdot \| \cdot)$ denotes the Jensen-Shannon divergence. We then compare all combinations in varying conditions on a basic inference problem and an autoencoder experiment to determine the optimal density ratio estimation algorithm.
 
 \section{Results}
 After generalising the density ratio estimation algorithms, we show that all three estimator parametrisations have similar accuracies when optimised properly, and find that the estimators are more accurate when trained with the reverse KL divergence than with the GAN divergence. We then compare the effectiveness of the estimators when under-trained, showing that the class probability estimator is the most accurate, followed by the direct ratio estimator and the direct log ratio estimator. This is likely due to the faster convergence experienced by the superior estimator. This experiment also reinforces the previous experiment's conclusion that the estimators trained with the reverse KL divergence are more accurate, but also demonstrate initial instability. The under-trained estimators are compared again in the optimisation of an autoencoder, for both low-dimensional and high-dimensional latent spaces. Similar results are found in the low-dimensional setting. On the other hand, the high-dimensional latent space leads to density ratios too large to be represented by the loss functions associated with both the direct ratio estimator and the direct log ratio estimator. The class probability estimator is the only feasible estimator and is therefore superior in that regard. In the high-dimensional experiment, we also find that the estimators trained with the reverse KL divergence fail to stabilise, and therefore have inferior accuracy.
@@ -1202,7 +1202,7 @@ which is the optimal discriminator of class probability estimation. Thus, the de
 \[\frac{q(u)}{p(u)}\simeq \frac{D(u)}{1-D(u)}.\]
 Therefore, our previous formulation of class probability estimation by minimizing the Bernoulli loss of a discriminator function is equivalent to maximizing the lower bound of the ``GAN" divergence between the two densities.
 \chapter{Algorithm Generalisation}\label{ch5}
-In this chapter, we present the two density ratio estimation techniques in a comparable form, that is, in terms of the relevant $f$-divergence's lower bound as derived in \autoref{sec:4.2} using Theorem \ref{4.2.1}. From this, we generalise the density ratio algorithms to a selection of an $f$-divergence to formulate the lower bound and a parametrisation of the density ratio estimator. We also suggest a third estimator parametrisation: the direct log density ratio estimator $T_\alpha(u)$. The formal generalisation of density ratio estimation algorithms is the first contribution of this thesis.
+In this chapter, we present the two density ratio estimation techniques in a comparable form, that is, in terms of the relevant $f$-divergence's lower bound as derived in \autoref{sec:4.2} using Theorem \ref{4.2.1}. From this, we generalise the density ratio algorithms to a selection of an $f$-divergence to formulate the lower bound and a parametrisation of the density ratio estimator. We also suggest a third estimator parametrisation: the direct log density ratio estimator $T_\alpha(u)\simeq \log (q(u)/p(u))$. The formal generalisation of density ratio estimation algorithms is the first contribution of this thesis.
 \section{Introduction}\label{sec:5.1}
 First, recall that within each of the prior-contrastive and joint-contrastive formulations, both class probability estimation and divergence minimisation methods use the same $NELBO$ loss function to optimise the posterior weights. It is therefore evident that the only differences between the two density ratio estimation techniques are the estimator loss functions used. As shown in Subsections \ref{sec:4.2.1} and \ref{sec:4.2.4}, these estimator losses can be derived using \autoref{4.2.1}, hence the only differences between them lie within their $f$-divergence bound and the parametrization of the estimator. We reiterate these derivations below.
 
@@ -1215,7 +1215,7 @@ and class probability estimation follows the GAN divergence $D_{GAN}(p(u)\|q(u))
 D_{GAN}(p(u)\|q(u))\geq \sup_\alpha\{\mathbb{E}_{q(u)}\left[\log \frac{r_\alpha(u)}{r_\alpha(u)+1}\right]-\mathbb{E}_{p(u)}[\log(r_\alpha(u)+1)]\},
 \end{equation}
 with equality of both equations at $r_\alpha(u)=q(u)/p(u)$.\\
-To convert the Equation (\ref{eq:5.1.2}) to the class probability estimation loss function, we have used the estimator transformation $r_\alpha(u)=\frac{D_\alpha(u)}{1-D_\alpha(u)}\iff D_\alpha(u)=\frac{r_\alpha(u)}{r_\alpha(u)+1}$. Since this mapping is bijective and monotonically increasing, the equality of the bound is retained at equivalent points. We can therefore also use this transformation on Equation (\ref{eq:5.1.1}) deriving its respective loss function as a function of $D_\alpha(u)\simeq q(u)/(q(u)+p(u))$ instead of $r_\alpha(u)\simeq q(u)/p(u)$.
+To convert the Equation (\ref{eq:5.1.2}) to the class probability estimation loss function, we have used the estimator transformation $r_\alpha(u)=\frac{D_\alpha(u)}{1-D_\alpha(u)}\iff D_\alpha(u)=\frac{r_\alpha(u)}{r_\alpha(u)+1}$. Since this mapping is bijective and monotonically increasing, the equality of the bound is retained at equivalent estimator parametrisations. We can therefore also use this transformation on Equation (\ref{eq:5.1.1}) deriving its respective loss function as a function of $D_\alpha(u)\simeq q(u)/(q(u)+p(u))$ instead of $r_\alpha(u)\simeq q(u)/p(u)$.
 \begin{example}
 In this example, we represent the estimator loss function formulated by the reverse KL divergence in terms of the class probability estimator $D_\alpha(u)$:
 \begin{align}
@@ -1225,25 +1225,25 @@ D_{RKL}(p(u)\|q(u))&\geq \sup_{\alpha}\{\mathbb{E}_{q(u)}[1+\log r_\alpha(u)]-\m
 By taking the negative of Expression (\ref{eq:5.1.3}) and eliminating the constant $+1$ term, we form the following minimisation problem:
 \[\min_\alpha \left\lbrace\mathbb{E}_{q(u)}\left[\log \frac{1-D_\alpha(u)}{D_\alpha(u)}\right]+\mathbb{E}_{p(u)}\left[\frac{D_\alpha(u)}{1-D_\alpha(u)}\right]\right\rbrace.\]
 \end{example}
-We also propose a third estimator parametrisation, the direct log density ratio estimator
+We also propose a third estimator parametrisation, the direct log density ratio estimator:
 \[T_\alpha(u)\simeq \log \frac{q(u)}{p(u)}.\]
 This is derived by simply using the transformation $T_\alpha(u)=\log r_\alpha(u)$.
 \section{Algorithm Generalisation}
 For each $f$-divergence, we can derive a loss function for each of our three estimator parametrisations.
 \subsection{Reverse KL Divergence}
 \textbf{Direct Ratio Estimator} $r_\alpha(u)$:
-\[\min_\alpha \left\lbrace-\mathbb{E}_{q(u)}[\log r_\alpha(u)]+\mathbb{E}_{p(u)}[r_\alpha(u)]\right\rbrace\]
+\[\min_\alpha \left\lbrace-\mathbb{E}_{q(u)}[\log r_\alpha(u)]+\mathbb{E}_{p(u)}[r_\alpha(u)]\right\rbrace.\]
 \textbf{Class Probability Estimator/Discriminator} $D_\alpha(u)$:
-\[\min_\alpha \left\lbrace\mathbb{E}_{q(u)}\left[\log \frac{1-D_\alpha(u)}{D_\alpha(u)}\right]+\mathbb{E}_{p(u)}\left[\frac{D_\alpha(u)}{1-D_\alpha(u)}\right]\right\rbrace\]
+\[\min_\alpha \left\lbrace\mathbb{E}_{q(u)}\left[\log \frac{1-D_\alpha(u)}{D_\alpha(u)}\right]+\mathbb{E}_{p(u)}\left[\frac{D_\alpha(u)}{1-D_\alpha(u)}\right]\right\rbrace.\]
 \textbf{Direct Log Ratio Estimator} $T_\alpha(u)$:
-\[\min_\alpha \left\lbrace-\mathbb{E}_{q(u)}[T_\alpha(u)]+\mathbb{E}_{p(u)}\left[e^{T_\alpha (u)}\right]\right\rbrace\]
+\[\min_\alpha \left\lbrace-\mathbb{E}_{q(u)}[T_\alpha(u)]+\mathbb{E}_{p(u)}\left[e^{T_\alpha (u)}\right]\right\rbrace.\]
 \subsection{GAN Divergence}
 \textbf{Direct Ratio Estimator} $r_\alpha(u)$:
-\[\min_\alpha \left\lbrace\E_{q(u)}\left[\log \frac{r_\alpha(u)+1}{r_\alpha(u)}\right]+\E_{p(u)}[\log (r_\alpha(u)+1)]\right\rbrace\]
+\[\min_\alpha \left\lbrace\E_{q(u)}\left[\log \frac{r_\alpha(u)+1}{r_\alpha(u)}\right]+\E_{p(u)}[\log (r_\alpha(u)+1)]\right\rbrace.\]
 \textbf{Class Probability Estimator/Discriminator} $D_\alpha(u)$:
-\[\min_\alpha \left\lbrace-\E_{q(u)}[\log D_\alpha(u)]-\E_{p(u)}[\log (1-D_\alpha(u))]\right\rbrace\]
+\[\min_\alpha \left\lbrace-\E_{q(u)}[\log D_\alpha(u)]-\E_{p(u)}[\log (1-D_\alpha(u))]\right\rbrace.\]
 \textbf{Direct Log Ratio Estimator} $T_\alpha(u)$:
-\[\min_\alpha \left\lbrace\E_{q(u)}\left[\log \frac{e^{T_\alpha(u)}+1}{e^{T_\alpha(u)}}\right]+\E_{p(u)}\left[\log\left(e^{T_\alpha(u)}+1\right)\right]\right\rbrace\]
+\[\min_\alpha \left\lbrace\E_{q(u)}\left[\log \frac{e^{T_\alpha(u)}+1}{e^{T_\alpha(u)}}\right]+\E_{p(u)}\left[\log\left(e^{T_\alpha(u)}+1\right)\right]\right\rbrace.\]
 We have therefore generalised the choice of algorithm for training density ratio estimators to a choice of $f$-divergence:
 \begin{itemize}
 \item Reverse KL Divergence: $D_{KL}(p(u)\|q(u))=\mathbb{E}_{q(u)}\left[1+\log \frac{q(u)}{p(u)}\right]-\mathbb{E}_{p(u)}\left[\frac{q(u)}{p(u)}\right]$,
@@ -1258,51 +1258,52 @@ and a choice of estimator parametrization:
 The original ``KL divergence minimization" approach simply chooses the reverse KL Divergence and the direct ratio estimator, whilst ``class probability estimation" uses the GAN Divergence and the class probability estimator. These are just two variations of the six available algorithms.
 \section{Optimization Algorithms}
 The ratio estimator forms in the posterior loss functions also have to be transformed accordingly. In the following subsections we give the specific prior-contrastive and joint-contrastive $NELBO$s as functions of each estimator parametrisation. For completeness, we also list the two different estimator loss functions for each case, corresponding to the two $f$-divergences that we have discussed.
-\subsection{Prior-Contrastive}
+\subsection{Prior-Contrastive Loss Functions}
 \textbf{Direct Ratio Estimator} $r_\alpha(u)$:
-\[\text{Reverse KL: }\min_\alpha \left\lbrace-\E_{q^*(x)\pi(\epsilon)}[\log r_\alpha(\mathcal{G}(\epsilon;x),x)]+\E_{p(z)q^*(x)}[r_\alpha(z,x)]\right\rbrace\]
-\[\text{GAN: }\min_\alpha \left\lbrace\E_{q^*(x)\pi(\epsilon)}\left[\log \frac{r_\alpha(\mathcal{G}(\epsilon;x),x)+1}{r_\alpha(\mathcal{G}(\epsilon;x),x)}\right]+\E_{p(z)q^*(x)}[\log(r_\alpha(z,x)+1)]\right\rbrace\]
-\[\min_\phi\left\lbrace-\E_{q^*(x)\pi(\epsilon)}[\log p(x|\mathcal{G}_\phi(\epsilon;x))]+\E_{q^*(x)\pi(\epsilon)}[\log r_\alpha(\mathcal{G}(\epsilon;x),x)]\right\rbrace\]
+\[\text{Reverse KL: }\min_\alpha \left\lbrace-\E_{q^*(x)\pi(\epsilon)}[\log r_\alpha(\mathcal{G}(\epsilon;x),x)]+\E_{p(z)q^*(x)}[r_\alpha(z,x)]\right\rbrace.\]
+\[\text{GAN: }\min_\alpha \left\lbrace\E_{q^*(x)\pi(\epsilon)}\left[\log \frac{r_\alpha(\mathcal{G}(\epsilon;x),x)+1}{r_\alpha(\mathcal{G}(\epsilon;x),x)}\right]+\E_{p(z)q^*(x)}[\log(r_\alpha(z,x)+1)]\right\rbrace.\]
+\[\min_\phi\left\lbrace-\E_{q^*(x)\pi(\epsilon)}[\log p(x|\mathcal{G}_\phi(\epsilon;x))]+\E_{q^*(x)\pi(\epsilon)}[\log r_\alpha(\mathcal{G}(\epsilon;x),x)]\right\rbrace.\]
 \textbf{Class Probability Estimator/Discriminator} $D_\alpha(u)$:
-\[\text{Reverse KL: }\min_\alpha \left\lbrace\E_{q^*(x)\pi(\epsilon)}\left[\log \frac{1-D_\alpha(\mathcal{G}(\epsilon;x),x)}{D_\alpha(\mathcal{G}(\epsilon;x),x)}\right]+\E_{p(z)q^*(x)}\left[\frac{D_\alpha(\mathcal{G}(\epsilon;x),x)}{1-D_\alpha(\mathcal{G}(\epsilon;x),x)}\right]\right\rbrace\]
-\[\text{GAN: }\min_\alpha \left\lbrace-\E_{q^*(x)\pi(\epsilon)}[\log D_\alpha(\mathcal{G}(\epsilon;x),x)]-\E_{p(z)q^*(x)}[\log(1-D_\alpha(z,x))]\right\rbrace\]
-\[\min_\phi\left\lbrace-\E_{q^*(x)\pi(\epsilon)}[\log p(x|\mathcal{G}_\phi(\epsilon;x))]+\E_{q^*(x)\pi(\epsilon)}\left[\log \frac{D_\alpha(\mathcal{G}(\epsilon;x),x)}{1-D_\alpha(\mathcal{G}(\epsilon;x),x)}\right]\right\rbrace\]
+\[\text{Reverse KL: }\min_\alpha \left\lbrace\E_{q^*(x)\pi(\epsilon)}\left[\log \frac{1-D_\alpha(\mathcal{G}(\epsilon;x),x)}{D_\alpha(\mathcal{G}(\epsilon;x),x)}\right]+\E_{p(z)q^*(x)}\left[\frac{D_\alpha(\mathcal{G}(\epsilon;x),x)}{1-D_\alpha(\mathcal{G}(\epsilon;x),x)}\right]\right\rbrace.\]
+\[\text{GAN: }\min_\alpha \left\lbrace-\E_{q^*(x)\pi(\epsilon)}[\log D_\alpha(\mathcal{G}(\epsilon;x),x)]-\E_{p(z)q^*(x)}[\log(1-D_\alpha(z,x))]\right\rbrace.\]
+\[\min_\phi\left\lbrace-\E_{q^*(x)\pi(\epsilon)}[\log p(x|\mathcal{G}_\phi(\epsilon;x))]+\E_{q^*(x)\pi(\epsilon)}\left[\log \frac{D_\alpha(\mathcal{G}(\epsilon;x),x)}{1-D_\alpha(\mathcal{G}(\epsilon;x),x)}\right]\right\rbrace.\]
 \textbf{Direct Log Ratio Estimator} $T_\alpha(u)$:
-\[\text{Reverse KL: }\min_\alpha \left\lbrace-\E_{q^*(x)\pi(\epsilon)}[T_\alpha(\mathcal{G}(\epsilon;x),x)]+\E_{p(z)q^*(x)}\left[e^{T_\alpha(z,x)}\right]\right\rbrace\]
-\[\text{GAN: }\min_\alpha \left\lbrace\E_{q^*(x)\pi(\epsilon)}\left[\log \frac{e^{T_\alpha(\mathcal{G}(\epsilon;x),x)}+1}{e^{T_\alpha(\mathcal{G}(\epsilon;x),x)}}\right]+\E_{p(z)q^*(x)}[\log(e^{T_\alpha(z,x)}+1)]\right\rbrace\]
-\[\min_\phi\left\lbrace-\E_{q^*(x)\pi(\epsilon)}[\log p(x|\mathcal{G}_\phi(\epsilon;x))]+\E_{q^*(x)\pi(\epsilon)}[T_\alpha(\mathcal{G}(\epsilon;x),x)]\right\rbrace\]
-\subsection{Joint-Contrastive}
+\[\text{Reverse KL: }\min_\alpha \left\lbrace-\E_{q^*(x)\pi(\epsilon)}[T_\alpha(\mathcal{G}(\epsilon;x),x)]+\E_{p(z)q^*(x)}\left[e^{T_\alpha(z,x)}\right]\right\rbrace.\]
+\[\text{GAN: }\min_\alpha \left\lbrace\E_{q^*(x)\pi(\epsilon)}\left[\log \frac{e^{T_\alpha(\mathcal{G}(\epsilon;x),x)}+1}{e^{T_\alpha(\mathcal{G}(\epsilon;x),x)}}\right]+\E_{p(z)q^*(x)}[\log(e^{T_\alpha(z,x)}+1)]\right\rbrace.\]
+\[\min_\phi\left\lbrace-\E_{q^*(x)\pi(\epsilon)}[\log p(x|\mathcal{G}_\phi(\epsilon;x))]+\E_{q^*(x)\pi(\epsilon)}[T_\alpha(\mathcal{G}(\epsilon;x),x)]\right\rbrace.\]
+\subsection{Joint-Contrastive Loss Functions}
 \textbf{Direct Ratio Estimator} $r_\alpha(u)$:
-\[\text{Reverse KL: }\min_\alpha \left\lbrace-\E_{q^*(x)\pi(\epsilon)}[\log r_\alpha(\mathcal{G}(\epsilon;x),x)]+\E_{p(z)p(x|z)}[r_\alpha(z,x)]\right\rbrace\]
-\[\text{GAN: }\min_\alpha \left\lbrace\E_{q^*(x)\pi(\epsilon)}\left[\log \frac{r_\alpha(\mathcal{G}(\epsilon;x),x)+1}{r_\alpha(\mathcal{G}(\epsilon;x),x)}\right]+\E_{p(z)p(x|z)}[\log(r_\alpha(z,x)+1)]\right\rbrace\]
-\[\min_\phi \left\lbrace\E_{q^*(x)\pi(\epsilon)}\left[\log r_\alpha(\mathcal{G}_\phi(\epsilon;x),x)\right]\right\rbrace\]
+\[\text{Reverse KL: }\min_\alpha \left\lbrace-\E_{q^*(x)\pi(\epsilon)}[\log r_\alpha(\mathcal{G}(\epsilon;x),x)]+\E_{p(z)p(x|z)}[r_\alpha(z,x)]\right\rbrace.\]
+\[\text{GAN: }\min_\alpha \left\lbrace\E_{q^*(x)\pi(\epsilon)}\left[\log \frac{r_\alpha(\mathcal{G}(\epsilon;x),x)+1}{r_\alpha(\mathcal{G}(\epsilon;x),x)}\right]+\E_{p(z)p(x|z)}[\log(r_\alpha(z,x)+1)]\right\rbrace.\]
+\[\min_\phi \left\lbrace\E_{q^*(x)\pi(\epsilon)}\left[\log r_\alpha(\mathcal{G}_\phi(\epsilon;x),x)\right]\right\rbrace.\]
 \textbf{Class Probability Estimator/Discriminator} $D_\alpha(u)$:
-\[\text{Reverse KL: }\min_\alpha \left\lbrace\E_{q^*(x)\pi(\epsilon)}\left[\log \frac{1-D_\alpha(\mathcal{G}(\epsilon;x),x)}{D_\alpha(\mathcal{G}(\epsilon;x),x)}\right]+\E_{p(z)p(x|z)}\left[\frac{D_\alpha(\mathcal{G}(\epsilon;x),x)}{1-D_\alpha(\mathcal{G}(\epsilon;x),x)}\right]\right\rbrace\]
-\[\text{GAN: }\min_\alpha \left\lbrace-\E_{q^*(x)\pi(\epsilon)}[\log D_\alpha(\mathcal{G}(\epsilon;x),x)]-\E_{p(z)p(x|z)}[\log(1-D_\alpha(z,x))]\right\rbrace\]
-\[\min_\phi \left\lbrace\E_{q^*(x)\pi(\epsilon)}\left[\log \frac{D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)}{1-D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)}\right]\right\rbrace\]
+\[\text{Reverse KL: }\min_\alpha \left\lbrace\E_{q^*(x)\pi(\epsilon)}\left[\log \frac{1-D_\alpha(\mathcal{G}(\epsilon;x),x)}{D_\alpha(\mathcal{G}(\epsilon;x),x)}\right]+\E_{p(z)p(x|z)}\left[\frac{D_\alpha(\mathcal{G}(\epsilon;x),x)}{1-D_\alpha(\mathcal{G}(\epsilon;x),x)}\right]\right\rbrace.\]
+\[\text{GAN: }\min_\alpha \left\lbrace-\E_{q^*(x)\pi(\epsilon)}[\log D_\alpha(\mathcal{G}(\epsilon;x),x)]-\E_{p(z)p(x|z)}[\log(1-D_\alpha(z,x))]\right\rbrace.\]
+\[\min_\phi \left\lbrace\E_{q^*(x)\pi(\epsilon)}\left[\log \frac{D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)}{1-D_\alpha(\mathcal{G}_\phi(\epsilon;x),x)}\right]\right\rbrace.\]
 \textbf{Direct Log Ratio Estimator} $T_\alpha(u)$:
-\[\text{Reverse KL: }\min_\alpha \left\lbrace-\E_{q^*(x)\pi(\epsilon)}[T_\alpha(\mathcal{G}(\epsilon;x),x)]+\E_{p(z)p(x|z)}\left[e^{T_\alpha(z,x)}\right]\right\rbrace\]
-\[\text{GAN: }\min_\alpha \left\lbrace\E_{q^*(x)\pi(\epsilon)}\left[\log \frac{e^{T_\alpha(\mathcal{G}(\epsilon;x),x)}+1}{e^{T_\alpha(\mathcal{G}(\epsilon;x),x)}}\right]+\E_{p(z)p(x|z)}\left[\log\left(e^{T_\alpha(z,x)}+1\right)\right]\right\rbrace\]
-\[\min_\phi \left\lbrace\E_{q^*(x)\pi(\epsilon)}\left[T_\alpha(\mathcal{G}_\phi(\epsilon;x),x)\right]\right\rbrace\]
+\[\text{Reverse KL: }\min_\alpha \left\lbrace-\E_{q^*(x)\pi(\epsilon)}[T_\alpha(\mathcal{G}(\epsilon;x),x)]+\E_{p(z)p(x|z)}\left[e^{T_\alpha(z,x)}\right]\right\rbrace.\]
+\[\text{GAN: }\min_\alpha \left\lbrace\E_{q^*(x)\pi(\epsilon)}\left[\log \frac{e^{T_\alpha(\mathcal{G}(\epsilon;x),x)}+1}{e^{T_\alpha(\mathcal{G}(\epsilon;x),x)}}\right]+\E_{p(z)p(x|z)}\left[\log\left(e^{T_\alpha(z,x)}+1\right)\right]\right\rbrace.\]
+\[\min_\phi \left\lbrace\E_{q^*(x)\pi(\epsilon)}\left[T_\alpha(\mathcal{G}_\phi(\epsilon;x),x)\right]\right\rbrace.\]
 \chapter{Comparing Optimal Estimators}\label{ch6}
 In this chapter, we verify that for a fixed $f$-divergence, each estimator parametrisation leads to similar levels of convergence when optimally trained. In this experiment, we also determine whether the $f$-divergence used to derive the estimator loss function has any effect on posterior convergence.
 \section{Theory}
-It is intuitive that the rate of posterior convergence improves with the accuracy of the $NELBO$ estimation, dependent on how well the density ratio estimator is trained. Recall from \autoref{sec:5.1} that the estimator transformation preserves the equality of the bound in \autoref{4.2.1}. Therefore each parametrisation should reach optimality when optimized sufficiently, estimating the $NELBO$ with minimal error. Consequently, there should be no significant difference in posterior convergence.
+It is intuitive that the rate of posterior convergence improves with the accuracy of the $NELBO$ estimation, dependent on how well the density ratio estimator is trained. Recall from \autoref{sec:5.1} that the estimator transformation preserves the equality of the bound in \autoref{4.2.1}. Therefore each parametrisation should reach optimality when optimized sufficiently, estimating the $NELBO$ with minimal error. Consequently, there should be no notable difference in posterior convergence.
 
-Theorem \ref{4.2.1} states that equality of the bound is attained at $r^*_\alpha(u)=\frac{q(u)}{p(u)}$ regardless of the $f$-divergence used, so we also expect similar levels of convergence between the $f$-divergences. However, ``$f$-GAN: Training Generative Neural Samplers using Variational Divergence Minimization" by \citet{nowozin} shows experimentally that the fastest posterior convergence is attained when the $f$-divergence used to optimize the variational posterior is also used to derive the lower bound. Since we train our posterior network by minimising its reverse KL divergence with the true posterior, this paper implies the estimator loss functions formulated by the reverse KL divergence correspond to superior posterior convergence.
+Theorem \ref{4.2.1} states that equality of the bound is attained at $r^*_\alpha(u)=\frac{q(u)}{p(u)}$ regardless of the $f$-divergence used, so we also expect similar levels of convergence between the $f$-divergences. However, ``$f$-GAN: Training Generative Neural Samplers using Variational Divergence Minimization" by \citet{nowozin} shows experimentally that the fastest posterior convergence is attained when the $f$-divergence used to optimize the variational posterior is also used to derive the lower bound. This implies that in our context, estimator loss functions formulated by the reverse KL divergence correspond to superior posterior convergence.
 \section{Problem Context}
-We use the basic ``Continuous Sprinkler" posterior inference experiment as described in ``Variational Inference using Implicit densitys" by \citet{huszar}. This experiment involves the hypothetical scenario of grass wetness as a result of two independent sources: rainfall and a sprinkler. The problem exhibits ``explaining away" \citep{explain}, a pattern of reasoning in which the confirmation of one cause of an effect reduces the need to discuss alternative causes. In this example, despite the two possible sources of wetness being independent, they demonstrate dependence when we condition on the observation of wet grass. This is because grass wetness is correlated with the significance of either water source.\\ 
-The latent variables $\bm{z}=(z_1, z_2)$ represent the sprinkler and the rain respectively, and the observation $x$ represents the wetness of the grass. The prior and likelihood distributions are as follows:
-\[z_1,z_2\sim \mathcal{N} (0,\sigma^2 I_{2\times 2}),\]
+We use the basic ``Continuous Sprinkler" posterior inference experiment as described in ``Variational Inference using Implicit densitys" by \citet{huszar}. This experiment involves the hypothetical scenario of grass wetness as a result of two independent sources: rainfall and a sprinkler. The problem exhibits ``explaining away" \citep{explain}, a pattern of reasoning in which the confirmation of one cause of an effect reduces the need to discuss alternative causes. In this example, despite the two possible sources of wetness being independent, they demonstrate dependence when we condition on the observation of wet grass. This is because grass wetness is correlated with the significance of either water source.
+
+The latent variables $\bm{z}=(z_1, z_2)$ represent the sprinkler and the rain respectively, and the observation $x$ represents the wetness of the grass. We assume that the levels of incoming water are normally distributed, and that the grass wetness increases with these values. The prior and likelihood distributions are as follows:
+\[(z_1,z_2)\sim \mathcal{N} (0,\sigma^2 I_{2\times 2}),\]
 \[x|\bm{z}\sim Exp(3+\max\{0,z_1\}^3+\max\{0,z_2\}^3).\]
 The aim of this experiment is to compare the density ratio estimation algorithms in the use of amortized variational inference to estimate the posterior distribution. For increased reliability, we perform this experiment in both prior-contrastive and joint-contrastive contexts. The prior-contrastive algorithm requires the likelihood function of the likelihood density:
 \[p(x|\bm{z})=-(3+\max \{0,z_1\}^3+\max\{0,z_2\}^3)-\exp\left(\frac{x}{3+\max \{0,z_1\}^3+\max\{0,z_2\}^3}\right).\]
-This likelihood function is not required for the joint-contrastive algorithms as it is assumed to be implicit.\\
+This explicit form is not directly used for the joint-contrastive algorithms; it is only used to generate samples from the likelihood density.\\
 The unnormalised true posterior density function is derived as shown below.\\
 \textbf{Posterior Calculation:}
 \begin{equation}
 \begin{aligned}
-p(z_1,z_2|x)&= \exp(\log p(z_1,z_2)+\log p(x|z_1,z_2))\\
+p(z_1,z_2|x)&\propto \exp(\log p(z_1,z_2)+\log p(x|z_1,z_2))\\
 &\propto\exp\left(\frac12\bm{z}^T(\sigma^{-2}I_{2\times 2})\bm{z}-\log (3+\max\{0,z_1\}^3+\max\{0,z_2\}^3)\right.\\
 &\quad\left.-\frac{x}{3+\max\{0,z_1\}^3+\max\{0,z_2\}^3}\right)\\
 &\propto \exp\left(\frac{1}{2\sigma^2}(z_1^2+z_2^2)-\log (3+\max\{0,z_1\}^3+\max\{0,z_2\}^3)\right.\\
@@ -1310,14 +1311,14 @@ p(z_1,z_2|x)&= \exp(\log p(z_1,z_2)+\log p(x|z_1,z_2))\\
 \end{aligned}
 \end{equation}
 In the experiment, we let $\sigma^2=2$, and assume that each of the observation values $x=0,5,8,12,50$ have the same frequency. Our data density is therefore:
-\[q^*(x)= \frac{1}{5}\left(\mathbbm{1}_{\{0\}}(x)+\mathbbm{1}_{\{5\}}(x)+\mathbbm{1}_{\{8\}}(x)+\mathbbm{1}_{\{12\}}(x)+\mathbbm{1}_{\{50\}}(x)\right).\] In \autoref{fig:6.1}, we plot the true (unnormalised) posterior $p(\bm{z}|x)$ over a range of equally spaced points from $(z_1,z_2)=\{(-5,-5),\dots, (5,5)\}$. We are not concerned with the lack of normalisation as the purpose of the plots is to depict the shape and relative density of the posterior density.
+\[q^*(x)= \frac{1}{5}\left(\mathbbm{1}_{\{0\}}(x)+\mathbbm{1}_{\{5\}}(x)+\mathbbm{1}_{\{8\}}(x)+\mathbbm{1}_{\{12\}}(x)+\mathbbm{1}_{\{50\}}(x)\right).\] In \autoref{fig:6.1}, we plot the true (unnormalised) posterior $p(\bm{z}|x)$ over a grid of equally spaced points from $(z_1,z_2)=\{(-5,-5),\dots, (5,5)\}$. We are not concerned with the lack of normalisation as the purpose of the plots is to depict the shape and relative density of the posterior density.
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{sprinklertrue.png}
-\caption{\small This figure depicts the true (unnormalised) posterior plots for the ``Continuous Sprinkler" experiment. As $x$ increases, the posteriors become increasingly multimodal and unusually shaped.}
+\caption{\small This figure depicts the true (unnormalised) posterior plots for the ``Continuous Sprinkler" experiment. As $x$ increases, the posteriors become increasingly bi-modal and unusually shaped.}
 \label{fig:6.1}
 \end{figure}
 \section{Program Structure}
-Recall from \autoref{sec:3.8.1} that our generator $\mathcal{G}_\phi(x,\epsilon)$ is a neural network that takes in noise $\epsilon\sim \pi(\epsilon)$ along with data sample $x\sim q^*(x)$, outputting a sample from the variational posterior density $\bm{z}\sim q_\phi(\bm{z}|x)$. In this experiment, the generator has 3 noise inputs $\bm{\epsilon}=(\epsilon_1,\epsilon_2,\epsilon_3)^\top \sim \mathcal{N}(0,I_{3\times 3})$ along with 1 data input $x$, and 2 posterior outputs $z_1, z_2$. The structure of this network is as depicted in \autoref{fig:6.2}:
+Recall from \autoref{sec:3.8.1} that our generator $\mathcal{G}_\phi(x,\epsilon)$ is a neural network that takes in noise $\epsilon\sim \pi(\epsilon)$ along with a data sample $x\sim q^*(x)$, outputting a sample from the variational posterior density $\bm{z}\sim q_\phi(\bm{z}|x)$. In this experiment, the generator has 3 noise inputs $\bm{\epsilon}=(\epsilon_1,\epsilon_2,\epsilon_3)^\top \sim \mathcal{N}(0,I_{3\times 3})$ along with 1 data input $x$, and 2 posterior outputs $z_1, z_2$. The structure of this network is as depicted in \autoref{fig:6.2}. In the figure, the number inside the node indicates how many nodes the layer has, and the text above the node describes the activation function. Recall that the input layer does not have an activation function, and that Rectified Linear Units (ReLU) are used for most of the hidden layers due to their many advantages. In the Concat. layer, the two input vectors are concatenated and there is no activation function.
 \begin{figure}[h!]
 \begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
     \tikzstyle{every pin edge}=[<-,shorten <=1pt]
@@ -1360,11 +1361,11 @@ Recall from \autoref{sec:3.8.1} that our generator $\mathcal{G}_\phi(x,\epsilon)
     \node[annot,above of=H-32, node distance=1cm] {ReLU};
     \node[annot,above of=O, node distance=1cm] {Linear};
 \end{tikzpicture}
-\caption{\small This figure illustrates the structure of the generator network $\mathcal{G}(x,\bm{\epsilon})$ used in the ``Continuous Sprinkler" experiment. The number inside the node indicates how many nodes the layer has, and the text above the node describes the activation function. Recall that the input layer does not have an activation function, and that Rectified Linear Units (ReLU) are used for most of the hidden layers due to their many advantages. In the Concat. layer, the two input vectors are concatenated and there is no activation function. We do not use an activation function for the output layer as $\bm{z}\in \R^2$.}
+\caption{\small This figure illustrates the structure of the generator network $\mathcal{G}(x,\bm{\epsilon})$ used in the ``Continuous Sprinkler" experiment. We do not use an activation function for the output layer as $\bm{z}\in \R^2$.}
 \label{fig:6.2}
 \end{figure}
 
-The structure of the estimator (discriminator $D_\alpha(\bm{z},x)$, direct ratio estimator $r_\alpha(\bm{z},x)$ or direct log ratio estimator $T_\alpha(\bm{z},x)$) is similar to that of the generator, with an additional hidden layer associated with the $\bm{z}$ input and a different output activation function corresponding to the estimator's identity. Note that the only differences between the estimators are the activation function of their output layers and the loss functions used to train them. The estimator structure is shown in \autoref{fig:6.3}:
+The structure of the estimator (discriminator $D_\alpha(\bm{z},x)$, direct ratio estimator $r_\alpha(\bm{z},x)$ or direct log ratio estimator $T_\alpha(\bm{z},x)$) is similar to that of the generator, with an additional hidden layer associated with the $\bm{z}$ input and a different output activation function corresponding to the estimator's identity. When the estimator takes the parametrisation of a discriminator $D_\alpha(z,x)$, a sigmoid output layer is used \citep{gan}. An exponential activation function is used for the output layer when the estimator output is the direct density ratio $r_\alpha(z,x)$, and a linear output is used for the direct log density ratio estimator $T_\alpha(z,x)$ \citep{nowozin}. The estimator structure is shown in \autoref{fig:6.3}.
 \begin{figure}[h!]
 
 \begin{tikzpicture}[shorten >=1pt,->,draw=black!50, node distance=2.5cm]
@@ -1411,21 +1412,21 @@ The structure of the estimator (discriminator $D_\alpha(\bm{z},x)$, direct ratio
     \node[annot,above of=H-32, node distance=1cm] {ReLU};
     \node[annot,above of=O, node distance=1cm] {Output Activ.};
 \end{tikzpicture}
-\caption{\small This figure depicts the structure of the estimator network for the ``Continuous Sprinkler Experiment". The notation is the same as in \autoref{fig:6.2}. When the estimator takes the parametrisation of a discriminator $D_\alpha(z,x)$, a sigmoid output layer is used \citep{gan}. An exponential activation function is used for the output layer when the estimator output is the direct density ratio $r_\alpha(z,x)$, and a linear output is used for the direct log density ratio estimator $T_\alpha(z,x)$ \citep{nowozin}.}
+\caption{\small This figure depicts the structure of the estimator network for the ``Continuous Sprinkler Experiment". The notation is the same as in \autoref{fig:6.2}. Note that the only differences between the estimators are the activation function of their output layers and the loss functions used to train them.}
 \label{fig:6.3}
 \end{figure}
 
-The network weights are initialized with Xavier initialization, and trained using the Adam optimizer with learning rate $0.0001$ for the prior-contrastive setting and $0.00001$ for the joint-contrastive algorithms. Recall from the nature of our dataset density $q*(x)$ that we only train the network on data values $x=0,5,8,12,50$. In each training iteration, 200 samples are taken for each $x$-value, corresponding to a batch size of 1000. This large batch size makes training more consistent, as the latent variables $\bm{z}$ are probabilistic in nature. Due to the similar network structure in each algorithm, they have near-identical runtime, as the majority of the training time is spent in back-propagation \citep{DeepLearning}.
+The network weights are initialized with Xavier initialization (as explained in \autoref{sec:2.5}), and trained using the Adam optimizer (described in \autoref{sec:2.6}) with learning rate $0.0001$ for the prior-contrastive setting and $0.00001$ for the joint-contrastive algorithms. These values were determined via trial and error to yield consistent results. Recall from the nature of our dataset density $q^*(x)$ that we only train the network on data values $x=0,5,8,12,50$. In each training iteration, 200 samples are taken for each $x$-value, corresponding to a batch size of 1000. This large batch size makes training more consistent, as the latent variables $\bm{z}$ are probabilistic in nature. Due to the similar network structure in each algorithm, they have near-identical runtime, as the majority of the training time is spent in back-propagation \citep{DeepLearning}.
 
-To prevent taking $\log 0$ in the loss functions, we add a small constant $c=10^{-18}$ to the log function's input. The estimator is pre-trained for 5000 iterations to ensure that optimization of the variational network begins with an optimal estimator. The variance of the results is also reduced as the initial parametrisation of the estimator is similar for each fixed generator initialization. Afterwards, the variational posterior is optimized for 10000 iterations for the prior-contrastive experiment, and 40000 iterations in the joint-contrastive formulation. Between each of these iterations, the algorithm takes 100 training steps of the estimator. Pseudocode for the prior-contrastive and joint-contrastive algorithms, based off their derivations in Chapters \ref{ch4} and \ref{ch5}, are shown in Algorithms \ref{alg:7} and \ref{alg:8} in \autoref{app:B.3}.
+To prevent taking $\log 0$ in the loss functions, we add a constant $c=10^{-18}$ to the log function's input. Preliminary tests show that this sufficiently small constant does not have an apparent effect on the program performance. The estimator is pre-trained for 5000 iterations to ensure that optimization of the variational network begins with an optimal estimator. The variance of the results is also reduced as the initial parametrisation of the estimator is similar for each fixed generator initialization. Afterwards, the variational posterior is optimized for 10000 iterations for the prior-contrastive experiment, and 40000 iterations in the joint-contrastive formulation. Again, these values were chosen through trial and error to result in sufficient posterior convergence. Between each of these iterations, the algorithm takes 100 training steps of the estimator. Pseudocode for the prior-contrastive and joint-contrastive algorithms, based off their derivations in Chapters \ref{ch4} and \ref{ch5}, are shown in Algorithms \ref{alg:7} and \ref{alg:8} in \autoref{app:B.3}.
 
 We evaluate the algorithms by comparing the level of posterior convergence. To measure this, we use the average `true' KL divergence between the true and variational posteriors at the end of the program's runtime: \[\E_{q^*(x)}\left[KL(q_\phi(\bm{z}|x)\|p(\bm{z}|x))\right].\] To do so, we estimate the probability density function of the variational posterior for each of the 5 data points using a Gaussian kernel density estimator $\hat{q}(\bm{z}|x)$. We then calculate its expected KL divergence with the unnormalised true posterior derived in Equation (6.2.1). The normalisation constant $p(x)$ is independent of the variational posterior $q_\phi(\bm{z}|x)$ that we compare it with, so its omission does not affect our comparison of the algorithms. An explanation of kernel density estimation can be found in \autoref{app:D}. Due to the stochastic nature of the optimisation, it is desirable to have a large number of experiment repetitions for reliable results. However, due to limited computational time, each algorithm was only run 30 times. At the end of each posterior optimisation step, both the estimator loss and $NELBO$ estimation were stored. Additionally, the `true' KL divergence was estimated every 100 posterior iterations. Arrays containing these values were averaged over the 30 experiment repetitions, and plotted as shown in Section 6.4.
 \section{Results}
-Tables \ref{tab:6.1} and \ref{tab:6.2} compare the `true' KL divergence between the 30 iterations for each algorithm variation. \autoref{fig:6.4} compares variational posterior output plots corresponding to different `true' KL divergences. In the prior-contrastive context, there is no significant difference in posterior convergence for the algorithms, and the variation in the results is very low. However, \autoref{fig:6.4} suggests that the variational posterior reaches optimality at the `true' KL divergence of around 1.326. This was verified by running a prior-contrastive algorithm for twice as long (20000 posterior iterations) and observing that the metric did not decrease any further. We can therefore deduce that all of the prior-contrastive programs reached optimality, so we cannot draw any conclusions from those results. It is intuitive that explicit knowledge of the likelihood density in the prior-contrastive algorithm leads to faster posterior convergence than in the joint-contrastive experiments. Plots corresponding to the prior-contrastive optimal estimator experiment can be found in \autoref{app:E}.
+Tables \ref{tab:6.1} and \ref{tab:6.2} compare the `true' KL divergence between the 30 iterations for each algorithm variation. \autoref{fig:6.4} compares variational posterior output plots corresponding to different `true' KL divergences. In the prior-contrastive context, there is no major difference in posterior convergence for the algorithms, and the variation in the results is very low. However, \autoref{fig:6.4} suggests that the variational posterior reaches optimality at the `true' KL divergence of around 1.326. This was verified by running a prior-contrastive algorithm for twice as long (20000 posterior iterations) and observing that the metric did not decrease any further. We can therefore deduce that all of the prior-contrastive programs reached optimality, so we cannot draw any conclusions from those results. It is intuitive that explicit knowledge of the likelihood density in the prior-contrastive algorithm leads to faster posterior convergence than in the joint-contrastive experiments. Plots corresponding to the prior-contrastive optimal estimator experiment can be found in \autoref{app:E}.
 
-Figures \ref{fig:6.5}-\ref{fig:6.7} correspond to the average KL divergence, estimator loss and estimated $NELBO$ over the runtime of the program for the joint-contrastive cases.
+Figures \ref{fig:6.5}-\ref{fig:6.7} correspond to the average KL divergence, estimator loss and estimated $NELBO$ over the runtime of the program for the joint-contrastive cases. In these figures, there is little relative difference between the estimator parametrisations. Note that the relative trend in the estimator loss plot is reflected in the corresponding $NELBO$ plot.
 
-\begin{figure}[t!]
+\begin{figure}[h!]
 \begin{subfigure}{\textwidth}
 \includegraphics[width=\linewidth]{sprinklertrue.png}
 \caption{True Posterior Plot}
@@ -1435,10 +1436,6 @@ Figures \ref{fig:6.5}-\ref{fig:6.7} correspond to the average KL divergence, est
 \caption{Variational Posterior Plot with `True' KL Divergence of 1.3288}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
-\includegraphics[width=\linewidth]{13474.png}
-\caption{Variational Posterior Plot with `True' KL Divergence of 1.3474}
-\end{subfigure}
-\begin{subfigure}{\textwidth}
 \includegraphics[width=\linewidth]{13623.png}
 \caption{Variational Posterior Plot with `True' KL Divergence of 1.3623}
 \end{subfigure}
@@ -1446,12 +1443,12 @@ Figures \ref{fig:6.5}-\ref{fig:6.7} correspond to the average KL divergence, est
 \includegraphics[width=\linewidth]{13963.png}
 \caption{Variational Posterior Plot with `True' KL Divergence of 1.3963}
 \end{subfigure}
-\caption{\small Above we compare the true (unnormalised) posterior as plotted in \autoref{fig:6.1} against variational posterior outputs corresponding to varying KL divergences. Sub-figures (b)-(e) were created by fitting a Gaussian kernel density estimation over 1000 posterior samples. Note that the variational posterior is relatively optimal at a `true' KL divergence of 1.3288, and that the output appears less flexible as the divergence increases. In sub-figure (e), the variational posterior fails to capture the bimodality of the true posterior.}
+\caption{\small Above we compare the true (unnormalised) posterior as plotted in \autoref{fig:6.1} against variational posterior outputs corresponding to varying KL divergences. Sub-figures (b)-(d) were created by fitting a Gaussian kernel density estimation over 1000 posterior samples. Note that the variational posterior is relatively optimal at a `true' KL divergence of 1.3288, and that the output appears less flexible as the divergence increases. In sub-figure (d), the variational posterior fails to capture the bimodality of the true posterior.}
 \label{fig:6.4}
 \end{figure}
 \newpage
 
-\begin{table}[h!]
+\begin{table}[t!]
 \centering
 \begin{tabular}{|l|c|c|c|}
 \hline
@@ -1497,10 +1494,10 @@ Figures \ref{fig:6.5}-\ref{fig:6.7} correspond to the average KL divergence, est
 & $T_\alpha(\bm{z},x)$ & 1.3670 & 0.0387\\
 \hline
 \end{tabular}
-\caption{\small From these joint-contrastive results, it is evident that for each $f$-divergence, similar posterior convergence is associated with the different estimator parametrisations. As Nowozin's paper suggests, the GAN divergence demonstrates slower and more inconsistent results than the reverse KL divergence.}
+\caption{\small From these joint-contrastive results, it is evident that for each $f$-divergence, similar posterior convergence is associated with the different estimator parametrisations. As ``$f$-GAN: Training Generative Neural Samplers using Variational Divergence Minimization" by \citet{nowozin} suggests, the GAN divergence demonstrates slower and more inconsistent results than the reverse KL divergence.}
 \label{tab:6.2}
 \end{table}
-\begin{figure}[h]
+\begin{figure}[h!]
 \begin{subfigure}{0.49\textwidth}
 \includegraphics[width=\linewidth]{truklmins/JCADVvsJCADVexpvsJCADVgudlog.png}
 \caption{GAN Divergence}
@@ -1580,7 +1577,7 @@ In the derivation above we have set $q(u)=p(u)=0.5$. Note we plot the functional
 \includegraphics[width=\linewidth]{KLT.png}
 \caption{Reverse KL Divergence - $T_\alpha(u)$}
 \end{subfigure}
-\caption{\small Above we have plotted the estimator output against its loss functional. The same x and y-axis scales are used for all plots. Due to the bounds, it is evident that the loss functionals using the class probability estimator $D_\alpha(u)$ are associated with the highest gradient values and therefore the fastest convergence. It is difficult to compare the direct ratio estimator $r_\alpha(u)$ and the direct log ratio estimator $T_\alpha(u)$, as the former estimator appears to have higher gradients when $q(u)<p(u)$, but slower convergence when $q(u)>p(u)$. Since the relative gradients of the graph can vary with the choice of $p(u)$ and $q(u)$, we cannot compare the $f$-divergences.}
+\caption{\small Above we have plotted the estimator output against its loss functional. The same $x$ and $y$-axis scales are used for all plots. Due to the bounds, it is evident that the loss functionals using the class probability estimator $D_\alpha(u)$ are associated with the highest gradient values and therefore the fastest convergence. It is difficult to compare the direct ratio estimator $r_\alpha(u)$ and the direct log ratio estimator $T_\alpha(u)$, as the former estimator appears to have higher gradients when $q(u)<p(u)$, but slower convergence when $q(u)>p(u)$. Since the relative gradients of the graph can vary with the choice of $p(u)$ and $q(u)$, we cannot compare the $f$-divergences.}
 \label{fig:7.1}
 \end{figure}
 \subsection{First and Second Derivatives of Estimator Loss Functions}
@@ -1589,35 +1586,35 @@ It is known that the convergence rate of a gradient descent method is proportion
 Class Probability Estimator:
 \begin{align*}
 L_{RKL}(u)&\coloneqq-\E_{q(u)}\left[\log \frac{D_\alpha(u)}{1-D_\alpha(u)}\right]+\E_{p(u)}\left[\frac{D_\alpha(u)}{1-D_\alpha(u)}\right]\\
-&=-\int_U q(u)\left(\log \frac{D_\alpha(u)}{1-D_\alpha(u)}\right)\,{\rm d}u+\int_U p(u)\left(\frac{D_\alpha(u)}{1-D_\alpha(u)}\right)\,{\rm d}u\\
+&=-\int_U q(u)\left(\log \frac{D_\alpha(u)}{1-D_\alpha(u)}\right)\,{\rm d}u+\int_U p(u)\left(\frac{D_\alpha(u)}{1-D_\alpha(u)}\right)\,{\rm d}u.\\
 \frac{\partial L_{RKL}(u)}{\partial D_\alpha(u)}&=-\frac{q(u)}{D_\alpha(u)}-\frac{q(u)}{1-D_\alpha(u)}+\frac{p(u)}{1-D_\alpha(u)}+\frac{p(u)D_\alpha(u)}{(1-D_\alpha(u))^2}\\
-&=-\frac{q(u)}{D_\alpha(u)}-\frac{q(u)}{1-D_\alpha(u)}+\frac{p(u)}{(1-D_\alpha(u))^2}\\
+&=-\frac{q(u)}{D_\alpha(u)}-\frac{q(u)}{1-D_\alpha(u)}+\frac{p(u)}{(1-D_\alpha(u))^2}.\\
 \frac{\partial^2L_{RKL}(u)}{\partial D_\alpha^2(u)}&=\frac{q(u)}{D_\alpha^2(u)}-\frac{q(u)}{(1-D_\alpha(u))^2}+\frac{2p(u)}{(1-D_\alpha(u))^3}.
 \end{align*}
 Direct Ratio Estimator:
-\begin{align*}
-L_{RKL}(u)&\coloneqq-\E_{q(u)}[\log r_\alpha(u)]+\E_{p(u)}[r_\alpha(u)]\\
-&=-\int_U q(u)\log r_\alpha(u) \,{\rm d}u+\int_U p(u)r_\alpha(u)\,{\rm d}u\\
-\frac{\partial L_{RKL}(u)}{\partial r_\alpha(u)}&=-\frac{q(u)}{r_\alpha(u)}+p(u)\\
+\begin{align}
+L_{RKL}(u)&\coloneqq-\E_{q(u)}[\log r_\alpha(u)]+\E_{p(u)}[r_\alpha(u)]\nonumber\\
+&=-\int_U q(u)\log r_\alpha(u) \,{\rm d}u+\int_U p(u)r_\alpha(u)\,{\rm d}u.\nonumber\\
+\frac{\partial L_{RKL}(u)}{\partial r_\alpha(u)}&=-\frac{q(u)}{r_\alpha(u)}+p(u).\nonumber\\
 \frac{\partial^2L_{RKL}(u)}{\partial r_\alpha^2(u)}&=\frac{q(u)}{r_\alpha^2(u)}.
-\end{align*}
+\end{align}
 \subsubsection*{\textbf{GAN Divergence Bound}:}
 Class Probability Estimator:
-\begin{align*}
-L_{GAN}(u)&\coloneqq-\E_{q(u)}[\log D_\alpha(u)]-\E_{p(u)}[\log (1-D_\alpha(u))]\\
-&=-\int_U q(u)\log D_\alpha(u) \,{\rm d}u -\int_U p(u)\log(1-D_\alpha(u))\,{\rm d}u\\
-\frac{\partial L_{GAN}(u)}{\partial D_\alpha(u)}&=-\frac{q(u)}{D_\alpha(u)}+\frac{p(u)}{1-D_\alpha(u)}\\
+\begin{align}
+L_{GAN}(u)&\coloneqq-\E_{q(u)}[\log D_\alpha(u)]-\E_{p(u)}[\log (1-D_\alpha(u))]\nonumber\\
+&=-\int_U q(u)\log D_\alpha(u) \,{\rm d}u -\int_U p(u)\log(1-D_\alpha(u))\,{\rm d}u.\nonumber\\
+\frac{\partial L_{GAN}(u)}{\partial D_\alpha(u)}&=-\frac{q(u)}{D_\alpha(u)}+\frac{p(u)}{1-D_\alpha(u)}.\nonumber\\
 \frac{\partial^2L_{GAN}(u)}{\partial D_\alpha^2(u)}&=\frac{q(u)}{D_\alpha^2(u)}+\frac{p(u)}{(1-D_\alpha(u))^2}.
-\end{align*}
+\end{align}
 Direct Ratio Estimator:
-\begin{align*}
-L_{GAN}(u)&\coloneqq-\E_{q(u)}\left[\log \frac{r_\alpha(u)}{r_\alpha(u)+1}\right]+\E_{p(u)}\left[\log(r_\alpha(u)+1)\right]\\
-&=-\int_U q(u)\left[\log \frac{r_\alpha(u)}{r_\alpha(u)+1}\right]\,{\rm d}u+\int_U p(u)\left[\log(r_\alpha(u)+1)\right]\,{\rm d}u\\
-\frac{\partial L_{GAN}(u)}{\partial r_\alpha(u)}&=-\frac{q(u)}{r_\alpha(u)}+\frac{q(u)}{r_\alpha(u)+1}+\frac{p(u)}{r_\alpha(u)+1}\\
+\begin{align}
+L_{GAN}(u)&\coloneqq-\E_{q(u)}\left[\log \frac{r_\alpha(u)}{r_\alpha(u)+1}\right]+\E_{p(u)}\left[\log(r_\alpha(u)+1)\right]\nonumber\\
+&=-\int_U q(u)\left[\log \frac{r_\alpha(u)}{r_\alpha(u)+1}\right]\,{\rm d}u+\int_U p(u)\left[\log(r_\alpha(u)+1)\right]\,{\rm d}u.\nonumber\\
+\frac{\partial L_{GAN}(u)}{\partial r_\alpha(u)}&=-\frac{q(u)}{r_\alpha(u)}+\frac{q(u)}{r_\alpha(u)+1}+\frac{p(u)}{r_\alpha(u)+1}.\nonumber\\
 \frac{\partial^2L_{GAN}(u)}{\partial r_\alpha^2(u)}&=\frac{q(u)}{r_\alpha^2(u)}-\frac{q(u)}{(r_\alpha(u)+1)^2}-\frac{p(u)}{(r_\alpha(u)+1)^2}.
-\end{align*}
+\end{align}
 
-It can be seen that within the GAN divergence, the second derivative of the class probability estimator is strictly superior to that of the direct ratio estimator. Also, the direct ratio estimator has a strictly greater second derivative when its loss function is bounded by the reverse KL divergence than with the GAN divergence.
+By comparing Equations (7.1.2) and (7.1.3), we find that within the GAN divergence, the second derivative of the class probability estimator is strictly superior to that of the direct ratio estimator. Also, a comparison of Equations (7.1.1) and (7.1.3) shows that the direct ratio estimator has a strictly greater second derivative when its loss function is bounded by the reverse KL divergence than with the GAN divergence.
 As previously stated, the effectiveness of different $f$-divergence upper bounds has been tested in \citet{nowozin}. They found that the ideal $f$-divergence used for the estimator's loss function is the same $f$-divergence that is being minimized in the variational posterior training: in our case, it is the reverse KL divergence.
 \subsection{Displacement of Estimator Optimal Values}
 We can also consider the effect of the posterior density displacement from each training step: every time $q(u)$ changes, the optimal parametrisation of the estimator also changes. Consequently, the estimator must take optimization steps to reach this new parametrisation, but again, if the displacement is too significant, then the estimator may not converge in time.
@@ -1658,31 +1655,33 @@ It is difficult to make a direct comparison with the other displacement expressi
 \section{Experiment Outline}
 In this experiment, we aim to confirm our theory that the estimator parametrisations have differing density ratio estimation accuracies when improperly trained. We also aim to determine the most accurate undertrained estimator by observing the variational posterior convergence.
 
-The same ``Continuous Sprinkler" experimental setup is used, but with several changes to the training parameters. We significantly reduce the amount of estimator training, lowering the estimator training rate to 0.00004 and the number of training steps before each posterior iteration to 11 for both contrastive settings. We also increase the posterior training rate to 0.0002 and to account for this change, the number of optimization steps of the variational density is reduced to 2000 for the prior-contrastive context and 4000 in the joint-contrastive algorithms. 
+The same ``Continuous Sprinkler" experimental setup from \autoref{ch6} is used, but with several changes to the training parameters aimed towards reducing the relative amount of estimator training. We significantly reduce the amount of estimator training, lowering the estimator training rate to 0.00004 and the number of training steps before each posterior iteration to 11 for both contrastive settings. We also increase the posterior training rate to 0.0002 and to account for this change, the number of optimization steps of the variational density is reduced to 2000 for the prior-contrastive context and 4000 in the joint-contrastive algorithms. 
 \section{Results}
-Tables 7.1 and 7.2, and Figures 7.2-7.7 present the results in a similar manner to Section 6.4. For each contrastive context and $f$-divergence bound, the class probability estimator $D_\alpha(\bm{z},x)$ consistently demonstrates the lowest mean KL divergence, followed by the direct ratio estimator $r_\alpha (\bm{z},x)$ and the direct log ratio estimator $T_\alpha(\bm{z},x)$. The standard deviation of the results also generally increases with this trend: a lower standard deviation implies more consistent results. These results support the theory presented in \autoref{sec:7.1}, but their significance varies depending on the comparison. Additionally, the estimators formulated by the reverse KL divergence have consistently better results, reinforcing the results in Chapter 6.
+Tables 7.1 and 7.2, and Figures 7.2\textendash 7.7 present the results in a similar manner to Section 6.4. For each contrastive context and $f$-divergence bound, the class probability estimator $D_\alpha(\bm{z},x)$ consistently demonstrates the lowest mean KL divergence, followed by the direct ratio estimator $r_\alpha (\bm{z},x)$ and the direct log ratio estimator $T_\alpha(\bm{z},x)$. The standard deviation of the results also generally increases with this trend: a lower standard deviation implies more consistent results. These results support the theory presented in \autoref{sec:7.1}, but their significance varies depending on the comparison. Additionally, the estimators formulated by the reverse KL divergence have consistently better results, reinforcing the results in Chapter 6.
 
-The differences between the prior-contrastive estimators are relatively insignificant. This is likely because a likelihood term $-\E_{q^*(x)\pi(\varepsilon)}[\log p(x|\mathcal{G}_\phi(\varepsilon;x))]$ is additionally used to optimise the posterior weights $\phi$, so convergence is less dependent on an accurate density ratio estimation.
+The prior-contrastive estimators demonstrate relatively similar results. This is likely because a likelihood term $-\E_{q^*(x)\pi(\varepsilon)}[\log p(x|\mathcal{G}_\phi(\varepsilon;x))]$ is additionally used to optimise the posterior weights $\phi$, so convergence is less dependent on an accurate density ratio estimation. In Figures 7.2\textendash 7.4, we cannot distinguish any noticeable trends between the estimator parametrisations. However, there is an initial instability associated with the estimators formulated with the reverse KL divergence, whilst the GAN divergence corresponds to stable estimators. This observation, in spite of the superiority of the reverse KL divergence, implies a trade-off between the stability and accuracy of an estimator when choosing an $f$-divergence to formulate its loss function.
 \begin{table}[h]
 \centering
-\begin{tabular}{|c|c|c|}
+\begin{tabular}{|l|c|c|c|}
 \hline
-Algorithm & Mean KL Divergence & Standard Deviation\\
+\multicolumn{4}{|c|}{Prior-Contrastive Results}\\
 \hline
-PC Reverse KL - $D_\alpha(\bm{z},x)$ & \textbf{1.3572} & \textbf{0.0136}\\
+\multicolumn{2}{|c|}{Algorithm} & Mean KL Divergence & Standard Deviation\\
 \hline
-PC Reverse KL - $r_\alpha(\bm{z},x)$ & 1.3607 & 0.0199\\
+\multirow{3}{*}{Reverse KL} & $D_\alpha(\bm{z},x)$ & \textbf{1.3572} & \textbf{0.0136}\\
+\cline{2-4}
+& $r_\alpha(\bm{z},x)$ & 1.3607 & 0.0199\\
+\cline{2-4}
+& $T_\alpha(\bm{z},x)$ & 1.3641 & 0.0141\\
 \hline
-PC Reverse KL - $T_\alpha(\bm{z},x)$ & 1.3641 & 0.0141\\
-\hline
-PC GAN - $D_\alpha(\bm{z},x)$ & 1.3788 & 0.0258\\
-\hline
-PC GAN - $r_\alpha(\bm{z},x)$ & 1.3811 & 0.0365\\
-\hline
-PC GAN - $T_\alpha(\bm{z},x)$ & 1.3849 & 0.0450\\
+\multirow{3}{*}{GAN} & $D_\alpha(\bm{z},x)$ & 1.3788 & 0.0258\\
+\cline{2-4}
+& $r_\alpha(\bm{z},x)$ & 1.3811 & 0.0365\\
+\cline{2-4}
+& $T_\alpha(\bm{z},x)$ & 1.3849 & 0.0450\\
 \hline
 \end{tabular}
-\caption{\small In these prior-contrastive results, it is evident that using the reverse KL divergence to derive the lower bound for the estimator loss function leads to significantly higher posterior convergence, supporting our experimental results in \autoref{ch6}.}
+\caption{\small In these prior-contrastive results, it is evident that using the reverse KL divergence to derive the lower bound for the estimator loss function leads to higher posterior convergence, supporting our experimental results in \autoref{ch6}.}
 \label{tab:7.1}
 \end{table}
 \begin{figure}[h]
@@ -1720,27 +1719,29 @@ PC GAN - $T_\alpha(\bm{z},x)$ & 1.3849 & 0.0450\\
 \caption{\small The trends shown in the $NELBO$ plots above are generally consistent with the corresponding estimator loss plots. All of the estimators converge at approximately the same estimated $NELBO$, indicating that the effects of under-training the estimator are mostly experienced in the early program iterations.}
 \end{figure}
 \newpage
-More significant results are found in the joint-contrastive experiments, tabulated in Table \ref{tab:7.2}. This is likely because the entirety of the joint-contrastive $NELBO$ is a density ratio: \[NELBO(q)=\E_{q^*(x)q_\phi(\bm{z}|x)}\left[\frac{q(\bm{z},x)}{p(\bm{z},x)}\right],\] so posterior optimisation is more dependent on an accurate density ratio estimation.
+More notable results are found in the joint-contrastive experiments, tabulated in Table \ref{tab:7.2}. This is likely because the entirety of the joint-contrastive $NELBO$ is a density ratio: \[NELBO(q)=\E_{q^*(x)q_\phi(\bm{z}|x)}\left[\frac{q(\bm{z},x)}{p(\bm{z},x)}\right],\] so posterior optimisation is more dependent on an accurate density ratio estimation. Similar to the prior-contrastive results, Figures 7.5\textendash 7.7 imply a trade-off between estimator stability and accuracy in the choice of $f$-divergence.
 \begin{table}[h]
 \centering
-\begin{tabular}{|c|c|c|}
+\begin{tabular}{|l|c|c|c|}
 \hline
-Algorithm & Mean KL Divergence & Standard Deviation\\
+\multicolumn{4}{|c|}{Joint-Contrastive Results}\\
 \hline
-JC Reverse KL - $D_\alpha(\bm{z},x)$ & \textbf{1.3786} & \textbf{0.0286}\\
+\multicolumn{2}{|c|}{Algorithm} & Mean KL Divergence & Standard Deviation\\
 \hline
-JC Reverse KL - $r_\alpha(\bm{z},x)$ & 1.3934 & 0.0410\\
+\multirow{3}{*}{Reverse KL} & $D_\alpha(\bm{z},x)$ & \textbf{1.3786} & \textbf{0.0286}\\
+\cline{2-4}
+& $r_\alpha(\bm{z},x)$ & 1.3934 & 0.0410\\
+\cline{2-4}
+& $T_\alpha(\bm{z},x)$ & 1.4133 & 0.0597\\
 \hline
-JC Reverse KL - $T_\alpha(\bm{z},x)$ & 1.4133 & 0.0597\\
-\hline
-JC GAN - $D_\alpha(\bm{z},x)$ & 1.4017 & \textbf{0.0286}\\
-\hline
-JC GAN - $r_\alpha(\bm{z},x)$ & 1.4086 & 0.0555\\
-\hline
-JC GAN - $T_\alpha(\bm{z},x)$ & 1.4214 & 0.0518\\
+\multirow{3}{*}{GAN} & $D_\alpha(\bm{z},x)$ & 1.4017 & \textbf{0.0286}\\
+\cline{2-4}
+& $r_\alpha(\bm{z},x)$ & 1.4086 & 0.0555\\
+\cline{2-4}
+& $T_\alpha(\bm{z},x)$ & 1.4214 & 0.0518\\
 \hline
 \end{tabular}
-\caption{\small In these joint-contrastive results, there is a significant difference between the three estimators when the reverse KL bound is used. However, when the GAN divergence is used to formulate the estimator loss function, only the direct log ratio estimator demonstrates significantly worse posterior convergence than the other two estimators.}
+\caption{\small In these joint-contrastive results, there is a considerable difference between the three estimators when the reverse KL bound is used. However, when the GAN divergence is used to formulate the estimator loss function, only the direct log ratio estimator demonstrates substantially worse posterior convergence than the other two estimators.}
 \label{tab:7.2}
 \end{table}
 \begin{figure}[h]
@@ -1763,7 +1764,7 @@ JC GAN - $T_\alpha(\bm{z},x)$ & 1.4214 & 0.0518\\
 \includegraphics[width=\linewidth]{part2estimatorlosses/JCKLDvsJCKLexpvsJCKLgudlog.png}
 \caption{Reverse KL Divergence}
 \end{subfigure}
-\caption{\small In these estimator loss plots, we again see that the reverse KL divergence plot demonstrates initial estimator instability. This is in stark contrast to the relatively stable GAN divergence plot. From sub-figure (a), we note that the direct ratio estimator is more unstable and has a lower loss value than the other two estimators. This may be the result of an outlier experiment, as the direct ratio estimator results have the highest standard deviation of the GAN divergence experiments, yet it has similar posterior convergence to the more consistent class probability estimator.}
+\caption{\small In these estimator loss plots, we again see that the reverse KL divergence plot demonstrates initial estimator instability. This is in stark contrast to the relatively stable GAN divergence plot. From sub-figure (a), we note that the direct ratio estimator is more unstable and has a lower loss value than the other two estimators. The cause of this is unknown, as the direct ratio estimator leads to similar posterior convergence to the more consistent class probability estimator.}
 \end{figure}
 \begin{figure}[h]
 \begin{subfigure}{0.49\textwidth}
@@ -1787,9 +1788,9 @@ The MNIST (Modified National Institute of Standards and Technology) dataset is w
 \label{fig:8.1}
 \end{figure}
 
-In this problem, we aim to generate new MNIST images indistinguishable from those in the original dataset. To do so, we use the ``Adversarial Variational Bayes" variation of the autoencoder as described in \autoref{sec:3.8.1}. Recall that the associated optimisation problem is:
+In this problem, we train autoencoders on the MNIST dataset using various density ratio estimation algorithms. Specifically, we use the ``Adversarial Variational Bayes" variation of the autoencoder as described in \autoref{sec:3.8.1}. Recall that the associated optimisation problem is:
 \[\min_{\phi,\theta}\left\lbrace\E_{q^*(x)}\left[-\E_{q_\phi(z|x)}[\log p_\theta(x|z)]+KL(q_\phi(z|x)\|p(z))\right]\right\rbrace.\]
-We therefore have three neural networks:
+We therefore have three neural networks, illustrated in Figures 8.2\textendash 8.4. The notation in these figures is the same as in Figures 5.2 and 5.3, and the variational posterior and estimator networks have a relatively similar structure to the neural networks used in Chapters 6 and 7.
 \begin{itemize}
 \item An encoder network $\mathcal{G}_\phi(\varepsilon;x)$ that outputs samples from the variational posterior $q_\phi(z|x)$, effectively creating a latent representation of a data sample $x$.
 \begin{figure}[h!]
@@ -1834,7 +1835,7 @@ We therefore have three neural networks:
     \node[annot,above of=H-32, node distance=1cm] {ReLU};
     \node[annot,above of=O, node distance=1cm] {Linear};
 \end{tikzpicture}
-\caption{\small This figure illustrates the structure of the generator network $\mathcal{G}(x,\bm{\varepsilon})$ used in the MNIST data generation experiment. The notation used in the figure is the same as in Figures 5.2 and 5.3, and overall the network structure is very similar except significantly more nodes are used, suiting the higher dimensionality of the data. The dimensionality of latent variable $z$ is either 2 or 20 depending on the experimental setting. We have arbitrarily chosen the number of random noise inputs $\varepsilon$ to be 4.}
+\caption{\small This figure illustrates the structure of the generator network $\mathcal{G}(x,\bm{\varepsilon})$ used in the MNIST data generation experiment. The dimensionality of latent variable $z$ is either 2 or 20 depending on the experimental setting. We have arbitrarily chosen the number of random noise inputs $\varepsilon$ to be 4.}
 \end{figure}
 \item A decoder network representing the likelihood density $p_\theta(x|z)$ that reconstructs a data sample $x$ from a latent variable input $z$.
 \begin{figure}[h!]
@@ -1870,7 +1871,7 @@ We therefore have three neural networks:
     \node[annot,above of=H-4, node distance=1cm] {ReLU};
     \node[annot,above of=O, node distance=1cm] {Sigmoid};
 \end{tikzpicture}
-\caption{\small This is a diagram of the decoder network used in the MNIST data generation experiment. A sigmoid output layer is used to map the network output to $(0,1)$, suiting the grayscale nature of the data. The amount of effective hidden layers is the same as in the encoder network, but there are significantly more nodes in each layer. This is because the objective of the program is to output relatively high dimensional image data. Although this problem involves image analysis, due to the relatively small image size we refrain from using convolutional layers. This is consistent with other similar MNIST experiments \citep{nowozin, bgan}.}
+\caption{\small This is a diagram of the decoder network used in the MNIST data generation experiment. A sigmoid output layer is used to map the network output to $(0,1)$, suiting the grayscale nature of the data. Although this problem involves image analysis, we refrain from using convolutional layers due to the relatively small image size. This is consistent with other similar MNIST experiments \citep{nowozin, bgan}.}
 \end{figure}
 \item A density ratio estimator network ($D_\alpha(z,x),r_\alpha(z,x)$ or $T_\alpha(z,x)$) used to evaluate the intractable $KL(q_\phi(z|x)\|p(z))$ term in the optimisation problem.
 \begin{figure}[h!]
@@ -1924,7 +1925,7 @@ We therefore have three neural networks:
 \end{itemize}
 The program alternates between multiple iterations of estimator training and a single, simultaneous training step of the encoder and decoder weights.
 
-Unlike the exact ``Adversarial Variational Bayes" specification in \autoref{sec:3.8.1}, we do not add random noise to the decoder, therefore resulting in a deterministic output. This is depicted in Figure 8.5. To express the likelihood term $\E_{q_\phi(z|x)}[\log p_\theta(x|z)]$ in the optimisation problem, we use the likelihood function of a Bernoulli density, with probability equal to the output of the decoder. This likelihood representation is common in literature, and is used for several reasons \citep{nowozin,bgan, tiao}:
+Unlike the ``Adversarial Variational Bayes" specification in \autoref{sec:3.8.1}, we do not input random noise to the decoder, therefore resulting in a deterministic output. This is depicted in Figure 8.5. To express the likelihood term $\E_{q_\phi(z|x)}[\log p_\theta(x|z)]$ in the optimisation problem, we use the likelihood function of a Bernoulli density, with probability equal to the output of the decoder. This likelihood representation is common in literature, and is used for several reasons \citep{nowozin,bgan, tiao}:
 \begin{itemize}
 \item Image blurriness is reduced as there is no random noise in the pixel values.
 \item We use the reconstruction error $\|x-\tilde{x}\|^2$ to evaluate convergence, so a noisy sample reconstruction can make it difficult to compare the algorithms.
@@ -1949,9 +1950,9 @@ We avoid using kernel density estimation to evaluate convergence as it is inaccu
    \caption{\small This diagram depicts the ``Adversarial Variational Bayes" formulation of the variational autoencoder used in the MNIST data generation experiment. Note that there is no random noise added to the decoder.}
 \end{figure}
 
-Our experiment parameters have been configured to be similar to the MNIST experiment performed in ``f-GAN: Training Generative Neural Samplers using Variational Divergence Minimization" by \citet{nowozin}: a large batch size of 2048 is used and for each network, a training rate of 0.0004 is used in the low dimensional configuration, whilst the high dimensional setting uses a training rate of 0.0001. Again, the estimator is pre-trained for 5000 iterations, afterwards the program alternates between 20 iterations of estimator optimizaton and 1 iteration of posterior training, for 4000 total posterior iterations. Like in the ``Sprinkler" experiments, the estimator loss and estimated $NELBO$ at each posterior iteration was saved, and every 10 posterior iterations, 500 MNIST samples were passed through the autoencoder and the average reconstruction error $\|x-\tilde{x}\|^2$ was saved.
+Our experiment parameters have been configured to be similar to the MNIST experiment performed in ``$f$-GAN: Training Generative Neural Samplers using Variational Divergence Minimization" by \citet{nowozin}: a large batch size of 2048 is used and for each network, a training rate of 0.0004 is used in the low dimensional configuration, whilst the high dimensional setting uses a training rate of 0.0001. Again, the estimator is pre-trained for 5000 iterations, afterwards the program alternates between 20 iterations of estimator optimizaton and 1 iteration of posterior training, for 4000 total posterior iterations. Like in the ``Sprinkler" experiments, the estimator loss and estimated $NELBO$ at each posterior iteration was saved, and every 10 posterior iterations, 500 MNIST samples were passed through the autoencoder and the average reconstruction error $\|x-\tilde{x}\|^2$ was saved.
 \section{Low Dimensional Experiment Results}
-Table 8.1 below tabulates the mean and standard deviation of the autoencoder's final reconstruction error between the 30 experiment repetitions. The majority of the distinctions are insignificant, likely because the estimators experience a relatively higher level of training in comparison to the experiment in \autoref{ch7}. Additionally, the presence of the likelihood term in the $NELBO$ loss function reduces the importance of accurate density ratio estimation.
+Table 8.1 below tabulates the mean and standard deviation of the autoencoder's final reconstruction error between the 30 experiment repetitions. Figures 8.6 depicts a visual representation of these values. As reflected in Figures 8.7\textendash 8.9, most of the distinctions are relatively minor, likely because the estimators experience a higher level of training in comparison to the experiment in \autoref{ch7}. Additionally, the presence of the likelihood term in the $NELBO$ loss function reduces the importance of accurate density ratio estimation. In this experiment, the most notable observation is that the direct log ratio estimator trained with a GAN divergence leads to substantially higher reconstruction error.  
 \begin{table}[h]
 \centering
 \begin{tabular}{|l|c|c|c|}
@@ -1973,7 +1974,7 @@ Table 8.1 below tabulates the mean and standard deviation of the autoencoder's f
 & $T_\alpha(z,x)$ & 0.10683 & 0.00199\\
 \hline
 \end{tabular}
-\caption{\small The low-dimensional MNIST autoencoder experiment results are tabulated above. The only notable observation is that the direct log ratio estimator trained with a GAN divergence leads to significantly higher reconstruction error. There is also a consistent but relatively insignificant trend in the estimator parametrisations: again the class probability estimator correlates with the lowest reconstruction errors, followed by the direct ratio estimator and the direct log ratio estimator. Additionally, the reverse KL divergence correlates to superior posterior convergence.}
+\caption{\small The low-dimensional MNIST autoencoder experiment results are tabulated above. We note that the relative performances of the different estimator loss functions is the same as in \autoref{ch7}.}
 \end{table}
 \begin{figure}[h!]
 \begin{subfigure}{\textwidth}
@@ -2023,23 +2024,23 @@ Table 8.1 below tabulates the mean and standard deviation of the autoencoder's f
 \includegraphics[width=\linewidth]{part3nelbos/PCKLDvsPCKLexpvsPCKLgudlog.png}
 \caption{Reverse KL Divergence}
 \end{subfigure}
-\caption{\small Despite the apparent instability of the estimators trained with the reverse KL divergence, the $NELBO$ plot in sub-figure (b) is relatively consistent, leading to a smooth convergence as plotted in Figure 8.7 (b). The high direct log ratio estimator loss associated with the GAN divergence corresponds to a relatively large $NELBO$ as depicted in sub-figure (a).}
+\caption{\small Despite the apparent instability of the estimators trained with the reverse KL divergence, the $NELBO$ plot in sub-figure (b) is relatively consistent, leading to a smooth convergence as plotted in Figure 8.7 (b). The high direct log ratio estimator loss associated with the GAN divergence corresponds to a relatively large $NELBO$, as depicted in sub-figure (a).}
 \end{figure}
 \newpage
 \section{High Dimensional Experiment Results}
-When the dimensionality of the latent space was increased to 10, the direct ratio and direct log ratio estimator loss functions involved quantities greater than the largest representable 64-bit floating point number, overflowing to \verb+Inf+ and outputting \verb+NaN+ for the remainder of the program runtime. This is because the density ratio $q_\phi(z|x)/p(z)$ increases with the dimensionality of the latent space, eventually reaching a value that is too large to be represented by a 64-bit float. The direct ratio estimator $r_\alpha(z,x)\simeq q_\phi(z|x)/p(z)$ therefore fails in this scenario. Now recall that the direct log ratio estimator loss function involves taking the exponential of the estimator output. For example, the loss function formulated by the reverse KL divergence is
+When the dimensionality of the latent space was increased to 20, the direct ratio and log ratio estimator loss functions involved quantities greater than the largest representable 64-bit floating point number, overflowing to \verb+Inf+ and outputting \verb+NaN+ for the remainder of the program runtime. This is because the density ratio $q_\phi(z|x)/p(z)$ increases with the dimensionality of the latent space, eventually reaching a value too large to be represented by a 64-bit float. The direct ratio estimator $r_\alpha(z,x)\simeq q_\phi(z|x)/p(z)$ therefore fails in this scenario. This is consistent with the results in ``Generative Adversarial Nets from a Density Ratio Estimation Perspective" by \citet{bgan}. Now recall that the direct log ratio estimator loss function involves taking the exponential of the estimator output. For example, the loss function formulated by the reverse KL divergence is
 \[-\E_{q^*(x)\pi(\varepsilon)}[T_\alpha(\mathcal{G}(\varepsilon;x),x)]+\E_{p(z)q^*(x)}[\exp(T_\alpha(z,x))].\]
 So despite $T_\alpha(z,x)$ outputting the log of the density ratio, the exact density ratio is expressed in the loss function when the exponential is taken, causing the program to fail. On the other hand, the class probability estimator does not experience this problem as its output is bound in $(0,1)$.
 \begin{lemma}
-In the prior-contrastive setting, the class probability estimator network output before passing through the sigmoid activation function \\$g(x)=(1+e^{-x})^{-1}$ is the estimated log density ratio $\log \left(q_\phi(z|x)/p(z)\right)$. A similar result holds in the joint-contrastive setting.
+In the prior-contrastive setting, the output of the class probability estimator network before passing through the sigmoid activation function $g(x)=(1+e^{-x})^{-1}$ is the estimated log density ratio $\log \left(q_\phi(z|x)/p(z)\right)$. A similar result holds in the joint-contrastive setting.
 \begin{proof}
 Proof of this lemma can be found in \autoref{app:A.5}.
 \end{proof}
 \end{lemma}
 \begin{remark}
-The calculations with the class probability estimator $D_\alpha(z,x)$ involve values that lie within a larger bound of floating point representations than the values concerned with the direct ratio $r_\alpha(z,x)$ and direct log ratio $T_\alpha(z,x)$ estimators.
+The calculations with the class probability estimator $D_\alpha(z,x)$ involve values that lie within a larger bound of floating point representations than the values concerned with the direct ratio $r_\alpha(z,x)$ and log ratio $T_\alpha(z,x)$ estimators.
 \end{remark}
-We can therefore conclude that the class probability estimator is superior in the sense that it is the only feasible parametrization. It remains to compare the $f$-divergence used to formulate the estimator loss function. The reconstruction errors are tabulated in Table 8.2 below.
+We can therefore conclude that the class probability estimator is superior in the sense that it is the only feasible parametrization. It remains to compare the $f$-divergence used to formulate the estimator loss function. The reconstruction errors are tabulated in Table 8.2 below, and a visual representation of the errors is found in Figures 8.10. We notice that unlike our previous experimental results, the reverse KL divergence correlates to inferior results; this is reflected in the instability of its estimator, as shown in Figures 8.11\textendash 8.13.
 \begin{table}[h]
 \centering
 \begin{tabular}{|c|c|c|}
@@ -2053,7 +2054,7 @@ Reverse KL - $D_\alpha(z,x)$ & 0.06470 & 0.01949\\
 GAN - $D_\alpha(z,x)$ & \textbf{0.04440} & \textbf{0.00174}\\
 \hline
 \end{tabular}
-\caption{\small In the high dimensional MNIST autoencoder experiment results, it is evident that the GAN divergence correlates with significantly lower reconstruction error mean and standard deviation, contradicting the superiority of the reverse KL divergence shown in previous experiments. An analysis of the plots in Figures 8.11-8.13 may explain this occurrence.}
+\caption{\small In the high dimensional MNIST autoencoder experiment results, it is evident that the GAN divergence correlates with substantially lower reconstruction error mean and standard deviation, contradicting the superiority of the reverse KL divergence shown in previous experiments.}
 \end{table}
 \begin{figure}[h]
 \begin{subfigure}{\textwidth}
@@ -2086,9 +2087,9 @@ GAN - $D_\alpha(z,x)$ & \textbf{0.04440} & \textbf{0.00174}\\
 \chapter{Conclusion and Further Research}\label{ch9}
 In this thesis, we have compared various density ratio estimator loss functions in both prior-contrastive and joint-contrastive contexts for a simple Bayesian posterior inference problem, and in the prior-contrastive context for an autoencoder trained on the MNIST dataset. In \autoref{ch5}, we generalised the estimator loss function specification to the choice of $f$-divergence and estimator parametrisation. Chapters \ref{ch6} and \ref{ch7} showed that the different estimator parametrisations have similar accuracies when optimally trained, but when under-trained, higher posterior convergence is correlated with faster estimator convergence, exhibited by the class probability estimator. These chapters also demonstrated that estimators trained with the reverse KL divergence may be initially unstable, particularly when undertrained, but demonstrate high density ratio estimation accuracy when stable. On the other hand, estimators trained with the GAN divergence are relatively stable but lead to lower posterior convergence. These results were verified in the MNIST autoencoder experiment discussed in \autoref{ch8}. This cemented the class probability estimator as the superior estimator parametrisation, as the values associated with the direct ratio and direct log ratio estimators were too large to be efficiently stored in a digital representation.
 \section{Further Research}
-In this thesis, we have only compared the use of the reverse KL divergence and the GAN divergence in formulating the estimator loss function. ``f-GAN: Training Generative Neural Samplers using Variational Divergence Minimisation" by \citet{nowozin} compares several different $f$-divergences such as the Pearson divergence and the forward KL divergence, but only assesses the posterior convergence. An analysis on the estimator losses and estimated $NELBO$s over the program runtime may reveal insights on the tradeoff between estimator stability and accuracy. Nowozin's paper also uses different estimator parametrisations for each $f$-divergence; comparing the $f$-divergences with the same class probability estimator parametrisation may lead to more reliable results.
+In this thesis, we have only compared the use of the reverse KL divergence and the GAN divergence in formulating the estimator loss function. ``$f$-GAN: Training Generative Neural Samplers using Variational Divergence Minimisation" by \citet{nowozin} compares several different $f$-divergences such as the Pearson divergence and the forward KL divergence, but only assesses the posterior convergence. An analysis on the estimator losses and estimated $NELBO$s over the program runtime may reveal insights on the tradeoff between estimator stability and accuracy. Nowozin's paper also uses different estimator parametrisations for each $f$-divergence; comparing the $f$-divergences with the same class probability estimator parametrisation may lead to more reliable results.
 
-There are alternative estimator parametrisations to test. For example, to alleviate the issues associated with an excessively high density ratio, ``Generative Adversarial Nets from a Density Ratio Estimation Perspective" by \citet{bgan} proposes that the direct density ratio estimator be parametrised as $r_\alpha(u)\simeq \frac{q(u)}{\beta q(u)+(1-\beta)p(u)}$ where $\beta>0$ is small.
+There are alternative estimator parametrisations to test. For example, to alleviate the issues associated with an excessively high density ratio, ``Generative Adversarial Nets from a Density Ratio Estimation Perspective" by \citet{bgan} proposes that the direct density ratio estimator be parametrised as $r_\alpha(u)\simeq q(u)/(\beta q(u)+(1-\beta)p(u))$ where $\beta>0$ is small.
 
 In our experiments, we have excluded the joint-contrastive autoencoder formulation, as described in ``Adversarially Learned Inference" by \citet{ali} due to lack of computational time, but comparing the estimators in this context may present new insights.
 
