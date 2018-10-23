@@ -347,6 +347,7 @@ The following loss function
 \[\min_\alpha -\E_{q(u)}[\log D_\alpha(u)]-\E_{p(u)}[\log(1-D_\alpha(u))]\]
 trains a network $D_\alpha(u)$ estimating $\frac{q(u)}{q(u)+p(u)}$.
 \end{example}
+\footnotesize $\simeq$ is equality when the estimator is optimal, e.g. $D^*_\alpha(u)=\frac{q(u)}{q(u)+p(u)}$.
 \end{frame}
 \begin{frame}{Density Ratio Estimation}{Theorem}
 \begin{theorem}[Nguyen, 2010, Adapted]
@@ -760,11 +761,7 @@ GAN - $D_\alpha(z,x)$ & \textbf{0.0444} & \textbf{0.0017}\\
     \end{itemize}
   \end{itemize}
 \end{frame}
-%\begin{frame}{Cats}
-%\begin{figure}
-%\includegraphics[scale=0.4]{cats.png}
-%\end{figure}
-%\end{frame}
+
 
 
 % All of the following is optional and typically not needed. 
@@ -800,7 +797,11 @@ GAN - $D_\alpha(z,x)$ & \textbf{0.0444} & \textbf{0.0017}\\
     2017.
   \end{thebibliography}
 \end{frame}
-
+\begin{frame}{Cats}
+\begin{figure}
+\includegraphics[scale=0.4]{cats.png}
+\end{figure}
+\end{frame}
 \end{document}
 
 
