@@ -349,7 +349,7 @@ trains a network $D_\alpha(u)$ estimating $\frac{q(u)}{q(u)+p(u)}$.
 \end{example}
 \end{frame}
 \begin{frame}{Density Ratio Estimation}{Theorem}
-\begin{theorem}
+\begin{theorem}[Nguyen, 2010, Adapted]
 If $f$ is a convex function with derivative $f'$ and convex conjugate $f^*$, and $r_\alpha(u)$ is a neural network, then we have the lower bound for the $f$-divergence between densities $p(u)$ and $q(u)$:
 \[D_f [p(u)||q(u)]\geq \sup_{\alpha} \{\mathbb{E}_{q(u)}[f'(r_\alpha(u))]-\mathbb{E}_{p(u)}[f^*(f'(r_\alpha(u)))]\},\]
 with equality when $r_\alpha(u)=q(u)/p(u)$.
@@ -417,7 +417,7 @@ To train a variational posterior network:
 \includegraphics[width=\textwidth]{sprinklertrue.png}
 \end{figure}
 \begin{itemize}
-\item Posterior is flexible and bimodal.
+\item Posterior is unusually-shaped and bimodal.
 \item Use Gaussian KDE to find `true' KL divergence for $q_\phi(z|x=0,5,8,12,50)$.
 \end{itemize}
 \end{frame}
@@ -685,7 +685,7 @@ To train a variational posterior network:
 \hline
 Algorithm & Mean Reconstruction Error & Standard Deviation\\
 \hline
-Reverse KL - $D_\alpha(z,x)$ & 0.0647 & 0.0019\\
+Reverse KL - $D_\alpha(z,x)$ & 0.0647 & 0.0191\\
 \hline
 GAN - $D_\alpha(z,x)$ & \textbf{0.0444} & \textbf{0.0017}\\
 \hline
