@@ -9,15 +9,15 @@ Warning--empty chapter and pages in kolen
 Warning--can't use both author and editor fields in lecun
 You've used 47 entries,
             1935 wiz_defined-function locations,
-            730 strings with 10724 characters,
-and the built_in function-call counts, 18284 in all, are:
-= -- 1767
+            730 strings with 10738 characters,
+and the built_in function-call counts, 18424 in all, are:
+= -- 1809
 > -- 716
 < -- 37
 + -- 237
 - -- 235
-* -- 1439
-:= -- 3161
+* -- 1453
+:= -- 3175
 add.period$ -- 148
 call.type$ -- 47
 change.case$ -- 339
@@ -38,14 +38,14 @@ purify$ -- 351
 quote$ -- 0
 skip$ -- 587
 stack$ -- 0
-substring$ -- 1097
+substring$ -- 1153
 swap$ -- 138
 text.length$ -- 11
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 254
 warning$ -- 4
-while$ -- 131
+while$ -- 145
 width$ -- 0
 write$ -- 609
 (There were 4 warnings)
