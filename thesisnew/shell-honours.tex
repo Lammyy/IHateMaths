@@ -1124,7 +1124,7 @@ The $NELBO$ minimization problem in terms of the direct ratio estimator is:
 \begin{equation}
 \min_\phi \left\lbrace\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log r_\alpha(z,x)]\right\rbrace.
 \end{equation}
-Finally, we derive the bi-level optimization problem by writing the variational posterior term in Expressions (4.2.5) and (4.2.6) in terms of their generator form:
+Finally, we derive the following bi-level optimization problem by writing the variational posterior term in Expressions (4.2.5) and (4.2.6) in terms of their generator form:
 \[\min_\alpha \left\lbrace-\mathbb{E}_{q^*(x)\pi(\varepsilon)}[\log r_\alpha(\mathcal{G}(\varepsilon;x),x)]+\mathbb{E}_{p(z)p(x|z)}[r_\alpha(z,x)]\right\rbrace,\]
 \[\min_\phi \left\lbrace\mathbb{E}_{q^*(x)\pi(\varepsilon)}[\log r_\alpha(\mathcal{G}(\varepsilon;x),x)]\right\rbrace.\]
 Again this process, shown in \autoref{alg:4}, involves cycling between multiple steps of optimizing the ratio estimator and taking a single optimization step of the $NELBO$.
@@ -1194,7 +1194,7 @@ D_{GAN}(p(u)\|q(u))&\coloneqq 2JS(p(u)\|q(u))-\log 4\\
 &\geq \sup_{r\in \mathcal{R}}\left\lbrace\mathbb{E}_{q(u)}\left[\log \left(\frac{r(u)}{r(u)+1}\right)\right]-\mathbb{E}_{p(u)}[\log(r(u)+1)]\right\rbrace\\
 &=\sup_{D\in \mathcal{R}}\{\E_{q(u)}[\log D(u)]+\E_{p(u)}[\log(1-D(u))]\},
 \end{align*}
-where $D(u)=r(u)/(r(u)+1)$. Maximization of the lower bound, equivalent to minimizing its negative, follows the optimization problem:
+where $D(u)=r(u)/(r(u)+1)$. Maximization of the lower bound, equivalent to minimizing its negative, follows the optimization problem
 \[\min_\alpha \left\lbrace-\E_{q(u)}[\log D(u)]-\E_{p(u)}[\log (1-D(u))]\right\rbrace,\]
 which is the discriminative loss of the class probability estimation approach. Equality of the bound is accomplished at the optimal function of
 \begin{align*}
