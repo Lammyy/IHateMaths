@@ -254,13 +254,13 @@ In this thesis, we generalize the estimator loss function selection to a choice 
 
 \chapter{Introduction}\label{intro}
 \section{Problem Context}
-In any Bayesian statistics problem, the quintessential objective is to evaluate the posterior density $p(z|x)$ \citep{gelman}. In cases where algebraic posterior evaluation is difficult, Markov Chain Monte Carlo (MCMC) methods can been used to approximate the posterior density, but they tend to have slow convergence when applied to high dimensional data or large datasets \citep{blei}. Variational inference methods overcome this obstacle by approximating the posterior density with a different, optimized density parametrized by $\phi$: $q_\phi(z)$, dubbed the `variational density'. This can be achieved by minimizing its reverse KL divergence with the true posterior density, or equivalently minimizing an expression equal to the negative of the evidence lower bound, $NELBO(q)$ \citep{blei}:
+In any Bayesian statistics problem, the quintessential objective is to evaluate the posterior density $p(z|x)$ \citep{gelman}. In cases where algebraic posterior evaluation is difficult, Markov Chain Monte Carlo (MCMC) methods can been used to approximate the posterior density, but they tend to have slow convergence when applied to high dimensional data or large datasets \citep{blei}. Variational inference methods overcome this obstacle by approximating the posterior density with a different, optimized density parametrized by $\phi$: $q_\phi(z)$, dubbed the `variational density'. This can be achieved by minimizing its reverse KL divergence with the true posterior density, or equivalently minimizing an expression equal to the negative of the evidence lower bound, $NELBO(q)$ \citep{blei}
 \[\min_\phi \lbrace\underbrace{-\E_{q_\phi(z)}[\log p(x|z)]+KL(q_\phi(z)\|p(z))}_{=NELBO(q)}\rbrace.\]
 In traditional `mean-field variational inference', the variational density factorises over the latent variables, taking the form $q_\phi(z)=\prod_i q_{\phi_i}(z_i)$. This algorithm is inefficient in large datasets, as a new variational density would have to be trained for each data observation. The recent increased popularity of neural networks, brought forward by improvements in computational power, has led to a new type of variational inference, amortized variational inference \citep{ADVVI}. This method uses the universal function approximating capability of the neural network model to condition the variational posterior on the observation $x$, producing a flexible model that can be generalized over large datasets. To optimize this density $q_\phi(z|x)$, we minimize $NELBO(q)$ with respect to the density of the dataset $q^*(x)$: 
 \[\min_{\phi} \left\lbrace\E_{q^*(x)}\left[-\E_{q_\phi(z|x)}[\log p(x|z)]+KL(q_\phi(z|x)\|p(z))\right]\right\rbrace.\]
-Typically, the variational posterior is explicitly parametrized as a multivariate Gaussian density with means and variances specified by the posterior network output \citep{kingma}. However, ``Adversarial Variational Bayes" by \citet{mescheder} introduces a more flexible model by adding additional random noise inputs to the posterior network, which is configured to output density samples $z$. We label this posterior as `implicit' as it is difficult to numerically evaluate its explicit representation. Consequently, the optimization problem is intractable as we are unable to calculate the KL divergence term:\[KL(q_\phi(z|x)\|p(z))=\E_{q_\phi(z|x)}\left[\log \frac{q_\phi(z|x)}{p(z)}\right].\] We therefore resort to density ratio estimation techniques, using another neural network to estimate this term \citep{sugiyama, mohamed}. There are two main methods of optimizing this network: class probability estimation, which trains the network to distinguish between samples from the numerator and denominator densities \citep{gan}, and divergence minimization, which formulates an estimator loss function with a global minimum equal to the reverse KL divergence $KL(q_\phi(z|x)\|p(z))$ \citep{nguyen}.
+Typically, the variational posterior is explicitly parametrized as a multivariate Gaussian density with means and variances specified by the posterior network output \citep{kingma}. However, ``Adversarial Variational Bayes" by \citet{mescheder} introduces a more flexible model by adding additional random noise inputs to the posterior network, which is configured to output density samples $z$. We label this posterior as `implicit' as it is difficult to numerically evaluate its explicit representation. Consequently, the optimization problem is intractable as we are unable to calculate the KL divergence term\[KL(q_\phi(z|x)\|p(z))=\E_{q_\phi(z|x)}\left[\log \frac{q_\phi(z|x)}{p(z)}\right].\] We therefore resort to density ratio estimation techniques, using another neural network to estimate this term \citep{sugiyama, mohamed}. There are two main methods of optimizing this network: class probability estimation, which trains the network to distinguish between samples from the numerator and denominator densities \citep{gan}, and divergence minimization, which formulates an estimator loss function with a global minimum equal to the reverse KL divergence $KL(q_\phi(z|x)\|p(z))$ \citep{nguyen}.
 
-Since density ratio estimation only requires samples from the densities, we are additionally able to use this algorithm when the prior $p(z)$ is implicit. Following the terminology in ``Variational Inference using Implicit Distributions" by \citet{huszar}, we refer to this as the `prior-contrastive' formulation. When the likelihood density is additionally implicit, we use a `joint-contrastive' formulation, minimizing the reverse KL divergence between the joint densities \citep{tran}:
+Since density ratio estimation only requires samples from the densities, we are additionally able to use this algorithm when the prior $p(z)$ is implicit. Following the terminology in ``Variational Inference using Implicit Distributions" by \citet{huszar}, we refer to this as the `prior-contrastive' formulation. When the likelihood density is additionally implicit, we use a `joint-contrastive' formulation, minimizing the reverse KL divergence between the joint densities \citep{tran}
 \[\min_\phi \left\lbrace\E_{q^*(x)q_\phi(z|x)}\left[KL(q(z,x)\|p(z,x))\right]\right\rbrace.\]
 
 The uses of amortized variational inference are not limited to posterior inference; it can additionally be used to train an autoencoder, a model consisting of an encoder that represents a data point $x$ as a lower dimensional latent variable $z$ according to the variational posterior $q_\phi(z|x)$, and a decoder that reconstructs data $\tilde{x}$ from latent $z$ according to the likelihood $p_\theta(x|z)$ \citep{kingma}.
@@ -645,7 +645,7 @@ KL(q(\bm{z})\|p(\bm{z}|\bm{x}))&=\mathbb{E}_{q(\bm{z})}[\log q(\bm{z})-\log p(\b
 &=\mathbb{E}_{q(\bm{z})}[\log p(\bm{x}|\bm{z})]-KL(q(\bm{z})\|p(\bm{z}))\nonumber\\
 \log p(\bm{x})&\geq \mathbb{E}_{q(\bm{z})}[\log p(\bm{x}|\bm{z})]-KL(q(\bm{z})\|p(\bm{z})).
 \end{align}
-We refer to $\mathbb{E}_{q(\bm{z})}[\log p(\bm{x}|\bm{z})]-KL(q(\bm{z})\|p(\bm{z}))$ as $ELBO(q)$, as it is the lower bound of the evidence density. Our minimization problem in Equation (\ref{eqn:3.3.2}) is now equivalent to maximizing $ELBO(q)$, so it can be written as:
+We refer to $\mathbb{E}_{q(\bm{z})}[\log p(\bm{x}|\bm{z})]-KL(q(\bm{z})\|p(\bm{z}))$ as $ELBO(q)$, as it is the lower bound of the evidence density. Our minimization problem in Equation (\ref{eqn:3.3.2}) is now equivalent to maximizing $ELBO(q)$, so it can be written as
 \begin{align}
 q^*(\bm{z})&=\argmin_{q(\bm{z})\in \mathcal{Q}}\left\lbrace KL(q(\bm{z})\|p(\bm{z}|\bm{x}))\right\rbrace\nonumber\\
 &= \argmax_{q(\bm{z})\in \mathcal{Q}} \left\lbrace ELBO(q)\right\rbrace\nonumber\\
@@ -808,7 +808,7 @@ Due to the complex nature of the neural network, it is difficult to numerically 
 
 Now recall our optimization problem from Equation (3.7.1):
 \[\min_{\phi,\theta} \left\lbrace\mathbb{E}_{q^*(\bm{x})}\left[-\E_{q_\phi(\bm{z}|\bm{x})}[\log p_\theta(\bm{x}|\bm{z})]+KL(q_\phi(\bm{z}|\bm{x})\|p(\bm{z}))\right]\right\rbrace.\]
-When either the prior or variational posterior is implicit, this expression is difficult to evaluate as we are unable to calculate the KL divergence term:
+When either the prior or variational posterior is implicit, this expression is difficult to evaluate as we are unable to calculate the KL divergence term
 \[KL(q_\phi(\bm{z}|\bm{x})\|p(\bm{z}))=\E_{q_\phi(\bm{z}|\bm{x})}\left[\log \frac{q_\phi(\bm{z}|\bm{x})}{p(\bm{z})}\right].\]
 We therefore resort to \textit{density ratio estimation} techniques (\autoref{ch4}) to approximate $q_\phi(\bm{z}|\bm{x})/p(\bm{z})$, using only samples from the two densities.
 \subsection{Implicit Likelihood}\label{sec:3.8.2}
@@ -834,7 +834,7 @@ When we apply amortized variational inference to an implicit likelihood density,
    \label{fig:3.6}
 \end{figure}
 
-We rephrase the optimization problem, instead minimizing the reverse KL divergence between the two joint densities \citep{tran}: \[KL(q(\bm{z},\bm{x})\|p(\bm{z},\bm{x}))=\E_{q(\bm{z},\bm{x})}\left[\log\frac{q(\bm{z},\bm{x})}{p(\bm{z},\bm{x})}\right].\] We derive this by applying Bayes' theorem to the reverse KL divergence between the true and variational posterior densities, this time formulating the joint densities:
+We rephrase the optimization problem, instead minimizing the reverse KL divergence between the two joint densities \citep{tran} \[KL(q(\bm{z},\bm{x})\|p(\bm{z},\bm{x}))=\E_{q(\bm{z},\bm{x})}\left[\log\frac{q(\bm{z},\bm{x})}{p(\bm{z},\bm{x})}\right].\] We derive this by applying Bayes' theorem to the reverse KL divergence between the true and variational posterior densities, this time formulating the joint densities:
 \begin{align*}
 \mathbb{E}_{q^*(\bm{x})}\left[KL(q_\phi(\bm{z}|\bm{x})\|p_\theta (\bm{z}|\bm{x}))\right]&=\mathbb{E}_{q^*(\bm{x})q(\bm{z}|\bm{x})}\left[\log \frac{q(\bm{z}|\bm{x})p(\bm{x})}{p(\bm{x}|\bm{z})p(\bm{z})}\right]\\
 &=\mathbb{E}_{q^*(\bm{x})q(\bm{z}|\bm{x})}\left[\log \frac{q(\bm{z}|\bm{x})q^*(\bm{x})}{p(\bm{x}|\bm{z})p(\bm{z})}\right]+\mathbb{E}_{q^*(\bm{x})}\left[\log \frac{p(\bm{x})}{q^*(\bm{x})}\right]\\
@@ -894,7 +894,7 @@ When $q(u)$ and $p(u)$ are equivalent, that is, $q(u)=p(u)$, the discriminator c
 \end{remark}
 In the context of amortized variational inference, the optimal discriminative loss can be used to check when the variational posterior has converged, that is, when the variational density $q_\phi(z|x)$ is equivalent to the true posterior density $p(z|x)$.
 \subsection{Prior-Contrastive Algorithm}\label{sec:4.1.2}
-We now turn to the prior-contrastive problem in Expression (3.6.1) of minimizing $NELBO(q)$
+We now turn to the prior-contrastive problem in Expression (3.6.1) of minimizing $NELBO(q)$:
 \begin{align}
 \min_{\phi} \left\lbrace NELBO(q)\right\rbrace&=\min_{\phi}\left\lbrace\mathbb{E}_{q^*(x)}\left[-\E_{q_\phi(z|x)}[\log p(x|z)]+KL(q_\phi(z|x)\|p(z))\right]\right\rbrace\nonumber\\
 &=\min_\phi \left\lbrace-\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log p(x|z)]+\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{q_\phi(z|x)}{p(z)}\right]\right\rbrace,
@@ -914,7 +914,7 @@ We can now express the expected log ratio in terms of the probability that a pos
 \mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{q_\phi(z|x)}{p(z)}\right]&=\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{P(y=1|z)}{P(y=0|z)}\right]\\
 &\simeq \mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{D_\alpha(z,x)}{1-D_\alpha(z,x)}\right].
 \end{align*}
-Our $NELBO$ optimization objective in Expression (4.1.1) can now be written as:
+Our $NELBO$ optimization objective in Expression (4.1.1) can now be written as
 \begin{equation}
 \min_\phi \left\lbrace-\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log p(x|z)]+\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{D_\alpha(z,x)}{1-D_\alpha(z,x)}\right]\right\rbrace.
 \end{equation}
@@ -965,20 +965,20 @@ We now restate from Expression (3.8.1) our optimization objective when the likel
 \[\min_\phi \left\lbrace\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{q(z,x)}{p(z,x)}\right]\right\rbrace,\]
 or
 \[\min_\phi \left\lbrace\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log \frac{q_\phi(z|x)q^*(x)}{p(x|z)p(z)}\right]\right\rbrace.\]
-Similar to the prior-contrastive case, we can label samples from $q(z,x)$ with $y=1$ and samples from $p(z,x)$ with $y=0$, leading to the density ratio expression:
+Similar to the prior-contrastive case, we can label samples from $q(z,x)$ with $y=1$ and samples from $p(z,x)$ with $y=0$, leading to the density ratio expression
 \[\frac{q(z,x)}{p(z,x)}=\frac{P(y=1|z,x)}{P(y=0|z,x)}.\]
-Again, we use a discriminator neural network $D_\alpha(z,x)\simeq P(y=1|z,x)$ to estimate the probability that samples $(z,x)$ came from the joint variational density $q(z,x)$. Using this discriminator function, our density ratio expression becomes:
+Again, we use a discriminator neural network $D_\alpha(z,x)\simeq P(y=1|z,x)$ to estimate the probability that samples $(z,x)$ came from the joint variational density $q(z,x)$. Using this discriminator function, our density ratio expression becomes
 \[\frac{q(z,x)}{p(z,x)}\simeq\frac{D_\alpha(z,x)}{1-D_\alpha(z,x)}.\]
 The class probability algorithm again cycles between Bernoulli loss minimization of the discriminator:
 \begin{equation}
-\min_\alpha \left\lbrace-\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log D_\alpha(z,x)]-\mathbb{E}_{p(z)p(x|z)}[\log (1-D_\alpha(z,x))]\right\rbrace
+\min_\alpha \left\lbrace-\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log D_\alpha(z,x)]-\mathbb{E}_{p(z)p(x|z)}[\log (1-D_\alpha(z,x))]\right\rbrace,
 \end{equation}
 and optimization of the variational posterior:
 \begin{equation}
 \min_\phi \left\lbrace\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log\frac{D_\alpha(z,x)}{1-D_\alpha(z,x)}\right]\right\rbrace.
 \end{equation}
 Using the posterior generator parametrization $\mathcal{G}_\phi (\varepsilon;x)$, the optimization objectives in Expressions (4.1.6) and (4.1.7) become:
-\[\min_\alpha \left\lbrace-\mathbb{E}_{q^*(x)\pi(\varepsilon)}[\log D_\alpha(\mathcal{G}_\phi(\varepsilon;x), x)]-\mathbb{E}_{p(z)p(x|z)}[\log (1-D_\alpha(z,x))]\right\rbrace\]
+\[\min_\alpha \left\lbrace-\mathbb{E}_{q^*(x)\pi(\varepsilon)}[\log D_\alpha(\mathcal{G}_\phi(\varepsilon;x), x)]-\mathbb{E}_{p(z)p(x|z)}[\log (1-D_\alpha(z,x))]\right\rbrace,\]
 \[\min_\phi \left\lbrace\mathbb{E}_{q^*(x)\pi(\varepsilon)}\left[\log\frac{D_\alpha(\mathcal{G}_\phi(\varepsilon;x),x)}{1-D_\alpha(\mathcal{G}_\phi(\varepsilon;x),x)}\right]\right\rbrace.\]
 Using Remark \ref{rem:4.1.3}, it can be seen that when $q(z,x)=p(z,x)$, the optimal generative loss is $0$. Pseudocode for the joint-contrastive class probability estimation algorithm is shown in \autoref{alg:2}.
 \newpage
@@ -1075,7 +1075,7 @@ Since $r_\alpha(z,x)\simeq q_\phi(z|x)/p(z)$, we write our $NELBO$ optimization 
 \min_\phi \left\lbrace-\mathbb{E}_{q^*(x)q_\phi(z|x)}\left[\log p(x|z)\right]+E_{q^*(x)q_\phi (z|x)}[\log r_\alpha(z,x)]\right\rbrace.
 \end{equation}
 Substituting the generator form of the posterior into Expressions (4.2.3) and (4.2.4), we have the bi-level optimization problem:
-\[\min_\alpha \left\lbrace-\mathbb{E}_{q^*(x)\pi(\varepsilon)}[\log r_\alpha(\mathcal{G}_\phi(\varepsilon;x),x)]+\mathbb{E}_{q^*(x)p(z)}[r_\alpha(z,x)]\right\rbrace\]
+\[\min_\alpha \left\lbrace-\mathbb{E}_{q^*(x)\pi(\varepsilon)}[\log r_\alpha(\mathcal{G}_\phi(\varepsilon;x),x)]+\mathbb{E}_{q^*(x)p(z)}[r_\alpha(z,x)]\right\rbrace,\]
 \[\min_\phi \left\lbrace-\mathbb{E}_{q^*(x)\pi(\varepsilon)}\left[\log p(x|\mathcal{G}_\phi(\varepsilon;x)\right]+E_{q^*(x)\pi(\varepsilon)}[\log r_\alpha(\mathcal{G}(\varepsilon;x),x)]\right\rbrace.\]
 Similar to class probability estimation, the algorithm involves cycling between multiple ratio estimator optimization steps and a single step of $NELBO$ minimization, as shown in \autoref{alg:3}.
 \begin{algorithm}
@@ -1125,7 +1125,7 @@ The $NELBO$ minimization problem in terms of the direct ratio estimator is:
 \min_\phi \left\lbrace\mathbb{E}_{q^*(x)q_\phi(z|x)}[\log r_\alpha(z,x)]\right\rbrace.
 \end{equation}
 Finally, we derive the bi-level optimization problem by writing the variational posterior term in Expressions (4.2.5) and (4.2.6) in terms of their generator form:
-\[\min_\alpha \left\lbrace-\mathbb{E}_{q^*(x)\pi(\varepsilon)}[\log r_\alpha(\mathcal{G}(\varepsilon;x),x)]+\mathbb{E}_{p(z)p(x|z)}[r_\alpha(z,x)]\right\rbrace\]
+\[\min_\alpha \left\lbrace-\mathbb{E}_{q^*(x)\pi(\varepsilon)}[\log r_\alpha(\mathcal{G}(\varepsilon;x),x)]+\mathbb{E}_{p(z)p(x|z)}[r_\alpha(z,x)]\right\rbrace,\]
 \[\min_\phi \left\lbrace\mathbb{E}_{q^*(x)\pi(\varepsilon)}[\log r_\alpha(\mathcal{G}(\varepsilon;x),x)]\right\rbrace.\]
 Again this process, shown in \autoref{alg:4}, involves cycling between multiple steps of optimizing the ratio estimator and taking a single optimization step of the $NELBO$.
 \begin{algorithm}
@@ -1299,7 +1299,7 @@ We use the basic ``Continuous Sprinkler" posterior inference experiment as descr
 The latent variables $\bm{z}=(z_1, z_2)$ represent the sprinkler and the rain respectively, and the observation $x$ represents the wetness of the grass. We assume that the levels of incoming water are normally distributed, and that the grass wetness increases with these values. The prior and likelihood distributions are as follows:
 \[(z_1,z_2)\sim \mathcal{N} (0,\sigma^2 I_{2\times 2}),\]
 \[x|\bm{z}\sim Exp(3+\max\{0,z_1\}^3+\max\{0,z_2\}^3).\]
-The aim of this experiment is to compare the loss functions used to train density ratio estimators in the amortized variational inference method of approximating the posterior density. For increased reliability, we perform this experiment in both prior-contrastive and joint-contrastive contexts. The prior-contrastive algorithm requires the likelihood function:
+The aim of this experiment is to compare the loss functions used to train density ratio estimators in the amortized variational inference method of approximating the posterior density. For increased reliability, we perform this experiment in both prior-contrastive and joint-contrastive contexts. The prior-contrastive algorithm requires the likelihood function
 \[p(x|\bm{z})=-(3+\max \{0,z_1\}^3+\max\{0,z_2\}^3)-\exp\left(\frac{x}{3+\max \{0,z_1\}^3+\max\{0,z_2\}^3}\right).\]
 This explicit form is not directly used for the joint-contrastive algorithms; it is only used to generate samples from the likelihood density.\\
 The unnormalised true posterior density function is derived as shown below.\\
@@ -1313,7 +1313,7 @@ p(z_1,z_2|x)&\propto \exp(\log p(z_1,z_2)+\log p(x|z_1,z_2))\\
 &\left.\quad-\frac{x}{3+\max\{0,z_1\}^3+\max\{0,z_2\}^3}\right).
 \end{aligned}
 \end{equation}
-In the experiment, we let $\sigma^2=2$, and assume that each of the observation values $x=0,5,8,12,50$ have the same frequency. Our data density is therefore:
+In the experiment, we let $\sigma^2=2$, and assume that each of the observation values $x=0,5,8,12,50$ have the same frequency. Our data density is therefore
 \[q^*(x)= \frac{1}{5}\left(\mathbbm{1}_{\{0\}}(x)+\mathbbm{1}_{\{5\}}(x)+\mathbbm{1}_{\{8\}}(x)+\mathbbm{1}_{\{12\}}(x)+\mathbbm{1}_{\{50\}}(x)\right).\] In \autoref{fig:6.1}, we plot the true (unnormalised) posterior $p(\bm{z}|x)$ over a grid of equally spaced points from $(z_1,z_2)=\{(-5,-5),\dots, (5,5)\}$. We are not concerned with the lack of normalisation as the purpose of the plots is to depict the shape and relative density of the posterior density.
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{sprinklertrue.png}
@@ -1546,7 +1546,7 @@ Consider the bounds on the estimator outputs. The class probability estimator $D
 
 By converting the loss functions to integral form, we are able to visualise the bounds on the loss function output by fixing $q(u)$ and $p(u)$ as arbitrary values in $(0,1)$, and plotting the functional inside the integral. \autoref{fig:7.1} depicts plots of estimator outputs against the loss functional where $q(u)=p(u)=0.5$.
 \begin{example}
-In this example we formulate the loss functional plotted in \autoref{fig:7.1} (a): the class probability estimator $D_\alpha(u)$ derived from the GAN divergence. The relevant estimator loss function is:
+In this example we formulate the loss functional plotted in \autoref{fig:7.1} (a): the class probability estimator $D_\alpha(u)$ derived from the GAN divergence. The relevant estimator loss function is
 \begin{align*}
 -\E_{q(u)}[\log D_\alpha(u)]-\E_{p(u)}[\log (1-D_\alpha(u))]&=\int_U -q(u)\log D_\alpha(u)\\
 &\quad \quad -p(u)\log(1-D_\alpha(u)) \,{\rm d}u\\
@@ -1791,7 +1791,7 @@ The MNIST (Modified National Institute of Standards and Technology) dataset is w
 \label{fig:8.1}
 \end{figure}
 
-In this problem, we train autoencoders on the MNIST dataset using various density ratio estimation algorithms. Specifically, we use the ``Adversarial Variational Bayes" variation of the autoencoder as described in \autoref{sec:3.8.1}. Recall that the associated optimization problem is:
+In this problem, we train autoencoders on the MNIST dataset using various density ratio estimation algorithms. Specifically, we use the ``Adversarial Variational Bayes" variation of the autoencoder as described in \autoref{sec:3.8.1}. Recall that the associated optimization problem is
 \[\min_{\phi,\theta}\left\lbrace\E_{q^*(x)}\left[-\E_{q_\phi(z|x)}[\log p_\theta(x|z)]+KL(q_\phi(z|x)\|p(z))\right]\right\rbrace.\]
 We therefore have three neural networks, illustrated in Figures 8.2\textendash 8.4. The notation in these figures is the same as in Figures 5.2 and 5.3, and the variational posterior and estimator networks have a relatively similar structure to the neural networks used in Chapters 6 and 7.
 \begin{itemize}
