@@ -71,8 +71,9 @@
 \BOOKMARK [1][-]{appendix.B.1}{Back-Propagation Algorithm}{appendix.B}% 71
 \BOOKMARK [1][-]{appendix.B.2}{Coordinate Ascent Variational Inference Algorithm}{appendix.B}% 72
 \BOOKMARK [1][-]{appendix.B.3}{Algorithms for ``Sprinkler" Experiment}{appendix.B}% 73
-\BOOKMARK [0][-]{appendix.C}{Coordinate Ascent Variational Inference Derivation}{}% 74
-\BOOKMARK [0][-]{appendix.D}{Mean Field Variational Inference Example}{}% 75
-\BOOKMARK [0][-]{appendix.E}{Kernel Density Estimation}{}% 76
-\BOOKMARK [0][-]{appendix.F}{Prior-Contrastive Optimal Estimator Experiment Plots}{}% 77
-\BOOKMARK [0][-]{appendix.G}{Second Functional Derivatives of Direct Log Ratio Estimator Losses}{}% 78
+\BOOKMARK [1][-]{appendix.B.4}{Algorithm for MNIST Experiment}{appendix.B}% 74
+\BOOKMARK [0][-]{appendix.C}{Coordinate Ascent Variational Inference Derivation}{}% 75
+\BOOKMARK [0][-]{appendix.D}{Mean Field Variational Inference Example}{}% 76
+\BOOKMARK [0][-]{appendix.E}{Kernel Density Estimation}{}% 77
+\BOOKMARK [0][-]{appendix.F}{Prior-Contrastive Optimal Estimator Experiment Plots}{}% 78
+\BOOKMARK [0][-]{appendix.G}{Second Functional Derivatives of Direct Log Ratio Estimator Losses}{}% 79

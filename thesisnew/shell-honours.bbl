@@ -48,13 +48,13 @@ Cybenko, G. (1989).
 \bibitem[{Doersch}, 2016]{vae}
 {Doersch}, C. (2016).
 \newblock {Tutorial on Variational Autoencoders}.
-\newblock {\em ArXiv e-prints}.
+\newblock {\em ArXiv}.
 
 \bibitem[{Dumoulin} et~al., 2016]{ali}
 {Dumoulin}, V., {Belghazi}, I., {Poole}, B., {Mastropietro}, O., {Lamb}, A.,
   {Arjovsky}, M., and {Courville}, A. (2016).
 \newblock {Adversarially Learned Inference}.
-\newblock {\em ArXiv e-prints}.
+\newblock {\em ArXiv}.
 
 \bibitem[E.~Rumelhart et~al., 1986]{backprop}
 E.~Rumelhart, D., E.~Hinton, G., and J.~Williams, R. (1986).
@@ -71,8 +71,8 @@ Floudas, C.~A. (2005).
 \bibitem[Fuglede and Topsoe, 2004]{JS}
 Fuglede, B. and Topsoe, F. (2004).
 \newblock Jensen-shannon divergence and hilbert space embedding.
-\newblock In {\em International Symposium onInformation Theory, 2004. ISIT
-  2004. Proceedings.}, pages 31--.
+\newblock In {\em International Symposium on Information Theory, 2004. ISIT
+  2004. Proceedings.}, page~31.
 
 \bibitem[Gelman et~al., 2004]{gelman}
 Gelman, A., Carlin, J.~B., Stern, H.~S., and Rubin, D.~B. (2004).
@@ -102,8 +102,9 @@ Goodfellow, I., Bengio, Y., and Courville, A. (2016).
 \bibitem[Goodfellow et~al., 2014]{gan}
 Goodfellow, I., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D., Ozair,
   S., Courville, A., and Bengio, Y. (2014).
-\newblock {Generative Adversarial Networks}.
-\newblock 3.
+\newblock Generative adversarial nets.
+\newblock In {\em Advances in Neural Information Processing Systems 27}, pages
+  2672--2680. Curran Associates, Inc.
 
 \bibitem[Goodman, 1960]{goodman}
 Goodman, L.~A. (1960).
@@ -119,22 +120,22 @@ Haykin, S. (1998).
 \bibitem[Hornik, 1991]{universal}
 Hornik, K. (1991).
 \newblock Approximation capabilities of multilayer feedforward networks.
-\newblock {\em Neural Networks}, 4(2):251 -- 257.
+\newblock {\em Neural Networks}, 4(2):251--257.
 
 \bibitem[{Husz{\'a}r}, 2017]{huszar}
 {Husz{\'a}r}, F. (2017).
 \newblock {Variational Inference using Implicit Distributions}.
-\newblock {\em ArXiv e-prints}.
+\newblock {\em ArXiv}.
 
 \bibitem[Kingma and Ba, 2014]{adam}
 Kingma, D.~P. and Ba, J. (2014).
 \newblock Adam: {A} method for stochastic optimization.
-\newblock {\em CoRR}, abs/1412.6980.
+\newblock {\em ArXiv}.
 
 \bibitem[{Kingma} and {Welling}, 2013]{kingma}
 {Kingma}, D.~P. and {Welling}, M. (2013).
 \newblock {Auto-Encoding Variational Bayes}.
-\newblock {\em ArXiv e-prints}.
+\newblock {\em ArXiv}.
 
 \bibitem[Kolen and Kremer, 2001]{kolen}
 Kolen, J.~F. and Kremer, S.~C. (2001).
@@ -163,12 +164,12 @@ Li, M., Zhang, T., Chen, Y., and Smola, A.~J. (2014).
 Mescheder, L.~M., Nowozin, S., and Geiger, A. (2017).
 \newblock {Adversarial Variational Bayes: Unifying Variational Autoencoders and
   Generative Adversarial Networks}.
-\newblock {\em CoRR}, abs/1701.04722.
+\newblock {\em ArXiv}.
 
 \bibitem[{Mohamed} and {Lakshminarayanan}, 2016]{mohamed}
 {Mohamed}, S. and {Lakshminarayanan}, B. (2016).
 \newblock {Learning in Implicit Generative Models}.
-\newblock {\em ArXiv e-prints}.
+\newblock {\em ArXiv}.
 
 \bibitem[Nguyen et~al., 2010]{nguyen}
 Nguyen, X., Wainwright, M.~J., and Jordan, M.~I. (2010).
@@ -180,16 +181,13 @@ Nguyen, X., Wainwright, M.~J., and Jordan, M.~I. (2010).
 Nowozin, S., Cseke, B., and Tomioka, R. (2016).
 \newblock f-gan: Training generative neural samplers using variational
   divergence minimization.
-
-\bibitem[P.~Wellman and Henrion, 1993]{explain}
-P.~Wellman, M. and Henrion, M. (1993).
-\newblock Explaining `explaining away'.
-\newblock 15:287--292.
+\newblock In {\em Advances in Neural Information Processing Systems 29}, pages
+  271--279. Curran Associates, Inc.
 
 \bibitem[Ruder, 2016]{optimneural}
 Ruder, S. (2016).
 \newblock An overview of gradient descent optimization algorithms.
-\newblock {\em CoRR}, abs/1609.04747.
+\newblock {\em ArXiv}.
 
 \bibitem[Simard et~al., 2003]{mnist}
 Simard, P.~Y., Steinkraus, D., and Platt, J.~C. (2003).
@@ -199,7 +197,9 @@ Simard, P.~Y., Steinkraus, D., and Platt, J.~C. (2003).
 
 \bibitem[Snyman, 2005]{snyman}
 Snyman, J. (2005).
-\newblock {\em Practical Mathematical Optimization}.
+\newblock {\em Practical Mathematical Optimization: An Introduction to Basic
+  Optimization Theory and Classical and New Gradient-Based Algorithms}.
+\newblock Applied Optimization. Springer.
 
 \bibitem[Sugiyama et~al., 2012]{sugiyama}
 Sugiyama, M., Suzuki, T., and Kanamori, T. (2012).
@@ -210,20 +210,21 @@ Sugiyama, M., Suzuki, T., and Kanamori, T. (2012).
 Tiao, L.~C., Bonilla, E.~V., and Ramos, F. (2018).
 \newblock {Cycle-Consistent Adversarial Learning as Approximate Bayesian
   Inference}.
-\newblock {\em ArXiv e-prints}.
+\newblock {\em ArXiv}.
 
-\bibitem[{Tran} et~al., 2017]{tran}
-{Tran}, D., {Ranganath}, R., and {Blei}, D.~M. (2017).
-\newblock {Hierarchical Implicit Models and Likelihood-Free Variational
-  Inference}.
-\newblock {\em ArXiv e-prints}.
+\bibitem[Tran et~al., 2017]{tran}
+Tran, D., Ranganath, R., and Blei, D. (2017).
+\newblock Hierarchical implicit models and likelihood-free variational
+  inference.
+\newblock In {\em Advances in Neural Information Processing Systems 30}, pages
+  5523--5533. Curran Associates, Inc.
 
 \bibitem[{Uehara} et~al., 2016]{bgan}
 {Uehara}, M., {Sato}, I., {Suzuki}, M., {Nakayama}, K., and {Matsuo}, Y.
   (2016).
 \newblock {Generative Adversarial Nets from a Density Ratio Estimation
   Perspective}.
-\newblock {\em ArXiv e-prints}.
+\newblock {\em ArXiv}.
 
 \bibitem[Vincent et~al., 2008]{vincent}
 Vincent, P., Larochelle, H., Bengio, Y., and Manzagol, P.-A. (2008).
@@ -237,32 +238,37 @@ Wang, Q., Kulkarni, S.~R., and Verd\'{u}, S. (2009).
   k-nearest-neighbor distances.
 \newblock {\em IEEE Trans. Inf. Theor.}, 55(5):2392--2405.
 
+\bibitem[Wellman and Henrion, 1993]{explain}
+Wellman, M.~P. and Henrion, M. (1993).
+\newblock Explaining 'explaining away'.
+\newblock {\em IEEE Trans. Pattern Anal. Mach. Intell.}, 15(3):287--292.
+
 \bibitem[Wu, 2009]{wu}
 Wu, H. (2009).
 \newblock Global stability analysis of a general class of discontinuous neural
   networks with linear growth activation functions.
-\newblock 179:3432--3441.
+\newblock {\em Inf. Sci.}, 179(19):3432--3441.
 
 \bibitem[Wu et~al., 2016]{ais}
 Wu, Y., Burda, Y., Salakhutdinov, R., and Grosse, R.~B. (2016).
 \newblock On the quantitative analysis of decoder-based generative models.
-\newblock {\em CoRR}, abs/1611.04273.
+\newblock {\em ArXiv}.
 
 \bibitem[{Zanin Zambom} and {Dias}, 2012]{kde}
 {Zanin Zambom}, A. and {Dias}, R. (2012).
 \newblock {A Review of Kernel Density Estimation with Applications to
   Econometrics}.
-\newblock {\em ArXiv e-prints}.
+\newblock {\em ArXiv}.
 
 \bibitem[Zhang et~al., 2017]{ADVVI}
 Zhang, C., B{\"u}tepage, J., Kjellstr{\"o}m, H., and Mandt, S. (2017).
 \newblock Advances in variational inference.
-\newblock {\em CoRR}, abs/1711.05597.
+\newblock {\em ArXiv}.
 
 \bibitem[Zilles, 1992]{neuroplast}
 Zilles, K. (1992).
 \newblock Neuronal plasticity as an adaptive property of the central nervous
   system.
-\newblock {\em Annals of Anatomy - Anatomischer Anzeiger}, 174(5):383 -- 391.
+\newblock {\em Annals of Anatomy - Anatomischer Anzeiger}, 174(5):383--391.
 
 \end{thebibliography}

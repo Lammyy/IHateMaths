@@ -21,7 +21,7 @@
 \contentsline {section}{\numberline {3.7}Example: Variational Autoencoder}{21}{section.3.7}
 \contentsline {section}{\numberline {3.8}Problems with Implicit Densities}{23}{section.3.8}
 \contentsline {subsection}{\numberline {3.8.1}Implicit Prior and/or Variational Posterior}{23}{subsection.3.8.1}
-\contentsline {subsection}{\numberline {3.8.2}Implicit Likelihood}{24}{subsection.3.8.2}
+\contentsline {subsection}{\numberline {3.8.2}Implicit Likelihood}{25}{subsection.3.8.2}
 \contentsline {chapter}{\numberline {Chapter 4}Density Ratio Estimation}{27}{chapter.4}
 \contentsline {section}{\numberline {4.1}Class Probability Estimation}{27}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Derivation}{27}{subsection.4.1.1}
@@ -71,8 +71,9 @@
 \contentsline {section}{\numberline {B.1}Back-Propagation Algorithm}{83}{appendix.B.1}
 \contentsline {section}{\numberline {B.2}Coordinate Ascent Variational Inference Algorithm}{84}{appendix.B.2}
 \contentsline {section}{\numberline {B.3}Algorithms for ``Sprinkler" Experiment}{85}{appendix.B.3}
-\contentsline {chapter}{\numberline {Appendix C}Coordinate Ascent Variational Inference Derivation}{87}{appendix.C}
-\contentsline {chapter}{\numberline {Appendix D}Mean Field Variational Inference Example}{89}{appendix.D}
-\contentsline {chapter}{\numberline {Appendix E}Kernel Density Estimation}{93}{appendix.E}
-\contentsline {chapter}{\numberline {Appendix F}Prior-Contrastive Optimal Estimator Experiment Plots}{94}{appendix.F}
-\contentsline {chapter}{\numberline {Appendix G}Second Functional Derivatives of Direct Log Ratio Estimator Losses}{95}{appendix.G}
+\contentsline {section}{\numberline {B.4}Algorithm for MNIST Experiment}{87}{appendix.B.4}
+\contentsline {chapter}{\numberline {Appendix C}Coordinate Ascent Variational Inference Derivation}{88}{appendix.C}
+\contentsline {chapter}{\numberline {Appendix D}Mean Field Variational Inference Example}{90}{appendix.D}
+\contentsline {chapter}{\numberline {Appendix E}Kernel Density Estimation}{94}{appendix.E}
+\contentsline {chapter}{\numberline {Appendix F}Prior-Contrastive Optimal Estimator Experiment Plots}{95}{appendix.F}
+\contentsline {chapter}{\numberline {Appendix G}Second Functional Derivatives of Direct Log Ratio Estimator Losses}{96}{appendix.G}
